@@ -1,0 +1,70 @@
+.reviewMain {
+  width: 65vw;
+  display: flex;
+  flex-direction: column;
+  margin-left: 14rem;
+}
+
+.reviewWrapper {
+  display: flex;
+  flex-direction: row;
+  width: 65vw;
+  align-items: center;
+  margin-bottom: 10px;
+  padding: 8px;
+  border: 1px solid grey;
+  /* background-color: white; */
+  border-radius: 16px;
+  /* min-width: 60rem; */
+}
+
+.imageContainer {
+  display: flex;
+  align-items: center;
+}
+
+.image {
+  width: 50px;
+  height: 50px;
+  border-radius: 25px;
+}
+
+.reviewContentContainer {
+  width: 100%; /* 컨테이너가 래퍼만큼의 크기를가진다. */
+  margin-left: 8px;
+  display: grid;
+  /* grid-template-columns: 8em 15em 15em 8em 6em; */
+  grid-template-columns: 0.5fr 1fr 1.5fr 1fr 0.4fr;
+  align-items: center;
+}
+
+.reviewnameText {
+  color: black;
+  font-size: 16px;
+  /* font-weight: bold; */
+}
+
+.reviewText {
+  color: black;
+  font-size: 16px;
+}
+
+.reviewDetailBtn {
+  margin: 0;
+  padding: 0;
+  width: 5em;
+  height: 2em;
+  font-size: 0.7em;
+  background-color: #eee;
+}
+.tossface {
+  font-family: Tossface;
+}
+.paginationList {
+  display: flex;
+  justify-content: center;
+  margin-top: 1.25rem;
+  /* margin-left: 18.45rem; */
+  /* margin-right: 8rem; */
+  margin-bottom: 1.25rem;
+}

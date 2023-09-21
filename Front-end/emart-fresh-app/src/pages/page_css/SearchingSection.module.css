@@ -1,0 +1,32 @@
+.inputSection {
+  width: 100%;
+  display: flex;
+}
+.searchingInput {
+  flex: 1;
+  border: none;
+  padding-left: 16px;
+  padding-right: 16px;
+  width: 20em;
+  height: 2.3em;
+  color: #333333;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.searchBtn {
+  cursor: pointer;
+  width: 100%;
+  transition: 0.2s;
+  max-width: 100px;
+  max-height: 58px;
+  border-radius: 8px;
+  background-color: #f9bb00;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+  align-items: center;
+  justify-content: center;
+  margin: 1em;
+}

@@ -1,0 +1,29 @@
+.title{
+    margin-top: 2em;
+    margin-bottom: 1.4em;
+    font-size: 1.8em;
+}
+
+.inquiryBtnWrap{
+    width: 100%;
+    border: 0.07em solid #404040;
+    border-left: 0;
+    border-right: 0;
+    /* border-radius: 0.5em; */
+}
+
+.inquiryBtn{
+    width: 50%;
+    height: 3em;
+    background-color: white;
+    border-radius: 0;
+}
+
+.inquiryBtnLeft{
+    border-right: 0.07em solid #000000;
+}
+
+.inquiryBtn:hover{
+    background-color: rgba(249, 187, 0, 0.8);
+    transition: 0.1s;
+}

@@ -1,0 +1,87 @@
+.productDetailContainer {
+  padding: 1em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  flex-wrap: wrap;
+}
+
+.itemContainer {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.contentSection {
+  width: 30em;
+}
+
+.itemImage {
+  width: 15em;
+  height: 15em;
+  background-color: wheat;
+}
+
+.itemLine {
+  display: block;
+  width: 100%;
+  height: 0.5px;
+  border-top: 0.5px solid #ebebeb;
+}
+
+.priceInput {
+  width: 4em;
+}
+
+/*----------------리뷰----------------*/
+.reviewContentContainer {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  padding: 1em;
+}
+.reviewContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+  align-items: start;
+  padding: 1em;
+  margin: 1em;
+}
+
+.reviewDelBtn {
+  margin-left: auto;
+  padding: 0.3em;
+  border-radius: 0.8em;
+  font-size: 0.8em;
+  background-color: white;
+  border: 1.3px solid black;
+}
+
+.reviewDelBtn:hover {
+  color: white;
+  background-color: #393838;
+  transition: 0.2s ease;
+}
+.reviewMemberName {
+  color: black;
+  font-size: 1.2em;
+  font-weight: bold;
+}
+.starWrapper {
+  display: flex;
+  flex-direction: row;
+}
+
+.starFilled {
+  color: yellow;
+}
+
+.contentWrapper {
+  background-color: #e1e1e1;
+  width: 100%;
+  text-align: left;
+  padding: 1em;
+  border-radius: 0.5em;
+}

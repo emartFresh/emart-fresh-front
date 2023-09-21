@@ -1,0 +1,40 @@
+.orderListWrapper {
+  display: block;
+  height: 50em;
+  margin: 2em;
+}
+
+.orderListSection {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  margin: 1em;
+  border: 1px solid gray;
+  border-radius: 0.3em;
+  padding: 1em;
+}
+
+.innerListSection {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  margin: 0.5em;
+  border: 1px solid gray;
+  border-radius: 0.3em;
+  padding: 1em;
+}
+.innerCheckBox {
+  width: 1.7em;
+  height: 1.7em;
+}
+
+.innerListTitle {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  border: 1px solid gray;
+  border-radius: 0.3em;
+  padding: 1em;
+}
+
+.orderImg {
+  width: 5em;
+  height: 5em;
+}

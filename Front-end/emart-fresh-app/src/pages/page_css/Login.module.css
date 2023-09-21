@@ -1,0 +1,58 @@
+.container{
+    min-height: 32em;
+    width: 100%;
+}
+
+.title{
+    margin-top: 2.2em;
+    margin-bottom: 2em;
+    font-size: 1.8em;
+}
+
+.loginForm{
+    margin: 0 auto;
+    width: 40em;
+}
+
+.loginId, .loginPw{
+    width: 22em;
+    display: block;
+    padding: 0.8em 1.8em;
+    font-size: 1em;
+    border-radius: 0.5em;
+    border: 0.1em solid rgba(0, 0, 0, 0.5);
+    outline: 0; 
+}
+
+.loginId{
+    margin: 1em auto;
+}
+
+.loginPw{
+    margin: 2em auto;
+}
+
+input{
+    /* transition: border-color 0.3s; 트랜지션 추가 */
+}
+
+input:focus{
+    /* 수정 : input의 focus 디폴트가 설정되어있는듯 */
+    /* border: 1px solid #f9bb00; */
+    /* border-color: #f9bb00 !important; */
+}
+
+.links{
+    margin: 0 auto;
+    width: 28em;
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9em;
+}
+
+.loginBtn{
+    width: 12em;
+    /* width: 26em; */
+    margin-top: 3em;
+    padding: 0.7em 0;
+}

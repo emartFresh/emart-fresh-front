@@ -1,0 +1,43 @@
+.couponTest {
+  width: 65vw;
+  display: flex;
+  flex-direction: column;
+  margin-left: 14rem;
+}
+
+.couponWrapper {
+  display: flex;
+  flex-direction: row;
+  width: 65vw;
+  /* align-items: center; */
+  margin-bottom: 0.625rem;
+  padding: 8px;
+  border: 1px solid grey;
+  /* background-color: white; */
+  border-radius: 16px;
+  /* min-width: 60rem; */
+}
+.couponContainer {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  /* align-items: center; */
+}
+
+.couponText {
+  color: black;
+  font-size: 1rem;
+  height: 3rem;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+}
+.tossface {
+  font-family: Tossface;
+}
+.paginationList {
+  display: flex;
+  justify-content: center;
+  margin-top: 1.25rem;
+  margin-bottom: 1.25rem;
+}

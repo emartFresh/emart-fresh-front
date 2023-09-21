@@ -1,0 +1,521 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { useState } from 'react';
+import axios from 'axios';
+import styles from '../page_css/Signup.module.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCircleCheck } from '@fortawesome/free-regular-svg-icons';
+import ExpiryTime from './ExpiryTime';
+import { Link, useNavigate } from 'react-router-dom';
+import TextField from '@mui/material/TextField';
+// import InputAdornment from '@mui/material/InputAdornment';
+// import AccountCircle from '@mui/icons-material/AccountCircle';
+import { useEffect } from 'react';
+
+interface FormState {
+    signupId: string;
+    signupPassword: string;
+    signupPasswordCheck: string;
+    signupName: string;
+    signupEmail: string;
+    certificationCode: string;
+}
+
+interface Messages {
+    id: string;
+    name: string;
+    email: string;
+    password: string;
+    passwordConfirm: string;
+    certificationCode: string;
+}
+
+interface Validity {
+    isIdValid: boolean;
+    isIdDuplicated: boolean;
+    isPasswordValid: boolean;
+    isPasswordConfirmValid: boolean;
+    isNameValid: boolean;
+    isEmailValid: boolean;
+    isEmailDuplicated: boolean;
+    isCertificationCode?: boolean;
+}
+
+const Signup = () => { 
+
+    const navigate = useNavigate();
+
+    const initialFormState: FormState = {
+        signupId: '',
+        signupPassword: '',
+        signupPasswordCheck: '',
+        signupName: '',
+        signupEmail: '',
+        certificationCode: '',
+    };
+
+    const [formData, setFormData] = useState<FormState>(initialFormState);
+
+    const [messages, setMessages] = useState<Messages>({
+        id: '',
+        name: '',
+        email: '',
+        password: '',
+        passwordConfirm: '',
+        certificationCode: '',
+    });
+
+    const [formValidity, setFormValidity] = useState<Validity>({
+        isIdValid: false,
+        isIdDuplicated: false,
+        isPasswordValid: false,
+        isPasswordConfirmValid: false,
+        isNameValid: false,
+        isEmailValid: false,
+        isEmailDuplicated: false,
+        isCertificationCode: false,
+    })
+
+    const spaceRegex = /\s/;
+    const idRegex = /^(?=.*[a-zA-Z])(?=.*[0-9])[a-zA-Z0-9]{8,12}$/;
+    const pwRegex = /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[~!@#$%^&*]).{8,16}$/;
+    const nameRegex = /^[가-힣]+$/;
+    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+
+    // 인증시작 -> 폼 입력창막기 / 인증번호 입력창 보이기 / 유효시간 보이기
+    const [emailInputDisabled, setEmailInputDisabled] = useState<boolean>(false);
+    const [showCertCodeInput, setShowCertCodeInput] = useState<boolean>(false);
+    const [emailCertCode, setEmailCertCode] = useState<string>('');
+    const [showExpiryTime, setShowExpiryTime] = useState<boolean>(false);
+
+    const [isEnableInput, setIsEnableInput]= useState<boolean>(false);
+    const [isEnableCodeSendBtn, setIsEnableCodeSendBtn] = useState<boolean>(false);
+    const [isEnableCodeCertBtn, setIsEnableCodeCertBtn] = useState<boolean>(false);
+    const [codeSendCount, setCodeSendCount] = useState<number>(0);
+    const [isAllValid, setIsAllValid] = useState<boolean>(false);    
+    const [isComplete, setIsComplete] = useState<boolean>(false); //인증성공여부 default:false
+
+    useEffect(()=> {
+        isFormValid();
+    },[formValidity]);
+
+    const isFormValid = () => {
+        const copyObj = {...formValidity};
+        delete copyObj.isCertificationCode;
+        const isEnable = Object.values(copyObj).every(Boolean);
+        setIsEnableCodeSendBtn(isEnable);
+        setIsAllValid(isEnable);
+    };
+
+    const isSingupValid = () => {
+        const validity = Object.values(formValidity).every(Boolean);
+        return validity;
+    };
+
+    const handleStartTimer = () => {
+      setShowExpiryTime(true);
+      handleMessageChange('certificationCode','');
+      setIsEnableInput(true);
+      setIsEnableCodeCertBtn(true);
+    };
+  
+    const handleCloseExpiryTime = () => {
+      setShowExpiryTime(false);
+      handleMessageChange('certificationCode','인증 시간이 만료되었습니다. 다시 시도해주세요.');
+      setEmailCertCode('');
+      setIsEnableCodeCertBtn(false);
+    };
+    
+    const handleSignup = async(signupData:FormState) => {
+        // 모든 항목 유효성 검사 true (인증번호까지 일치할 때) -> 회원가입 처리 로직
+        if(isSingupValid()){
+            await axios.post(`${import.meta.env.VITE_BACK_PORT}/member/add`, {
+                memberId: signupData.signupId,
+                memberPw: signupData.signupPassword,
+                memberName: signupData.signupName,
+                memberEmail: signupData.signupEmail, 
+            })
+            .then((response) => {
+                console.log(response.data);
+                console.log(response.status);  
+                alert('회원가입 완료 (임시 알림)')
+                navigate('/login')
+            })
+            .catch(() => console.error()
+            )
+        }
+    }
+
+    const handleInputChange = (fieldName: keyof FormState, value: string) => {
+        setFormData({
+            ...formData,
+            [fieldName]: value,
+        });
+        
+    };
+
+    const handleMessageChange = (fieldName: keyof Messages, value: string) => {
+        setMessages({
+            ...messages,
+            [fieldName]: value,
+        })
+    }
+
+    const handleValidityChange = (fieldName: keyof Validity, value: boolean) => {
+        setFormValidity({
+            ...formValidity,
+            [fieldName]: value,
+        })
+    }
+
+    const validateId = (value: string) => {
+        // 아이디 유효성 검사 로직 / 결과에 따라 메시지 및 유효성 상태 업데이트
+        if (value.trim() === '') { 
+            handleMessageChange('id', '아이디를 입력해주세요.');
+            handleValidityChange('isIdValid', false);
+        }else if(spaceRegex.test(value)){
+            handleMessageChange('id','아이디는 띄어쓰기 없이 입력해주세요.');
+            handleValidityChange('isIdValid', false);
+        }else if (!idRegex.test(value)) {
+            handleMessageChange('id', '아이디는 영문과 숫자를 포함하고, 최소 8자 최대 12자로 입력해주세요.');
+            handleValidityChange('isIdValid', false);
+        }else {
+            handleMessageChange('id', '');
+            handleValidityChange('isIdValid', true);
+        }
+    }
+
+    const idDuplicateCheck = async(signupId: string) => { 
+        // 아이디 DB 중복 여부 검사
+        if(formValidity.isIdValid){
+            await axios.get(`${import.meta.env.VITE_BACK_PORT}/member/idCheck`, {
+                params: {
+                    memberId: signupId,
+                },
+            })
+            .then((response) => {
+                if(response.status === 200){
+                    console.log("아이디 중복체크 >> 사용가능한 아이디");
+                    handleValidityChange('isIdDuplicated', true);
+                    handleMessageChange('id', '사용가능한 아이디입니다.')
+                }
+            })
+            .catch(() => {
+                console.log("아이디 중복체크 >> 이미 존재하는 아이디");
+                handleValidityChange('isIdDuplicated', false);
+                handleMessageChange('id','이미 존재하는 아이디입니다.')
+            })
+        }
+    }
+
+    const validatePassword = (value: string) => { 
+        // 비밀번호 유효성 검사 로직 / 결과에 따라 메시지 및 유효성 상태 업데이트
+        if (value.trim() === '') {
+            handleMessageChange('password','비밀번호를 입력해주세요.');
+            handleValidityChange('isPasswordValid', false);
+        }else if(spaceRegex.test(value)){
+            handleMessageChange('password','비밀번호는 띄어쓰기 없이 입력해주세요.');
+            handleValidityChange('isPasswordValid', false);
+        }else if(!pwRegex.test(value)){
+            handleMessageChange('password','비밀번호는 영문/숫자/특수문자를 포함하고, 최소 8자 최대 16자로 입력해주세요.');
+            handleValidityChange('isPasswordValid', false);
+        }else if(value === formData.signupId){
+            handleMessageChange('password','비밀번호는 아이디와 동일할 수 없습니다.');
+            handleValidityChange('isPasswordValid', false);
+        } else {
+            handleMessageChange('password','');
+            handleValidityChange('isPasswordValid', true);
+        }
+    }
+
+    const validatePasswordConfirm = (value: string) => {
+        // 비밀번호 확인 유효성 검사 로직 / 결과에 따라 메시지 및 유효성 상태 업데이트
+        if (value.trim() === '') {
+            handleMessageChange('passwordConfirm','확인 비밀번호을 입력해주세요.');
+            handleValidityChange('isPasswordConfirmValid', false);
+        } else if(value !== formData.signupPassword){
+            handleMessageChange('passwordConfirm','비밀번호를 동일하게 입력해주세요');
+            handleValidityChange('isPasswordConfirmValid', false);
+        }else if(value === formData.signupPassword){
+            handleMessageChange('passwordConfirm', '');
+            handleValidityChange('isPasswordConfirmValid', true);
+        }
+    }
+    const validateName = (value: string) => {
+        // 이름 유효성 검사 로직 / 결과에 따라 메시지 및 유효성 상태 업데이트
+        if (value.trim() === '') {
+            handleMessageChange('name','이름을 입력해주세요.');
+            handleValidityChange('isNameValid', false);
+        } else if(spaceRegex.test(value)){
+            handleMessageChange('name','이름에는 띄어쓰기를 포함할 수 없습니다.')
+            handleValidityChange('isNameValid', false);
+        } else if(!nameRegex.test(value)){
+            handleMessageChange('name','이름은 완성된 한글 글자로 입력해야합니다.');
+            handleValidityChange('isNameValid', false);
+        } else if (value.trim().length < 2 || 5 < value.trim().length) {  
+            handleMessageChange('name','이름은 최소 2자에서 최대 5자로 입력해주세요.');
+            handleValidityChange('isNameValid', false);
+        } else {
+            handleMessageChange('name','');
+            handleValidityChange('isNameValid', true);
+        }
+    }
+                                                                                                                        
+    const validateEmail = (value: string) => {
+        // 이메일 유효성 검사 로직 / 결과에 따라 메시지 및 유효성 상태 업데이트
+        if(value.trim() === ''){
+            handleMessageChange('email','이메일을 입력해주세요.');
+            handleValidityChange('isEmailValid', false);
+        } else if(spaceRegex.test(value)){
+            handleMessageChange('email',' 이메일은 띄어쓰기를 포함할 수 없습니다.')
+            handleValidityChange('isEmailValid', false);
+        } else if(!emailRegex.test(value)){
+            handleMessageChange('email','이메일 형식이 유효하지 않습니다.');
+            handleValidityChange('isEmailValid', false);
+        } else{
+            handleMessageChange('email','');
+            handleValidityChange('isEmailValid', true);
+        }
+    }
+
+    const emailDuplicateCheck = async(signupEmail: string) => { // eamil 중복검사 
+        // email DB 중복 여부 검사
+        if(formValidity.isEmailValid){
+            await axios.get(`${import.meta.env.VITE_BACK_PORT}/member/emailCheck`, {
+                params: {
+                    memberEmail: signupEmail,
+                },
+            })
+            .then((response) => {
+                if(response.status === 200){
+                    console.log("이메일 중복체크 >> 사용가능한 이메일");
+                    handleMessageChange('email', '사용가능한 이메일입니다.')
+                    handleValidityChange('isEmailDuplicated', true);
+                }
+            })
+            .catch((error) => {
+                console.error(error.response.data);
+                console.log("이메일 중복체크 >> 이미 존재하는 이메일");
+                handleMessageChange('email','이미 존재하는 이메일입니다.')
+                handleValidityChange('isEmailDuplicated', false);
+            })
+        }
+    }
+    
+    const ClickCertBtn = async(signupEmail: string) => {
+        setShowCertCodeInput(true);
+        await axios.post(`${import.meta.env.VITE_BACK_PORT}/member/checkVerifyEmail`,{memberEmail: signupEmail})
+        .then((response) => {
+            // console.log("이메일인증 코드 >>> " + response.data.verificationCode);
+            // console.log("이메일인증 만료시간 >>> " + response.data.expiryTime);
+            // setEmailCertCode(response.data.verificationCode.toString());
+            console.log(response.data);
+        }).catch(() => {
+            console.log("이메일 인증 실패");
+            alert('이메일 인증 실패 > 관리자 문의 (임시 알림)');
+        })
+    };
+
+    const validateCertificationCode = async(value:string) => {
+
+        const trimValue = value.replace(/\s+/g, '');
+
+        // if(isBeforeGetCode()){
+        //     handleMessageChange('certificationCode','인증번호가 일치하지않습니다.');
+        //     handleValidityChange('isCertificationCode', false);
+        //     console.log("인증 코드 불일치");
+        //     return;
+        // }
+
+        await axios.post(`${import.meta.env.VITE_BACK_PORT}/member/checkAccountEmailVerification`,{
+            memberEmail: formData.signupEmail,
+            verificationCode: trimValue
+        })
+        .then((response) => {
+            console.log(response.data);
+            handleMessageChange('certificationCode', '인증이 완료되었습니다.');
+            handleValidityChange('isCertificationCode', true);
+            setShowExpiryTime(false);
+            setIsEnableCodeCertBtn(false);
+            setIsEnableCodeSendBtn(false);
+            setIsComplete(true);
+            console.log("인증 코드 일치");
+        })
+        .catch(() => {
+            handleMessageChange('certificationCode','인증번호가 일치하지않습니다.')
+            handleValidityChange('isCertificationCode', false);
+            console.log("인증 코드 불일치");
+        })
+    };
+        
+
+    // const isBeforeGetCode = () => {
+    //     return emailCertCode === '';
+    // }
+    
+  return (
+    <div className={styles.container}>
+        <h2 className={styles.title}>회원가입</h2>
+        <div className={styles.signupForm}>
+            <div className={styles.inputWrap}>
+                <div className={styles.centeredContent}>
+                    <TextField
+                        label="ID"
+                        type="text"
+                        autoComplete="off"
+                        variant="standard"
+                        disabled={isEnableInput}
+                        className={styles.signupId} 
+                        onChange={(e) => {
+                            handleInputChange('signupId', e.target.value);
+                            validateId(e.target.value);
+                        }}
+                        onBlur={() => {
+                            if (formValidity.isIdValid) {
+                                idDuplicateCheck(formData.signupId);
+                            }
+                        }}
+                    />
+                    <FontAwesomeIcon 
+                        icon={faCircleCheck} 
+                        className={`${styles.inputValueCheckIcon} ${formValidity.isIdValid && formValidity.isIdDuplicated ? styles.valid : styles.invalid}`}
+                    />
+                </div>
+                <p className={styles.message}>{messages.id}</p>
+            </div>
+            <div className={styles.inputWrap}>
+                <div className={styles.centeredContent}>
+                    <TextField
+                        label="Password"
+                        type="password"
+                        autoComplete="off"
+                        variant="standard"
+                        disabled={isEnableInput}
+                        className={styles.signupPw} 
+                        onChange={(e) => {handleInputChange('signupPassword', e.target.value); validatePassword(e.target.value);}}
+                    />
+                    <FontAwesomeIcon 
+                        icon={faCircleCheck} 
+                        className={`${styles.inputValueCheckIcon} ${formValidity.isPasswordValid ? styles.valid : styles.invalid}`}
+                    />
+                </div>
+                <p className={styles.message} >{messages.password}</p>
+            </div>
+            <div className={styles.inputWrap}>
+                <div className={styles.centeredContent}>
+                    <TextField
+                        label="Password Check"
+                        type="password"
+                        autoComplete="off"
+                        variant="standard"
+                        disabled={isEnableInput}
+                        className={styles.signupPwCheck} 
+                        onChange={(e) => {handleInputChange('signupPasswordCheck', e.target.value); validatePasswordConfirm(e.target.value);}}
+                    />
+                    <FontAwesomeIcon 
+                        icon={faCircleCheck} 
+                        className={`${styles.inputValueCheckIcon} ${formValidity.isPasswordConfirmValid ? styles.valid : styles.invalid}`}
+                    />
+                </div>
+                <p className={styles.message}>{messages.passwordConfirm}</p>
+            </div>
+            <div className={styles.inputWrap}>
+                <div className={styles.centeredContent}>
+                    <TextField
+                        label="Name"
+                        type="text"
+                        autoComplete="off"
+                        variant="standard"
+                        disabled={isEnableInput}
+                        className={styles.signupName}
+                        onChange={(e) => {handleInputChange('signupName', e.target.value); validateName(e.target.value);}}
+                    />
+                    <FontAwesomeIcon 
+                        icon={faCircleCheck} 
+                        className={`${styles.inputValueCheckIcon} ${formValidity.isNameValid ? styles.valid : styles.invalid}`}
+                    />
+                </div>
+                <p className={styles.message}>{messages.name}</p>
+            </div>
+            <div className={styles.inputWrap}>
+                <div className={styles.emailCenteredContent}>
+                    <TextField
+                        label="Email"
+                        type="text"
+                        autoComplete="off"
+                        variant="standard"
+                        disabled={isEnableInput}
+                        className={styles.signupEmail} 
+                        onChange={(e) => {
+                            handleInputChange('signupEmail', e.target.value); 
+                            validateEmail(e.target.value);
+                        }}
+                        onBlur={() => {
+                            if (formValidity.isEmailValid) {
+                                emailDuplicateCheck(formData.signupEmail);
+                            }
+                        }}
+                    />
+                    <FontAwesomeIcon 
+                        icon={faCircleCheck} 
+                        className={`${styles.inputValueCheckIcon} ${formValidity.isEmailValid && formValidity.isEmailDuplicated ? styles.valid : styles.invalid}`}
+                    />
+                    <button 
+                        className={styles.emailCertificationBtn} 
+                        disabled={!isAllValid || !isEnableCodeSendBtn || isComplete}
+                        onClick={() => {                            
+                            ClickCertBtn(formData.signupEmail);
+                            setCodeSendCount(()=>codeSendCount+1);
+                            setIsEnableCodeSendBtn(false);  
+                            handleStartTimer();
+                        }}
+                    >인증번호받기</button>
+                </div>
+                <p className={styles.message}>{messages.email}</p>
+            </div>
+
+            {showCertCodeInput && (
+                <div className={styles.inputWrap}>
+                    <div className={styles.emailCenteredContent}>
+                        <TextField
+                            label="Certification Code"
+                            type="text"
+                            autoComplete="off"
+                            variant="standard"
+                            disabled={isSingupValid()}
+                            className={styles.emailCertCode} 
+                            onChange={(e) => handleInputChange('certificationCode', e.target.value) }
+                        />
+                        <FontAwesomeIcon 
+                            icon={faCircleCheck} 
+                            className={`${styles.inputValueCheckIcon} ${formValidity.isCertificationCode ? styles.valid : styles.invalid}`}
+                        />
+                        <button 
+                            className={styles.emailCertificationBtn} 
+                            onClick={() => validateCertificationCode(formData.certificationCode)}
+                            disabled={!isEnableCodeCertBtn}
+                        >인증하기</button>
+                    </div>
+                    <p className={styles.message}>{messages.certificationCode}</p>
+
+                    {showExpiryTime && (
+                        <ExpiryTime 
+                            callCount={codeSendCount}
+                            onClose={handleCloseExpiryTime}
+                            enableSendBtn={() => setIsEnableCodeSendBtn(true)} />
+                    )}
+                </div>
+            )}
+            <div className={styles.loginLinkWrap}>
+                <Link to='/login' className={styles.loginLink}>이미 회원이신가요?</Link>
+            </div>
+            <button 
+                className={styles.signupBtn} 
+                onClick={() => handleSignup(formData)}
+                disabled={!isSingupValid()}
+            >회원가입</button>
+        </div>
+    </div>
+  )
+}
+
+export default Signup

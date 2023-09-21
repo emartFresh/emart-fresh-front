@@ -1,0 +1,65 @@
+.orderMain {
+  width: 65vw;
+  display: flex;
+  flex-direction: column;
+  margin-left: 14rem;
+}
+
+.orderWrapper {
+  display: flex;
+  flex-direction: row;
+  width: 65vw;
+  align-items: center;
+  margin-bottom: 10px;
+  padding: 8px;
+  border: 1px solid grey;
+  /* background-color: white; */
+  border-radius: 16px;
+  /* min-width: 60rem; */
+}
+
+.imageContainer {
+  display: flex;
+  align-items: center;
+}
+
+.image {
+  width: 50px;
+  height: 50px;
+  border-radius: 25px;
+}
+
+.orderContainer {
+  width: 100%;
+  margin-left: 8px;
+  display: grid;
+  grid-template-columns: 1fr 2fr 2fr 1fr 1fr;
+  align-items: center;
+}
+
+.ordernameText {
+  color: black;
+  font-size: 16px;
+  /* font-weight: bold; */
+}
+
+.orderText {
+  color: black;
+  font-size: 16px;
+}
+
+.orderDetailBtn {
+  /* margin: 2em 0 4.5em 0; */
+  width: 8em;
+  /* padding: 0.8em 0; */
+  background-color: #f9bb00;
+}
+.tossface {
+  font-family: Tossface;
+}
+.paginationList {
+  display: flex;
+  justify-content: center;
+  margin-top: 1.25rem;
+  margin-bottom: 1.25rem;
+}

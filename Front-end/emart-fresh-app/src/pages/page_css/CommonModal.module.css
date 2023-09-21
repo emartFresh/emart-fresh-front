@@ -1,0 +1,116 @@
+.modal {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 500px;
+    height: 450px;
+    margin: 0 auto;
+    z-index: 1000; /* 레이어 순서 조정 */
+  }
+  
+  .modaloverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5); /* 불투명한 배경 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999; /* 다른 요소 위에 나타나도록 설정 */
+  }
+  
+  /* 비밀번호 변경 부분 CSS */
+  .container {
+    /* height: 42em; */
+    width: 100%;
+  }
+  
+  .title {
+    margin-top: 2em;
+    margin-bottom: 1.8em;
+    font-size: 1.8em;
+  }
+  
+  .modifyPwForm {
+    margin: 0 auto;
+    width: 28em;
+  }
+  
+  .inputWrap {
+    /* display: flex; */
+    margin: 0 auto;
+    position: relative;
+    /* border: 1px solid #ccc;
+    margin-bottom: 10px;
+    border-radius: 4px; */
+  }
+  
+  .modifyPw,
+  .modifyNewPw,
+  .modifyNewPwCheck,
+  .modifyEmail {
+    width: 26em;
+    padding: 0.8em 1.8em;
+    font-size: 1em;
+    border-radius: 0.5em;
+    margin: 0 auto;
+    /* border: 0.1em solid rgba(0, 0, 0, 0.8); */
+    border: #ccc;
+    outline: 0;
+  }
+  .message {
+    display: flex;
+    color: red;
+    font-size: 0.8em;
+    width: 35em;
+    margin: 0 auto;
+    margin-top: 0.2em;
+    margin-bottom: 1em;
+  }
+  .messageEmailValid {
+    /* display: flex; */
+    color: blue;
+    font-size: 0.8em;
+    width: 35em;
+    margin: 0 auto;
+    margin-top: 0.2em;
+    margin-bottom: 1em;
+  }
+  .messageEmailInvalid {
+    /* display: flex; */
+    color: red;
+    font-size: 0.8em;
+    width: 35em;
+    margin: 0 auto;
+    margin-top: 0.2em;
+    margin-bottom: 1em;
+  }
+  .modifyControlBtn {
+    display: flex;
+    margin-bottom: 15px;
+  }
+  
+  .inputEmail,
+  .inputPw {
+    flex: 1;
+  
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .modifyBtn {
+    margin: 2em 0 4.5em 0;
+    width: 26em;
+    padding: 0.8em 0;
+    background-color: #f9bb00;
+  }
+  .modifyBackBtn {
+    margin: 2em 0 4.5em 0;
+    width: 26em;
+    padding: 0.8em 0;
+    background-color: #d3d1d1;
+  }

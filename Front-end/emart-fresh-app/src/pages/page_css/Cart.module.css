@@ -1,0 +1,92 @@
+/* @media screen and (max-width:767px) {
+    .cartCalculate {
+      margin-top: 0 !important;
+    }
+} */
+
+.title{
+    margin-top: 2rem;
+}
+
+.test{
+    width: 75vw;
+    margin: 0 auto;
+    padding: 3rem 0;
+}
+
+.allCheck, .allCheckBox{
+    float: left;
+    margin: 0;
+}
+
+.cartContainer{
+    display: flex;
+    min-height: 40rem;
+    width: 85%;
+    margin: 4rem auto;
+    margin-top: 0;
+}
+
+.cartProducts{
+    width: 70%;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    margin-right: 1rem;
+    z-index: 0;
+}
+
+.cartCalculate{
+    width: 30%;
+    height: 34rem;
+    border: 0.05rem solid rgba(0, 0, 0, 0.6);
+    border-radius: 0.5rem;
+    position: sticky;
+    top: 8rem;
+    /* transition: transform 0.5s ease; /* 스무스한 움직임을 위한 트랜지션 설정 */
+    /* transform: translateY(0); 초기 위치 설정 */ 
+    z-index: 1;
+    background-color: white;
+}
+
+.cartProduct{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 14rem;
+    border: 0.5px solid rgba(0, 0, 0, 0.6);
+    border-radius: 1rem;
+    padding: 1rem;
+}
+
+.cartProduct span{
+    position: absolute; 
+    top: 1rem; 
+    left: 1rem;
+}
+
+.quantityControl{
+    width: 100%;
+    display: gird;
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.quantity{
+    width: 3rem;
+    padding: 0 0.5rem 0 1rem;
+    text-align: right;
+}
+
+.storeName{
+    padding: 1em 0;
+}
+
+.payBtn{
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    padding: 1rem 0;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}

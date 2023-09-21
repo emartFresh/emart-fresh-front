@@ -1,0 +1,103 @@
+.mypageMain {
+  width: 65vw;
+  display: flex;
+  flex-direction: column;
+  margin-left: 14rem;
+}
+
+.mypageWrapper1 {
+  padding: 2rem;
+  display: flex;
+
+  width: 70em;
+  /* background-color: blue; */
+}
+/* 우선, 첫번째로 적용해놓자. */
+.container {
+  min-height: 32em;
+  width: 100%;
+  background-color: #f8f8f8;
+  text-align: center;
+}
+
+.container2 {
+  /* position: relative; */
+  display: flex;
+  flex-direction: column;
+  background-color: rgb(240, 233, 233);
+  /* grid-template-rows: 1fr 1fr; */
+  /* justify-items: center; */
+  align-items: center;
+  width: 90vw;
+  height: 30vh;
+  justify-content: center;
+}
+.contentDiv {
+  background-color: rgb(216, 217, 211);
+  display: grid;
+  grid-template-rows: 1;
+  font-size: 1.2rem;
+}
+/* 메뉴바 */
+.sideMenuBar {
+  position: absolute;
+  left: 0;
+  margin-top: 10px;
+  height: 50vh;
+
+  min-width: 180px;
+  padding: auto;
+  /* font-size: 1.2em; */
+  font-size: 16px;
+}
+
+.mypagecontent {
+  border: 1px solid balck;
+  background-color: white;
+}
+.mypageTitle {
+  margin-bottom: 10px;
+}
+
+/* span {
+  display: flex;
+  margin: 15px;
+}
+
+input[type="text"] {
+  flex: 1;
+
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+input[readonly] {
+  background-color: #f0f0f0;
+} */
+.myinfo {
+  font-size: 1.2em;
+  padding: 2rem;
+  display: grid;
+  grid-template-columns: 0.5fr 0.5fr;
+  grid-gap: 0.5rem;
+  /* text-align: center; */
+  align-items: center;
+}
+.mypagemenubar {
+  font-size: 1.2em;
+
+  margin-top: 8px;
+  margin-left: 0;
+}
+.btn {
+  /* color: #ccc; */
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: gray;
+  cursor: pointer;
+}

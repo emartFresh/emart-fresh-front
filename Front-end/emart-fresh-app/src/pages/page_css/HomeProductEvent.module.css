@@ -1,0 +1,97 @@
+.productEventContainer{
+    display: flex;
+    margin: 6em auto;
+    width: 75%;
+    height: 25em;
+}
+.eventType{
+    width: 15%;
+    margin-right: 2em;
+}
+.eventProducts{
+    width: 85%;
+}
+.calendarIcon{
+    font-size: 3em;
+    margin-bottom: 0.5em;
+}
+.eventTypeBtn {
+    display: block;
+    background-color: white;
+    color: rgb(30, 30, 30);
+    width: 12em;
+    border-radius: 0.7em;
+    border-bottom-right-radius: 0;
+    margin-top: 1.5em;
+    padding: 0.7em 1.6em 0.7em 0;
+}
+.eventTypeBtn:hover {
+    width: 110%;
+    background-color: #f9bb00;
+    color: white;
+    transition: 0.3s;
+}
+.selectedTypeBtn{
+    width: 110%;
+    background-color: #f9bb00;
+    color: white;
+}
+
+.eventTypeIcon{
+    margin-right: 0.5em;
+}
+
+ .productWrapper {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 14em;
+    height: 18em;
+    background-color: white;
+    border-radius: 1em;
+    margin: 1em;
+    border: 1px solid rgb(200, 200, 200);
+}
+.productImg {
+    transform: translate(50, 50);
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    background-color: white;
+}
+.productImgWrapper {
+    width: 10em;
+    height: 10em;
+    padding: 1em;
+    overflow: hidden;
+}
+.productImg:hover{
+    transform: scale(1.2);
+    transition-duration: 0.5s;
+    cursor: pointer;
+}
+.titleWrapper {
+    padding: 1em;
+    cursor: pointer;
+}
+.priceInfo {
+    font-size: 1em;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    color: #f95a00;
+}
+  
+.itemLine {
+    display: block;
+    width: 100%;
+    height: 0.5px;
+    border-top: 0.5px solid #ebebeb;
+}
+  
+.showItemSection {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
+}

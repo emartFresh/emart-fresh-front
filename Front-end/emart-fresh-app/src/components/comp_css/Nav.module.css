@@ -1,0 +1,57 @@
+
+.nav {
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-around;
+  position: sticky;
+  width: 75vw;
+  top: 0;
+  padding: 1.3em 0;
+  background-color: #ffffff;
+  z-index: 2;
+}
+.home {
+  border-bottom: none; /* 홈 페이지에서 border-bottom 제거 */
+}
+
+.subNav {
+  display: flex;
+  justify-content: right;
+  padding: 0.8em 0;
+  width: 85vw;
+}
+
+.subNav span {
+  margin: 0;
+  font-size: 0.5em;
+  margin-bottom: 0.3em;
+}
+
+/* .nav span {
+  margin-right: 20px;
+} */
+
+.nav a {
+  text-decoration: none;
+  color: #333; /* 원하는 텍스트 색상을 지정하세요 */
+  font-weight: bold;
+  transition: color 0.3s ease-in-out;
+}
+
+.contentDiv {
+  display: flex;
+  justify-content: space-between;
+  width: 40%;
+  font-size: 1.2em;
+}
+
+.subContentDiv {
+  display: flex;
+  justify-content: space-between;
+  width: 16%;
+  font-size: 1.7em;
+}
+
+.nav a:hover {
+  color: #f9bb00; /* 마우스 호버 시 색상 변경 */
+}

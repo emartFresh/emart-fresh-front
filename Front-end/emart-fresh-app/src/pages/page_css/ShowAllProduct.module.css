@@ -1,0 +1,8 @@
+.showAllSection {
+  background-color: #ededed;
+  padding: 2em;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+}
