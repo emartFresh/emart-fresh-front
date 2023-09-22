@@ -8,10 +8,24 @@ import { loginState } from '../../atoms';
 import { Checkbox } from '@mui/material';
 import { useState } from 'react';
 import { sendAxiosRequest } from '../../utils/userUtils';
+import cartNull from '../../assets/images/cartNull.png';
+import cartCalcNull from '../../assets/images/cartCalcNull.png';
+import RemoveIcon from '@mui/icons-material/Remove';
+import AddIcon from '@mui/icons-material/Add';
 
 interface responseData {
   data: CartData[];
 }
+
+
+
+// 수정 : 수량 변경 시  0이하/ 99이상 안됨.
+// 전체 선택 
+// 총 금액 계산 
+// 쿠폰 적용 
+// cartCalculate : div내부 스크롤 -> overflow scroll
+// unmount : 수량 저장 
+// 제품 삭제 기능 
 
 const Cart = () => {
   const [loginToken, setLoginToken] = useRecoilState<JwtToken>(loginState);
@@ -34,13 +48,13 @@ const Cart = () => {
   }
 
   const handleInputQuantity = (value:string, cartProductId:number) => {
-    cartItemList.map((item) => {
+    setCartItemList( cartItemList.map((item) => {
       if (item.cartProductId === cartProductId) {
-        return { ...item, cartProductQuantity: parseInt(value)}
+        return {...item, cartProductQuantity: parseInt(value)}
       } else {
         return item
       }
-    })
+    }));
   }
 
   const handleCheckboxChange = (cartProductId:number) => {
@@ -80,25 +94,31 @@ const Cart = () => {
         if (translateY + sidebarHeight < contentHeight) {
             cartCalculate.style.transform = `translateY(${translateY}px)`;
         }
-    }
-    return () => {
-      // 컴포넌트가 언마운트될 때 이벤트 리스너 정리
-      window.removeEventListener('scroll', () => {});
-    };
-  })
-  }, []);
+      }
+    })
+  return () => {
+    console.log('장바구니 업데이터 API');
+    // 컴포넌트가 언마운트될 때 이벤트 리스너 정리
+
+    window.removeEventListener('scroll', () => {});
+  };
+}, []);
 
 
   return (
     <div>
       <h3 className={styles.title} onClick={()=>{console.log(cartItemList)}}>장바구니</h3>
-      <div className={styles.test}>
+      <div className={cartItemList.length === 0 ? styles.hiddenWrap : styles.allCheckWrap}>
         <Checkbox className={styles.allCheckBox}/>
         <p className={styles.allCheck}>전체 선택</p>
       </div>
       <div className={styles.cartContainer}>
-        <div className={styles.cartProducts}>          
+        <div className={cartItemList.length === 0 ? styles.cartNullWrap : styles.cartProducts}>          
           {
+            cartItemList.length === 0 
+            ? 
+            <img src={cartNull} alt="" className={styles.cartNull}/> 
+            :
             cartItemList.map((item) => {
               return(
                 <div className={styles.cartProduct} key={item.cartProductId}>
@@ -112,11 +132,11 @@ const Cart = () => {
                   <p>{item.productTitle}</p>
                   <p>{item.priceNumber}</p>
                   <p className={styles.quantityControl}>
-                    <input type="button" value='-' id='minusQuantity' onClick={(e) => handleQuantity(e, item.cartProductId)}/>
-                    <input type="text" value={item.cartProductQuantity} className={styles.quantity} onChange={(e) => handleInputQuantity(e.target.value, item.cartProductId)}/>
-                    {/* 수정 : input 입력값으로도 변경될 수 있게 할건지 */}
-                    <input type="button" value='+' id='plusQuantity'  onClick={(e) => handleQuantity(e, item.cartProductId)}/>
-                    {/* <input type="button" value='확인'/> */}
+                    <input type="button" value='-' id='minusQuantity' className={styles.quantityBtn} onClick={(e) => handleQuantity(e, item.cartProductId)}/>
+                    {/* <RemoveIcon/> */}
+                    <input type="text" value={item.cartProductQuantity} className={styles.quantityInput} onChange={(e) => handleInputQuantity(e.target.value, item.cartProductId)}/>
+                    <input type="button" value='+' id='plusQuantity' className={styles.quantityBtn} onClick={(e) => handleQuantity(e, item.cartProductId)}/>
+                    {/* <AddIcon/> */}
                   </p>
                </div>
               )
@@ -128,7 +148,7 @@ const Cart = () => {
           {
             selectedItems.length === 0 && (
               <div>
-                <p>결제할 물품이 없습니다.</p>
+                <img src={cartCalcNull} alt="" className={styles.cartCalcNull}/>
               </div>
             )
           }
@@ -143,7 +163,7 @@ const Cart = () => {
                   const selectedItem = cartItemList.find((item) => item.cartProductId === selectedItemId);
                   return (
                     <li key={selectedItemId}>
-                      {selectedItem.productTitle} - 수량: {selectedItem.cartProductQuantity} - 가격: {selectedItem.priceNumber}
+                      {selectedItem.productTitle}  / 가격: {selectedItem.priceNumber} / 수량: {selectedItem.cartProductQuantity}
                     </li>
                   );
                 })}

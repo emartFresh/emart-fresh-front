@@ -8,7 +8,7 @@
     margin-top: 2rem;
 }
 
-.test{
+.allCheckWrap{
     width: 75vw;
     margin: 0 auto;
     padding: 3rem 0;
@@ -17,6 +17,10 @@
 .allCheck, .allCheckBox{
     float: left;
     margin: 0;
+}
+
+.hiddenWrap{
+    display: none;
 }
 
 .cartContainer{
@@ -34,6 +38,25 @@
     gap: 1rem;
     margin-right: 1rem;
     z-index: 0;
+}
+
+.cartNullWrap{
+    width: 70%;
+    margin-right: 1rem;
+    z-index: 0;
+    padding-top: 6em;
+}
+
+.cartNull{
+    width: 50%;
+    height: 36vh;
+    margin: 0 auto;
+}
+
+.cartCalcNull{
+    width: 100%;
+    height: 98%;
+    margin-top: 0.7rem;
 }
 
 .cartCalculate{
@@ -66,15 +89,21 @@
 }
 
 .quantityControl{
-    width: 100%;
-    display: gird;
-    grid-template-columns: repeat(4, 1fr);
+    width: 70%;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1.5fr 1fr;
 }
 
-.quantity{
-    width: 3rem;
-    padding: 0 0.5rem 0 1rem;
+.quantityInput{
+    width: 100%;
+    padding: 0 1rem;
     text-align: right;
+}
+
+.quantityBtn{
+    background-color: white;
+    border: 0;
 }
 
 .storeName{

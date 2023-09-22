@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import styles from "./comp_css/nav.module.css";
+import styles from "./comp_css/Nav.module.css";
 
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
