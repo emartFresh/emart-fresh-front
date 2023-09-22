@@ -25,6 +25,7 @@ import Cart from "./pages/cartPage/Cart";
 import { RecoilRoot } from "recoil";
 
 import ProductDetail from "./pages/productDetailPage/ProductDetail";
+import EventList from "./pages/eventPage/EventList";
 const queryClient = new QueryClient();
 
 function App() {
@@ -36,22 +37,22 @@ function App() {
           <div className="mainContent">
             <Routes>
               <Route path="/" element={<Home />} />
+              <Route path="/:coupon" element={<Home />} />
+              {/* 쿠폰받으러가기 추가사항 */}
               <Route path="/show" element={<Show />} />
-              <Route path="/list" element={<MyPageMain />}>
-                <Route index element={<MyPage />} />
-                <Route path="/list/myreview" element={<MyReview />} />
-                <Route path="/list/mycoupon" element={<MyCoupon />} />
-              </Route>
+
               <Route path="/mypageMain" element={<MyPageMain />}>
                 <Route index element={<MyPage />} />
                 <Route path="/mypageMain/myorder" element={<MyOrder />} />
                 <Route path="/mypageMain/myreview" element={<MyReview />} />
                 <Route path="/mypageMain/mycoupon" element={<MyCoupon />} />
+
                 {/* <Route
                   path="/mypageMain/EventRegi"
                   element={<EventRegi />}
                 ></Route> */}
               </Route>
+              <Route path="/eventlist" element={<EventList />}></Route>
 
               <Route path="/order-request" element={<OrderRequest />}></Route>
               <Route

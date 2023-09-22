@@ -5,54 +5,8 @@ import styles from "../page_css/MyReview.module.css";
 import icon_warning from "../../assets/images/icon_warning.svg";
 import Pagination from "@mui/material/Pagination";
 
-import Rating, { IconContainerProps } from "@mui/material/Rating";
-import { styled } from "@mui/material/styles";
-import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDissatisfied";
-import SentimentDissatisfiedIcon from "@mui/icons-material/SentimentDissatisfied";
-import SentimentSatisfiedIcon from "@mui/icons-material/SentimentSatisfied";
-import SentimentSatisfiedAltIcon from "@mui/icons-material/SentimentSatisfiedAltOutlined";
-import SentimentVerySatisfiedIcon from "@mui/icons-material/SentimentVerySatisfied";
 import ReviewCard from "./ReviewCard";
-
-const StyledRating = styled(Rating)(({ theme }) => ({
-  "& .MuiRating-iconEmpty .MuiSvgIcon-root": {
-    color: theme.palette.action.disabled,
-  },
-}));
-
-const reviewScoreIcons: {
-  [key: number]: {
-    icon: React.ReactElement;
-    label: string;
-  };
-} = {
-  1: {
-    icon: <SentimentVeryDissatisfiedIcon color="error" />,
-    label: "Very Dissatisfied",
-  },
-  2: {
-    icon: <SentimentDissatisfiedIcon color="error" />,
-    label: "Dissatisfied",
-  },
-  3: {
-    icon: <SentimentSatisfiedIcon color="warning" />,
-    label: "Neutral",
-  },
-  4: {
-    icon: <SentimentSatisfiedAltIcon color="success" />,
-    label: "Satisfied",
-  },
-  5: {
-    icon: <SentimentVerySatisfiedIcon color="success" />,
-    label: "Very Satisfied",
-  },
-};
-
-function IconContainer(props: IconContainerProps) {
-  const { value, ...other } = props;
-  const customIcon = reviewScoreIcons[value] || reviewScoreIcons[0];
-  return <span {...other}>{customIcon.icon}</span>;
-}
+import { Rating } from "@mui/material";
 
 // 리뷰 정보
 interface ReviewData {
@@ -73,10 +27,12 @@ export default function MyReview() {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
 
+  // 나의 주문 내역 리스트
   useEffect(() => {
     async function fetchReviews() {
       try {
-        const response = await axios.post(`${import.meta.env.VITE_BACK_PORT}/review/review-list`,
+        const response = await axios.post(
+          `${import.meta.env.VITE_BACK_PORT}/review/review-list`,
           null,
           {
             params: {
@@ -107,16 +63,36 @@ export default function MyReview() {
 
     fetchReviews();
   }, [memberId, currentPage]);
+  // 나의 주문 내역 삭제
+  async function deleteReview(reviewId: number | undefined) {
+    try {
+      const response = await axios.post(
+        "http://localhost:8080/review/review-delete",
+        null,
+        {
+          params: {
+            reviewId: reviewId,
+          },
+        }
+      );
+      console.log("API Response:", response.data);
+      const ReviewDeleteData = response.data;
 
-  // const deleteReview = async (reviewId: number) => {
-  //   try {
-  //     await axios.delete(`http://localhost:8080/review/delete-review/${reviewId}`);
-  //
-  //     setReviews((prevReviews) => prevReviews.filter((review) => review.reviewId !== reviewId));
-  //   } catch (error) {
-  //     console.error("Error deleting review:", error);
-  //     alert("리뷰 삭제 중 오류가 발생했습니다.");
-  //   }
+      if (response.data === "삭제") {
+        console.log("Review Data:", ReviewDeleteData);
+        setReviews((prevReviews) =>
+          prevReviews.filter((review) => review.reviewId !== reviewId)
+        );
+        alert("삭제!");
+      } else {
+        alert("삭제실패.");
+      }
+    } catch (error) {
+      console.error("Error fetching reviews:", error);
+      alert("삭제 중 오류가 발생했습니다.");
+    }
+  }
+
   const handlePageChange = (newPage: number) => {
     setCurrentPage(newPage);
   };
@@ -147,15 +123,12 @@ export default function MyReview() {
       ) : (
         reviews.map((review) => (
           <div key={review.reviewId}>
-            <h6 style={{ textAlign: "left", marginLeft: "310px" }}>
-              {/* <StyledRating
-                name="highlight-selected-only"
-                value={review.reviewScore}
-                IconContainerComponent={IconContainer}
-                getLabelText={(value: number) => reviewScoreIcons[value].label}
-                highlightSelectedOnly
-              /> */}
-            </h6>
+            <h6 style={{ textAlign: "left", marginLeft: "310px" }}></h6>
+            <Rating
+              name={`rating-${review.reviewId}`}
+              value={review.reviewScore}
+              readOnly
+            />
             <div className={styles.reviewWrapper}>
               <div className={styles.reviewContentContainer}>
                 <div className={styles.imageContainer}>
@@ -178,7 +151,7 @@ export default function MyReview() {
                 <div>
                   <button
                     className={styles.reviewDetailBtn}
-                    /* onClick={() => deleteReview(review.reviewId)} */
+                    onClick={(e) => deleteReview(review.reviewId)}
                   >
                     삭제
                   </button>

@@ -13,7 +13,6 @@ export default function CommonModalBasicEmail({
   setIsChange,
 }: ModifyEmailProps) {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  // const [memberEmail, setMemberEmail] = useState<string>("");
 
   const openModal = () => {
     setIsModalOpen(true);

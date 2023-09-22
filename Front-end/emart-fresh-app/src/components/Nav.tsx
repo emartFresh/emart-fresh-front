@@ -59,7 +59,7 @@ export default function Nav() {
             </IconButton>
           </span>
           <span>
-            <Link to="/list">MyPage</Link>
+            <Link to="/mypageMain">MyPage</Link>
           </span>
         </div>
       </nav>
@@ -80,6 +80,9 @@ export default function Nav() {
           </span>
           <span>
             <Link to="/storeproduct">가게</Link>
+          </span>
+          <span>
+            <Link to="/eventlist">이벤트</Link>
           </span>
         </div>
         <div></div>

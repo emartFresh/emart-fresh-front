@@ -1,5 +1,5 @@
 import { Outlet } from "react-router-dom";
-import MyPageMenuBar from "./MyPageMenuBar";
+import MyPageMenuBar from "../myPageMenuBar/MyPageMenuBar";
 
 export default function MyPageMain() {
   return (

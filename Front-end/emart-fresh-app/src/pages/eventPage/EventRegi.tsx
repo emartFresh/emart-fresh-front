@@ -62,6 +62,7 @@ export default function EventRegi({ onSubmit }: EventFormProps) {
       eventEndDate,
     } = formData;
     console.log(formData);
+
     //
     const eventData: EventData = {
       eventTitle,
@@ -79,7 +80,8 @@ export default function EventRegi({ onSubmit }: EventFormProps) {
     // formDataToSend.append("event_end_date", eventEndDate || "");
 
     try {
-      const response = await axios.post(`${import.meta.env.VITE_BACK_PORT}/event/event-update`,
+      const response = await axios.post(
+        `${import.meta.env.VITE_BACK_PORT}/event/event-update`,
         formDataToSend,
         {
           headers: {
