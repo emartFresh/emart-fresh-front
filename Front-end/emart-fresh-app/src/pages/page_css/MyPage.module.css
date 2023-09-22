@@ -2,42 +2,20 @@
   width: 65vw;
   display: flex;
   flex-direction: column;
+  margin-top: 4rem;
   margin-left: 14rem;
+  background-color: whitesmoke;
+
+  border-radius: 15px;
+  border: 1px solid whitesmoke;
+  /* border: 1px solid #f9bb00; */
+
+  /* box-shadow: "20px 20px 20px yellow"; 가로거리 세로거리  */
+  /* box-shadow: inset 10px 100px 15px yellowgreen; */
+
+  box-shadow: 0px 0px 10px 0.5px #f9bb00;
 }
 
-.mypageWrapper1 {
-  padding: 2rem;
-  display: flex;
-
-  width: 70em;
-  /* background-color: blue; */
-}
-/* 우선, 첫번째로 적용해놓자. */
-.container {
-  min-height: 32em;
-  width: 100%;
-  background-color: #f8f8f8;
-  text-align: center;
-}
-
-.container2 {
-  /* position: relative; */
-  display: flex;
-  flex-direction: column;
-  background-color: rgb(240, 233, 233);
-  /* grid-template-rows: 1fr 1fr; */
-  /* justify-items: center; */
-  align-items: center;
-  width: 90vw;
-  height: 30vh;
-  justify-content: center;
-}
-.contentDiv {
-  background-color: rgb(216, 217, 211);
-  display: grid;
-  grid-template-rows: 1;
-  font-size: 1.2rem;
-}
 /* 메뉴바 */
 .sideMenuBar {
   position: absolute;
@@ -59,45 +37,101 @@
   margin-bottom: 10px;
 }
 
-/* span {
-  display: flex;
-  margin: 15px;
-}
-
-input[type="text"] {
-  flex: 1;
-
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
-input[readonly] {
-  background-color: #f0f0f0;
-} */
 .myinfo {
   font-size: 1.2em;
+  /* margin: 2rem; */
   padding: 2rem;
   display: grid;
-  grid-template-columns: 0.5fr 0.5fr;
-  grid-gap: 0.5rem;
-  /* text-align: center; */
+  /* grid-template-columns: 0.5fr 0.5fr; */
+  justify-content: center;
+  grid-gap: 2rem;
+  text-align: left;
   align-items: center;
+}
+.myTitleId {
+  grid-column-start: 1;
+  grid-column-end: 2;
+  grid-row-start: 1;
+  grid-row-end: 2;
+}
+
+.myTitleIdValue {
+  grid-column-start: 2;
+  grid-column-end: 3;
+  grid-row-start: 1;
+  grid-row-end: 2;
+}
+
+.myTitleName {
+  grid-column-start: 1;
+  grid-column-end: 2;
+  grid-row-start: 2;
+  grid-row-end: 3;
+}
+
+.myTitleNameValue {
+  grid-column-start: 2;
+  grid-column-end: 3;
+  grid-row-start: 2;
+  grid-row-end: 3;
+}
+
+.myTitleEmail {
+  grid-column-start: 1;
+  grid-column-end: 2;
+  grid-row-start: 3;
+  grid-row-end: 4;
+}
+
+.myTitleEmailValue {
+  display: flex;
+  align-items: center;
+  grid-column-start: 2;
+  grid-column-end: 3;
+  grid-row-start: 3;
+  grid-row-end: 4;
+}
+
+.editEmail {
+  grid-column-start: 1;
+  grid-column-end: 2;
+  grid-row-start: 4;
+  grid-row-end: 5;
+}
+
+.editPassword {
+  grid-column-start: 2;
+  grid-column-end: 3;
+  grid-row-start: 4;
+  grid-row-end: 5;
+}
+
+.mypageTitleEmailValueBtn {
+  grid-column-start: 3;
+  grid-column-end: 4;
+  grid-row-start: 3;
+  grid-row-end: 4;
 }
 .mypagemenubar {
   font-size: 1.2em;
-
   margin-top: 8px;
   margin-left: 0;
 }
-.btn {
-  /* color: #ccc; */
+
+.modifyBtn {
+  /* width: 10px; */
+  /* padding: 0.2vw; */
+  margin: 0;
+  background-color: #f9bb00;
   border-radius: 8px;
   border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: gray;
+  font-size: 1rem;
   cursor: pointer;
 }
+
+/* .modifyBtn {
+  margin: 2em 0 4.5em 0;
+  width: 7em;
+  padding: 0.8em 0;
+  background-color: #f9bb00;
+} */

@@ -7,11 +7,11 @@ import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import Button from "@mui/material/Button";
 import ReorderIcon from "@mui/icons-material/Reorder";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+
 import ProductionQuantityLimitsIcon from "@mui/icons-material/ProductionQuantityLimits";
-import ReviewsIcon from "@mui/icons-material/Reviews";
+
 import MailIcon from "@mui/icons-material/Mail";
-import LocalConvenienceStoreIcon from "@mui/icons-material/LocalConvenienceStore";
+
 import EventIcon from "@mui/icons-material/Event";
 
 // npm install @mui/material @emotion/react @emotion/styled
@@ -32,35 +32,36 @@ const MyPageMenuBar = () => {
   const [open, setOpen] = useState(false);
 
   const [memberId, setMemberId] =
-    useState("admin"); /* owner1 => auth=1(점주) */
+    useState("user123"); /* owner1 => auth=1(점주) */
   const [memberAuth, setMemberAuth] = useState<0 | 1 | 2>(0);
 
   const toggleDrawer = (isOpen: boolean) => () => {
     setOpen(isOpen);
   };
 
-  useEffect(() => {
-    async function getMyinfo() {
-      try {
-        const response = await axios.post(`${import.meta.env.VITE_BACK_PORT}/mypage/mypage-info`,
-          null,
-          {
-            params: {
-              memberId: memberId,
-            },
-          }
-        );
+  // useEffect(() => {
+  //   async function getMyinfo() {
+  //     try {
+  //       const response = await axios.post(
+  //         `${import.meta.env.VITE_BACK_PORT}/mypage/mypage-info`,
+  //         null,
+  //         {
+  //           params: {
+  //             memberId: memberId,
+  //           },
+  //         }
+  //       );
 
-        console.log(response.data);
+  //       console.log(response.data);
 
-        setMemberId(response.data.memberId);
-        setMemberAuth(response.data.memberAuth);
-      } catch (error) {
-        alert(error);
-      }
-    }
-    getMyinfo();
-  }, []);
+  //       setMemberId(response.data.memberId);
+  //       setMemberAuth(response.data.memberAuth);
+  //     } catch (error) {
+  //       alert(error);
+  //     }
+  //   }
+  //   getMyinfo();
+  // }, []);
   return (
     <div className={styles.sideMenuBar}>
       <div>
@@ -79,28 +80,28 @@ const MyPageMenuBar = () => {
             onClick={toggleDrawer(false)}
             onKeyDown={toggleDrawer(false)}
           >
-            <h2>마이페이지</h2>
             <div className={styles.mypagemenubar}>
-              <AccountCircleIcon />
+              <ReorderIcon />
               <Link to="/mypageMain">개인정보관리</Link>
             </div>
             <div className={styles.mypagemenubar}>
-              <ProductionQuantityLimitsIcon />
+              <ReorderIcon />
               <Link to="/mypageMain/myorder">나의주문내역</Link>
             </div>
             <div className={styles.mypagemenubar}>
-              <ReviewsIcon />
+              <ReorderIcon />
               <Link to="/mypageMain/myreview">내가작성한리뷰</Link>
             </div>
             <div className={styles.mypagemenubar}>
-              <MailIcon />
+              <ReorderIcon />
               <Link to="/mypageMain/mycoupon">나의쿠폰조회</Link>
             </div>
+            <hr />
             <hr />
             {/* memberAuth==0일 때, 나오는 컴포넌트  */}
             {memberAuth === 0 && (
               <div className={styles.mypagemenubar}>
-                <LocalConvenienceStoreIcon />
+                <ReorderIcon />
                 <Link to="/mypageMain/MypageApplyManager">점포점주신청</Link>
               </div>
             )}
@@ -108,14 +109,16 @@ const MyPageMenuBar = () => {
             {/* memberAuth==1(점주)일 때, 나오는 컴포넌트  */}
             {memberAuth === 1 && (
               <div className={styles.mypagemenubar}>
-                <MemberAuthSelect />
+                <ReorderIcon />
+                <MemberAuthManager />
               </div>
             )}
 
             {/* memberAuth==2(관리자)일 때, 나오는 컴포넌트  */}
             {memberAuth === 2 && (
               <div className={styles.mypagemenubar}>
-                <MemberAuthSelect2 />
+                <ReorderIcon />
+                <MemberAuthAdmin />
               </div>
             )}
           </Box>
@@ -127,7 +130,7 @@ const MyPageMenuBar = () => {
 export default MyPageMenuBar;
 
 // /* memberAuth==1일 때, 나오는 컴포넌트  */
-function MemberAuthSelect() {
+function MemberAuthManager() {
   return (
     <div>
       <div className={styles.mypagemenubar}>
@@ -145,7 +148,7 @@ function MemberAuthSelect() {
 }
 
 // /* memberAuth==2일 때, 나오는 컴포넌트  */
-function MemberAuthSelect2() {
+function MemberAuthAdmin() {
   return (
     <div>
       <div className={styles.mypagemenubar}>

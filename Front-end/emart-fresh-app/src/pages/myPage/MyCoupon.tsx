@@ -5,6 +5,7 @@ import styles from "../page_css/MyCoupon.module.css";
 import CouponCard from "./CouponCard";
 import axios from "axios";
 import icon_warning from "../../assets/images/icon_warning.svg";
+import { Link } from "react-router-dom";
 
 // 쿠폰 정보
 interface CouponData {
@@ -25,43 +26,42 @@ export default function MyCoupon() {
   const [totalPages, setTotalPages] = useState(0);
   const [totalElements, setTotalElements] = useState(0);
 
-  useEffect(() => {
-    async function fetchCoupons() {
-      console.log("coupon axios");
+  // useEffect(() => {
+  //   async function fetchCoupons() {
+  //     try {
+  //       const response = await axios.post(
+  //         `${import.meta.env.VITE_BACK_PORT}/coupon/coupon-list`,
+  //         null,
+  //         {
+  //           params: {
+  //             memberId: memberId,
+  //             page: currentPage,
+  //             size: pageSize,
+  //           },
+  //         }
+  //       );
+  //       console.log("API Response:", response.data.content);
+  //       const couponData = response.data.content;
 
-      try {
-        const response = await axios.post(`${import.meta.env.VITE_BACK_PORT}/coupon/coupon-list`,
-          null,
-          {
-            params: {
-              memberId: memberId,
-              page: currentPage,
-              size: pageSize,
-            },
-          }
-        );
-        console.log("API Response:", response.data.content);
-        const couponData = response.data.content;
+  //       if (response.data.totalPages) {
+  //         setTotalPages(response.data.totalPages);
+  //       }
+  //       if (couponData && couponData.length > 0) {
+  //         console.log("Coupon Data:", couponData);
+  //         setCoupons(couponData);
+  //       }
 
-        if (response.data.totalPages) {
-          setTotalPages(response.data.totalPages);
-        }
-        if (couponData && couponData.length > 0) {
-          console.log("Coupon Data:", couponData);
-          setCoupons(couponData);
-        }
+  //       if (response.data.totalElements) {
+  //         setTotalElements(response.data.totalElements);
+  //       }
+  //     } catch (error) {
+  //       console.error("Error fetching coupons:", error);
+  //       alert("쿠폰 조회 중 오류가 발생했습니다.");
+  //     }
+  //   }
 
-        if (response.data.totalElements) {
-          setTotalElements(response.data.totalElements);
-        }
-      } catch (error) {
-        console.error("Error fetching coupons:", error);
-        alert("쿠폰 조회 중 오류가 발생했습니다.");
-      }
-    }
-
-    fetchCoupons();
-  }, [memberId, currentPage]);
+  //   fetchCoupons();
+  // }, [memberId, currentPage]);
 
   const handlePageChange = (newPage: number) => {
     setCurrentPage(newPage);
@@ -71,8 +71,6 @@ export default function MyCoupon() {
   for (let i = 0; i < totalPages; i++) {
     pages.push(i + 1);
   }
-
-  console.log("페이지 배열 > " + pages);
 
   return (
     <div>
@@ -89,9 +87,17 @@ export default function MyCoupon() {
             <div style={{ alignItems: "center" }}>
               <img
                 src={icon_warning}
-                style={{ width: "1.2rem", marginBottom: "1vw" }}
+                style={{ width: "1.2rem", marginBottom: "0.6rem" }}
               />
-              <span style={{ fontSize: "1.2rem" }}>등록된 쿠폰이 없습니다</span>
+              <span style={{ fontSize: "1.2rem" }}>
+                고객님이 보유하신 쿠폰이 없습니다
+              </span>
+              <div>다양한 쿠폰과 혜택을 받아보세요.</div>
+              <div>
+                <Link to="/mycoupon" className={styles.couponBtn}>
+                  쿠폰받으러가기
+                </Link>
+              </div>
             </div>
           ) : (
             coupons.map((coupon) => (

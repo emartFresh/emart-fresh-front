@@ -4,14 +4,14 @@ import styles from "./comp_css/nav.module.css";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
 import { useState } from "react";
-import Badge, { BadgeProps } from '@mui/material/Badge';
-import { styled } from '@mui/material/styles';
-import IconButton from '@mui/material/IconButton';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import { useRecoilState } from 'recoil';
+import Badge, { BadgeProps } from "@mui/material/Badge";
+import { styled } from "@mui/material/styles";
+import IconButton from "@mui/material/IconButton";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import { useRecoilState } from "recoil";
 import { loginState } from "../atoms";
 
-export default function Nav() { 
+export default function Nav() {
   const navigate = useNavigate();
   const location = useLocation();
   const isHomePage = location.pathname === "/"; // 홈 페이지 여부 확인
@@ -19,18 +19,18 @@ export default function Nav() {
 
   const logout = () => {
     setLoginToken({
-      accessToken: '',
-      refreshToken: '',
+      accessToken: "",
+      refreshToken: "",
     });
-    alert('로그아웃 완료! (임시 알림)')
-  }
+    alert("로그아웃 완료! (임시 알림)");
+  };
 
   const StyledBadge = styled(Badge)<BadgeProps>(({ theme }) => ({
-    '& .MuiBadge-badge': {
+    "& .MuiBadge-badge": {
       right: -3,
       top: 13,
       border: `2px solid ${theme.palette.background.paper}`,
-      padding: '0 4px',
+      padding: "0 4px",
     },
   }));
 
@@ -39,21 +39,27 @@ export default function Nav() {
       <nav className={styles.subNav}>
         <div className={styles.subContentDiv}>
           <span>
-            {loginToken.refreshToken !== '' ? <Link to="/" onClick={logout}>Logout</Link> : <Link to="/login">Login</Link>}
+            {loginToken.refreshToken !== "" ? (
+              <Link to="/" onClick={logout}>
+                Logout
+              </Link>
+            ) : (
+              <Link to="/login">Login</Link>
+            )}
           </span>
           <span>
             <Link to="/show">show</Link>
           </span>
           <span>
             {/* <Link to="/search">Search</Link> */}
-              <IconButton aria-label="cart" onClick={() => navigate('/cart')}>
-                <StyledBadge badgeContent={4} color="secondary">
-                  <ShoppingCartIcon />
-                </StyledBadge>
-              </IconButton>
+            <IconButton aria-label="cart" onClick={() => navigate("/cart")}>
+              <StyledBadge badgeContent={4} color="secondary">
+                <ShoppingCartIcon />
+              </StyledBadge>
+            </IconButton>
           </span>
           <span>
-            <Link to="/list">MyPage</Link>
+            <Link to="/mypageMain">MyPage</Link>
           </span>
         </div>
       </nav>
@@ -75,10 +81,13 @@ export default function Nav() {
           <span>
             <Link to="/storeproduct">가게</Link>
           </span>
+          <span>
+            <Link to="/eventlist">이벤트</Link>
+          </span>
         </div>
         <div></div>
       </nav>
-      <hr/>
+      <hr />
     </>
   );
 }
