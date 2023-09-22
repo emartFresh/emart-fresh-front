@@ -109,9 +109,7 @@ export default function MyReview() {
         <span className={styles.tossface}>😀</span>
         {memberId}님 반갑습니다.
       </h3>
-      <div>
-        <ReviewCard />
-      </div>
+      <div>{/* <ReviewCard /> */}</div>
       {reviews === undefined || (reviews && reviews.length === 0) ? (
         <div style={{ alignItems: "center" }}>
           <img

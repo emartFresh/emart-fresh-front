@@ -2,7 +2,7 @@
 import Card from "./Card";
 
 interface ReviewCardProps {
-  totalElements: number;
+  totalElements?: number;
 }
 export default function ReviewCard({ totalElements }: ReviewCardProps) {
   return (
