@@ -9,11 +9,10 @@ import { loginState } from "../../atoms";
 import styles from "../page_css/ProductDetail.module.css";
 import ProductReview from "./ProductReview";
 import { sendAxiosGetRequest } from "../../utils/userUtils";
-
 export default function ProductDetail() {
   const [productData, setProductData] = useState<ProductData>();
   const [quantity, setQuantity] = useState<number>(1);
-  const [loginToken, setLoginToken] = useRecoilState<any>(loginState);
+  const [loginToken, setLoginToken] = useRecoilState<JwtToken>(loginState);
   console.log("로그인 토큰", loginToken);
 
   const location = useLocation();
@@ -24,7 +23,9 @@ export default function ProductDetail() {
   useEffect(() => {
     axios
       .get(
-        `${import.meta.env.VITE_BACK_PORT}/product/product-detail?productId=${productId}`
+        `${
+          import.meta.env.VITE_BACK_PORT
+        }/product/product-detail?productId=${productId}`
       )
       .then((res) => {
         console.log(res.data);
