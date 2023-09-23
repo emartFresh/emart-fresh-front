@@ -53,16 +53,20 @@
   transition: 0.1s;
   color: #f9bb00;
 }
-.eventItem:hover .eventImage {
+.eventItem:hover .eventImage,
+.eventItem:hover .endedEventImage {
   border-color: #f9bb00;
   transform: scale(1.05);
 }
+
 .eventText {
-  font-size: 3vh;
+  font-size: 2vh;
+  font-weight: 600;
   text-align: center;
 }
 
-.eventImage {
+.eventImage,
+.endedEventImage {
   width: 100%;
   height: 40vh;
   margin-bottom: 2vh;
@@ -71,9 +75,12 @@
   border-radius: 2.5rem;
   cursor: pointer;
 }
+.endedEventImage {
+  filter: grayscale(100%);
+}
 
-.eventImage:hover {
-  transition: 0.1s;
+.eventImage:hover,
+.endedEventImage:hover {
   border-color: #f9bb00;
   transform: scale(1.05);
 }

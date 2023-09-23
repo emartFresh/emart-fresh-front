@@ -8,42 +8,42 @@ const EventEnded = () => {
     <div>
       <div className={styles.eventContainer}>
         <div className={styles.eventItem}>
-          <img src={image3} alt="예시" className={styles.eventImage} />
+          <img src={image3} alt="예시" className={styles.endedEventImage} />
           <div>
             <div className={styles.eventText}>2023.09.21 ~ 2023.10.08</div>
             <div className={styles.eventText}>"9월 냉장커피 빙고 이벤트"</div>
           </div>
         </div>
         <div className={styles.eventItem}>
-          <img src={image3} alt="예시" className={styles.eventImage} />
+          <img src={image3} alt="예시" className={styles.endedEventImage} />
           <div>
             <div className={styles.eventText}>2023.09.21 ~ 2023.10.08</div>
             <div className={styles.eventText}>"9월 냉장커피 빙고 이벤트"</div>
           </div>
         </div>
         <div className={styles.eventItem}>
-          <img src={image3} alt="예시" className={styles.eventImage} />
+          <img src={image3} alt="예시" className={styles.endedEventImage} />
           <div>
             <div className={styles.eventText}>2023.09.21 ~ 2023.10.08</div>
             <div className={styles.eventText}>"9월 냉장커피 빙고 이벤트"</div>
           </div>
         </div>
         <div className={styles.eventItem}>
-          <img src={image1} alt="예시" className={styles.eventImage} />
+          <img src={image1} alt="예시" className={styles.endedEventImage} />
           <div>
             <div className={styles.eventText}>2023.09.21 ~ 2023.10.08</div>
             <div className={styles.eventText}>"9월 냉장커피 빙고 이벤트"</div>
           </div>
         </div>
         <div className={styles.eventItem}>
-          <img src={image1} alt="예시" className={styles.eventImage} />
+          <img src={image1} alt="예시" className={styles.endedEventImage} />
           <div>
             <div className={styles.eventText}>2023.09.21 ~ 2023.10.08</div>
             <div className={styles.eventText}>"9월 냉장커피 빙고 이벤트"</div>
           </div>
         </div>
         <div className={styles.eventItem}>
-          <img src={image1} alt="예시" className={styles.eventImage} />
+          <img src={image1} alt="예시" className={styles.endedEventImage} />
           <div>
             <div className={styles.eventText}>2023.09.21 ~ 2023.10.08</div>
             <div className={styles.eventText}>"9월 냉장커피 빙고 이벤트"</div>
