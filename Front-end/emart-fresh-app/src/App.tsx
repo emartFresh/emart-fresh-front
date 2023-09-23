@@ -26,6 +26,7 @@ import { RecoilRoot } from "recoil";
 
 import ProductDetail from "./pages/productDetailPage/ProductDetail";
 import EventList from "./pages/eventPage/EventList";
+
 const queryClient = new QueryClient();
 
 function App() {
