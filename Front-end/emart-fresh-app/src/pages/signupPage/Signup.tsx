@@ -81,18 +81,16 @@ const Signup = () => {
     const nameRegex = /^[가-힣]+$/;
     const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
 
-    // 인증시작 -> 폼 입력창막기 / 인증번호 입력창 보이기 / 유효시간 보이기
-    const [emailInputDisabled, setEmailInputDisabled] = useState<boolean>(false);
     const [showCertCodeInput, setShowCertCodeInput] = useState<boolean>(false);
     const [emailCertCode, setEmailCertCode] = useState<string>('');
     const [showExpiryTime, setShowExpiryTime] = useState<boolean>(false);
 
-    const [isEnableInput, setIsEnableInput]= useState<boolean>(false);
-    const [isEnableCodeSendBtn, setIsEnableCodeSendBtn] = useState<boolean>(false);
-    const [isEnableCodeCertBtn, setIsEnableCodeCertBtn] = useState<boolean>(false);
+    const [enableInput, setEnableInput]= useState<boolean>(false);
+    const [enableCodeSendBtn, setEnableCodeSendBtn] = useState<boolean>(false);
+    const [enableCodeCertBtn, setEnableCodeCertBtn] = useState<boolean>(false);
     const [codeSendCount, setCodeSendCount] = useState<number>(0);
     const [isAllValid, setIsAllValid] = useState<boolean>(false);    
-    const [isComplete, setIsComplete] = useState<boolean>(false); //인증성공여부 default:false
+    const [isComplete, setIsComplete] = useState<boolean>(false);
 
     useEffect(()=> {
         isFormValid();
@@ -101,9 +99,9 @@ const Signup = () => {
     const isFormValid = () => {
         const copyObj = {...formValidity};
         delete copyObj.isCertificationCode;
-        const isEnable = Object.values(copyObj).every(Boolean);
-        setIsEnableCodeSendBtn(isEnable);
-        setIsAllValid(isEnable);
+        const enable = Object.values(copyObj).every(Boolean);
+        setEnableCodeSendBtn(enable);
+        setIsAllValid(enable);
     };
 
     const isSingupValid = () => {
@@ -114,19 +112,18 @@ const Signup = () => {
     const handleStartTimer = () => {
       setShowExpiryTime(true);
       handleMessageChange('certificationCode','');
-      setIsEnableInput(true);
-      setIsEnableCodeCertBtn(true);
+      setEnableInput(true);
+      setEnableCodeCertBtn(true);
     };
   
     const handleCloseExpiryTime = () => {
       setShowExpiryTime(false);
       handleMessageChange('certificationCode','인증 시간이 만료되었습니다. 다시 시도해주세요.');
       setEmailCertCode('');
-      setIsEnableCodeCertBtn(false);
+      setEnableCodeCertBtn(false);
     };
     
     const handleSignup = async(signupData:FormState) => {
-        // 모든 항목 유효성 검사 true (인증번호까지 일치할 때) -> 회원가입 처리 로직
         if(isSingupValid()){
             await axios.post(`${import.meta.env.VITE_BACK_PORT}/member/add`, {
                 memberId: signupData.signupId,
@@ -168,7 +165,6 @@ const Signup = () => {
     }
 
     const validateId = (value: string) => {
-        // 아이디 유효성 검사 로직 / 결과에 따라 메시지 및 유효성 상태 업데이트
         if (value.trim() === '') { 
             handleMessageChange('id', '아이디를 입력해주세요.');
             handleValidityChange('isIdValid', false);
@@ -184,8 +180,7 @@ const Signup = () => {
         }
     }
 
-    const idDuplicateCheck = async(signupId: string) => { 
-        // 아이디 DB 중복 여부 검사
+    const idDuplicateCheck = async(signupId: string) => {
         if(formValidity.isIdValid){
             await axios.get(`${import.meta.env.VITE_BACK_PORT}/member/idCheck`, {
                 params: {
@@ -207,8 +202,7 @@ const Signup = () => {
         }
     }
 
-    const validatePassword = (value: string) => { 
-        // 비밀번호 유효성 검사 로직 / 결과에 따라 메시지 및 유효성 상태 업데이트
+    const validatePassword = (value: string) => {
         if (value.trim() === '') {
             handleMessageChange('password','비밀번호를 입력해주세요.');
             handleValidityChange('isPasswordValid', false);
@@ -228,7 +222,6 @@ const Signup = () => {
     }
 
     const validatePasswordConfirm = (value: string) => {
-        // 비밀번호 확인 유효성 검사 로직 / 결과에 따라 메시지 및 유효성 상태 업데이트
         if (value.trim() === '') {
             handleMessageChange('passwordConfirm','확인 비밀번호을 입력해주세요.');
             handleValidityChange('isPasswordConfirmValid', false);
@@ -241,7 +234,6 @@ const Signup = () => {
         }
     }
     const validateName = (value: string) => {
-        // 이름 유효성 검사 로직 / 결과에 따라 메시지 및 유효성 상태 업데이트
         if (value.trim() === '') {
             handleMessageChange('name','이름을 입력해주세요.');
             handleValidityChange('isNameValid', false);
@@ -261,7 +253,6 @@ const Signup = () => {
     }
                                                                                                                         
     const validateEmail = (value: string) => {
-        // 이메일 유효성 검사 로직 / 결과에 따라 메시지 및 유효성 상태 업데이트
         if(value.trim() === ''){
             handleMessageChange('email','이메일을 입력해주세요.');
             handleValidityChange('isEmailValid', false);
@@ -277,8 +268,7 @@ const Signup = () => {
         }
     }
 
-    const emailDuplicateCheck = async(signupEmail: string) => { // eamil 중복검사 
-        // email DB 중복 여부 검사
+    const emailDuplicateCheck = async(signupEmail: string) => {
         if(formValidity.isEmailValid){
             await axios.get(`${import.meta.env.VITE_BACK_PORT}/member/emailCheck`, {
                 params: {
@@ -301,12 +291,10 @@ const Signup = () => {
         }
     }
     
-    const ClickCertBtn = async(signupEmail: string) => {
+    const clickCertBtn = async(signupEmail: string) => {
         setShowCertCodeInput(true);
         await axios.post(`${import.meta.env.VITE_BACK_PORT}/member/checkVerifyEmail`,{memberEmail: signupEmail})
         .then((response) => {
-            // console.log("이메일인증 코드 >>> " + response.data.verificationCode);
-            // console.log("이메일인증 만료시간 >>> " + response.data.expiryTime);
             // setEmailCertCode(response.data.verificationCode.toString());
             console.log(response.data);
         }).catch(() => {
@@ -335,8 +323,8 @@ const Signup = () => {
             handleMessageChange('certificationCode', '인증이 완료되었습니다.');
             handleValidityChange('isCertificationCode', true);
             setShowExpiryTime(false);
-            setIsEnableCodeCertBtn(false);
-            setIsEnableCodeSendBtn(false);
+            setEnableCodeCertBtn(false);
+            setEnableCodeSendBtn(false);
             setIsComplete(true);
             console.log("인증 코드 일치");
         })
@@ -363,7 +351,7 @@ const Signup = () => {
                         type="text"
                         autoComplete="off"
                         variant="standard"
-                        disabled={isEnableInput}
+                        disabled={enableInput}
                         className={styles.signupId} 
                         onChange={(e) => {
                             handleInputChange('signupId', e.target.value);
@@ -389,7 +377,7 @@ const Signup = () => {
                         type="password"
                         autoComplete="off"
                         variant="standard"
-                        disabled={isEnableInput}
+                        disabled={enableInput}
                         className={styles.signupPw} 
                         onChange={(e) => {handleInputChange('signupPassword', e.target.value); validatePassword(e.target.value);}}
                     />
@@ -407,7 +395,7 @@ const Signup = () => {
                         type="password"
                         autoComplete="off"
                         variant="standard"
-                        disabled={isEnableInput}
+                        disabled={enableInput}
                         className={styles.signupPwCheck} 
                         onChange={(e) => {handleInputChange('signupPasswordCheck', e.target.value); validatePasswordConfirm(e.target.value);}}
                     />
@@ -425,7 +413,7 @@ const Signup = () => {
                         type="text"
                         autoComplete="off"
                         variant="standard"
-                        disabled={isEnableInput}
+                        disabled={enableInput}
                         className={styles.signupName}
                         onChange={(e) => {handleInputChange('signupName', e.target.value); validateName(e.target.value);}}
                     />
@@ -443,7 +431,7 @@ const Signup = () => {
                         type="text"
                         autoComplete="off"
                         variant="standard"
-                        disabled={isEnableInput}
+                        disabled={enableInput}
                         className={styles.signupEmail} 
                         onChange={(e) => {
                             handleInputChange('signupEmail', e.target.value); 
@@ -461,11 +449,11 @@ const Signup = () => {
                     />
                     <button 
                         className={styles.emailCertificationBtn} 
-                        disabled={!isAllValid || !isEnableCodeSendBtn || isComplete}
+                        disabled={!isAllValid || !enableCodeSendBtn || isComplete}
                         onClick={() => {                            
-                            ClickCertBtn(formData.signupEmail);
+                            clickCertBtn(formData.signupEmail);
                             setCodeSendCount(()=>codeSendCount+1);
-                            setIsEnableCodeSendBtn(false);  
+                            setEnableCodeSendBtn(false);  
                             handleStartTimer();
                         }}
                     >인증번호받기</button>
@@ -492,7 +480,7 @@ const Signup = () => {
                         <button 
                             className={styles.emailCertificationBtn} 
                             onClick={() => validateCertificationCode(formData.certificationCode)}
-                            disabled={!isEnableCodeCertBtn}
+                            disabled={!enableCodeCertBtn}
                         >인증하기</button>
                     </div>
                     <p className={styles.message}>{messages.certificationCode}</p>
@@ -501,7 +489,7 @@ const Signup = () => {
                         <ExpiryTime 
                             callCount={codeSendCount}
                             onClose={handleCloseExpiryTime}
-                            enableSendBtn={() => setIsEnableCodeSendBtn(true)} />
+                            enableSendBtn={() => setEnableCodeSendBtn(true)} />
                     )}
                 </div>
             )}

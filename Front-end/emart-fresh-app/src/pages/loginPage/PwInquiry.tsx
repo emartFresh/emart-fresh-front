@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import axios from 'axios'
 import styled from 'styled-components';
+import ExpiryTime from '../signupPage/ExpiryTime';
 
 const InquiryFormWrap = styled.div`
     width: 100%;
@@ -11,7 +12,6 @@ const InquiryFormWrap = styled.div`
     align-items: center; /* 수평 가운데 정렬 */
     justify-content: center; /* 수직 가운데 정렬 */
 `;
-
 
 const InquiryInput = styled.input`
     margin: 0 auto;
@@ -63,24 +63,44 @@ const InquiryButton = styled.button`
     font-size: 0.9em;
 `;
 
+interface FormState {
+    inquiryId: string;
+    inquiryName: string;
+    inquiryEmail: string;
+    inquiryCertCode: string;
+}
+
 const PwInquiry = () => {
-    const [inquiryId, setInquiryId] = useState<string>('');
-    const [inquiryName, setInquiryName] = useState<string>('');
-    const [inquiryEmail, setInquiryEmail] = useState<string>('');
-    const [inquiryCode, setInquiryCode] = useState<string>('');
-    const [showCodeInput, setShowCodeInput] = useState<boolean>(false);
-    const [emailCode ,setEmailCode] = useState<string>('');
-    // showUpdatePw
+    const initialPwInquiryForm: FormState = {
+        inquiryId : '',
+        inquiryName : '',
+        inquiryEmail : '',
+        inquiryCertCode : '',
+    }
+
+    const [formData, setFormData] = useState<FormState>(initialPwInquiryForm);
+    const [enableCodeInput, setEnableCodeInput] = useState<boolean>(false);
+    const [enableCodeSendBtn, setEnableCodeSendBtn] = useState<boolean>(true);
+    const [enable, setEnableBtn] = useState<boolean>(false); 
+    const [codeSendCount, setCodeSendCount] = useState<number>(0);
+    const [showTimer, setShowTimer] = useState<boolean>(false);
     const [open, setOpen] = useState<boolean>(false);
 
-    const findUserInfo = async() => {
-        setShowCodeInput(true);
+
+    const handleInputChange = (fieldName: keyof FormState, value: string) => {
+        setFormData({
+            ...formData,
+            [fieldName]: value,
+        });
         
+    };
+
+    const findUserInfo = async() => {        
         await axios.post(`${import.meta.env.VITE_BACK_PORT}/member/findPw`,
         {
-            memberEmail: inquiryEmail,
-            memberId: inquiryId,
-            memberName: inquiryName
+            memberEmail: formData.inquiryEmail,
+            memberId: formData.inquiryId,
+            memberName: formData.inquiryName,
         })
         .then((response) => {
             console.log("일치하는 회원정보가 있음! >>> " + response.data);
@@ -93,15 +113,30 @@ const PwInquiry = () => {
     const checkCertCode = async() => {
         await axios.post(`${import.meta.env.VITE_BACK_PORT}/member/checkVerificationCode`,
         {
-            memberId: inquiryId,
-            verificationCode: inquiryCode
+            memberId: formData.inquiryId,
+            verificationCode: formData.inquiryCertCode,
         })
         .then((response) => {
-            console.log("인증코드 일치 >>> " + response.data);            
+            console.log("인증코드 일치 >>> " + response.data);
+            setEnableCodeInput(false);
+            setEnableCodeSendBtn(false);
+            setEnableBtn(false);
+            setShowTimer(false);
         })
         .catch(() => {
             console.log("인증코드 일치하지 않음!!! ");
         })
+    }
+
+
+    const handleStartTimer = () => {
+        setShowTimer(true);
+        setEnableCodeSendBtn(false);
+        setEnableCodeInput(true);
+    }
+
+    const handleCloseTimer = () => {
+        setShowTimer(false);
     }
 
     // TODO : 인증번호 전송 버튼 누르면 -> 인풋 다 막기 -> 코드 인풋 활성화
@@ -113,29 +148,40 @@ const PwInquiry = () => {
                 type="text"
                 name="inquiryId"
                 placeholder="아이디를 입력해주세요"
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setInquiryId(e.target.value)}
+                maxLength={12}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleInputChange('inquiryId', e.target.value)}
             />
             <InquiryInput
                 type="text"
                 name="inquiryName"
                 placeholder="이름을 입력해주세요"
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setInquiryName(e.target.value)}
+                maxLength={5}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleInputChange('inquiryName', e.target.value)}
             />
             <EmailInquiryInput
                 type="text"
                 name="inquiryEmail"
                 placeholder="이메일을 입력해주세요"
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setInquiryEmail(e.target.value)}
+                maxLength={30}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleInputChange('inquiryEmail', e.target.value)}
             />
-            <CertificationBtn onClick={findUserInfo}>인증번호 전송</CertificationBtn>
+            <CertificationBtn disabled={!enableCodeSendBtn} onClick={() => {findUserInfo(), handleStartTimer()}}>인증번호 전송</CertificationBtn>
 
             <CertCodeInput 
                 type="text"
                 placeholder="인증번호를 입력해주세요"
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setInquiryCode(e.target.value)}
+                maxLength={6}
+                disabled={!enableCodeInput}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleInputChange('inquiryCertCode', e.target.value)}
             />
-            <CertificationBtn onClick={checkCertCode}>인증번호 확인</CertificationBtn>
-
+            <CertificationBtn onClick={checkCertCode} disabled={!enableCodeInput}>인증번호 확인</CertificationBtn>
+            {showTimer && (
+            <ExpiryTime 
+                onClose={handleCloseTimer}
+                enableSendBtn={() => setEnableCodeSendBtn(true)} 
+                callCount={codeSendCount}
+            />
+            )}
             <InquiryButton onClick={() => setOpen(true)}>비밀번호 재설정</InquiryButton>
         </InquiryFormWrap>
     );
