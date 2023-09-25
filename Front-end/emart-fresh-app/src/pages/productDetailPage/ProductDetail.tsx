@@ -1,14 +1,10 @@
 import axios from "axios";
-import { AxiosError } from "axios";
 
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { loginState } from "../../atoms";
-import {
-  GetUserAllInfo,
-  SendLoginPageIfNotLogin,
-} from "../../utils/LoginUtils";
+import { GetUserAllInfo } from "../../utils/LoginUtils";
 import { sendAxiosPostRequest } from "../../utils/userUtils";
 
 import styles from "../page_css/ProductDetail.module.css";
@@ -77,6 +73,7 @@ export default function ProductDetail() {
       }
     );
   };
+
   const handleQuantityDown = () => {
     if (quantity > 1) {
       const newQuantity = quantity - 1;

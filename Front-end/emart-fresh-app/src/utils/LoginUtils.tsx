@@ -16,7 +16,7 @@ export function SendLoginPageIfNotLogin() {
   }
 }
 
-interface MemberInfo {
+export interface MemberInfo {
   exp: number;
   iat: number;
   memberAuth: number;

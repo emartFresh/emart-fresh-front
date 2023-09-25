@@ -1,0 +1,17 @@
+.paymentContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+
+.couponItemContainer {
+  display: flex;
+  flex-direction: row;
+  padding: 0.5rem 1rem 0.5rem 1rem;
+}
+
+.couponItemContainer:hover {
+  background-color: #e1e1e1;
+}
