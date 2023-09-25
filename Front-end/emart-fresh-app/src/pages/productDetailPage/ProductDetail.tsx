@@ -5,10 +5,30 @@ import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { loginState } from "../../atoms";
+import {
+  GetUserAllInfo,
+  SendLoginPageIfNotLogin,
+} from "../../utils/LoginUtils";
+import { sendAxiosPostRequest } from "../../utils/userUtils";
 
 import styles from "../page_css/ProductDetail.module.css";
 import ProductReview from "./ProductReview";
 import { sendAxiosGetRequest } from "../../utils/userUtils";
+/*
+public class AddToCartDto {
+	int storeId;
+	String productName;
+	int requestQuantity;
+}
+
+*/
+
+interface AddToCartDto {
+  storeId: number;
+  productName: string;
+  requestQuantity: number;
+}
+
 export default function ProductDetail() {
   const [productData, setProductData] = useState<ProductData>();
   const [quantity, setQuantity] = useState<number>(1);
@@ -20,6 +40,7 @@ export default function ProductDetail() {
   const productId = queryParams.get("product-id");
   const storeId: string | null = queryParams.get("store-id");
 
+  console.log("유저인포", GetUserAllInfo());
   useEffect(() => {
     axios
       .get(
@@ -43,7 +64,6 @@ export default function ProductDetail() {
       loginToken,
       setLoginToken
     );
-    console.log("완료 후 토큰", loginToken);
   };
 
   const handleTest2 = async () => {
@@ -56,7 +76,6 @@ export default function ProductDetail() {
         age: "27",
       }
     );
-    console.log("완료 후 토큰", loginToken);
   };
   const handleQuantityDown = () => {
     if (quantity > 1) {
@@ -73,9 +92,18 @@ export default function ProductDetail() {
   };
 
   const handleCartInsert = () => {
-    //수정 : 로그인 안 되어있으면 리다이렉트
-    //axios.post();//수정 : 장바구니 담기 구현(jwt기반 인증)
+    const data: AddToCartDto = {
+      storeId: Number(storeId),
+      productName: productData.productTitle,
+      requestQuantity: quantity,
+    };
+
+    const url = `${import.meta.env.VITE_BACK_PORT}/cart/addToCart`;
+    sendAxiosPostRequest(url, loginToken, setLoginToken, data).then((res) => {
+      console.log("응답 완료", res);
+    });
   };
+
   return (
     <div className={styles.productDetailContainer}>
       <div className={styles.itemContainer}>
@@ -104,7 +132,11 @@ export default function ProductDetail() {
             <button onClick={handleQuantityUp}>+</button>
           </div>
 
-          <button onClick={handleCartInsert}>장바구니 담기</button>
+          {GetUserAllInfo() ? (
+            <button onClick={handleCartInsert}>장바구니 담기</button>
+          ) : (
+            <button disabled>장바구니 담기</button>
+          )}
         </div>
       )}
       {productId && productData?.productTitle && (
