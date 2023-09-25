@@ -147,7 +147,6 @@ const Signup = () => {
             ...formData,
             [fieldName]: value,
         });
-        
     };
 
     const handleMessageChange = (fieldName: keyof Messages, value: string) => {
@@ -445,7 +444,7 @@ const Signup = () => {
                     />
                     <FontAwesomeIcon 
                         icon={faCircleCheck} 
-                        className={`${styles.inputValueCheckIcon} ${formValidity.isEmailValid && formValidity.isEmailDuplicated ? styles.valid : styles.invalid}`}
+                        className={`${styles.inputValueCheckIcon} ${styles.emailValueCheckIcon} ${formValidity.isEmailValid && formValidity.isEmailDuplicated ? styles.valid : styles.invalid}`}
                     />
                     <button 
                         className={styles.emailCertificationBtn} 
@@ -475,7 +474,7 @@ const Signup = () => {
                         />
                         <FontAwesomeIcon 
                             icon={faCircleCheck} 
-                            className={`${styles.inputValueCheckIcon} ${formValidity.isCertificationCode ? styles.valid : styles.invalid}`}
+                            className={`${styles.inputValueCheckIcon} ${styles.emailValueCheckIcon} ${formValidity.isCertificationCode ? styles.valid : styles.invalid}`}
                         />
                         <button 
                             className={styles.emailCertificationBtn} 

@@ -64,15 +64,21 @@ const InquiryButton = styled.button`
 `;
 
 interface FormState {
-    inquiryId: string;
     inquiryName: string;
     inquiryEmail: string;
     inquiryCertCode: string;
 }
 
-const PwInquiry = () => {
+interface PwInquiryProps {
+    setPwResetting: React.Dispatch<React.SetStateAction<boolean>>;
+    pwInquiryId?: string;
+    setPwInquiryId: React.Dispatch<React.SetStateAction<string>>;
+  }
+
+
+const PwInquiry = ({ setPwResetting, pwInquiryId, setPwInquiryId }: PwInquiryProps) => {
+
     const initialPwInquiryForm: FormState = {
-        inquiryId : '',
         inquiryName : '',
         inquiryEmail : '',
         inquiryCertCode : '',
@@ -81,10 +87,10 @@ const PwInquiry = () => {
     const [formData, setFormData] = useState<FormState>(initialPwInquiryForm);
     const [enableCodeInput, setEnableCodeInput] = useState<boolean>(false);
     const [enableCodeSendBtn, setEnableCodeSendBtn] = useState<boolean>(true);
-    const [enable, setEnableBtn] = useState<boolean>(false); 
+    const [enableResettingBtn, setEnableResettingBtn] = useState<boolean>(false); 
     const [codeSendCount, setCodeSendCount] = useState<number>(0);
     const [showTimer, setShowTimer] = useState<boolean>(false);
-    const [open, setOpen] = useState<boolean>(false);
+    const [completeCert, setCompleteCert] = useState<boolean>(false);
 
 
     const handleInputChange = (fieldName: keyof FormState, value: string) => {
@@ -99,35 +105,37 @@ const PwInquiry = () => {
         await axios.post(`${import.meta.env.VITE_BACK_PORT}/member/findPw`,
         {
             memberEmail: formData.inquiryEmail,
-            memberId: formData.inquiryId,
+            memberId: pwInquiryId,
             memberName: formData.inquiryName,
         })
         .then((response) => {
             console.log("일치하는 회원정보가 있음! >>> " + response.data);
         }).catch(() => {
             console.log("일치하는 회원정보가 없습니다.");
+            alert('일치하는 회원 정보가 없음! (임시 알림)');
         })
     };
-
 
     const checkCertCode = async() => {
         await axios.post(`${import.meta.env.VITE_BACK_PORT}/member/checkVerificationCode`,
         {
-            memberId: formData.inquiryId,
+            memberId: pwInquiryId,
             verificationCode: formData.inquiryCertCode,
         })
         .then((response) => {
             console.log("인증코드 일치 >>> " + response.data);
             setEnableCodeInput(false);
             setEnableCodeSendBtn(false);
-            setEnableBtn(false);
+            setEnableResettingBtn(true);
             setShowTimer(false);
+            setCompleteCert(true);
+            alert('인증번호가 일치합니다. (임시 알림)');
         })
         .catch(() => {
             console.log("인증코드 일치하지 않음!!! ");
+            alert('인증번호가 일치하지 않습니다. (임시 알림)');
         })
     }
-
 
     const handleStartTimer = () => {
         setShowTimer(true);
@@ -139,9 +147,6 @@ const PwInquiry = () => {
         setShowTimer(false);
     }
 
-    // TODO : 인증번호 전송 버튼 누르면 -> 인풋 다 막기 -> 코드 인풋 활성화
-    // TODO : 인증번호 확인 버튼 눌러서 -> 코드입력 인풋까지 막고 -> 비밀번호 재설정 버튼 활성화 
-    // TODO : 비밀번호 재설정은 모달로 띄우기 
     return (
         <InquiryFormWrap>
             <InquiryInput
@@ -149,7 +154,7 @@ const PwInquiry = () => {
                 name="inquiryId"
                 placeholder="아이디를 입력해주세요"
                 maxLength={12}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleInputChange('inquiryId', e.target.value)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPwInquiryId(e.target.value)}
             />
             <InquiryInput
                 type="text"
@@ -175,6 +180,7 @@ const PwInquiry = () => {
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleInputChange('inquiryCertCode', e.target.value)}
             />
             <CertificationBtn onClick={checkCertCode} disabled={!enableCodeInput}>인증번호 확인</CertificationBtn>
+
             {showTimer && (
             <ExpiryTime 
                 onClose={handleCloseTimer}
@@ -182,7 +188,10 @@ const PwInquiry = () => {
                 callCount={codeSendCount}
             />
             )}
-            <InquiryButton onClick={() => setOpen(true)}>비밀번호 재설정</InquiryButton>
+            {completeCert && 
+                <p>인증번호가 일치합니다.</p>
+            }
+            <InquiryButton disabled={!enableResettingBtn} onClick={() => setPwResetting(true)}>비밀번호 재설정</InquiryButton>
         </InquiryFormWrap>
     );
 }
