@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import axios, { AxiosError, AxiosResponse } from 'axios';
-import { SetterOrUpdater} from 'recoil';
+import axios, { AxiosError, AxiosResponse } from "axios";
+import { SetterOrUpdater } from "recoil";
 
 export function getUserLocation(): Promise<{
   latitude: number;
@@ -59,7 +59,8 @@ export async function sendAxiosGetRequest(
       try {
         // 새로운 액세스 토큰을 사용하여 요청을 재시도
         console.log("401에러 발생!!!");
-        const res = await axios.post(`${import.meta.env.VITE_BACK_PORT}/refreshToken/newAccessToken`,
+        const res = await axios.post(
+          `${import.meta.env.VITE_BACK_PORT}/refreshToken/newAccessToken`,
           jwtToken
         );
 
@@ -86,10 +87,10 @@ export async function sendAxiosGetRequest(
         // localStorage.setItem("preUrl", currentURL); // 수정 필요 리다이렉트 코드
         location.href = "/login";
         throw refreshError;
-      }  }
+      }
     }
   }
-
+}
 
 // jjs
 export async function sendAxiosPostRequest(
@@ -122,7 +123,8 @@ export async function sendAxiosPostRequest(
       try {
         // 새로운 액세스 토큰을 사용하여 요청을 재시도
         console.log("401에러 발생!!!");
-        const res = await axios.post(`${import.meta.env.VITE_BACK_PORT}/refreshToken/newAccessToken`,
+        const res = await axios.post(
+          `${import.meta.env.VITE_BACK_PORT}/refreshToken/newAccessToken`,
           jwtToken
         );
 
@@ -154,60 +156,57 @@ export async function sendAxiosPostRequest(
   }
 }
 
-
-
-
-
-
 //yewon=========================================================
-export const sendAxiosRequest = async(
-  url:string, 
-  httpMethod:string, 
-  loginToken:JwtToken,
-  setLoginToken:SetterOrUpdater<JwtToken>,
-  params?:Params,
+export const sendAxiosRequest = async (
+  url: string,
+  httpMethod: string,
+  loginToken: JwtToken,
+  setLoginToken: SetterOrUpdater<JwtToken>,
+  params?: Params,
   callStack: number = 0
-):Promise<responseData> => {
+): Promise<responseData> => {
+  if (callStack >= 10) {
+    return { isError: true };
+  }
 
-if(callStack >= 10){
-  return {isError : true};
-}
-
-const result = await axios({
-  method: httpMethod,
-  url: 'http://localhost:8080' + url,
-  headers: {
-    Authorization: `Bearer ${loginToken.accessToken}`, 
-    refreshToken: loginToken.refreshToken,
-  },
-  ...(httpMethod === 'get' ? {params:params} : {data:params}),
-})
-.then((response) => response.data)
-.catch(async(error) => {
-  console.error("ecatch error status>>> ", error.response?.status);
-  if (error.response?.status === 401) {
-    console.log("401error, refreshToken >>> " + loginToken.refreshToken);
-    return await axios.post("http://localhost:8080/refreshToken/newAccessToken", {refreshToken: loginToken.refreshToken})
-    .then((response) => {      
-      const newAccessToken = response.data.newAccessToken;
-      setLoginToken({
-        ...loginToken,
-        accessToken: newAccessToken,
-      })
-      return sendAxiosRequest(
-        url, 
-        httpMethod, 
-        {...loginToken, accessToken:newAccessToken}, 
-        setLoginToken, 
-        params,
-        ++callStack
-        );
-    })
-  .catch(() => {
-    console.error("refresh error");
-    return;
+  const result = await axios({
+    method: httpMethod,
+    url: "http://localhost:8080" + url,
+    headers: {
+      Authorization: `Bearer ${loginToken.accessToken}`,
+      refreshToken: loginToken.refreshToken,
+    },
+    ...(httpMethod === "get" ? { params: params } : { data: params }),
   })
-}
-})
-return result;
-}
+    .then((response) => response.data)
+    .catch(async (error) => {
+      console.error("ecatch error status>>> ", error.response?.status);
+      if (error.response?.status === 401) {
+        console.log("401error, refreshToken >>> " + loginToken.refreshToken);
+        return await axios
+          .post("http://localhost:8080/refreshToken/newAccessToken", {
+            refreshToken: loginToken.refreshToken,
+          })
+          .then((response) => {
+            const newAccessToken = response.data.newAccessToken;
+            setLoginToken({
+              ...loginToken,
+              accessToken: newAccessToken,
+            });
+            return sendAxiosRequest(
+              url,
+              httpMethod,
+              { ...loginToken, accessToken: newAccessToken },
+              setLoginToken,
+              params,
+              ++callStack
+            );
+          })
+          .catch(() => {
+            console.error("refresh error");
+            return;
+          });
+      }
+    });
+  return result;
+};
