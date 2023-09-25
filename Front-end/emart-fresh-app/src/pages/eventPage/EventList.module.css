@@ -4,7 +4,7 @@
   flex-direction: column;
 }
 .eventNavbar {
-  width: 82vw;
+  width: 100%;
   height: 7vh;
   margin: auto;
   display: grid;
@@ -12,25 +12,32 @@
   grid-template-columns: 1fr 1fr;
   background-color: #333333;
   align-items: center;
+  justify-items: center;
   border-radius: 0.8rem;
 }
 .eventNavbar .event {
-  padding: 0.65rem;
-  margin-left: 0.2rem;
-  margin-right: 0.2rem;
-  font-weight: 600;
+  display: flex;
+  width: 98%;
+  height: 100%;
+  font-size: 16px;
+  align-items: center;
+
+  justify-content: center;
+  font-weight: 500;
   color: #999999;
   cursor: pointer;
   border-radius: 0.6rem;
 }
 
 .eventNavbar .eventActive {
-  padding: 0.65rem;
-  margin-left: 0.2rem;
-  margin-right: 0.2rem;
-  font-weight: 600;
+  display: flex;
+  width: 98%;
+  height: 6vh;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-weight: 500;
   background-color: #f9bb00;
-  color: black;
   cursor: pointer;
   border-radius: 0.6rem;
 }
