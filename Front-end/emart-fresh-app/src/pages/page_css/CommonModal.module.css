@@ -52,14 +52,14 @@
 .modifyNewPw,
 .modifyNewPwCheck,
 .modifyEmail {
-  /* width: em; */
-  /* padding: 0.8em 1.8em; */
-  /* font-size: 1em; */
-  /* border-radius: 0.5em; */
-  /* margin: 0 auto; */
-  /* border: 0.1em solid rgba(0, 0, 0, 0.8); */
-  /* border: #ccc; */
-  /* outline: 0; */
+  /* width: em;  */
+  padding: 0.8em 1.8em;
+  font-size: 1em;
+  border-radius: 0.5em;
+  margin: 0 auto;
+  border: 0.1em solid rgba(0, 0, 0, 0.8);
+  border: #ccc;
+  outline: 0;
 }
 .message {
   display: flex;

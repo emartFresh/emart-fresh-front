@@ -5,41 +5,61 @@ import axios from "axios";
 
 import CommonModalBasicEmail from "./CommonModalBasicEmail";
 import CommonModalBasic from "./CommonModalBasic";
+import {
+  SendLoginPageIfNotLogin,
+  GetUserName,
+  GetUserAllInfo,
+} from "../../utils/LoginUtils";
+import { useRecoilState } from "recoil";
+import { loginState } from "../../atoms";
 
 export default function MyPage() {
   console.log("마이페이지 컴포넌트");
 
-  const [memberId, setMemberId] = useState<string>("user123");
-  const [memberName, setMemberName] = useState<string>("이순신");
-  const [memberEmail, setMemberEmail] = useState<string>("abcd@example.com");
+  const [memberId, setMemberId] = useState<string>("");
+  const [memberName, setMemberName] = useState<string>("");
+  const [memberEmail, setMemberEmail] = useState<string>("");
   const [memberAuth, setMemberAuth] = useState<0 | 1 | 2>(0);
   const [ischange, setIsChange] = useState<boolean>(false);
+  const [loginToken, setLoginToken] = useRecoilState<JwtToken>(loginState);
 
-  // useEffect(() => {
-  //   async function getMyinfo() {
-  //     try {
-  //       const response = await axios.post(
-  //         `${import.meta.env.VITE_BACK_PORT}/mypage/mypage-info`,
-  //         null,
-  //         {
-  //           params: {
-  //             memberId: memberId,
-  //           },
-  //         }
-  //       );
+  SendLoginPageIfNotLogin();
+  console.log(GetUserAllInfo());
 
-  //       console.log(response.data);
+  useEffect(() => {
+    axios
+      .post(`${import.meta.env.VITE_BACK_PORT}/mypage/mypage-info`)
+      .then((res) => {
+        console.log(res.data);
+        setProductData(res.data);
+      });
+  }, []);
 
-  //       setMemberId(response.data.memberId);
-  //       setMemberName(response.data.memberName);
-  //       setMemberEmail(response.data.memberEmail);
-  //       setMemberAuth(response.data.memberAuth);
-  //     } catch (error) {
-  //       alert(error);
-  //     }
-  //   }
-  //   getMyinfo();
-  // }, [memberId, memberEmail, ischange]);
+  useEffect(() => {
+    async function getMyinfo() {
+      try {
+        const response = await axios.post(
+          `${import.meta.env.VITE_BACK_PORT}/mypage/mypage-info`,
+          null,
+          {
+            params: {
+              memberId: memberId,
+            },
+          }
+        );
+
+        console.log(response.data);
+
+        setMemberId(response.data.memberId);
+        setMemberName(response.data.memberName);
+        setMemberEmail(response.data.memberEmail);
+        setMemberAuth(response.data.memberAuth);
+      } catch (error) {
+        alert(error);
+      }
+    }
+    getMyinfo();
+  }, [memberId, memberEmail, ischange]);
 
   return (
     <div className={styles.mypageMain}>

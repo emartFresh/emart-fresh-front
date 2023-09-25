@@ -31,8 +31,7 @@ interface Props {
 const MyPageMenuBar = () => {
   const [open, setOpen] = useState(false);
 
-  const [memberId, setMemberId] =
-    useState("user123"); /* owner1 => auth=1(점주) */
+  const [memberId, setMemberId] = useState(""); /* owner1 => auth=1(점주) */
   const [memberAuth, setMemberAuth] = useState<0 | 1 | 2>(0);
 
   const toggleDrawer = (isOpen: boolean) => () => {
