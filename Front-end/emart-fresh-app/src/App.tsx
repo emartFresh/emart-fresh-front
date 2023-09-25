@@ -76,7 +76,7 @@ function App() {
               <Route path="/storeproduct" element={<ShowStoreProduct />} />
               <Route path="/cart" element={<Cart />} />
               <Route path="/product/detail" element={<ProductDetail />} />
-              <Route path="/payment" element={<Payment />} />
+              {/* <Route path="/payment" element={<Payment />} /> */}
             </Routes>
           </div>
           <Footer />
