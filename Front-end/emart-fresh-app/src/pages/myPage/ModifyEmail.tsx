@@ -26,7 +26,7 @@ const ModifyEmail: React.FC<ModifyEmailProps> = ({
   ischange,
   setIsChange,
 }) => {
-  const [memberId, setMemberId] = useState<string>("user123");
+  const [memberId, setMemberId] = useState<string>("");
   const [newEmail, setNewEmail] = useState<string>("");
   const [certificationCode, setCertificationCode] = useState<string>("");
 
@@ -54,7 +54,7 @@ const ModifyEmail: React.FC<ModifyEmailProps> = ({
 
   useEffect(() => {
     isFormValid();
-  }, []); /* formValidity */
+  }, []);
 
   const isFormValid = () => {
     const copyobj = { ...formValidity };

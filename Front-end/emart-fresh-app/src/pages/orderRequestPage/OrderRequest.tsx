@@ -23,8 +23,7 @@ export default function OrderRequest() {
     [productId: number]: number;
   }>({});
   const navigate = useNavigate();
-  const [loginToken, setLoginToken] = useRecoilState<any>(loginState);
-
+  const [loginToken, setLoginToken] = useRecoilState<JwtToken>(loginState);
   const [quantityData, setQuantityData] = useState<QuantityData[]>([]);
 
   const fetchProductData = async () => {
@@ -116,7 +115,10 @@ export default function OrderRequest() {
     console.log("실행");
     console.log("ㄷ이터", sendingData);
     await axios
-      .post(`${import.meta.env.VITE_BACK_PORT}/order/add-manager-order`, sendingData)
+      .post(
+        `${import.meta.env.VITE_BACK_PORT}/order/add-manager-order`,
+        sendingData
+      )
       .then((res) => {
         console.log(res);
         if (res.data === "success") {

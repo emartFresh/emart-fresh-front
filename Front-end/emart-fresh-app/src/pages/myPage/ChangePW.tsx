@@ -31,7 +31,7 @@ const ChangePw = ({ onClose }: ModalProps) => {
   const [currentPwVisible, setCurrentPwVisible] = useState<boolean>(false);
   const [newPwVisible, setNewPwVisible] = useState<boolean>(false);
 
-  const [memberId, setMemberId] = useState("user123");
+  const [memberId, setMemberId] = useState("");
   const [memberPw, setMemberPw] = useState("");
   const [newPw, setNewPw] = useState("");
 
@@ -49,7 +49,8 @@ const ChangePw = ({ onClose }: ModalProps) => {
 
   async function changepassword() {
     try {
-      const response = await axios.post(`${import.meta.env.VITE_BACK_PORT}/mypage/mypage-changepassword`,
+      const response = await axios.post(
+        `${import.meta.env.VITE_BACK_PORT}/mypage/mypage-changepassword`,
         null,
         {
           params: {
@@ -147,7 +148,6 @@ const ChangePw = ({ onClose }: ModalProps) => {
               name="currentPw"
               placeholder="현재비밀번호를 입력해주세요"
               autoComplete="off"
-              // className={styles.modifyPw}
               className={styles.inputPw}
               onChange={(e) => {
                 handleInputChange("currentPw", e.target.value);
@@ -167,7 +167,6 @@ const ChangePw = ({ onClose }: ModalProps) => {
               name="memberPw"
               placeholder="새비밀번호를 입력해주세요"
               autoComplete="off"
-              // className={styles.modifyNewPw}
               className={styles.inputPw}
               onChange={(e) => {
                 setNewPw(e.target.value);
@@ -189,7 +188,6 @@ const ChangePw = ({ onClose }: ModalProps) => {
               name="newPw"
               placeholder="비밀번호를 다시 입력해주세요"
               autoComplete="off"
-              // className={styles.modifyNewPwCheck}
               className={styles.inputPw}
               onChange={(e) => {
                 handleInputChange("newPw", e.target.value);

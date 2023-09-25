@@ -1,73 +1,34 @@
-import React from "react";
+import { useState } from "react";
 import styles from "./EventList.module.css";
+import EventOngoing from "./EventOngoing";
+import EventEnded from "./EventEnded";
 
-import image1 from "../../assets/images/image1.png";
+function EventList() {
+  const [isOngoingEvent, setIsOngoingEvent] = useState(true);
 
-const EventList = () => {
+  const onChangeEventType = (mode: boolean) => {
+    setIsOngoingEvent(mode);
+  };
+
   return (
-    <div className={styles.eventWrapper}>
+    <div>
       <div className={styles.eventNavbar}>
-        <div>진행중인 이벤트</div>
-        <div>진행완료 된 이벤트</div>
-      </div>
-      <div className={styles.eventContainer}>
-        <div className={styles.eventItem}>
-          <div>
-            <img src={image1} alt="예시" className={styles.eventImage} />
-          </div>
-          <div className={styles.eventText}>
-            <div>2023.09.21 ~ 2023.10.08</div>
-            <div>"9월 냉장커피 빙고 이벤트"</div>
-          </div>
+        <div
+          className={isOngoingEvent ? styles.eventActive : styles.event}
+          onClick={() => onChangeEventType(true)}
+        >
+          진행중인 이벤트
         </div>
-        <div className={styles.eventItem}>
-          <div>
-            <img src={image1} alt="예시" className={styles.eventImage} />
-          </div>
-          <div>
-            <div>2023.09.21 ~ 2023.10.08</div>
-            <div>"9월 냉장커피 빙고 이벤트"</div>
-          </div>
-        </div>
-        <div className={styles.eventItem}>
-          <div>
-            <img src={image1} alt="예시" className={styles.eventImage} />
-          </div>
-          <div>
-            <div>2023.09.21 ~ 2023.10.08</div>
-            <div>"9월 냉장커피 빙고 이벤트"</div>
-          </div>
-        </div>
-        <div className={styles.eventItem}>
-          <div>
-            <img src={image1} alt="예시" className={styles.eventImage} />
-          </div>
-          <div>
-            <div>2023.09.21 ~ 2023.10.08</div>
-            <div>"9월 냉장커피 빙고 이벤트"</div>
-          </div>
-        </div>
-        <div className={styles.eventItem}>
-          <div>
-            <img src={image1} alt="예시" className={styles.eventImage} />
-          </div>
-          <div>
-            <div>2023.09.21 ~ 2023.10.08</div>
-            <div>"9월 냉장커피 빙고 이벤트"</div>
-          </div>
-        </div>
-        <div className={styles.eventItem}>
-          <div>
-            <img src={image1} alt="예시" className={styles.eventImage} />
-          </div>
-          <div>
-            <div>2023.09.21 ~ 2023.10.08</div>
-            <div>"9월 냉장커피 빙고 이벤트"</div>
-          </div>
+        <div
+          className={!isOngoingEvent ? styles.eventActive : styles.event}
+          onClick={() => onChangeEventType(false)}
+        >
+          종료된 이벤트
         </div>
       </div>
+      <div>{isOngoingEvent ? <EventOngoing /> : <EventEnded />}</div>
     </div>
   );
-};
+}
 
 export default EventList;

@@ -26,6 +26,9 @@ import { RecoilRoot } from "recoil";
 
 import ProductDetail from "./pages/productDetailPage/ProductDetail";
 import EventList from "./pages/eventPage/EventList";
+import Payment from "./pages/paymentPage/Payment";
+import EventListDetail from "./pages/eventPage/EventListDetail";
+
 const queryClient = new QueryClient();
 
 function App() {
@@ -53,6 +56,10 @@ function App() {
                 ></Route> */}
               </Route>
               <Route path="/eventlist" element={<EventList />}></Route>
+              <Route
+                path="/eventlistdetail"
+                element={<EventListDetail />}
+              ></Route>
 
               <Route path="/order-request" element={<OrderRequest />}></Route>
               <Route
@@ -75,6 +82,7 @@ function App() {
               <Route path="/storeproduct" element={<ShowStoreProduct />} />
               <Route path="/cart" element={<Cart />} />
               <Route path="/product/detail" element={<ProductDetail />} />
+              {/* <Route path="/payment" element={<Payment />} /> */}
             </Routes>
           </div>
           <Footer />

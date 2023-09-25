@@ -16,13 +16,23 @@ export function SendLoginPageIfNotLogin() {
   }
 }
 
-interface MemberInfo {
+export interface MemberInfo {
   exp: number;
   iat: number;
   memberAuth: number;
   memberEmail: string;
   memberId: string;
   memberName: string;
+}
+
+export function GetUserAllInfo(): MemberInfo {
+  const loginToken = useRecoilValue<JwtToken>(loginState);
+  if (loginToken.accessToken) {
+    const memberInfo: MemberInfo = jwtDecode(loginToken.accessToken);
+    console.log("토큰 해석", jwtDecode(loginToken.accessToken));
+    return memberInfo;
+  }
+  return null;
 }
 
 export function GetUserAuth(): number {
@@ -33,6 +43,16 @@ export function GetUserAuth(): number {
     return memberInfo.memberAuth;
   }
   return -1;
+}
+
+export function GetUserName(): string {
+  const loginToken = useRecoilValue<JwtToken>(loginState);
+  if (loginToken.accessToken) {
+    const memberInfo: MemberInfo = jwtDecode(loginToken.accessToken);
+    console.log("토큰 해석", jwtDecode(loginToken.accessToken));
+    return memberInfo.memberName;
+  }
+  return "";
 }
 
 export function IsSameAuthNum(inpputedAuth: number): boolean {

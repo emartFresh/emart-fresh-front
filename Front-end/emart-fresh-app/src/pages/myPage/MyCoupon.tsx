@@ -20,7 +20,7 @@ interface CouponData {
 export default function MyCoupon() {
   console.log("마이쿠폰페이지");
   const pageSize = 5;
-  const [memberId, setMemberId] = useState("user123");
+  const [memberId, setMemberId] = useState("");
   const [coupons, setCoupons] = useState<CouponData[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
