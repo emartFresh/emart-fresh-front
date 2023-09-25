@@ -25,7 +25,7 @@ export default function MyOrder() {
   console.log("주문내역페이지");
 
   const pageSize = 5;
-  const [memberId, setMemberId] = useState("user123");
+  const [memberId, setMemberId] = useState("");
   const [orderedProducts, setOrderedProducts] = useState<OrderedProductData[]>(
     []
   );
@@ -35,7 +35,10 @@ export default function MyOrder() {
   useEffect(() => {
     async function fetchOrders() {
       try {
-        const response = await axios.post(`${import.meta.env.VITE_BACK_PORT}/orderedproduct/orderedproduct-list`,
+        const response = await axios.post(
+          `${
+            import.meta.env.VITE_BACK_PORT
+          }/orderedproduct/orderedproduct-list`,
           null,
           {
             params: {
