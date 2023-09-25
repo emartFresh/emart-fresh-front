@@ -26,26 +26,20 @@ export default function MyPage() {
   SendLoginPageIfNotLogin();
   console.log(GetUserAllInfo());
 
-  useEffect(() => {
-    axios
-      .post(`${import.meta.env.VITE_BACK_PORT}/mypage/mypage-info`)
-      .then((res) => {
-        console.log(res.data);
-        setProductData(res.data);
-      });
-  }, []);
+  // const handleTest = async () => {
+  //   await sendAxiosGetRequest(
+  //     `${import.meta.env.VITE_BACK_PORT}/review/hello`,
+  //     loginToken,
+  //     setLoginToken
+  //   );
+  //   console.log("완료 후 토큰", loginToken);
+  // };
 
   useEffect(() => {
     async function getMyinfo() {
       try {
         const response = await axios.post(
-          `${import.meta.env.VITE_BACK_PORT}/mypage/mypage-info`,
-          null,
-          {
-            params: {
-              memberId: memberId,
-            },
-          }
+          `${import.meta.env.VITE_BACK_PORT}/mypage/mypage-info`
         );
 
         console.log(response.data);
