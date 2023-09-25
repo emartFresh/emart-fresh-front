@@ -4,58 +4,87 @@
   flex-direction: column;
 }
 .eventNavbar {
-  width: 100%;
-  height: 70px;
-  background-color: darkgray;
+  width: 82vw;
+  height: 7vh;
+  margin: auto;
+  display: grid;
+  grid-gap: 0.2rem;
+  grid-template-columns: 1fr 1fr;
+  background-color: #333333;
+  align-items: center;
+  border-radius: 0.8rem;
+}
+.eventNavbar .event {
+  padding: 0.65rem;
+  margin-left: 0.2rem;
+  margin-right: 0.2rem;
+  font-weight: 600;
+  color: #999999;
+  cursor: pointer;
+  border-radius: 0.6rem;
+}
+
+.eventNavbar .eventActive {
+  padding: 0.65rem;
+  margin-left: 0.2rem;
+  margin-right: 0.2rem;
+  font-weight: 600;
+  background-color: #f9bb00;
+  color: black;
+  cursor: pointer;
+  border-radius: 0.6rem;
 }
 
 .eventContainer {
   width: 82vw;
   display: grid;
-  padding-top: 1rem;
+  margin: auto;
+  padding-top: 2vw;
   grid-template-columns: 1fr 1fr;
-  grid-gap: 3rem;
+  grid-gap: 2vw;
 }
 .eventItem {
   width: 100%;
-  /* display: grid; */
   position: relative;
-  /* align-content: center; */
-  /* vertical-align: middle; */
-
-  /* border-radius: 8rem; */
-  /* border: 3px solid transparent; */
-
+  border: 3px solid transparent;
   row-gap: 1rem;
 }
+.eventItem:hover {
+  transition: 0.1s;
+  color: #f9bb00;
+}
+.eventItem:hover .eventImage {
+  border-color: #f9bb00;
+  transform: scale(1.05);
+}
 .eventText {
-  /* margin-bottom: 10rem; */
+  font-size: 3vh;
   text-align: center;
 }
+
 .eventImage {
   width: 100%;
+  height: 40vh;
+  margin-bottom: 2vh;
   border: 3px solid transparent;
   overflow: hidden;
-  border-radius: 3rem;
-  /* background-color: #ffd555; */
-  border: 1px solid #ffd555;
-  /* filter: drop-shadow(0px 8px 24px rgba(0, 0, 0, 0.05)); */
+  border-radius: 2.5rem;
   cursor: pointer;
 }
-/* .eventImage :hover {
-  background-color: #f9bb00;
-  border: 1px solid #f9bb00;
-  transition: 1s;
-} */
-/* 화면 너비가 768px 이하일 때 적용되는 스타일 */
-@media screen and (max-width: 740px) {
+
+.eventImage:hover {
+  transition: 0.1s;
+  border-color: #f9bb00;
+  transform: scale(1.05);
+}
+
+@media screen and (max-width: 768px) {
   .eventContainer {
     display: inline;
     margin: 1rem;
     padding: 1rem;
   }
-}
-
-@media screen and (min-width: 769px) and (max-width: 1024px) {
-  /* 화면 너비가 769px부터 1024px까지 적용되는 스타일 */
+  .eventNavbar {
+    width: 90vw;
+  }
 }
