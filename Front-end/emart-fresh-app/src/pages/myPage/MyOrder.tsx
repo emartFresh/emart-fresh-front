@@ -7,6 +7,7 @@ import icon_warning from "../../assets/images/icon_warning.svg";
 import { useRecoilState } from "recoil";
 import { loginState } from "../../atoms";
 import { sendAxiosGetRequest } from "../../utils/userUtils";
+import { GetUserAllInfo } from "../../utils/LoginUtils";
 
 interface OrderedProductData {
   memberId: string | MemberData;
@@ -35,6 +36,7 @@ export default function MyOrder() {
   const [loginToken, setLoginToken] = useRecoilState<JwtToken>(loginState);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
+  const allMember = GetUserAllInfo();
 
   useEffect(() => {
     async function fetchOrders() {
@@ -68,7 +70,7 @@ export default function MyOrder() {
           alert("주문내역이 없습니다.");
         }
       } catch (error) {
-        console.error("Error fetching reviews:", error);
+        console.error("Error fetching orders:", error);
         alert("주문내역 조회 중 오류가 발생했습니다.");
       }
     }
@@ -89,11 +91,13 @@ export default function MyOrder() {
     alert("상세보기 페이지로 이동");
   };
 
+  allMember.memberId;
   return (
     <div className={styles.orderMain}>
       <h3>
         <span className={styles.tossface}>😀</span>
-        {memberId}님 반갑습니다.
+        {allMember.memberId}님 반갑습니다.
+        <span className={styles.tossface}>😀</span>
       </h3>
       {orderedProducts === undefined ||
       (orderedProducts && orderedProducts.length === 0) ? (

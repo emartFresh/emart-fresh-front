@@ -10,6 +10,7 @@ import { Link } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { loginState } from "../../atoms";
 import { sendAxiosGetRequest } from "../../utils/userUtils";
+import { GetUserAllInfo, GetUserName } from "../../utils/LoginUtils";
 
 //쿠폰 정보
 interface CouponData {
@@ -30,36 +31,44 @@ export default function MyCoupon() {
   const [totalPages, setTotalPages] = useState(0);
   const [totalElements, setTotalElements] = useState(0);
   const [loginToken, setLoginToken] = useRecoilState<JwtToken>(loginState);
-
+  GetUserName();
   useEffect(() => {
     async function fetchCoupons() {
       console.log("리프레쉬토큰", loginToken);
       const url = `${import.meta.env.VITE_BACK_PORT}/coupon/coupon-list`;
-      const coupons = sendAxiosGetRequest(url, loginToken, setLoginToken, {
-        page: currentPage,
-        size: pageSize,
-      });
-
-      coupons.then((response) => {
-        console.log("응답값", response.content);
+      try {
+        const response = await sendAxiosGetRequest(
+          url,
+          loginToken,
+          setLoginToken,
+          {
+            page: currentPage,
+            size: pageSize,
+          }
+        );
+        console.log("API Response:", response);
         const couponData = response.content;
-        console.log("API Response:", couponData);
 
-        if (couponData && couponData.length > 0) {
-          console.log("Coupon Data:", couponData);
-          setCoupons(couponData);
-        }
         if (response.totalPages) {
           setTotalPages(response.totalPages);
         }
         if (response.totalElements) {
           setTotalElements(response.totalElements);
         }
-      });
+        if (couponData && couponData.length > 0) {
+          console.log("Coupon Data:", couponData);
+          setCoupons(couponData);
+        } else {
+          alert("쿠폰내역이 없습니다.");
+        }
+      } catch (error) {
+        console.error("Error fetching coupons:", error);
+        alert("쿠폰 조회 중 오류가 발생했습니다.");
+      }
     }
 
     fetchCoupons();
-  }, []);
+  }, [currentPage, loginToken]);
 
   const handlePageChange = (newPage: number) => {
     setCurrentPage(newPage);
@@ -69,13 +78,15 @@ export default function MyCoupon() {
   for (let i = 0; i < totalPages; i++) {
     pages.push(i + 1);
   }
-
+  const allMember = GetUserAllInfo();
+  allMember.memberId;
   return (
     <div>
       <div className={styles.couponTest}>
         <h3>
           <span className={styles.tossface}>😀</span>
-          {memberId}님 반갑습니다.
+          {allMember.memberId}님 반갑습니다.
+          <span className={styles.tossface}>😀</span>
         </h3>
         <div>
           <CouponCard totalElements={totalElements} />

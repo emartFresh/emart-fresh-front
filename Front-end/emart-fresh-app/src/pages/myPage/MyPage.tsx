@@ -29,15 +29,13 @@ export default function MyPage() {
   console.log("마이페이지 컴포넌트");
 
   const [memberData, setMemberData] = useState<MemberData[]>([]);
-  const [memberId, setMemberId] = useState<string>("");
-  const [memberName, setMemberName] = useState<string>("");
   const [memberEmail, setMemberEmail] = useState<string>("");
-  const [memberAuth, setMemberAuth] = useState<0 | 1 | 2>(0);
   const [ischange, setIsChange] = useState<boolean>(false);
   const [loginToken, setLoginToken] = useRecoilState<JwtToken>(loginState);
-
+  const allMember = GetUserAllInfo();
+  const userName = GetUserName();
   SendLoginPageIfNotLogin();
-  console.log(GetUserAllInfo());
+  console.log("확인", GetUserAllInfo());
 
   useEffect(() => {
     const getMemberInfo = async () => {
@@ -48,54 +46,29 @@ export default function MyPage() {
           setLoginToken
         );
         console.log("완료 후 토큰", loginToken);
-        console.log(response.data); //undefined?
-        console.log("Member ID:", response.data.memberId);
+        console.log("Axios Response:", response);
 
         setMemberData(response.data);
-        setMemberId(response.data.memberId);
-        setMemberName(response.data.memberName);
-        setMemberEmail(response.data.memberEmail);
-        setMemberAuth(response.data.memberAuth);
+        console.log("멤버 아이디:", response.memberId);
       } catch (error) {
-        alert(error);
+        console.error("Error fetching mypage:", error);
+        alert("개인회원정보 조회 중 오류가 발생했습니다.");
       }
     };
     getMemberInfo();
   }, [memberEmail, ischange]);
-
-  // useEffect(() => {
-  //   async function getMyinfo() {
-  //     console.log(import.meta.env.VITE_BACK_PORT);
-  //     try {
-  //       const response = await axios.get(
-  //         `${import.meta.env.VITE_BACK_PORT}/mypage/mypage-info`,
-  //         { memberId: memberId }
-  //       );
-
-  //       console.log(response.data);
-
-  //       setMemberId(response.data.memberId);
-  //       setMemberName(response.data.memberName);
-  //       setMemberEmail(response.data.memberEmail);
-  //       setMemberAuth(response.data.memberAuth);
-  //     } catch (error) {
-  //       alert(error);
-  //     }
-  //   }
-  //   getMyinfo();
-  // }, [memberId, memberEmail, ischange]);
 
   return (
     <div className={styles.mypageMain}>
       <div className={styles.container}>
         <div className={styles.myinfo}>
           <div className={styles.myTitleId}>아이디</div>
-          <div className={styles.myTitleIdValue}>{memberId}</div>
+          <div className={styles.myTitleIdValue}>{allMember.memberId}</div>
           <div className={styles.myTitleName}>이름</div>
-          <div className={styles.myTitleNameValue}>{memberName}</div>
+          <div className={styles.myTitleNameValue}>{allMember.memberName}</div>
           <div className={styles.myTitleEmail}>이메일</div>
           <div className={styles.myTitleEmailValue}>
-            {memberEmail}&nbsp;&nbsp;&nbsp;
+            {allMember.memberEmail}&nbsp;&nbsp;&nbsp;
             <div>
               <CommonModalBasicEmail
                 ischange={ischange}

@@ -8,6 +8,7 @@ import { Rating } from "@mui/material";
 import { useRecoilState } from "recoil";
 import { loginState } from "../../atoms";
 import { sendAxiosGetRequest } from "../../utils/userUtils";
+import { GetUserAllInfo } from "../../utils/LoginUtils";
 
 // 리뷰 정보
 interface ReviewData {
@@ -23,12 +24,11 @@ interface ReviewData {
 export default function MyReview() {
   console.log("마이리뷰페이지");
   const pageSize = 5;
-  const [memberId, setMemberId] = useState("");
   const [reviews, setReviews] = useState<ReviewData[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const [loginToken, setLoginToken] = useRecoilState<JwtToken>(loginState);
-
+  const allMember = GetUserAllInfo();
   // 나의 리뷰 리스트
   useEffect(() => {
     async function fetchReviews() {
@@ -66,7 +66,7 @@ export default function MyReview() {
     }
 
     fetchReviews();
-  }, [currentPage, loginToken, pageSize]);
+  }, [currentPage, loginToken]);
 
   // 나의 리뷰 삭제
   async function deleteReview(reviewId: number | undefined) {
@@ -106,13 +106,12 @@ export default function MyReview() {
     pages.push(i + 1);
   }
 
-  console.log("페이지 배열 > " + pages);
-
   return (
     <div className={styles.reviewMain}>
       <h3>
         <span className={styles.tossface}>😀</span>
-        {memberId}님 반갑습니다.
+        {allMember.memberId}님 반갑습니다.
+        <span className={styles.tossface}>😀</span>
       </h3>
 
       {reviews === undefined || (reviews && reviews.length === 0) ? (
@@ -141,7 +140,6 @@ export default function MyReview() {
                     alt="상품"
                   />
                 </div>
-
                 <div className={styles.reviewText}>
                   {review.productTitle.split("&")[0]}
                   <br />
