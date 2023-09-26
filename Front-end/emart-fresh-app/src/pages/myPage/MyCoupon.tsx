@@ -7,7 +7,11 @@ import axios from "axios";
 import icon_warning from "../../assets/images/icon_warning.svg";
 import { Link } from "react-router-dom";
 
-// 쿠폰 정보
+import { useRecoilState } from "recoil";
+import { loginState } from "../../atoms";
+import { sendAxiosGetRequest } from "../../utils/userUtils";
+
+//쿠폰 정보
 interface CouponData {
   couponId: number;
   memberId: string;
@@ -21,47 +25,41 @@ export default function MyCoupon() {
   console.log("마이쿠폰페이지");
   const pageSize = 5;
   const [memberId, setMemberId] = useState("");
-  const [coupons, setCoupons] = useState<CouponData[]>([]);
+  const [coupons, setCoupons] = useState<CouponData[]>();
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const [totalElements, setTotalElements] = useState(0);
+  const [loginToken, setLoginToken] = useRecoilState<JwtToken>(loginState);
 
-  // useEffect(() => {
-  //   async function fetchCoupons() {
-  //     try {
-  //       const response = await axios.post(
-  //         `${import.meta.env.VITE_BACK_PORT}/coupon/coupon-list`,
-  //         null,
-  //         {
-  //           params: {
-  //             memberId: memberId,
-  //             page: currentPage,
-  //             size: pageSize,
-  //           },
-  //         }
-  //       );
-  //       console.log("API Response:", response.data.content);
-  //       const couponData = response.data.content;
+  useEffect(() => {
+    async function fetchCoupons() {
+      console.log("리프레쉬토큰", loginToken);
+      const url = `${import.meta.env.VITE_BACK_PORT}/coupon/coupon-list`;
+      const coupons = sendAxiosGetRequest(url, loginToken, setLoginToken, {
+        page: currentPage,
+        size: pageSize,
+      });
 
-  //       if (response.data.totalPages) {
-  //         setTotalPages(response.data.totalPages);
-  //       }
-  //       if (couponData && couponData.length > 0) {
-  //         console.log("Coupon Data:", couponData);
-  //         setCoupons(couponData);
-  //       }
+      coupons.then((response) => {
+        console.log("응답값", response.content);
+        const couponData = response.content;
+        console.log("API Response:", couponData);
 
-  //       if (response.data.totalElements) {
-  //         setTotalElements(response.data.totalElements);
-  //       }
-  //     } catch (error) {
-  //       console.error("Error fetching coupons:", error);
-  //       alert("쿠폰 조회 중 오류가 발생했습니다.");
-  //     }
-  //   }
+        if (couponData && couponData.length > 0) {
+          console.log("Coupon Data:", couponData);
+          setCoupons(couponData);
+        }
+        if (response.totalPages) {
+          setTotalPages(response.totalPages);
+        }
+        if (response.totalElements) {
+          setTotalElements(response.totalElements);
+        }
+      });
+    }
 
-  //   fetchCoupons();
-  // }, [memberId, currentPage]);
+    fetchCoupons();
+  }, []);
 
   const handlePageChange = (newPage: number) => {
     setCurrentPage(newPage);

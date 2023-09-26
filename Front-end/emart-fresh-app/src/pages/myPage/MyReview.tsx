@@ -4,9 +4,10 @@ import axios from "axios";
 import styles from "../page_css/MyReview.module.css";
 import icon_warning from "../../assets/images/icon_warning.svg";
 import Pagination from "@mui/material/Pagination";
-
-import ReviewCard from "./ReviewCard";
 import { Rating } from "@mui/material";
+import { useRecoilState } from "recoil";
+import { loginState } from "../../atoms";
+import { sendAxiosGetRequest } from "../../utils/userUtils";
 
 // 리뷰 정보
 interface ReviewData {
@@ -26,27 +27,30 @@ export default function MyReview() {
   const [reviews, setReviews] = useState<ReviewData[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
+  const [loginToken, setLoginToken] = useRecoilState<JwtToken>(loginState);
 
-  // 나의 주문 내역 리스트
+  // 나의 리뷰 리스트
   useEffect(() => {
     async function fetchReviews() {
+      console.log("리프레쉬토큰", loginToken);
+      const url = `${import.meta.env.VITE_BACK_PORT}/review/review-list`;
+
       try {
-        const response = await axios.post(
-          `${import.meta.env.VITE_BACK_PORT}/review/review-list`,
-          null,
+        const response = await sendAxiosGetRequest(
+          url,
+          loginToken,
+          setLoginToken,
           {
-            params: {
-              memberId: memberId,
-              page: currentPage,
-              size: pageSize,
-            },
+            page: currentPage,
+            size: pageSize,
           }
         );
-        console.log("API Response:", response.data);
-        const ReviewData = response.data.content;
 
-        if (response.data.totalPages) {
-          setTotalPages(response.data.totalPages);
+        console.log("API Response:", response);
+        const ReviewData = response.content;
+
+        if (response.totalPages) {
+          setTotalPages(response.totalPages);
         }
 
         if (ReviewData && ReviewData.length > 0) {
@@ -62,12 +66,13 @@ export default function MyReview() {
     }
 
     fetchReviews();
-  }, [memberId, currentPage]);
-  // 나의 주문 내역 삭제
+  }, [currentPage, loginToken, pageSize]);
+
+  // 나의 리뷰 삭제
   async function deleteReview(reviewId: number | undefined) {
     try {
       const response = await axios.post(
-        "http://localhost:8080/review/review-delete",
+        `${import.meta.env.VITE_BACK_PORT}/review/review-delete`,
         null,
         {
           params: {
@@ -109,7 +114,7 @@ export default function MyReview() {
         <span className={styles.tossface}>😀</span>
         {memberId}님 반갑습니다.
       </h3>
-      <div>{/* <ReviewCard /> */}</div>
+
       {reviews === undefined || (reviews && reviews.length === 0) ? (
         <div style={{ alignItems: "center" }}>
           <img

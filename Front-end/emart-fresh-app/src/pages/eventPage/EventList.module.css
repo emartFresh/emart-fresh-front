@@ -4,7 +4,7 @@
   flex-direction: column;
 }
 .eventNavbar {
-  width: 100%;
+  width: 85vw;
   height: 7vh;
   margin: auto;
   display: grid;

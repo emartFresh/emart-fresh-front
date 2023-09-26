@@ -4,6 +4,9 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import Pagination from "@mui/material/Pagination";
 import icon_warning from "../../assets/images/icon_warning.svg";
+import { useRecoilState } from "recoil";
+import { loginState } from "../../atoms";
+import { sendAxiosGetRequest } from "../../utils/userUtils";
 
 interface OrderedProductData {
   memberId: string | MemberData;
@@ -29,44 +32,49 @@ export default function MyOrder() {
   const [orderedProducts, setOrderedProducts] = useState<OrderedProductData[]>(
     []
   );
+  const [loginToken, setLoginToken] = useRecoilState<JwtToken>(loginState);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
 
   useEffect(() => {
     async function fetchOrders() {
+      console.log("리프레쉬토큰", loginToken);
+      const url = `${
+        import.meta.env.VITE_BACK_PORT
+      }/orderedproduct/orderedproduct-list`;
+
       try {
-        const response = await axios.post(
-          `${
-            import.meta.env.VITE_BACK_PORT
-          }/orderedproduct/orderedproduct-list`,
-          null,
+        const response = await sendAxiosGetRequest(
+          url,
+          loginToken,
+          setLoginToken,
           {
-            params: {
-              memberId: memberId,
-              page: currentPage,
-              size: pageSize,
-            },
+            page: currentPage,
+            size: pageSize,
           }
         );
 
-        const productsData = response.data.content;
+        console.log("API Response:", response);
+        const OrderedData = response.content;
 
-        if (response.data.totalPages) {
-          setTotalPages(response.data.totalPages);
+        if (response.totalPages) {
+          setTotalPages(response.totalPages);
         }
-        if (productsData && productsData.length > 0) {
-          setOrderedProducts(productsData);
+
+        if (OrderedData && OrderedData.length > 0) {
+          console.log("Ordered Data:", OrderedData);
+          setOrderedProducts(OrderedData);
         } else {
           alert("주문내역이 없습니다.");
         }
       } catch (error) {
-        console.error("Error fetching orderedProducts:", error);
+        console.error("Error fetching reviews:", error);
         alert("주문내역 조회 중 오류가 발생했습니다.");
       }
     }
 
     fetchOrders();
-  }, [memberId, currentPage]);
+  }, [currentPage, loginToken, pageSize]);
 
   const handlePageChange = (newPage: number) => {
     setCurrentPage(newPage);
