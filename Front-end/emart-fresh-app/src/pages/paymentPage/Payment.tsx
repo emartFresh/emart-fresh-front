@@ -33,7 +33,7 @@ export interface Coupon {
   memberId: string;
 }
 
-export default function Payment({ cartInfo, totlaPrice }: PaymentProps) {
+export default function Payment({ cartInfo }: PaymentProps) {
   const [itemData, setItemData] = useState<ItemData[]>();
   const [totalPriceAf, setTotalPriceAf] = useState<number>();
   const [appliedCoupon, setAppliedCoupon] = useState<Coupon>({
