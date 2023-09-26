@@ -100,6 +100,7 @@ export default function ProductDetail() {
     const url = `${import.meta.env.VITE_BACK_PORT}/cart/addToCart`;
     sendAxiosPostRequest(url, loginToken, setLoginToken, data).then((res) => {
       console.log("응답 완료", res);
+      alert("장바구니 담기!");
     });
   };
 
