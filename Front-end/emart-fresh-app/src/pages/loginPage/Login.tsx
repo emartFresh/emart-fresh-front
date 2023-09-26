@@ -68,7 +68,7 @@ const Login = () => {
         {
         isModalOpen && (
             <Modal closeModal={closeModal}>
-              <Inquiry/>
+              <Inquiry closeModal={closeModal}/>
             </Modal>
         )}
         <button className={styles.loginBtn} onClick={handleLogin}>
