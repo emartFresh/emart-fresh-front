@@ -67,9 +67,11 @@ interface CartData {
   productTitle: string;
   cartProductId: number; // 제품 아이디 (외래 키)
   storeId: number; // 가게 아이디 (외래 키)
+  productTimeSale: number;
   // cartProductId: number | ProductData; // 제품 아이디 (외래 키)
   // storeId: number | StoreData; // 가게 아이디 (외래 키)
 }
+
 
 // 발주 정보
 interface ManagerOrderData {
