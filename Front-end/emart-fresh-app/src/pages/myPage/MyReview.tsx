@@ -125,14 +125,15 @@ export default function MyReview() {
       ) : (
         reviews.map((review) => (
           <div key={review.reviewId}>
-            <h6 style={{ textAlign: "left", marginLeft: "310px" }}></h6>
-            <Rating
-              name={`rating-${review.reviewId}`}
-              value={review.reviewScore}
-              readOnly
-            />
+            <div className={styles.reviewRating}>
+              <Rating
+                name={`rating-${review.reviewId}`}
+                value={review.reviewScore}
+                readOnly
+              />
+            </div>
             <div className={styles.reviewWrapper}>
-              <div className={styles.reviewContentContainer}>
+              <div className={styles.reviewContainer}>
                 <div className={styles.imageContainer}>
                   <img
                     src={review.productImgUrl}

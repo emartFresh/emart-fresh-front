@@ -82,7 +82,7 @@ export default function MyCoupon() {
   allMember.memberId;
   return (
     <div>
-      <div className={styles.couponTest}>
+      <div className={styles.couponMain}>
         <h3>
           <span className={styles.tossface}>😀</span>
           {allMember.memberId}님 반갑습니다.
