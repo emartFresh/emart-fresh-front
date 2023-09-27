@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import styles from "../page_css/MyOrder.module.css";
 import { useState, useEffect } from "react";
-import axios from "axios";
 import Pagination from "@mui/material/Pagination";
 import icon_warning from "../../assets/images/icon_warning.svg";
 import { useRecoilState } from "recoil";
@@ -29,9 +28,7 @@ interface OrderedProductData {
 
 export default function MyOrder() {
   console.log("주문내역페이지");
-
   const pageSize = 5;
-  const [memberId, setMemberId] = useState("");
   const [orderedProducts, setOrderedProducts] = useState<OrderedProductData[]>(
     []
   );
@@ -107,7 +104,6 @@ export default function MyOrder() {
           <img
             src={order}
             style={{
-              color: "grey",
               width: "200px",
               marginBottom: "0.6rem",
             }}
