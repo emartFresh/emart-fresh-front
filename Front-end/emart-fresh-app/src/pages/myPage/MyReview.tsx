@@ -9,6 +9,8 @@ import { useRecoilState } from "recoil";
 import { loginState } from "../../atoms";
 import { sendAxiosGetRequest } from "../../utils/userUtils";
 import { GetUserAllInfo } from "../../utils/LoginUtils";
+import review from "../../assets/images/review.png";
+import { Link } from "react-router-dom";
 
 // 리뷰 정보
 interface ReviewData {
@@ -57,7 +59,7 @@ export default function MyReview() {
           console.log("Review Data:", ReviewData);
           setReviews(ReviewData);
         } else {
-          alert("리뷰내역이 없습니다.");
+          // alert("리뷰내역이 없습니다.");
         }
       } catch (error) {
         console.error("Error fetching reviews:", error);
@@ -117,10 +119,19 @@ export default function MyReview() {
       {reviews === undefined || (reviews && reviews.length === 0) ? (
         <div style={{ alignItems: "center" }}>
           <img
+            src={review}
+            style={{ width: "200px", marginBottom: "0.6rem" }}
+          />
+          <img
             src={icon_warning}
             style={{ width: "1.2rem", marginBottom: "1vw" }}
           />
           <span style={{ fontSize: "1.2rem" }}>작성한 리뷰가 없습니다</span>
+          <div>
+            <Link to="/" className={styles.reviewBtn}>
+              상품구매하기
+            </Link>
+          </div>
         </div>
       ) : (
         reviews.map((review) => (

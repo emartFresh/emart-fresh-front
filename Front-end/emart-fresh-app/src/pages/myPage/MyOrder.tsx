@@ -8,6 +8,8 @@ import { useRecoilState } from "recoil";
 import { loginState } from "../../atoms";
 import { sendAxiosGetRequest } from "../../utils/userUtils";
 import { GetUserAllInfo } from "../../utils/LoginUtils";
+import order from "../../assets/images/order.png";
+import { Link } from "react-router-dom";
 
 interface OrderedProductData {
   memberId: string | MemberData;
@@ -67,7 +69,7 @@ export default function MyOrder() {
           console.log("Ordered Data:", OrderedData);
           setOrderedProducts(OrderedData);
         } else {
-          alert("주문내역이 없습니다.");
+          // alert("주문내역이 없습니다.");
         }
       } catch (error) {
         console.error("Error fetching orders:", error);
@@ -103,11 +105,24 @@ export default function MyOrder() {
       (orderedProducts && orderedProducts.length === 0) ? (
         <div style={{ alignItems: "center" }}>
           <img
+            src={order}
+            style={{
+              color: "grey",
+              width: "200px",
+              marginBottom: "0.6rem",
+            }}
+          />
+          <img
             src={icon_warning}
             style={{ width: "1.2rem", marginBottom: "1vw" }}
             alt="Warning Icon"
           />
           <span style={{ fontSize: "1.2rem" }}>주문하신 내역이 없습니다</span>
+          <div>
+            <Link to="/" className={styles.orderBtn}>
+              상품구매하기
+            </Link>
+          </div>
         </div>
       ) : (
         orderedProducts.map((orderedProduct, index) => (
