@@ -4,9 +4,11 @@ import axios from "axios";
 import styles from "../page_css/MyReview.module.css";
 import icon_warning from "../../assets/images/icon_warning.svg";
 import Pagination from "@mui/material/Pagination";
-
-import ReviewCard from "./ReviewCard";
 import { Rating } from "@mui/material";
+import { useRecoilState } from "recoil";
+import { loginState } from "../../atoms";
+import { sendAxiosGetRequest } from "../../utils/userUtils";
+import { GetUserAllInfo } from "../../utils/LoginUtils";
 
 // 리뷰 정보
 interface ReviewData {
@@ -22,31 +24,33 @@ interface ReviewData {
 export default function MyReview() {
   console.log("마이리뷰페이지");
   const pageSize = 5;
-  const [memberId, setMemberId] = useState("");
   const [reviews, setReviews] = useState<ReviewData[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
-
-  // 나의 주문 내역 리스트
+  const [loginToken, setLoginToken] = useRecoilState<JwtToken>(loginState);
+  const allMember = GetUserAllInfo();
+  // 나의 리뷰 리스트
   useEffect(() => {
     async function fetchReviews() {
+      console.log("리프레쉬토큰", loginToken);
+      const url = `${import.meta.env.VITE_BACK_PORT}/review/review-list`;
+
       try {
-        const response = await axios.post(
-          `${import.meta.env.VITE_BACK_PORT}/review/review-list`,
-          null,
+        const response = await sendAxiosGetRequest(
+          url,
+          loginToken,
+          setLoginToken,
           {
-            params: {
-              memberId: memberId,
-              page: currentPage,
-              size: pageSize,
-            },
+            page: currentPage,
+            size: pageSize,
           }
         );
-        console.log("API Response:", response.data);
-        const ReviewData = response.data.content;
 
-        if (response.data.totalPages) {
-          setTotalPages(response.data.totalPages);
+        console.log("API Response:", response);
+        const ReviewData = response.content;
+
+        if (response.totalPages) {
+          setTotalPages(response.totalPages);
         }
 
         if (ReviewData && ReviewData.length > 0) {
@@ -62,12 +66,13 @@ export default function MyReview() {
     }
 
     fetchReviews();
-  }, [memberId, currentPage]);
-  // 나의 주문 내역 삭제
+  }, [currentPage, loginToken]);
+
+  // 나의 리뷰 삭제
   async function deleteReview(reviewId: number | undefined) {
     try {
       const response = await axios.post(
-        "http://localhost:8080/review/review-delete",
+        `${import.meta.env.VITE_BACK_PORT}/review/review-delete`,
         null,
         {
           params: {
@@ -101,15 +106,14 @@ export default function MyReview() {
     pages.push(i + 1);
   }
 
-  console.log("페이지 배열 > " + pages);
-
   return (
     <div className={styles.reviewMain}>
       <h3>
         <span className={styles.tossface}>😀</span>
-        {memberId}님 반갑습니다.
+        {allMember.memberId}님 반갑습니다.
+        <span className={styles.tossface}>😀</span>
       </h3>
-      <div>{/* <ReviewCard /> */}</div>
+
       {reviews === undefined || (reviews && reviews.length === 0) ? (
         <div style={{ alignItems: "center" }}>
           <img
@@ -121,14 +125,15 @@ export default function MyReview() {
       ) : (
         reviews.map((review) => (
           <div key={review.reviewId}>
-            <h6 style={{ textAlign: "left", marginLeft: "310px" }}></h6>
-            <Rating
-              name={`rating-${review.reviewId}`}
-              value={review.reviewScore}
-              readOnly
-            />
+            <div className={styles.reviewRating}>
+              <Rating
+                name={`rating-${review.reviewId}`}
+                value={review.reviewScore}
+                readOnly
+              />
+            </div>
             <div className={styles.reviewWrapper}>
-              <div className={styles.reviewContentContainer}>
+              <div className={styles.reviewContainer}>
                 <div className={styles.imageContainer}>
                   <img
                     src={review.productImgUrl}
@@ -136,7 +141,6 @@ export default function MyReview() {
                     alt="상품"
                   />
                 </div>
-
                 <div className={styles.reviewText}>
                   {review.productTitle.split("&")[0]}
                   <br />

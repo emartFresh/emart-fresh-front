@@ -129,9 +129,13 @@
   cursor: pointer;
 }
 
-/* .modifyBtn {
-  margin: 2em 0 4.5em 0;
-  width: 7em;
-  padding: 0.8em 0;
-  background-color: #f9bb00;
-} */
+.passwordBtn {
+  width: 11rem;
+  height: 50px;
+  background-color: rgb(204, 204, 204);
+}
+.emailChangeBtn {
+  width: 9.5rem;
+  height: 50px;
+  background-color: rgb(204, 204, 204);
+}

@@ -60,7 +60,7 @@ a {
 }
 a:hover {
   cursor: pointer;
-  color: green;
+  color: #f9bb00;
 }
 
 h1 {
