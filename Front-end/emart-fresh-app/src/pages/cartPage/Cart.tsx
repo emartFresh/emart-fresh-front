@@ -18,6 +18,13 @@ interface responseData {
   data: CartData[];
 }
 
+
+
+/*
+
+
+*/
+
 // 수정 : 수량 변경 시  0이하/ 99이상 안됨.
 // 전체 선택 
 // 총 금액 계산 
@@ -70,6 +77,17 @@ const Cart = () => {
     }
   };
 
+
+  const handleAllCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if(e.target.checked){
+      const cartProductIdList =cartItemList.map((cartItem) => cartItem.cartProductId);
+      setSelectedItems(cartProductIdList);      
+    }else{
+      setSelectedItems([]);
+    }
+  }
+
+
   useEffect(() => {
     sendAxiosRequest('/cart/getCartInfo', 'get', loginToken, setLoginToken)
     .then((response) => {
@@ -107,12 +125,16 @@ const Cart = () => {
   };
 }, []);
 
+let totalPrice = 0;
+
+console.log('📋', selectedItems);
+
 
   return (
     <div>
       <h3 className={styles.title} onClick={()=>{console.log(cartItemList)}}>장바구니</h3>
       <div className={cartItemList.length === 0 ? styles.hiddenWrap : styles.allCheckWrap}>
-        <Checkbox className={styles.allCheckBox}/>
+        <Checkbox className={styles.allCheckBox} onChange={handleAllCheck}/>
         <p className={styles.allCheck}>전체 선택</p>
       </div>
       <div className={styles.cartContainer}>
@@ -172,7 +194,14 @@ const Cart = () => {
               {/* <h4>{storeName}<h4> */}
               <ul>
                 {selectedItems.map((selectedItemId) => {
+
                   const selectedItem = cartItemList.find((item) => item.cartProductId === selectedItemId);
+                  console.log('selectedItems>', selectedItems);
+                  console.log('cartItemList> ', cartItemList);
+                  console.log('NO ', selectedItemId)
+
+                  console.log('selectedItem>', selectedItem);
+                  totalPrice += selectedItem.priceNumber * selectedItem.cartProductQuantity;
                   return (
                     <li key={selectedItemId}>
                       {selectedItem.productTitle}  / 가격: {selectedItem.priceNumber} / 수량: {selectedItem.cartProductQuantity}
@@ -180,6 +209,7 @@ const Cart = () => {
                   );
                 })}
               </ul>
+              <div>총금액 : <p>{totalPrice}원</p></div>
             </>
             )
           }
