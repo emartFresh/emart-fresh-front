@@ -12,12 +12,11 @@ import cartNull from '../../assets/images/cartNull.png';
 import cartCalcNull from '../../assets/images/cartCalcNull.png';
 import RemoveIcon from '@mui/icons-material/Remove';
 import AddIcon from '@mui/icons-material/Add';
+import Payment from '../paymentPage/Payment';
 
 interface responseData {
   data: CartData[];
 }
-
-
 
 // 수정 : 수량 변경 시  0이하/ 99이상 안됨.
 // 전체 선택 
@@ -31,6 +30,8 @@ const Cart = () => {
   const [loginToken, setLoginToken] = useRecoilState<JwtToken>(loginState);
   const [cartItemList, setCartItemList] = useState<CartData[]>([]);
   const [selectedItems, setSelectedItems] = useState([]);
+  const [extendedPrice, setExtendedPrice] = useState<number>(0);
+  const [openPayment, setOpenPayment] = useState<boolean>(false);
 
   const handleQuantity = (e: React.MouseEvent<HTMLInputElement, MouseEvent>, cartProductId:number) => {
     const btn = e.target as HTMLButtonElement;
@@ -61,6 +62,8 @@ const Cart = () => {
     if (selectedItems.includes(cartProductId)) { // 만약 selectedItems에 cartProductId가 포함된다면 (이미 선택되었다면)
       setSelectedItems(selectedItems.filter((item) => item !== cartProductId)); 
       // selectedItems에 item의 cartProductId와, checkbox에서 넘어온 cartProductId를 비교해서 같지 않은 item만 selectItems에 담는다.
+      console.log(selectedItems);
+      
     } else {
       setSelectedItems([...selectedItems, cartProductId]);
       // 이미 선택되어있는 항목이 아니라면, selectedItems에 담음
@@ -134,7 +137,16 @@ const Cart = () => {
                   <p className={styles.quantityControl}>
                     <input type="button" value='-' id='minusQuantity' className={styles.quantityBtn} onClick={(e) => handleQuantity(e, item.cartProductId)}/>
                     {/* <RemoveIcon/> */}
-                    <input type="text" value={item.cartProductQuantity} className={styles.quantityInput} onChange={(e) => handleInputQuantity(e.target.value, item.cartProductId)}/>
+                    <input 
+                      type="text" 
+                      value={item.cartProductQuantity} 
+                      className={styles.quantityInput} 
+                      onChange={(e) => handleInputQuantity(e.target.value, item.cartProductId)}
+                      minLength={1}
+                      maxLength={2}
+                      max={99}
+                      min={1}
+                    />
                     <input type="button" value='+' id='plusQuantity' className={styles.quantityBtn} onClick={(e) => handleQuantity(e, item.cartProductId)}/>
                     {/* <AddIcon/> */}
                   </p>
@@ -171,10 +183,13 @@ const Cart = () => {
             </>
             )
           }
-          <button className={styles.payBtn}>결제하기</button>
-        </div>
-
+          <button className={styles.payBtn} onClick={() => setOpenPayment(true)}>결제하기</button>
       </div>
+      </div>
+        {/* {
+          openPayment && 
+          <Payment cartInfo={cartItemList}/>
+        } */}
     </div>
   )
 }
