@@ -1,0 +1,12 @@
+.makeStoreContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: red;
+}
+
+.makerMartinput {
+  border: 1px solid black;
+  border-radius: 8px;
+}
