@@ -127,9 +127,6 @@ const Cart = () => {
 
 let totalPrice = 0;
 
-console.log('📋', selectedItems);
-
-
   return (
     <div>
       <h3 className={styles.title} onClick={()=>{console.log(cartItemList)}}>장바구니</h3>

@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { loginState } from "../../atoms";
-import { GetUserAllInfo } from "../../utils/LoginUtils";
+import { GetUserAllInfo, IsLogIn } from "../../utils/LoginUtils";
 import { sendAxiosPostRequest } from "../../utils/userUtils";
 
 import styles from "../page_css/ProductDetail.module.css";
@@ -30,13 +30,15 @@ export default function ProductDetail() {
   const [quantity, setQuantity] = useState<number>(1);
   const [loginToken, setLoginToken] = useRecoilState<JwtToken>(loginState);
   console.log("로그인 토큰", loginToken);
-
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const productId = queryParams.get("product-id");
   const storeId: string | null = queryParams.get("store-id");
 
+  console.log("디테일");
   console.log("유저인포", GetUserAllInfo());
+  console.log("로그인 함 ", IsLogIn());
+
   useEffect(() => {
     axios
       .get(
@@ -98,6 +100,7 @@ export default function ProductDetail() {
     const url = `${import.meta.env.VITE_BACK_PORT}/cart/addToCart`;
     sendAxiosPostRequest(url, loginToken, setLoginToken, data).then((res) => {
       console.log("응답 완료", res);
+      alert("장바구니 담기!");
     });
   };
 

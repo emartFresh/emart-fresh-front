@@ -1,8 +1,10 @@
 import { Bootpay } from "@bootpay/client-js";
 import axios from "axios";
-
+import { loginState } from "../../atoms";
+import { useRecoilState } from "recoil";
 import { MemberInfo, GetUserAllInfo } from "../../utils/LoginUtils";
 import { ItemData } from "./Payment";
+import { sendAxiosPostRequest } from "../../utils/userUtils";
 
 interface DopayProp {
   itemData: ItemData[];
@@ -10,9 +12,18 @@ interface DopayProp {
 }
 
 export default function Dopay({ itemData, totalPriceAf }: DopayProp) {
-  console.log("아이템 데이터", itemData);
+  const [loginToken, setLoginToken] = useRecoilState<JwtToken>(loginState);
 
   const memberInfo: MemberInfo = GetUserAllInfo();
+
+  //수정 : 로직 고민...
+  const preProcesse = async () => {
+    const url = `${import.meta.env.VITE_BACK_PORT}/cart/decreaseCartProduct`;
+    sendAxiosPostRequest(url, loginToken, setLoginToken).then((res) => {
+      console.log("응답", res);
+      requestPayment();
+    });
+  };
 
   const requestPayment = async () => {
     console.log("총액", totalPriceAf);
@@ -47,7 +58,7 @@ export default function Dopay({ itemData, totalPriceAf }: DopayProp) {
 
   return (
     <div>
-      <button onClick={requestPayment}>결제하기</button>
+      <button onClick={preProcesse}>결제하기</button>
     </div>
   );
 }

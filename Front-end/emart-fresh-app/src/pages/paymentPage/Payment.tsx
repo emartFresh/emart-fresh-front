@@ -3,19 +3,8 @@ import styles from "../page_css/Payment.module.css";
 import Dopay from "./DoPay";
 import CopuonApply from "./CopuonApply";
 
-interface CartInfo {
-  cartId: number;
-  cartProductId: number;
-  productTitle: string;
-  priceNumber: number;
-  cartProductQuantity: number;
-  storeId: number;
-  productEvent: number;
-}
-
 interface PaymentProps {
-  cartInfo: CartInfo[];
-  totlaPrice: number;
+  cartInfo: CartData[];
 }
 
 export interface ItemData {
@@ -44,29 +33,6 @@ export default function Payment({ cartInfo }: PaymentProps) {
     memberId: "",
   });
 
-  cartInfo = [
-    //수정 : 삭제하기3
-
-    {
-      cartId: 1,
-      cartProductId: 1,
-      productTitle: "Product A",
-      priceNumber: 1000,
-      cartProductQuantity: 20,
-      storeId: 1,
-      productEvent: 30,
-    },
-    {
-      cartId: 1,
-      cartProductId: 1,
-      productTitle: "Product B",
-      priceNumber: 2000,
-      cartProductQuantity: 30,
-      storeId: 1,
-      productEvent: 0,
-    },
-  ];
-
   useEffect(() => {
     let totalPrice = 0;
     const items =
@@ -74,7 +40,7 @@ export default function Payment({ cartInfo }: PaymentProps) {
       cartInfo.map((item) => {
         totalPrice +=
           item.priceNumber *
-          (1 - appliedCoupon.couponType / 100) *
+          (1 - appliedCoupon.couponType / 100) * //수정 : productTimeSale (떙처리)적용
           item.cartProductQuantity;
         return {
           id: String(item.cartId),
@@ -85,7 +51,7 @@ export default function Payment({ cartInfo }: PaymentProps) {
       });
     setItemData(items);
     setTotalPriceAf(totalPrice);
-  }, [appliedCoupon]);
+  }, [appliedCoupon, cartInfo]);
 
   return (
     <div className={styles.paymentContainer}>
