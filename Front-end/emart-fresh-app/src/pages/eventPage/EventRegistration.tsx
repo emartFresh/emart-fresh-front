@@ -23,7 +23,7 @@ interface EventFormState {
   eventStartDate: Date | null; // 시작 날짜 (Date | null)
   eventEndDate: Date | null; // 종료 날짜 (Date | null)
 }
-export default function EventRegi({ onSubmit }: EventFormProps) {
+export default function EventRegistration({ onSubmit }: EventFormProps) {
   //
   const [formData, setFormData] = useState<EventFormState>({
     eventTitle: "",

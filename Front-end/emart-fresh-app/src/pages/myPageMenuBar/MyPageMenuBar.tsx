@@ -101,7 +101,7 @@ const MyPageMenuBar = () => {
             {memberAuth === 0 && (
               <div className={styles.mypagemenubar}>
                 <ReorderIcon />
-                <Link to="/mypageMain/MypageApplyManager">점포점주신청</Link>
+                <Link to="/mypageMain/mypageApplyManager">점포점주신청</Link>
               </div>
             )}
             <hr />
