@@ -4,11 +4,13 @@ import styles from "../page_css/MyPage.module.css";
 
 import CommonModalBasicEmail from "./CommonModalBasicEmail";
 import CommonModalBasic from "./CommonModalBasic";
+
 import {
   SendLoginPageIfNotLogin,
   GetUserName,
   GetUserAllInfo,
 } from "../../utils/LoginUtils";
+
 import { useRecoilState } from "recoil";
 import { loginState } from "../../atoms";
 import { sendAxiosGetRequest } from "../../utils/userUtils";
