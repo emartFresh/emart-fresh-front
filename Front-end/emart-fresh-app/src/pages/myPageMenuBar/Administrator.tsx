@@ -2,7 +2,7 @@
 import { Link } from "react-router-dom";
 import styles from "../page_css/MyPage.module.css";
 
-export default function MemberAuthAdmin() {
+export default function Administrator() {
   return (
     <div>
       <div className={styles.mypagemenubar}>
