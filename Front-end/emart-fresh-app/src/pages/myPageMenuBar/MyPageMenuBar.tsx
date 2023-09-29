@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 
 import styles from "../page_css/MyPage.module.css";
 import Box from "@mui/material/Box";
@@ -17,6 +16,9 @@ import {
 import { sendAxiosGetRequest } from "../../utils/userUtils";
 import { useRecoilState } from "recoil";
 import { loginState } from "../../atoms";
+import OrdinaryUser from "./OrdinaryUser";
+import Administrator from "./Administrator";
+import StoreManager from "./StoreManager";
 
 // npm install @mui/material @emotion/react @emotion/styled
 // npm install @mui/icons-material
@@ -102,24 +104,21 @@ const MyPageMenuBar = () => {
           >
             {getUserAuth === 0 && (
               <div className={styles.mypagemenubar}>
-                <MemberAuthUser />
+                <OrdinaryUser />
               </div>
             )}
 
-            <hr />
-            {/* memberAuth==1(점주)일 때, 나오는 컴포넌트  */}
             {getUserAuth === 1 && (
               <div className={styles.mypagemenubar}>
                 {/* <ReorderIcon /> */}
-                <MemberAuthManager />
+                <StoreManager />
               </div>
             )}
 
-            {/* memberAuth==2(관리자)일 때, 나오는 컴포넌트  */}
             {getUserAuth === 2 && (
               <div className={styles.mypagemenubar}>
                 {/* <ReorderIcon /> */}
-                <MemberAuthAdmin />
+                <Administrator />
               </div>
             )}
           </Box>
@@ -129,56 +128,3 @@ const MyPageMenuBar = () => {
   );
 };
 export default MyPageMenuBar;
-// memberAuth==0일 때, 나오는 컴포넌트
-function MemberAuthUser() {
-  return (
-    <div>
-      <div className={styles.mypagemenubar}>
-        <Link to="/mypageMain">개인정보관리</Link>
-      </div>
-      <div className={styles.mypagemenubar}>
-        <Link to="/mypageMain/myorder">나의주문내역</Link>
-      </div>
-      <div className={styles.mypagemenubar}>
-        <Link to="/mypageMain/myreview">내가작성한리뷰</Link>
-      </div>
-      <div className={styles.mypagemenubar}>
-        <Link to="/mypageMain/mycoupon">나의쿠폰조회</Link>
-      </div>
-      <div className={styles.mypagemenubar}>
-        <Link to="/mypageMain/mypageApplyManager">점포점주신청</Link>
-      </div>
-    </div>
-  );
-}
-// /* memberAuth==1일 때, 나오는 컴포넌트  */
-function MemberAuthManager() {
-  return (
-    <div>
-      <div className={styles.mypagemenubar}>
-        <Link to="/mypageMain">개인정보관리</Link>
-      </div>
-      <div className={styles.mypagemenubar}>
-        <Link to="/order-request">발주 보내는 페이지</Link>
-      </div>
-    </div>
-  );
-}
-
-// /* memberAuth==2일 때, 나오는 컴포넌트  */
-function MemberAuthAdmin() {
-  return (
-    <div>
-      <div className={styles.mypagemenubar}>
-        <Link to="/mypageMain">개인정보관리</Link>
-      </div>
-      <div className={styles.mypagemenubar}>
-        <Link to="/request-order-list">발주승인 페이지</Link>
-      </div>
-      <div className={styles.mypagemenubar}>
-        {/* <EventIcon /> */}
-        <Link to="/mypageMain/EventRegi">이벤트 생성</Link>
-      </div>
-    </div>
-  );
-}
