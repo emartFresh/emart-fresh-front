@@ -1,7 +1,8 @@
 import { useState, useRef, useEffect } from "react";
 import styles from "../page_css/MakeStore.module.css";
 import { Modal, Box } from "@mui/material";
-
+import magnifier from "../../assets/images/magnifier.svg";
+import UserInfoSide from "./UserInfoSide";
 interface searchedKakoData {
   road_address_name: string;
   place_name: string;
@@ -25,6 +26,7 @@ export default function MakeStore() {
   const [inputValue, setInputValue] = useState<string>("");
   const [storeDatas, setStoreDatas] = useState<searchedKakoData[]>([]);
   const [selectedStore, setSelectedStore] = useState<searchedKakoData>();
+  const [confirmedStore, setConfirmedStore] = useState<searchedKakoData>();
 
   const mapRef = useRef(null);
 
@@ -48,7 +50,7 @@ export default function MakeStore() {
       places.setMap(map, selectedStore);
     }
     // setMarker(map, selectedStore);
-  }, [selectedStore]);
+  }, [confirmedStore]);
 
   //수정
   //   const setMarker = (map, selectedStore: searchedKakoData) => {
@@ -112,19 +114,34 @@ export default function MakeStore() {
 
   return (
     <div className={styles.makeStoreContainer}>
-      <div
-        ref={mapRef}
-        id="map"
-        style={{ width: "500px", height: "400px" }}
-      ></div>
-      ;
-      <button
-        onClick={() => {
-          setShowModal(!showModal);
-        }}
-      >
-        매장 등록
-      </button>
+      <div className={styles.contentWrapper}>
+        <UserInfoSide />
+        <div className={styles.mapWrapper}>
+          <div
+            className={styles.mapContainer}
+            ref={mapRef}
+            id="map"
+            style={{ width: "500px", height: "300px" }}
+          ></div>
+
+          <div className={styles.storeInfo}>
+            <span>점포명</span>
+            <span>{confirmedStore?.place_name}</span>
+          </div>
+          <div className={styles.storeInfo}>
+            <span>도로명 주소</span>
+            <span>{confirmedStore?.road_address_name}</span>
+          </div>
+          <button
+            onClick={() => {
+              setShowModal(!showModal);
+            }}
+          >
+            매장 찾기
+          </button>
+        </div>
+      </div>
+
       <Modal
         open={showModal}
         onClose={() => {
@@ -146,33 +163,56 @@ export default function MakeStore() {
             transform: "translate(-50%, -50%)",
           }}
         >
-          <input
-            className={styles.makerMartinput}
-            value={inputValue}
-            onChange={(e) => {
-              setInputValue(e.target.value);
-            }}
-            type="text"
-          />
-          <div>{selectedStore?.place_name}</div>
-          <button onClick={searchMart}>매장 찾기</button>
-          {storeDatas.map((ele, inx) => {
-            return (
-              <div key={inx}>
-                {ele.place_name}
-                <button onClick={() => setSelectedStore(ele)}>선택</button>
-              </div>
-            );
-          })}
-          <div>
-            <button>확인</button>
-            <button
-              onClick={() => {
-                setShowModal(!showModal);
-              }}
-            >
-              닫기
-            </button>
+          <div className={styles.modalContainer}>
+            <div>
+              <input
+                className={styles.makerMartinput}
+                value={inputValue}
+                onChange={(e) => {
+                  setInputValue(e.target.value);
+                }}
+                type="text"
+              />{" "}
+              <button onClick={searchMart}>
+                <img src={magnifier} alt="" />
+                검색
+              </button>
+            </div>
+            <div>{selectedStore?.place_name}</div>
+            <div className={styles.scrollView}>
+              {storeDatas.map((ele, inx) => {
+                return (
+                  <div key={inx}>
+                    {ele.place_name}
+                    <button
+                      className={styles.selectBtn}
+                      onClick={() => setSelectedStore(ele)}
+                    >
+                      선택
+                    </button>
+                  </div>
+                );
+              })}
+            </div>
+            <div>
+              <button
+                className={styles.cancleBtn}
+                onClick={() => {
+                  setShowModal(!showModal);
+                }}
+              >
+                닫기
+              </button>
+              <button
+                className={styles.cofirmBtn}
+                onClick={() => {
+                  setShowModal(!showModal);
+                  setConfirmedStore(selectedStore);
+                }}
+              >
+                확인
+              </button>
+            </div>
           </div>
         </Box>
       </Modal>
