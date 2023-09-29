@@ -5,13 +5,12 @@ import styles from "../page_css/MyPage.module.css";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import Button from "@mui/material/Button";
-import ReorderIcon from "@mui/icons-material/Reorder";
-import ProductionQuantityLimitsIcon from "@mui/icons-material/ProductionQuantityLimits";
-import MailIcon from "@mui/icons-material/Mail";
-import EventIcon from "@mui/icons-material/Event";
+// import ReorderIcon from "@mui/icons-material/Reorder";
+// import ProductionQuantityLimitsIcon from "@mui/icons-material/ProductionQuantityLimits";
+// import MailIcon from "@mui/icons-material/Mail";
+// import EventIcon from "@mui/icons-material/Event";
 import {
   SendLoginPageIfNotLogin,
-  GetUserName,
   GetUserAllInfo,
   GetUserAuth,
 } from "../../utils/LoginUtils";
@@ -22,9 +21,9 @@ import { loginState } from "../../atoms";
 // npm install @mui/material @emotion/react @emotion/styled
 // npm install @mui/icons-material
 
-interface Props {
-  memberAuth: 0 | 1 | 2;
-}
+// interface Props {
+//   memberAuth: 0 | 1 | 2;
+// }
 // 회원 정보
 interface MemberData {
   memberId: string; // 회원 아이디 (로그인용)
@@ -50,6 +49,8 @@ const MyPageMenuBar = () => {
   const toggleDrawer = (isOpen: boolean) => () => {
     setOpen(isOpen);
   };
+  SendLoginPageIfNotLogin();
+  console.log("확인", GetUserAllInfo());
 
   const getUserAuth = GetUserAuth();
   useEffect(() => {
@@ -99,36 +100,17 @@ const MyPageMenuBar = () => {
             onClick={toggleDrawer(false)}
             onKeyDown={toggleDrawer(false)}
           >
-            <div className={styles.mypagemenubar}>
-              <ReorderIcon />
-              <Link to="/mypageMain">개인정보관리</Link>
-            </div>
-            <div className={styles.mypagemenubar}>
-              <ReorderIcon />
-              <Link to="/mypageMain/myorder">나의주문내역</Link>
-            </div>
-            <div className={styles.mypagemenubar}>
-              <ReorderIcon />
-              <Link to="/mypageMain/myreview">내가작성한리뷰</Link>
-            </div>
-            <div className={styles.mypagemenubar}>
-              <ReorderIcon />
-              <Link to="/mypageMain/mycoupon">나의쿠폰조회</Link>
-            </div>
-            <hr />
-            <hr />
-            {/* memberAuth==0일 때, 나오는 컴포넌트  */}
             {getUserAuth === 0 && (
               <div className={styles.mypagemenubar}>
-                <ReorderIcon />
-                <Link to="/mypageMain/mypageApplyManager">점포점주신청</Link>
+                <MemberAuthUser />
               </div>
             )}
+
             <hr />
             {/* memberAuth==1(점주)일 때, 나오는 컴포넌트  */}
             {getUserAuth === 1 && (
               <div className={styles.mypagemenubar}>
-                <ReorderIcon />
+                {/* <ReorderIcon /> */}
                 <MemberAuthManager />
               </div>
             )}
@@ -136,7 +118,7 @@ const MyPageMenuBar = () => {
             {/* memberAuth==2(관리자)일 때, 나오는 컴포넌트  */}
             {getUserAuth === 2 && (
               <div className={styles.mypagemenubar}>
-                <ReorderIcon />
+                {/* <ReorderIcon /> */}
                 <MemberAuthAdmin />
               </div>
             )}
@@ -147,20 +129,37 @@ const MyPageMenuBar = () => {
   );
 };
 export default MyPageMenuBar;
-
+// memberAuth==0일 때, 나오는 컴포넌트
+function MemberAuthUser() {
+  return (
+    <div>
+      <div className={styles.mypagemenubar}>
+        <Link to="/mypageMain">개인정보관리</Link>
+      </div>
+      <div className={styles.mypagemenubar}>
+        <Link to="/mypageMain/myorder">나의주문내역</Link>
+      </div>
+      <div className={styles.mypagemenubar}>
+        <Link to="/mypageMain/myreview">내가작성한리뷰</Link>
+      </div>
+      <div className={styles.mypagemenubar}>
+        <Link to="/mypageMain/mycoupon">나의쿠폰조회</Link>
+      </div>
+      <div className={styles.mypagemenubar}>
+        <Link to="/mypageMain/mypageApplyManager">점포점주신청</Link>
+      </div>
+    </div>
+  );
+}
 // /* memberAuth==1일 때, 나오는 컴포넌트  */
 function MemberAuthManager() {
   return (
     <div>
       <div className={styles.mypagemenubar}>
-        <MailIcon />
-        <Link to="/mypageMain/mycoupon">나의쿠폰조회</Link>
-        {/* 링크 수정 */}
+        <Link to="/mypageMain">개인정보관리</Link>
       </div>
-
       <div className={styles.mypagemenubar}>
-        <ProductionQuantityLimitsIcon />
-        발주받기
+        <Link to="/order-request">발주 보내는 페이지</Link>
       </div>
     </div>
   );
@@ -171,18 +170,14 @@ function MemberAuthAdmin() {
   return (
     <div>
       <div className={styles.mypagemenubar}>
-        <MailIcon />
-        <Link to="/mypageMain/mycoupon">발주받는 페이지</Link>
-        {/* 링크 수정 */}
+        <Link to="/mypageMain">개인정보관리</Link>
       </div>
       <div className={styles.mypagemenubar}>
-        <ProductionQuantityLimitsIcon />
-        발주주는 페이지
+        <Link to="/request-order-list">발주승인 페이지</Link>
       </div>
       <div className={styles.mypagemenubar}>
-        <EventIcon />
+        {/* <EventIcon /> */}
         <Link to="/mypageMain/EventRegi">이벤트 생성</Link>
-        {/* 링크 수정 */}
       </div>
     </div>
   );
