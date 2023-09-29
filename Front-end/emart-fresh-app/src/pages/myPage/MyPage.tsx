@@ -60,34 +60,38 @@ export default function MyPage() {
   }, [memberEmail, ischange]);
 
   return (
-    <div className={styles.mypageMain}>
-      <div className={styles.container}>
-        <div className={styles.myinfo}>
-          <div className={styles.myTitleId}>아이디</div>
-          <div className={styles.myTitleIdValue}>{allMember.memberId}</div>
-          <div className={styles.myTitleName}>이름</div>
-          <div className={styles.myTitleNameValue}>{allMember.memberName}</div>
-          <div className={styles.myTitleEmail}>이메일</div>
-          <div className={styles.myTitleEmailValue}>
-            {allMember.memberEmail}&nbsp;&nbsp;&nbsp;
-            <div>
-              <CommonModalBasicEmail
-                ischange={ischange}
-                setIsChange={setIsChange}
-              />
+    <div className={styles.mainContent}>
+      <div className={styles.mypageMain}>
+        <div className={styles.container}>
+          <div className={styles.myinfo}>
+            <div className={styles.myTitleId}>아이디</div>
+            <div className={styles.myTitleIdValue}>{allMember.memberId}</div>
+            <div className={styles.myTitleName}>이름</div>
+            <div className={styles.myTitleNameValue}>
+              {allMember.memberName}
             </div>
-          </div>
+            <div className={styles.myTitleEmail}>이메일</div>
+            <div className={styles.myTitleEmailValue}>
+              {allMember.memberEmail}&nbsp;&nbsp;&nbsp;
+              <div>
+                <CommonModalBasicEmail
+                  ischange={ischange}
+                  setIsChange={setIsChange}
+                />
+              </div>
+            </div>
 
-          {/* <div>비밀번호</div> */}
+            {/* <div>비밀번호</div> */}
 
-          {/* <div className={styles.editEmail}>
+            {/* <div className={styles.editEmail}>
             <CommonModalBasicEmail
               ischange={ischange}
               setIsChange={setIsChange}
             /> */}
-          {/* </div> */}
-          <div className={styles.editPassword}>
-            <CommonModalBasic />
+            {/* </div> */}
+            <div className={styles.editPassword}>
+              <CommonModalBasic />
+            </div>
           </div>
         </div>
       </div>
