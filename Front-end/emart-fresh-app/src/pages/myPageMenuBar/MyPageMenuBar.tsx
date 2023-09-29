@@ -75,8 +75,15 @@ const MyPageMenuBar = () => {
   return (
     <div className={styles.sideMenuBar}>
       <div>
-        <Button onClick={toggleDrawer(true)}>
-          <ReorderIcon /> 열기
+        <Button
+          sx={{
+            marginLeft: "14rem",
+            marginTop: 0,
+            width: "50px",
+          }}
+          onClick={toggleDrawer(true)}
+        >
+          {/* <ReorderIcon /> */} 열기
         </Button>
         <Drawer anchor="left" open={open} onClose={toggleDrawer(false)}>
           <Box
