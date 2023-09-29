@@ -13,6 +13,7 @@ import {
   SendLoginPageIfNotLogin,
   GetUserName,
   GetUserAllInfo,
+  GetUserAuth,
 } from "../../utils/LoginUtils";
 import { sendAxiosGetRequest } from "../../utils/userUtils";
 import { useRecoilState } from "recoil";
@@ -50,6 +51,7 @@ const MyPageMenuBar = () => {
     setOpen(isOpen);
   };
 
+  const getUserAuth = GetUserAuth();
   useEffect(() => {
     const getMemberAuth = async () => {
       try {
@@ -116,28 +118,28 @@ const MyPageMenuBar = () => {
             <hr />
             <hr />
             {/* memberAuth==0일 때, 나오는 컴포넌트  */}
-            {/* {memberAuth === 0 && ( */}
-            <div className={styles.mypagemenubar}>
-              <ReorderIcon />
-              <Link to="/mypageMain/mypageApplyManager">점포점주신청</Link>
-            </div>
-            {/* )} */}
+            {getUserAuth === 0 && (
+              <div className={styles.mypagemenubar}>
+                <ReorderIcon />
+                <Link to="/mypageMain/mypageApplyManager">점포점주신청</Link>
+              </div>
+            )}
             <hr />
             {/* memberAuth==1(점주)일 때, 나오는 컴포넌트  */}
-            {/* {memberAuth === 1 && ( */}
-            <div className={styles.mypagemenubar}>
-              <ReorderIcon />
-              <MemberAuthManager />
-            </div>
-            {/* )} */}
+            {getUserAuth === 1 && (
+              <div className={styles.mypagemenubar}>
+                <ReorderIcon />
+                <MemberAuthManager />
+              </div>
+            )}
 
             {/* memberAuth==2(관리자)일 때, 나오는 컴포넌트  */}
-            {/* {memberAuth === 2 && ( */}
-            <div className={styles.mypagemenubar}>
-              <ReorderIcon />
-              <MemberAuthAdmin />
-            </div>
-            {/* )} */}
+            {getUserAuth === 2 && (
+              <div className={styles.mypagemenubar}>
+                <ReorderIcon />
+                <MemberAuthAdmin />
+              </div>
+            )}
           </Box>
         </Drawer>
       </div>
