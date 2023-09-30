@@ -13,7 +13,6 @@ import MyReview from "./pages/myPage/MyReview";
 import MyCoupon from "./pages/myPage/MyCoupon";
 import MyPage from "./pages/myPage/MyPage";
 import MyOrder from "./pages/myPage/MyOrder";
-// import EventRegi from "./pages/eventPage/EventRegi";
 
 import OrderRequest from "./pages/orderRequestPage/OrderRequest";
 import OrderHandle from "./pages/orderHandlePage/OrderHandle";
@@ -28,6 +27,7 @@ import ProductDetail from "./pages/productDetailPage/ProductDetail";
 import EventList from "./pages/eventPage/EventList";
 import Payment from "./pages/paymentPage/Payment";
 import EventListDetail from "./pages/eventPage/EventListDetail";
+import EventUpdate from "./pages/eventPage/EventUpdate";
 
 const queryClient = new QueryClient();
 
@@ -50,10 +50,10 @@ function App() {
                 <Route path="/mypageMain/myreview" element={<MyReview />} />
                 <Route path="/mypageMain/mycoupon" element={<MyCoupon />} />
 
-                {/* <Route
-                  path="/mypageMain/EventRegi"
-                  element={<EventRegi />}
-                ></Route> */}
+                <Route
+                  path="/mypageMain/eventupdate"
+                  element={<EventUpdate />}
+                ></Route>
               </Route>
               <Route path="/eventlist" element={<EventList />}></Route>
               <Route

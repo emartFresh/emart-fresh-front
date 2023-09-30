@@ -79,7 +79,7 @@ export default function MyCoupon() {
     pages.push(i + 1);
   }
   const allMember = GetUserAllInfo();
-  allMember.memberId;
+
   return (
     <div>
       <div className={styles.couponMain}>

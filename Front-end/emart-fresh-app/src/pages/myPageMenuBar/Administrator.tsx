@@ -6,14 +6,17 @@ export default function Administrator() {
   return (
     <div>
       <div className={styles.mypagemenubar}>
-        <Link to="/mypageMain">개인정보관리</Link>
+        <Link to="/">점주 주문관리</Link>
+      </div>
+      <div className={styles.mypagemenubar}>
+        <Link to="/">점주 신청 승인</Link>
       </div>
       <div className={styles.mypagemenubar}>
         <Link to="/request-order-list">발주승인 페이지</Link>
       </div>
       <div className={styles.mypagemenubar}>
         {/* <EventIcon /> */}
-        <Link to="/mypageMain/EventRegi">이벤트 생성</Link>
+        <Link to="/mypageMain/eventupdate">이벤트 생성</Link>
       </div>
     </div>
   );
