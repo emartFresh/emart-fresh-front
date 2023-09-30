@@ -105,6 +105,14 @@ const MyPageMenuBar = () => {
               </div>
             )}
             <hr />
+            {/* memberAuth==2일 때, 나오는 컴포넌트   수정: auth 2로 변경*/}
+            {memberAuth === 0 && (
+              <div className={styles.mypagemenubar}>
+                <ReorderIcon />
+                <Link to="/mypageMain/HandleApplyManager">점포점주신청</Link>
+              </div>
+            )}
+            <hr />
             {/* memberAuth==1(점주)일 때, 나오는 컴포넌트  */}
             {memberAuth === 1 && (
               <div className={styles.mypagemenubar}>
