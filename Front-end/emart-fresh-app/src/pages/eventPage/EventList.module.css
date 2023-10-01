@@ -49,21 +49,16 @@
   padding-top: 2vw;
   grid-template-columns: 1fr 1fr;
   grid-gap: 2vw;
+  padding: auto;
 }
 .eventItem {
   width: 100%;
   position: relative;
   border: 3px solid transparent;
-  row-gap: 1rem;
 }
 .eventItem:hover {
   transition: 0.1s;
   color: #f9bb00;
-}
-.eventItem:hover .eventImage,
-.eventItem:hover .endedEventImage {
-  border-color: #f9bb00;
-  transform: scale(1.05);
 }
 
 .eventText {
@@ -90,6 +85,7 @@
 .endedEventImage:hover {
   border-color: #f9bb00;
   transform: scale(1.05);
+  /* border-color: transparent; */
 }
 
 @media screen and (max-width: 768px) {

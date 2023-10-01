@@ -3,7 +3,7 @@ import image3 from "../../assets/images/image3.png";
 import image1 from "../../assets/images/image4.png";
 import styles from "./EventList.module.css";
 
-const EventEnded = () => {
+export default function EventEnded() {
   return (
     <div>
       <div className={styles.eventContainer}>
@@ -52,6 +52,4 @@ const EventEnded = () => {
       </div>
     </div>
   );
-};
-
-export default EventEnded;
+}

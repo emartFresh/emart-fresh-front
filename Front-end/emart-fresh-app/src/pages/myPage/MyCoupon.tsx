@@ -31,7 +31,8 @@ export default function MyCoupon() {
   const [totalPages, setTotalPages] = useState(0);
   const [totalElements, setTotalElements] = useState(0);
   const [loginToken, setLoginToken] = useRecoilState<JwtToken>(loginState);
-  GetUserName();
+  const allMember = GetUserAllInfo();
+
   useEffect(() => {
     async function fetchCoupons() {
       console.log("리프레쉬토큰", loginToken);
@@ -78,7 +79,6 @@ export default function MyCoupon() {
   for (let i = 0; i < totalPages; i++) {
     pages.push(i + 1);
   }
-  const allMember = GetUserAllInfo();
 
   return (
     <div>
