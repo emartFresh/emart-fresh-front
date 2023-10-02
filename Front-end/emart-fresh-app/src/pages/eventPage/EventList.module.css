@@ -2,6 +2,7 @@
   width: 88vw;
   display: flex;
   flex-direction: column;
+  min-width: 900px;
 }
 .eventNavbar {
   width: 85vw;
@@ -14,6 +15,7 @@
   align-items: center;
   justify-items: center;
   border-radius: 0.8rem;
+  min-width: 400px;
 }
 .eventNavbar .event {
   display: flex;

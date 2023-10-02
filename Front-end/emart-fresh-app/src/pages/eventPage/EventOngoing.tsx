@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { useState, useEffect } from "react";
 import styles from "./EventList.module.css";
-// import { Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import axios from "axios";
 
 interface EventList {
@@ -48,7 +48,7 @@ export default function EventOngoing() {
     <div className={styles.eventContainer}>
       {onGoingEventList.map((eventlist) => (
         <div key={eventlist.eventId}>
-          <div className={styles.eventItem}>
+          <Link to="/eventlistdetail">
             <div>
               <img
                 src={eventlist.eventBannerImage}
@@ -61,7 +61,7 @@ export default function EventOngoing() {
               {new Date(eventlist.eventEndDate).toLocaleDateString()}
             </div>
             <div className={styles.eventText}>{eventlist.eventTitle}</div>
-          </div>
+          </Link>
         </div>
       ))}
     </div>
