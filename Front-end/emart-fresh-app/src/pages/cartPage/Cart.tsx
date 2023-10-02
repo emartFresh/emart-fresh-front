@@ -43,6 +43,17 @@ const Cart = () => {
       setCartItemList(res);
     });
 
+    if (selectedItems.length > 0) {
+      const newPaymentItems = selectedItems.map((selectedItemId) => {
+        const selectedItem = cartItemList.find(
+          (item) => item.cartProductId === selectedItemId
+        );
+        return selectedItem;
+      });
+      setPaymentItems(newPaymentItems);      
+    }
+
+
     window.addEventListener("scroll", () => {
       const cartCalculate = document.querySelector(
         ".cartCalculate"
@@ -67,9 +78,9 @@ const Cart = () => {
       // 컴포넌트가 언마운트될 때 이벤트 리스너 정리
       window.removeEventListener("scroll", () => {});
     };
-  }, []);
-
-  console.log("selectedItem>", selectedItems);
+  
+  }, [selectedItems]);
+  // 수정 : 체크할때마다 리렌더
 
   const handleQuantity = (
     e: React.MouseEvent<HTMLInputElement, MouseEvent>,
@@ -95,21 +106,38 @@ const Cart = () => {
   };
 
   const handleInputQuantity = (value: string, cartProductId: number) => {
-    setCartItemList(
-      cartItemList.map((item) => {
-        if (item.cartProductId === cartProductId) {
-          return { ...item, cartProductQuantity: parseInt(value) };
-        } else {
-          return item;
-        }
-      })
-    );
+    const newValue = value;
+    const isValidInput = /^[1-9]\d*$/.test(newValue);
+
+
+    // 수정 : 터짐
+    if (newValue.length === 0) {
+      // alert('수량을 입력해주세요. (임시 알림)');
+      setCartItemList(
+        cartItemList.map((item) => {
+          if (item.cartProductId === cartProductId) {
+            return { ...item, cartProductQuantity: parseInt('1') };
+          }
+        })
+      )
+    }
+
+    if (isValidInput) {
+      setCartItemList(
+        cartItemList.map((item) => {
+          if (item.cartProductId === cartProductId) {
+            return { ...item, cartProductQuantity: parseInt(value) };
+          } else {
+            return item;
+          }
+        })
+      );
+    }
   };
 
   const handleCheckboxChange = (cartProductId: number) => {
     if (selectedItems.includes(cartProductId)) {
       setSelectedItems(selectedItems.filter((item) => item !== cartProductId));
-      console.log(selectedItems);
     } else {
       setSelectedItems([...selectedItems, cartProductId]);
     }
@@ -205,8 +233,9 @@ const Cart = () => {
                       }
                       minLength={1}
                       maxLength={2}
-                      max={99}
-                      min={1}
+                      min="1"
+                      step="1"
+                      pattern="[1-9]\d*"
                     />
                     <input
                       type="button"
@@ -235,12 +264,12 @@ const Cart = () => {
               {/* <h4>{storeName}<h4> */}
               {/* 수정 : 응답에 store name을 하나로 뭉쳐서 */}
               <ul>
-                {selectedItems.map((selectedItemId) => {
+                {
+                selectedItems.map((selectedItemId) => {
                   const selectedItem = cartItemList.find(
                     (item) => item.cartProductId === selectedItemId
                   );
-                  totalPrice +=
-                    selectedItem.priceNumber * selectedItem.cartProductQuantity;
+                  totalPrice += selectedItem.priceNumber * selectedItem.cartProductQuantity; 
                   return (
                     <li key={selectedItemId}>
                       {selectedItem.productTitle} / 가격:{" "}
@@ -265,7 +294,7 @@ const Cart = () => {
       </div>
       {/* 수정 -> 선택된 아이템만! */}
       {/* {openPayment && <Payment cartInfo={cartItemList} />} */}
-      {openPayment && <Payment cartInfo={selectedItems} />}
+      {openPayment && <Payment cartInfo={paymentItems} />}
     </div>
   );
 };
