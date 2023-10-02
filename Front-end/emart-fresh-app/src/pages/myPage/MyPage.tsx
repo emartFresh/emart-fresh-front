@@ -50,7 +50,6 @@ export default function MyPage() {
         console.log("Axios Response:", response);
 
         setMemberData(response.data);
-        // console.log("멤버 아이디:", response.memberId);
       } catch (error) {
         console.error("Error fetching mypage:", error);
         alert("개인회원정보 조회 중 오류가 발생했습니다.");

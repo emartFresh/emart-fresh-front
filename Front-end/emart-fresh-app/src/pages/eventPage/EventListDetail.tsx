@@ -2,8 +2,10 @@
 import { useState, useEffect } from "react";
 import styles from "./EventListDetail.module.css";
 import axios from "axios";
+import { useParams } from "react-router-dom";
+
 interface EventList {
-  eventId: number;
+  eventId: string;
   eventTitle: string;
   eventBannerImage: string;
   eventDetailImage: string;
@@ -11,35 +13,40 @@ interface EventList {
   eventEndDate: string;
   eventListCount: number;
 }
-const EventListDetail = () => {
-  const [onGoingEventList, setOnGoingEventList] = useState<EventList[]>([]);
-  const pageSize = 50;
-  const [currentPage, setCurrentPage] = useState(1);
+export default function EventListDetail() {
+  const { eventId } = useParams();
+  const [onGoingEventList, setOnGoingEventList] = useState<EventList>({
+    eventId: eventId,
+    eventTitle: "",
+    eventBannerImage: "",
+    eventDetailImage: "",
+    eventStartDate: "",
+    eventEndDate: "",
+    eventListCount: 0,
+  });
 
   useEffect(() => {
-    async function EventListup() {
+    async function DetailEvent() {
       try {
         const response = await axios.get(
-          `${import.meta.env.VITE_BACK_PORT}/event/event-list`,
-
+          `${import.meta.env.VITE_BACK_PORT}/event/detail`,
           {
             params: {
-              page: currentPage,
-              size: pageSize,
+              eventId: eventId,
             },
           }
         );
-
         console.log(response.data);
-        const evnetListData = response.data.content;
-        setOnGoingEventList(evnetListData);
+        const eventListData = response.data;
+        setOnGoingEventList(eventListData);
       } catch (error) {
-        console.error("Error fetching eventlist:", error);
-        alert(error);
+        console.error("Error fetching eventdetail:", error);
       }
     }
-    EventListup();
-  }, []);
+    DetailEvent();
+  }, [eventId]);
+  console.log(onGoingEventList);
+
   return (
     <div>
       <div className={styles.eventWrapper}>
@@ -49,30 +56,23 @@ const EventListDetail = () => {
             이마트 24의 다양한 이벤트에 참여해보세요.
           </p>
         </div>
+        <div className={styles.eventDetailDiv}>
+          <p className={styles.eventDetailTitle}>
+            {onGoingEventList.eventTitle}
+          </p>
+          <p className={styles.eventDetailDate}>
+            {new Date(onGoingEventList.eventStartDate).toLocaleDateString()}~
+            {new Date(onGoingEventList.eventEndDate).toLocaleDateString()}
+          </p>
+        </div>
         <div>
-          {onGoingEventList.map((eventlist) => (
-            <div key={eventlist.eventId}>
-              <div className={styles.eventDetailDiv}>
-                <p className={styles.eventDetailTitle}>
-                  {eventlist.eventTitle}
-                </p>
-                <p className={styles.eventDetailDate}>
-                  {new Date(eventlist.eventStartDate).toLocaleDateString()} ~
-                  {new Date(eventlist.eventEndDate).toLocaleDateString()}
-                </p>
-              </div>
-              <div>
-                <img
-                  src={eventlist.eventDetailImage}
-                  className={styles.eventDetailImage}
-                  alt="상세이미지"
-                />
-              </div>
-            </div>
-          ))}
+          <img
+            src={onGoingEventList.eventDetailImage}
+            className={styles.eventDetailImage}
+            alt="상세이미지"
+          />
         </div>
       </div>
     </div>
   );
-};
-export default EventListDetail;
+}

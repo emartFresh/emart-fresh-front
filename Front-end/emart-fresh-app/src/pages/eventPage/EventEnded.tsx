@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React from "react";
 import image3 from "../../assets/images/image3.png";
 import image1 from "../../assets/images/image4.png";

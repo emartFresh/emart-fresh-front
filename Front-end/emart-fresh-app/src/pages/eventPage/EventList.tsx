@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useState } from "react";
 import styles from "./EventList.module.css";
 import EventOngoing from "./EventOngoing";

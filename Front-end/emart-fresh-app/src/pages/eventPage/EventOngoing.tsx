@@ -15,6 +15,7 @@ interface EventList {
 }
 
 export default function EventOngoing() {
+  const [eventId, setEventId] = useState("");
   const [onGoingEventList, setOnGoingEventList] = useState<EventList[]>([]);
   const pageSize = 50;
   const [currentPage, setCurrentPage] = useState(1);
@@ -24,9 +25,9 @@ export default function EventOngoing() {
       try {
         const response = await axios.get(
           `${import.meta.env.VITE_BACK_PORT}/event/event-list`,
-
           {
             params: {
+              eventId: eventId,
               page: currentPage,
               size: pageSize,
             },
@@ -36,6 +37,8 @@ export default function EventOngoing() {
         console.log(response.data);
         const evnetListData = response.data.content;
         setOnGoingEventList(evnetListData);
+        setEventId(response.data);
+        console.log(eventId);
       } catch (error) {
         console.error("Error fetching eventlist:", error);
         alert(error);
@@ -43,12 +46,12 @@ export default function EventOngoing() {
     }
     EventListup();
   }, []);
-
+  console.log(onGoingEventList);
   return (
     <div className={styles.eventContainer}>
       {onGoingEventList.map((eventlist) => (
         <div key={eventlist.eventId}>
-          <Link to="/eventlistdetail">
+          <Link to={`/eventlistdetail/${eventlist.eventId}`}>
             <div>
               <img
                 src={eventlist.eventBannerImage}
