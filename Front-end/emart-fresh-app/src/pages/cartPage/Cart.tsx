@@ -1,42 +1,75 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import styles from "../page_css/Cart.module.css";
 import image from "../../assets/images/product013.png";
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 import { useRecoilState } from "recoil";
 import { loginState } from "../../atoms";
 import { Checkbox } from "@mui/material";
-import { useState } from "react";
 import { sendAxiosRequest } from "../../utils/userUtils";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import cartNull from "../../assets/images/cartNull.png";
 import cartCalcNull from "../../assets/images/cartCalcNull.png";
-import RemoveIcon from "@mui/icons-material/Remove";
-import AddIcon from "@mui/icons-material/Add";
 import Payment from "../paymentPage/Payment";
+
 
 interface responseData {
   data: CartData[];
 }
 
-/*
-
-
-*/
-
 // 수정 : 수량 변경 시  0이하/ 99이상 안됨.
-// 전체 선택
-// 총 금액 계산
-// 쿠폰 적용
 // cartCalculate : div내부 스크롤 -> overflow scroll
 // unmount : 수량 저장
-// 제품 삭제 기능
 
 const Cart = () => {
   const [loginToken, setLoginToken] = useRecoilState<JwtToken>(loginState);
   const [cartItemList, setCartItemList] = useState<CartData[]>([]);
   const [selectedItems, setSelectedItems] = useState([]);
+  const [paymentItems, setPaymentItems] = useState<CartData[]>([]);
   const [extendedPrice, setExtendedPrice] = useState<number>(0);
   const [openPayment, setOpenPayment] = useState<boolean>(false);
+
+  useEffect(() => {
+    sendAxiosRequest(
+      "/cart/getCartInfo",
+      "get",
+      loginToken,
+      setLoginToken
+    ).then((response) => {
+      console.log("response > ", response);
+      // 수정
+      const res: CartData[] = JSON.parse(JSON.stringify(response));
+      setCartItemList(res);
+    });
+
+    window.addEventListener("scroll", () => {
+      const cartCalculate = document.querySelector(
+        ".cartCalculate"
+      ) as HTMLElement | null;
+      const content = document.querySelector(".content") as HTMLElement | null;
+
+      if (cartCalculate && content) {
+        const scrollY = window.scrollY;
+        const contentHeight = content.clientHeight;
+        const sidebarHeight = cartCalculate.clientHeight;
+
+        // 움직임을 느리게 하기 위해 scrollY 값을 조절
+        const translateY = scrollY * 0.2; // 조절 가능 비율
+
+        if (translateY + sidebarHeight < contentHeight) {
+          cartCalculate.style.transform = `translateY(${translateY}px)`;
+        }
+      }
+    });
+    return () => {
+      console.log("장바구니 업데이터 API");
+      // 컴포넌트가 언마운트될 때 이벤트 리스너 정리
+      window.removeEventListener("scroll", () => {});
+    };
+  }, []);
+
+  console.log("selectedItem>", selectedItems);
 
   const handleQuantity = (
     e: React.MouseEvent<HTMLInputElement, MouseEvent>,
@@ -75,13 +108,10 @@ const Cart = () => {
 
   const handleCheckboxChange = (cartProductId: number) => {
     if (selectedItems.includes(cartProductId)) {
-      // 만약 selectedItems에 cartProductId가 포함된다면 (이미 선택되었다면)
       setSelectedItems(selectedItems.filter((item) => item !== cartProductId));
-      // selectedItems에 item의 cartProductId와, checkbox에서 넘어온 cartProductId를 비교해서 같지 않은 item만 selectItems에 담는다.
       console.log(selectedItems);
     } else {
       setSelectedItems([...selectedItems, cartProductId]);
-      // 이미 선택되어있는 항목이 아니라면, selectedItems에 담음
     }
   };
 
@@ -96,45 +126,22 @@ const Cart = () => {
     }
   };
 
-  useEffect(() => {
+  const deleteItem = (cartProductId: number) => {
     sendAxiosRequest(
-      "/cart/getCartInfo",
-      "get",
+      "/cart/removeProduct?cartProductId="+cartProductId,
+      "delete",
       loginToken,
-      setLoginToken
-    ).then((response) => {
-      console.log("response > ", response);
-      // 수정
-      const res: CartData[] = JSON.parse(JSON.stringify(response));
-      setCartItemList(res);
-    });
-
-    window.addEventListener("scroll", () => {
-      const cartCalculate = document.querySelector(
-        ".cartCalculate"
-      ) as HTMLElement | null;
-      const content = document.querySelector(".content") as HTMLElement | null;
-
-      if (cartCalculate && content) {
-        const scrollY = window.scrollY;
-        const contentHeight = content.clientHeight;
-        const sidebarHeight = cartCalculate.clientHeight;
-
-        // 움직임을 느리게 하기 위해 scrollY 값을 조절
-        const translateY = scrollY * 0.2; // 조절 가능 비율
-
-        if (translateY + sidebarHeight < contentHeight) {
-          cartCalculate.style.transform = `translateY(${translateY}px)`;
-        }
-      }
-    });
-    return () => {
-      console.log("장바구니 업데이터 API");
-      // 컴포넌트가 언마운트될 때 이벤트 리스너 정리
-
-      window.removeEventListener("scroll", () => {});
-    };
-  }, []);
+      setLoginToken,
+      {cartProductId: cartProductId}
+    )
+    .then((res) => {
+      setCartItemList(
+        (prevList) => prevList.filter((item) => item.cartProductId !== cartProductId)
+      )
+      alert('삭제되었습니다.');
+    })
+    .catch(console.error)
+  }
 
   let totalPrice = 0;
 
@@ -153,8 +160,8 @@ const Cart = () => {
           cartItemList.length === 0 ? styles.hiddenWrap : styles.allCheckWrap
         }
       >
-        <Checkbox className={styles.allCheckBox} onChange={handleAllCheck} />
-        <p className={styles.allCheck}>전체 선택</p>
+        <input type='checkbox' id='allCheckBox' className={styles.allCheckBox} onChange={handleAllCheck} />
+        <label htmlFor="allCheckBox" className={styles.allCheck}>전체 선택</label>
       </div>
       <div className={styles.cartContainer}>
         <div
@@ -176,6 +183,7 @@ const Cart = () => {
                     checked={selectedItems.includes(item.cartProductId)}
                     onChange={() => handleCheckboxChange(item.cartProductId)}
                   />
+                  <FontAwesomeIcon icon={faXmark} className={styles.delItemMark} onClick={() => {deleteItem(item.cartProductId)}}/>
                   <img src={image} alt="" />
                   <p>{item.productTitle}</p>
                   <p>{item.priceNumber}</p>
@@ -216,7 +224,7 @@ const Cart = () => {
         </div>
         <div className={styles.cartCalculate}>
           {selectedItems.length === 0 && (
-            <div>
+            <div className={styles.cartCalcNullWrap}>
               <img src={cartCalcNull} alt="" className={styles.cartCalcNull} />
             </div>
           )}
@@ -225,16 +233,12 @@ const Cart = () => {
             <>
               <h4 className={styles.storeName}>센텀시티점</h4>
               {/* <h4>{storeName}<h4> */}
+              {/* 수정 : 응답에 store name을 하나로 뭉쳐서 */}
               <ul>
                 {selectedItems.map((selectedItemId) => {
                   const selectedItem = cartItemList.find(
                     (item) => item.cartProductId === selectedItemId
                   );
-                  console.log("selectedItems>", selectedItems);
-                  console.log("cartItemList> ", cartItemList);
-                  console.log("NO ", selectedItemId);
-
-                  console.log("selectedItem>", selectedItem);
                   totalPrice +=
                     selectedItem.priceNumber * selectedItem.cartProductQuantity;
                   return (
@@ -246,20 +250,22 @@ const Cart = () => {
                   );
                 })}
               </ul>
-              <div>
-                총금액 : <p>{totalPrice}원</p>
-              </div>
             </>
           )}
-          <button
-            className={styles.payBtn}
-            onClick={() => setOpenPayment(true)}
-          >
-            결제하기
-          </button>
+          <div className={styles.payInfoWrap}>
+            <p className={styles.extendedPrice}>결제 금액 : {totalPrice} 원</p>
+            <button
+              className={styles.payBtn}
+              onClick={() => setOpenPayment(true)}
+            >
+              결제하기
+            </button>
+          </div>
         </div>
       </div>
-      {openPayment && <Payment cartInfo={cartItemList} />}
+      {/* 수정 -> 선택된 아이템만! */}
+      {/* {openPayment && <Payment cartInfo={cartItemList} />} */}
+      {openPayment && <Payment cartInfo={selectedItems} />}
     </div>
   );
 };

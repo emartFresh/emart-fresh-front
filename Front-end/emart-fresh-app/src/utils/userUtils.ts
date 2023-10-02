@@ -176,7 +176,7 @@ export const sendAxiosRequest = async (
       Authorization: `Bearer ${loginToken.accessToken}`,
       refreshToken: loginToken.refreshToken,
     },
-    ...(httpMethod === "get" ? { params: params } : { data: params }),
+    ...(httpMethod === "get" || httpMethod === "delete" ? { params: params } : { data: params }),
   })
     .then((response) => response.data)
     .catch(async (error) => {
