@@ -5,13 +5,14 @@
   min-width: 900px;
 }
 .eventNavbar {
-  width: 83vw;
+  width: 72vw;
   height: 7vh;
   margin: auto;
   display: grid;
   grid-gap: 0.2rem;
   grid-template-columns: 1fr 1fr;
   background-color: #333333;
+  font-weight: 600;
   align-items: center;
   justify-items: center;
   border-radius: 0.8rem;
@@ -23,9 +24,8 @@
   height: 100%;
   font-size: 16px;
   align-items: center;
-
   justify-content: center;
-  font-weight: 500;
+  font-weight: 600;
   color: #999999;
   cursor: pointer;
   border-radius: 0.6rem;
@@ -38,23 +38,24 @@
   justify-content: center;
   align-items: center;
   text-align: center;
-  font-weight: 500;
+  font-weight: 600;
   background-color: #f9bb00;
   cursor: pointer;
   border-radius: 0.6rem;
 }
 
 .eventContainer {
-  width: 82vw;
+  width: 70vw;
   display: grid;
   margin: auto;
+  margin-bottom: 1rem;
   padding-top: 2vw;
   grid-template-columns: 1fr 1fr;
   grid-gap: 2vw;
   padding: auto;
 }
 .eventItem {
-  width: 100%;
+  width: 80%;
   position: relative;
   border: 3px solid transparent;
 }
@@ -97,7 +98,16 @@
     margin: 1rem;
     padding: 1rem;
   }
+  .eventImage,
+  .endedEventImage {
+    margin-top: 1rem;
+  }
+  .eventImage:hover,
+  .endedEventImage:hover {
+    border-color: #f9bb00;
+    transform: scale(1.02);
+  }
   .eventNavbar {
-    width: 90vw;
+    width: 91vw;
   }
 }
