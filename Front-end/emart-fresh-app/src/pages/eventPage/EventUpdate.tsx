@@ -77,7 +77,7 @@ export default function EventUpdate() {
       if (response.data === "success") {
         console.log("이벤트 생성에 성공하였습니다.");
         alert("이벤트 등록성공!");
-        console.log(setFormData);
+        // console.log(setFormData);
         if (
           (eventBannerImageInputRef.current, eventDetailImageInputRef.current)
         ) {

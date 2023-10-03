@@ -51,9 +51,15 @@ export default function EventListDetail() {
     <div>
       <div className={styles.eventWrapper}>
         <div>
-          <div className={styles.eventTitle}>진행중인 이벤트</div>
+          <div className={styles.eventTitle}>
+            {new Date(onGoingEventList.eventEndDate) >= new Date()
+              ? "진행중인 이벤트"
+              : "종료된 이벤트"}
+          </div>
           <p className={styles.eventTitleText}>
-            이마트 24의 다양한 이벤트에 참여해보세요.
+            {new Date(onGoingEventList.eventEndDate) >= new Date()
+              ? "이마트 24의 다양한 이벤트에 참여해보세요."
+              : "종료된 이벤트입니다. 당첨자발표는 이마트24 앱에서 확인해 주세요."}
           </p>
         </div>
         <div className={styles.eventDetailDiv}>

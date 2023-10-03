@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 
 interface EventList {
-  eventId: number;
+  eventId: string;
   eventTitle: string;
   eventBannerImage: string;
   eventDetailImage: string;
@@ -35,10 +35,15 @@ export default function EventOngoing() {
         );
 
         console.log(response.data);
-        const evnetListData = response.data.content;
-        setOnGoingEventList(evnetListData);
+        const currentDate = new Date();
+        const filteredEventList = response.data.content.filter(
+          (event: { eventEndDate: Date }) => {
+            const eventEndDate = new Date(event.eventEndDate);
+            return eventEndDate >= currentDate;
+          }
+        );
+        setOnGoingEventList(filteredEventList);
         setEventId(response.data);
-        console.log(eventId);
       } catch (error) {
         console.error("Error fetching eventlist:", error);
         alert(error);
@@ -46,7 +51,7 @@ export default function EventOngoing() {
     }
     EventListup();
   }, []);
-  console.log(onGoingEventList);
+  // console.log(onGoingEventList);
   return (
     <div className={styles.eventContainer}>
       {onGoingEventList.map((eventlist) => (
@@ -60,7 +65,7 @@ export default function EventOngoing() {
               />
             </div>
             <div className={styles.eventText}>
-              {new Date(eventlist.eventStartDate).toLocaleDateString()} ~
+              {new Date(eventlist.eventStartDate).toLocaleDateString()} ~&nbsp;
               {new Date(eventlist.eventEndDate).toLocaleDateString()}
             </div>
             <div className={styles.eventText}>{eventlist.eventTitle}</div>
