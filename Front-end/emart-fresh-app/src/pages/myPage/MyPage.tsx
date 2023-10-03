@@ -79,15 +79,6 @@ export default function MyPage() {
                 />
               </div>
             </div>
-
-            {/* <div>비밀번호</div> */}
-
-            {/* <div className={styles.editEmail}>
-            <CommonModalBasicEmail
-              ischange={ischange}
-              setIsChange={setIsChange}
-            /> */}
-            {/* </div> */}
             <div className={styles.editPassword}>
               <CommonModalBasic />
             </div>
