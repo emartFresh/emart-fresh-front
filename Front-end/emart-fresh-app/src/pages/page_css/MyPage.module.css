@@ -9,7 +9,6 @@
 
   border-radius: 15px;
   border: 1px solid whitesmoke;
-  /* border: 1px solid #f9bb00; */
 
   /* box-shadow: "20px 20px 20px yellow"; 가로거리 세로거리  */
   /* box-shadow: inset 10px 100px 15px yellowgreen; */
@@ -120,8 +119,6 @@
 }
 
 .modifyBtn {
-  /* width: 10px; */
-  /* padding: 0.2vw; */
   margin: 0;
   background-color: #f9bb00;
   border-radius: 8px;
@@ -131,12 +128,13 @@
 }
 
 .passwordBtn {
-  width: 11rem;
-  height: 50px;
+  width: 8.8rem;
+  font-size: 0.9rem;
+
   background-color: rgb(204, 204, 204);
 }
 .emailChangeBtn {
-  width: 9.5rem;
-  height: 50px;
+  width: 7.8rem;
+  font-size: 0.9rem;
   background-color: rgb(204, 204, 204);
 }
