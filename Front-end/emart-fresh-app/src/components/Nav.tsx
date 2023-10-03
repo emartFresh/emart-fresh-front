@@ -9,20 +9,31 @@ import { styled } from "@mui/material/styles";
 import IconButton from "@mui/material/IconButton";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { useRecoilState } from "recoil";
-import { loginState } from "../atoms";
+import { kakaoAccessToken, loginState, loginTypeState } from "../atoms";
+import axios from "axios";
+import { sendAxiosRequest } from "../utils/userUtils";
 
 export default function Nav() {
   const navigate = useNavigate();
   const location = useLocation();
   const isHomePage = location.pathname === "/"; // 홈 페이지 여부 확인
   const [loginToken, setLoginToken] = useRecoilState<JwtToken>(loginState);
+  const [kakaoToken, setKakaoToken] = useRecoilState<string>(kakaoAccessToken);
+  const [loginType, setLoginType] = useRecoilState<string>(loginTypeState);
 
-  const logout = () => {
-    setLoginToken({
-      accessToken: "",
-      refreshToken: "",
-    });
-    alert("로그아웃 완료! (임시 알림)");
+  const logout = () => { 
+    sendAxiosRequest('/member/logout', 'post', loginToken, setLoginToken, {loginType: loginType, kakaoAccessToken: kakaoToken})
+    .then(() => {
+      setLoginToken({
+        accessToken: "",
+        refreshToken: "",
+      });
+      setLoginType("");
+      alert("로그아웃 완료! (임시 알림)");
+    })
+    .catch(
+      console.error  
+    )
   };
 
   const StyledBadge = styled(Badge)<BadgeProps>(({ theme }) => ({
@@ -46,6 +57,9 @@ export default function Nav() {
             ) : (
               <Link to="/login">Login</Link>
             )}
+            {/* <Link to="/" onClick={logout}>
+                Logout
+            </Link> */}
           </span>
           <span>
             <Link to="/show">show</Link>
@@ -87,6 +101,9 @@ export default function Nav() {
         </div>
         <div></div>
       </nav>
+      {
+        `${loginToken.accessToken} // ${loginToken.refreshToken} // ${loginType}`
+      }
       <hr />
     </>
   );

@@ -7,6 +7,7 @@
     margin-top: 2.2em;
     margin-bottom: 2em;
     font-size: 1.8em;
+    text-align: center;
 }
 
 .loginForm{
@@ -53,6 +54,8 @@ input:focus{
 .loginBtn{
     width: 12em;
     /* width: 26em; */
-    margin-top: 3em;
+    margin: 3em 0;
     padding: 0.7em 0;
+    display: block;
+    margin: 3em auto;
 }
