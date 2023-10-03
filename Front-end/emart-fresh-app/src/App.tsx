@@ -30,6 +30,7 @@ import Payment from "./pages/paymentPage/Payment";
 import EventListDetail from "./pages/eventPage/EventListDetail";
 import ApplyManager from "./pages/applyManger/ApplyManager";
 import MakeStore from "./pages/makeStore/MakeStore";
+import HandleApplyManager from "./pages/HandleApplyManager";
 
 const queryClient = new QueryClient();
 
@@ -54,6 +55,10 @@ function App() {
                 <Route
                   path="/mypageMain/mypageApplyManager"
                   element={<ApplyManager />}
+                />
+                <Route
+                  path="/mypageMain/HandleApplyManager"
+                  element={<HandleApplyManager />}
                 />
 
                 {/* <Route
