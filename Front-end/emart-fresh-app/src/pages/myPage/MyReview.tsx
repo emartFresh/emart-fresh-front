@@ -129,7 +129,7 @@ export default function MyReview() {
           <span style={{ fontSize: "1.2rem" }}>작성한 리뷰가 없습니다</span>
           <div>
             <Link to="/" className={styles.reviewBtn}>
-              상품구매하기
+              상품보러가기
             </Link>
           </div>
         </div>

@@ -34,7 +34,6 @@ export default function MyPage() {
   const [ischange, setIsChange] = useState<boolean>(false);
   const [loginToken, setLoginToken] = useRecoilState<JwtToken>(loginState);
   const allMember = GetUserAllInfo();
-  const userName = GetUserName();
   SendLoginPageIfNotLogin();
   console.log("확인", GetUserAllInfo());
 

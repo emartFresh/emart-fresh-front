@@ -23,7 +23,7 @@ interface OrderedProductData {
   totalAmount: number;
   myOrderedCount: number;
   productImgUrl: string;
-  isPickup: boolean;
+  pickup: boolean;
 }
 
 export default function MyOrder() {
@@ -116,7 +116,7 @@ export default function MyOrder() {
           <span style={{ fontSize: "1.2rem" }}>주문하신 내역이 없습니다</span>
           <div>
             <Link to="/" className={styles.orderBtn}>
-              상품구매하기
+              상품보러가기
             </Link>
           </div>
         </div>
@@ -140,7 +140,7 @@ export default function MyOrder() {
                 <div>{orderedProduct.storeName}</div>
                 <div className={styles.orderText}>
                   <div>
-                    {orderedProduct.isPickup ? (
+                    {orderedProduct.pickup ? (
                       <div style={{ color: "gray" }}>픽업완료</div>
                     ) : (
                       <div style={{ color: "blue" }}>픽업대기중</div>
