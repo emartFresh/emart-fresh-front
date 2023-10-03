@@ -176,7 +176,7 @@ export const sendAxiosRequest = async (
       Authorization: `Bearer ${loginToken.accessToken}`,
       refreshToken: loginToken.refreshToken,
     },
-    ...(httpMethod === "get" ? { params: params } : { data: params }),
+    ...(httpMethod === "get" || httpMethod === "delete" ? { params: params } : { data: params }),
   })
     .then((response) => response.data)
     .catch(async (error) => {
@@ -206,6 +206,7 @@ export const sendAxiosRequest = async (
             console.error("refresh error");
             return;
           });
+          // 수정 : 로그인화면으로 보내기 
       }
     });
   return result;

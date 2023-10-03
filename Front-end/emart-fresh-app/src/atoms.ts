@@ -11,6 +11,12 @@ export const loginState = atom({
   effects_UNSTABLE: [persistAtom],
 });
 
+export const kakaoAccessToken = atom({
+  key: "kakaoAccessToken",
+  default: "",
+  effects_UNSTABLE: [persistAtom], 
+});
+
 //jjs에 의한 수정 : 추가
 export const loginTypeState = atom({
   key: "loginType",
