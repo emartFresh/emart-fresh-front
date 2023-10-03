@@ -16,7 +16,7 @@
     display: table;
     table-layout: fixed;
     display: flex;
-    align-items: center; /* 세로 가운데 정렬 */
+    align-items: center;
 }
 
 .allCheck, .allCheckBox{
@@ -128,16 +128,69 @@
     width: 100%;
     padding: 0 1rem;
     text-align: right;
-    border: 1px solid black;
+    border: 0.8px solid rgb(120, 120, 120);
+    border-radius: 0.3rem;
 }
 
 .quantityBtn{
     background-color: white;
     border: 0;
+    /* border: 0.8px solid rgb(120, 120, 120); */
+    border-radius: 0.3rem;
+}
+
+.quantityBtn:hover{
+    /* background-color: #f9bb006a; */
 }
 
 .storeName{
     padding: 1em 0;
+}
+
+.payItemListInfo{
+    width: 100%;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 0.3fr;
+    padding: 0 0.8rem;
+}
+
+.payItemListWrap{
+    padding: 0;
+    overflow-y: scroll;
+    height: 36vh;
+    border-top: 0.5px solid black;
+    border-bottom: 0.5px solid black;
+}
+
+.payItemListWrap::-webkit-scrollbar{
+    width: 10px;
+    display: flex;
+}
+
+.payItemListWrap::-webkit-scrollbar-thumb {
+    background: #f9bb00;
+    border-radius: 0.4rem;
+}
+
+.payItemList p{
+    margin: 0;
+}
+
+.payItemList{
+    width: 100%;
+    padding: 0.8rem;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 0.2fr;
+    align-items: center;
+    cursor: default;
+}
+
+.payItemList:hover{
+    background-color: #f9bb002a;
+}
+
+.delPayItemList{
+    cursor: pointer;
 }
 
 .payInfoWrap{
@@ -148,8 +201,6 @@
 }
 
 .extendedPrice{
-    /* text-align: right;
-    margin-right: 5rem; */
     font-size: 1.2rem;
     
 }

@@ -43,15 +43,7 @@ const Cart = () => {
       setCartItemList(res);
     });
 
-    if (selectedItems.length > 0) {
-      const newPaymentItems = selectedItems.map((selectedItemId) => {
-        const selectedItem = cartItemList.find(
-          (item) => item.cartProductId === selectedItemId
-        );
-        return selectedItem;
-      });
-      setPaymentItems(newPaymentItems);      
-    }
+    
 
 
     window.addEventListener("scroll", () => {
@@ -75,12 +67,11 @@ const Cart = () => {
     });
     return () => {
       console.log("장바구니 업데이터 API");
-      // 컴포넌트가 언마운트될 때 이벤트 리스너 정리
+      // 수정 : 컴포넌트가 언마운트될 때 이벤트 리스너 정리
       window.removeEventListener("scroll", () => {});
     };
   
-  }, [selectedItems]);
-  // 수정 : 체크할때마다 리렌더
+  }, []);
 
   const handleQuantity = (
     e: React.MouseEvent<HTMLInputElement, MouseEvent>,
@@ -136,12 +127,20 @@ const Cart = () => {
   };
 
   const handleCheckboxChange = (cartProductId: number) => {
+
+    let selectedList = [];
+   
     if (selectedItems.includes(cartProductId)) {
-      setSelectedItems(selectedItems.filter((item) => item !== cartProductId));
+      selectedList = selectedItems.filter((item) => item !== cartProductId);
+      
     } else {
-      setSelectedItems([...selectedItems, cartProductId]);
+      selectedList =[...selectedItems, cartProductId];
+      
     }
+    setSelectedItems(selectedList);
+    settingPaymentItems(selectedList);
   };
+
 
   const handleAllCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.checked) {
@@ -149,10 +148,24 @@ const Cart = () => {
         (cartItem) => cartItem.cartProductId
       );
       setSelectedItems(cartProductIdList);
+      settingPaymentItems(cartProductIdList);
     } else {
       setSelectedItems([]);
     }
   };
+
+  const settingPaymentItems = (selectedList: number[]) => {
+    if (selectedList.length > 0) {
+      const newPaymentItems = selectedList.map((selectedItemId) => {
+        const selectedItem = cartItemList.find(
+          (item) => item.cartProductId === selectedItemId
+        );
+        return selectedItem;
+      });
+      setPaymentItems(newPaymentItems);      
+    }
+  }
+
 
   const deleteItem = (cartProductId: number) => {
     sendAxiosRequest(
@@ -263,7 +276,12 @@ const Cart = () => {
               <h4 className={styles.storeName}>센텀시티점</h4>
               {/* <h4>{storeName}<h4> */}
               {/* 수정 : 응답에 store name을 하나로 뭉쳐서 */}
-              <ul>
+              <div className={styles.payItemListInfo}>
+                <p>제품명</p>
+                <p>가격</p>
+                <p>수량</p>
+              </div>
+              <ul className={styles.payItemListWrap}>
                 {
                 selectedItems.map((selectedItemId) => {
                   const selectedItem = cartItemList.find(
@@ -271,10 +289,11 @@ const Cart = () => {
                   );
                   totalPrice += selectedItem.priceNumber * selectedItem.cartProductQuantity; 
                   return (
-                    <li key={selectedItemId}>
-                      {selectedItem.productTitle} / 가격:{" "}
-                      {selectedItem.priceNumber} / 수량:{" "}
-                      {selectedItem.cartProductQuantity}
+                    <li key={selectedItemId} className={styles.payItemList}>
+                      <p>{selectedItem.productTitle}</p>
+                      <p>{selectedItem.priceNumber}원</p>
+                      <p>{selectedItem.cartProductQuantity}개</p>
+                      <FontAwesomeIcon icon={faXmark} className={styles.delPayItemList} onClick={() => handleCheckboxChange(selectedItem.cartProductId)}/>
                     </li>
                   );
                 })}

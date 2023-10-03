@@ -110,6 +110,8 @@ const Login = () => {
           placeholder="비밀번호를 입력해주세요"
           className={styles.loginPw}
           onChange={(e) => setMemberPw(e.target.value)}
+          onKeyUp={(e) => { 
+            if(e.key === 'Enter') handleLogin() }}
         />
         <div className={styles.links}>
           <p onClick={openModal}>아이디 / 비밀번호 찾기</p>
@@ -123,9 +125,13 @@ const Login = () => {
         <button className={styles.loginBtn} onClick={handleLogin}>
           로그인
         </button>
-        <a id="kakao-login-btn" onClick={loginWithKakao}>
-          <img src="https://k.kakaocdn.net/14/dn/btroDszwNrM/I6efHub1SN5KCJqLm1Ovx1/o.jpg" width="222"
-            alt="카카오 로그인 버튼" />
+        <hr/>
+        <p>SNS 로그인</p>
+        <a id="kakao-login-btn" onClick={loginWithKakao} className={styles.kakaoLoginBtn}>
+          <img src="https://k.kakaocdn.net/14/dn/btroDszwNrM/I6efHub1SN5KCJqLm1Ovx1/o.jpg" 
+            width="222"
+            alt="카카오 로그인 버튼" 
+            className={styles.kakaoLoginBtn}/>
         </a>
       </div>
     </div>
