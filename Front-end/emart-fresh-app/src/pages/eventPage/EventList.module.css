@@ -1,11 +1,11 @@
 .eventWrapper {
-  width: 88vw;
+  width: 86vw;
   display: flex;
   flex-direction: column;
   min-width: 900px;
 }
 .eventNavbar {
-  width: 85vw;
+  width: 83vw;
   height: 7vh;
   margin: auto;
   display: grid;
@@ -78,7 +78,9 @@
   overflow: hidden;
   border-radius: 2.5rem;
   cursor: pointer;
+  transition: all 0.2s ease-in-out;
 }
+
 .endedEventImage {
   filter: grayscale(100%);
 }
@@ -86,8 +88,7 @@
 .eventImage:hover,
 .endedEventImage:hover {
   border-color: #f9bb00;
-  transform: scale(1.05);
-  /* border-color: transparent; */
+  transform: scale(1.04);
 }
 
 @media screen and (max-width: 768px) {
