@@ -18,7 +18,7 @@ interface responseData {
 }
 
 // 수정 : 수량 변경 시  0이하/ 99이상 안됨.
-// cartCalculate : div내부 스크롤 -> overflow scroll
+// 수정 : 장바구니 item 개수 nav
 // unmount : 수량 저장
 
 const Cart = () => {
@@ -26,8 +26,8 @@ const Cart = () => {
   const [cartItemList, setCartItemList] = useState<CartData[]>([]);
   const [selectedItems, setSelectedItems] = useState([]);
   const [paymentItems, setPaymentItems] = useState<CartData[]>([]);
-  const [extendedPrice, setExtendedPrice] = useState<number>(0);
   const [openPayment, setOpenPayment] = useState<boolean>(false);
+  let payItemsInfo: CartData[] = [];
 
   useEffect(() => {
     sendAxiosRequest(
@@ -37,20 +37,9 @@ const Cart = () => {
       setLoginToken
     ).then((response) => {
       console.log("response > ", response);
-      // 수정
       const res: CartData[] = JSON.parse(JSON.stringify(response));
       setCartItemList(res);
     });
-
-    if (selectedItems.length > 0) {
-      const newPaymentItems = selectedItems.map((selectedItemId) => {
-        const selectedItem = cartItemList.find(
-          (item) => item.cartProductId === selectedItemId
-        );
-        return selectedItem;
-      });
-      setPaymentItems(newPaymentItems);
-    }
 
     window.addEventListener("scroll", () => {
       const cartCalculate = document.querySelector(
@@ -64,7 +53,7 @@ const Cart = () => {
         const sidebarHeight = cartCalculate.clientHeight;
 
         // 움직임을 느리게 하기 위해 scrollY 값을 조절
-        const translateY = scrollY * 0.2; // 조절 가능 비율
+        const translateY = scrollY * 0.2;
 
         if (translateY + sidebarHeight < contentHeight) {
           cartCalculate.style.transform = `translateY(${translateY}px)`;
@@ -73,11 +62,10 @@ const Cart = () => {
     });
     return () => {
       console.log("장바구니 업데이터 API");
-      // 컴포넌트가 언마운트될 때 이벤트 리스너 정리
+      // 수정 : 컴포넌트가 언마운트될 때 이벤트 리스너 정리
       window.removeEventListener("scroll", () => {});
     };
-  }, [selectedItems]);
-  // 수정 : 체크할때마다 리렌더
+  }, []);
 
   const handleQuantity = (
     e: React.MouseEvent<HTMLInputElement, MouseEvent>,
@@ -132,11 +120,15 @@ const Cart = () => {
   };
 
   const handleCheckboxChange = (cartProductId: number) => {
+    let selectedList = [];
+
     if (selectedItems.includes(cartProductId)) {
-      setSelectedItems(selectedItems.filter((item) => item !== cartProductId));
+      selectedList = selectedItems.filter((item) => item !== cartProductId);
     } else {
-      setSelectedItems([...selectedItems, cartProductId]);
+      selectedList = [...selectedItems, cartProductId];
     }
+    setSelectedItems(selectedList);
+    settingPaymentItems(selectedList);
   };
 
   const handleAllCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -145,8 +137,21 @@ const Cart = () => {
         (cartItem) => cartItem.cartProductId
       );
       setSelectedItems(cartProductIdList);
+      settingPaymentItems(cartProductIdList);
     } else {
       setSelectedItems([]);
+    }
+  };
+
+  const settingPaymentItems = (selectedList: number[]) => {
+    if (selectedList.length > 0) {
+      const newPaymentItems = selectedList.map((selectedItemId) => {
+        const selectedItem = cartItemList.find(
+          (item) => item.cartProductId === selectedItemId
+        );
+        return selectedItem;
+      });
+      setPaymentItems(newPaymentItems);
     }
   };
 
@@ -162,7 +167,6 @@ const Cart = () => {
         setCartItemList((prevList) =>
           prevList.filter((item) => item.cartProductId !== cartProductId)
         );
-        alert("삭제되었습니다.");
       })
       .catch(console.error);
   };
@@ -272,7 +276,12 @@ const Cart = () => {
               <h4 className={styles.storeName}>센텀시티점</h4>
               {/* <h4>{storeName}<h4> */}
               {/* 수정 : 응답에 store name을 하나로 뭉쳐서 */}
-              <ul>
+              <div className={styles.payItemListInfo}>
+                <p>제품명</p>
+                <p>가격</p>
+                <p>수량</p>
+              </div>
+              <ul className={styles.payItemListWrap}>
                 {selectedItems.map((selectedItemId) => {
                   const selectedItem = cartItemList.find(
                     (item) => item.cartProductId === selectedItemId
@@ -280,10 +289,17 @@ const Cart = () => {
                   totalPrice +=
                     selectedItem.priceNumber * selectedItem.cartProductQuantity;
                   return (
-                    <li key={selectedItemId}>
-                      {selectedItem.productTitle} / 가격:{" "}
-                      {selectedItem.priceNumber} / 수량:{" "}
-                      {selectedItem.cartProductQuantity}
+                    <li key={selectedItemId} className={styles.payItemList}>
+                      <p>{selectedItem.productTitle}</p>
+                      <p>{selectedItem.priceNumber}원</p>
+                      <p>{selectedItem.cartProductQuantity}개</p>
+                      <FontAwesomeIcon
+                        icon={faXmark}
+                        className={styles.delPayItemList}
+                        onClick={() =>
+                          handleCheckboxChange(selectedItem.cartProductId)
+                        }
+                      />
                     </li>
                   );
                 })}
@@ -291,9 +307,16 @@ const Cart = () => {
             </>
           )}
           <div className={styles.payInfoWrap}>
-            <p className={styles.extendedPrice}>결제 금액 : {totalPrice} 원</p>
+            <p
+              className={`${styles.extendedPrice} ${
+                selectedItems.length === 0 && styles.hidden
+              }`}
+            >
+              결제 금액 : {totalPrice} 원
+            </p>
             <button
               className={styles.payBtn}
+              disabled={selectedItems.length === 0}
               onClick={() => setOpenPayment(true)}
             >
               결제하기
@@ -301,9 +324,18 @@ const Cart = () => {
           </div>
         </div>
       </div>
-      {/* 수정 -> 선택된 아이템만! */}
-      {/* {openPayment && <Payment cartInfo={cartItemList} />} */}
-      {openPayment && <Payment cartInfo={paymentItems} />}
+      {openPayment && (
+        <Payment
+          cartInfo={
+            (payItemsInfo = selectedItems.map((selectedItemId) => {
+              const payItemInfo = cartItemList.find(
+                (item) => item.cartProductId === selectedItemId
+              );
+              return payItemInfo;
+            }))
+          }
+        />
+      )}
     </div>
   );
 };
