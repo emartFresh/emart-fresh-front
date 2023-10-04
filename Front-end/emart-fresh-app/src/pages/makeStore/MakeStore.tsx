@@ -1,7 +1,8 @@
 import { useState, useRef, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { Navigate, useLocation } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { loginState } from "../../atoms";
+import { useNavigate } from "react-router-dom";
 
 import styles from "../page_css/MakeStore.module.css";
 import { Modal, Box } from "@mui/material";
@@ -37,6 +38,7 @@ export default function MakeStore() {
   const [memberInfo, setMemberInfo] = useState<MemberData>();
   const [loginToken, setLoginToken] = useRecoilState<JwtToken>(loginState);
 
+  const navigate = useNavigate();
   const location = useLocation();
   const memberId = location.state?.memberId;
   const certifImg = location.state?.certImg;
@@ -151,23 +153,30 @@ export default function MakeStore() {
   };
 
   const handleRegibtn = () => {
+    console.log("멤버 아이디", memberId);
+
     sendAxiosPostRequest(
+      //매니저 신청
       `${import.meta.env.VITE_BACK_PORT}/applymanager/apply-applymanager`,
       loginToken,
       setLoginToken,
       { memberId: memberId }
     )
       .then((res) => {
-        axios.post(`${import.meta.env.VITE_BACK_PORT}/store/add-store`, {
-          storeName: confirmedStore.place_name,
-          storeAddress: confirmedStore.road_address_name,
-          storeLongitude: confirmedStore.longitude,
-          storeLatitude: confirmedStore.latitude,
-          memberId: memberId,
-        });
-      })
-      .then((res) => {
-        alert("등록 성공!!");
+        alert("가게 생성합니다.");
+        //가게 생성
+        axios
+          .post(`${import.meta.env.VITE_BACK_PORT}/store/add-store`, {
+            storeName: confirmedStore.place_name,
+            storeAddress: confirmedStore.road_address_name,
+            storeLongitude: confirmedStore.longitude,
+            storeLatitude: confirmedStore.latitude,
+            memberId: memberId,
+          })
+          .then((res) => {
+            alert("등록 성공!!");
+            navigate("/mypageMain/HandleApplyManager");
+          });
       })
       .catch((err) => {
         if (err.response && err.response.status === 400) {
