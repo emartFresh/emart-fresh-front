@@ -1,0 +1,79 @@
+.orderListContainer {
+  background-color: #f9fafb;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.orderListWrapper {
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 80%;
+  min-width: 320px;
+  max-width: 600px;
+  border-radius: 0.5rem;
+  border: 2px solid gray;
+  margin: 1rem;
+  padding: 0.5rem;
+}
+
+.dataWrapper {
+  border-top: 1.5px solid gray;
+  width: 100%;
+  text-align: left;
+  padding: 1rem;
+}
+
+.date {
+  color: gray;
+}
+
+.badge_detail_Wrapper {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  text-align: left;
+  margin-bottom: 0.6rem;
+}
+
+.badge {
+  background-color: orange;
+  font-weight: bold;
+  color: white;
+  border-radius: 0.5rem;
+  text-align: center;
+  padding: 0.3rem 0.8rem 0.3rem 0.8rem;
+}
+
+.detail {
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid gray;
+  color: gray;
+  border-radius: 0.8rem;
+  font-size: 0.7rem;
+  padding: 0rem 0.3rem 0.1rem 0.3rem;
+}
+
+.detail:hover {
+  background-color: rgb(73, 72, 72);
+  border: 1px solid rgb(73, 72, 72);
+
+  color: white;
+}
+
+.totalAmountWrapper {
+  width: 100%;
+  padding: 1rem;
+}
+
+.totalAmount {
+  color: rgb(78, 77, 77);
+  font-size: 1.3rem;
+}
