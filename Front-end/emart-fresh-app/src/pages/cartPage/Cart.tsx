@@ -19,7 +19,7 @@ interface responseData {
 }
 
 // 수정 : 수량 변경 시  0이하/ 99이상 안됨.
-// cartCalculate : div내부 스크롤 -> overflow scroll
+// 수정 : 장바구니 item 개수 nav 
 // unmount : 수량 저장
 
 const Cart = () => {
@@ -27,8 +27,8 @@ const Cart = () => {
   const [cartItemList, setCartItemList] = useState<CartData[]>([]);
   const [selectedItems, setSelectedItems] = useState([]);
   const [paymentItems, setPaymentItems] = useState<CartData[]>([]);
-  const [extendedPrice, setExtendedPrice] = useState<number>(0);
   const [openPayment, setOpenPayment] = useState<boolean>(false);
+  let payItemsInfo: CartData[] = [];
 
   useEffect(() => {
     sendAxiosRequest(
@@ -38,13 +38,9 @@ const Cart = () => {
       setLoginToken
     ).then((response) => {
       console.log("response > ", response);
-      // 수정
       const res: CartData[] = JSON.parse(JSON.stringify(response));
       setCartItemList(res);
     });
-
-    
-
 
     window.addEventListener("scroll", () => {
       const cartCalculate = document.querySelector(
@@ -58,7 +54,7 @@ const Cart = () => {
         const sidebarHeight = cartCalculate.clientHeight;
 
         // 움직임을 느리게 하기 위해 scrollY 값을 조절
-        const translateY = scrollY * 0.2; // 조절 가능 비율
+        const translateY = scrollY * 0.2;
 
         if (translateY + sidebarHeight < contentHeight) {
           cartCalculate.style.transform = `translateY(${translateY}px)`;
@@ -179,7 +175,6 @@ const Cart = () => {
       setCartItemList(
         (prevList) => prevList.filter((item) => item.cartProductId !== cartProductId)
       )
-      alert('삭제되었습니다.');
     })
     .catch(console.error)
   }
@@ -301,9 +296,10 @@ const Cart = () => {
             </>
           )}
           <div className={styles.payInfoWrap}>
-            <p className={styles.extendedPrice}>결제 금액 : {totalPrice} 원</p>
+            <p className={`${styles.extendedPrice} ${selectedItems.length === 0 && styles.hidden}`}>결제 금액 : {totalPrice} 원</p>
             <button
               className={styles.payBtn}
+              disabled = {selectedItems.length === 0}
               onClick={() => setOpenPayment(true)}
             >
               결제하기
@@ -311,9 +307,14 @@ const Cart = () => {
           </div>
         </div>
       </div>
-      {/* 수정 -> 선택된 아이템만! */}
-      {/* {openPayment && <Payment cartInfo={cartItemList} />} */}
-      {openPayment && <Payment cartInfo={paymentItems} />}
+      {openPayment && <Payment cartInfo={payItemsInfo = selectedItems.map((selectedItemId) => {
+          const payItemInfo = cartItemList.find(
+            (item) => item.cartProductId === selectedItemId
+          );
+          return (
+            payItemInfo
+          );
+        })} />}
     </div>
   );
 };

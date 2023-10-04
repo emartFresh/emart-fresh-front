@@ -157,7 +157,8 @@
 .payItemListWrap{
     padding: 0;
     overflow-y: scroll;
-    height: 36vh;
+    /* height: 29.5vh; */
+    height: 53%;
     border-top: 0.5px solid black;
     border-bottom: 0.5px solid black;
 }
@@ -195,6 +196,7 @@
 
 .payInfoWrap{
     width: 100%;
+    /* height: 20%; */
     position: absolute;
     bottom: 0;
     right: 0;
@@ -210,4 +212,8 @@
     padding: 1rem 0;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
+}
+
+.hidden{
+    display: none;
 }
