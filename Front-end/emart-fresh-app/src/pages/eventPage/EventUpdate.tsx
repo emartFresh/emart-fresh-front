@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { useState, ChangeEvent, FormEvent, useRef } from "react";
 import axios from "axios";
-import styles from "./EventRegi.module.css";
+import styles from "./EventUpdate.module.css";
 
 // 이벤트 정보
 interface EventFormState {
@@ -12,8 +12,8 @@ interface EventFormState {
   eventStartDate: string | null; // 시작 날짜 (Date | null)
   eventEndDate: string | null; // 종료 날짜 (Date | null)
 }
+
 export default function EventUpdate() {
-  //
   const [formData, setFormData] = useState<EventFormState>({
     eventTitle: "",
     eventBannerImage: null,
@@ -21,6 +21,13 @@ export default function EventUpdate() {
     eventStartDate: null,
     eventEndDate: null,
   });
+
+  const [bannerImagePreview, setBannerImagePreview] = useState<string | null>(
+    null
+  );
+  const [detailImagePreview, setDetailImagePreview] = useState<string | null>(
+    null
+  );
   const eventBannerImageInputRef = useRef<HTMLInputElement>(null);
   const eventDetailImageInputRef = useRef<HTMLInputElement>(null);
 
@@ -40,6 +47,17 @@ export default function EventUpdate() {
         ...formData,
         [name]: selectedFile,
       });
+
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const imagePreview = reader.result as string;
+        if (name === "eventBannerImage") {
+          setBannerImagePreview(imagePreview);
+        } else if (name === "eventDetailImage") {
+          setDetailImagePreview(imagePreview);
+        }
+      };
+      reader.readAsDataURL(selectedFile);
     }
   };
 
@@ -54,7 +72,6 @@ export default function EventUpdate() {
       eventStartDate,
       eventEndDate,
     } = formData;
-    console.log(formData);
 
     const formDataToSend = new FormData();
     formDataToSend.append("event_title", eventTitle);
@@ -77,9 +94,10 @@ export default function EventUpdate() {
       if (response.data === "success") {
         console.log("이벤트 생성에 성공하였습니다.");
         alert("이벤트 등록성공!");
-        // console.log(setFormData);
+
         if (
-          (eventBannerImageInputRef.current, eventDetailImageInputRef.current)
+          eventBannerImageInputRef.current &&
+          eventDetailImageInputRef.current
         ) {
           eventBannerImageInputRef.current.value = "";
           eventDetailImageInputRef.current.value = "";
@@ -101,52 +119,32 @@ export default function EventUpdate() {
   };
 
   return (
-    <div>
-      <div className={styles.eventRegiWrapper}>
-        <div className={styles.eventRegiContainer}>
+    <div className={styles.eventUpdateWrapper}>
+      <div className={styles.eventUpdateContainer}>
+        <div className={styles.등록이벤트}>
+          등록이벤트&nbsp;&nbsp;
+          <input
+            type="text"
+            name="eventTitle"
+            className={styles.inputEventUpdate}
+            value={formData.eventTitle}
+            onChange={handleInputChange}
+            placeholder="이벤트이름을 등록하세요"
+          />
+        </div>
+        <div className={styles.eventDate}>
           <div>
-            등록이벤트:
-            <input
-              type="text"
-              name="eventTitle"
-              className={styles.inputEventRegi}
-              value={formData.eventTitle}
-              onChange={handleInputChange}
-              placeholder="이벤트 이름을 입력하세요"
-            />
-          </div>
-          <div>
-            배너이미지:
-            <input
-              type="file"
-              name="eventBannerImage"
-              onChange={handleFileChange}
-              ref={eventBannerImageInputRef}
-              // placeholder="배너이미지를 등록하세요"
-            />
-          </div>
-          <div>
-            상세이미지:
-            <input
-              type="file"
-              name="eventDetailImage"
-              onChange={handleFileChange}
-              ref={eventDetailImageInputRef}
-              // placeholder="상세이미지를 등록하세요"
-            />
-          </div>
-          <div>
-            시작날짜:
+            이벤트 시작날짜&nbsp;&nbsp;
             <input
               type="date"
               name="eventStartDate"
               value={formData.eventStartDate || ""}
               onChange={handleInputChange}
             />
-          </div>
-          &nbsp;&nbsp; &nbsp;&nbsp;
+          </div>{" "}
+          &nbsp;&nbsp;&nbsp;&nbsp;
           <div>
-            마지막날짜:
+            이벤트 마지막날짜&nbsp;&nbsp;
             <input
               type="date"
               name="eventEndDate"
@@ -154,10 +152,65 @@ export default function EventUpdate() {
               onChange={handleInputChange}
             />
           </div>
-          <button onClick={handleSubmit} className={styles.eventSubmitBtn}>
-            이벤트 등록
-          </button>
         </div>
+        <div className={styles.tableContainer}>
+          <table>
+            <tbody>
+              <tr>
+                <td>
+                  <div>
+                    배너이미지&nbsp;&nbsp;
+                    <input
+                      type="file"
+                      name="eventBannerImage"
+                      onChange={handleFileChange}
+                      ref={eventBannerImageInputRef}
+                    />
+                  </div>
+                </td>
+                <td>
+                  <div className={styles.배너이미지미리보기}>
+                    {bannerImagePreview && (
+                      <img
+                        src={bannerImagePreview}
+                        alt="Banner Image Preview"
+                        style={{ height: "200px" }}
+                      />
+                    )}
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div>
+                    상세이미지&nbsp;&nbsp;
+                    <input
+                      type="file"
+                      name="eventDetailImage"
+                      onChange={handleFileChange}
+                      ref={eventDetailImageInputRef}
+                    />
+                  </div>
+                </td>
+                <td>
+                  <div className={styles.디테일이미지미리보기}>
+                    {detailImagePreview && (
+                      <img
+                        src={detailImagePreview}
+                        alt="Detail Image Preview"
+                        style={{ height: "450px" }}
+                      />
+                    )}
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <button onClick={handleSubmit} className={styles.eventSubmitBtn}>
+          이벤트 등록
+        </button>
       </div>
     </div>
   );
