@@ -60,6 +60,7 @@ declare global {
   // 장바구니 정보
   interface CartData {
     cartId?: number; // 장바구니 아이디 (프라이머리 키)
+    productId?: number;
     cartProductQuantity: number;
     priceNumber: number;
     productTitle: string;

@@ -27,28 +27,32 @@ export default function Payment({ cartInfo }: PaymentProps) {
   const [totalPriceAf, setTotalPriceAf] = useState<number>();
   const [appliedCoupon, setAppliedCoupon] = useState<Coupon>({
     couponExpirationDate: "",
-    couponId: 0,
+    couponId: null,
     couponTitle: "",
     couponType: 0,
     memberId: "",
   });
 
   useEffect(() => {
+    console.log("인포", cartInfo);
     let totalPrice = 0;
     const items =
       cartInfo &&
       cartInfo.map((item) => {
+        console.log("아이디", item.productId);
         totalPrice +=
           item.priceNumber *
           (1 - appliedCoupon.couponType / 100) * //수정 : productTimeSale (떙처리)적용
           item.cartProductQuantity;
         return {
-          id: String(item.cartId),
+          id: String(item.productId),
           name: item.productTitle,
           qty: item.cartProductQuantity,
           price: item.priceNumber * (1 - appliedCoupon.couponType / 100),
         };
       });
+
+    console.log("이거 이거");
     setItemData(items);
     setTotalPriceAf(totalPrice);
   }, [appliedCoupon, cartInfo]);
@@ -62,7 +66,11 @@ export default function Payment({ cartInfo }: PaymentProps) {
         appliedCoupon={appliedCoupon}
       />
       총결제액:{totalPriceAf}
-      <Dopay itemData={itemData} totalPriceAf={totalPriceAf} />
+      <Dopay
+        itemData={itemData}
+        totalPriceAf={totalPriceAf}
+        appliedCoupon={appliedCoupon}
+      />
     </div>
   );
 }

@@ -1,20 +1,43 @@
 import { Bootpay } from "@bootpay/client-js";
-import axios from "axios";
 import { loginState } from "../../atoms";
 import { useRecoilState } from "recoil";
 import { MemberInfo, GetUserAllInfo } from "../../utils/LoginUtils";
 import { ItemData } from "./Payment";
 import { sendAxiosPostRequest } from "../../utils/userUtils";
 
+import { Coupon } from "./Payment";
+import { useEffect, useState } from "react";
+import axios from "axios";
+
+interface OrderProduct {
+  orderedQuantity: number;
+  productId: number;
+}
+
 interface DopayProp {
   itemData: ItemData[];
   totalPriceAf: number;
+  appliedCoupon: Coupon;
 }
 
-export default function Dopay({ itemData, totalPriceAf }: DopayProp) {
+export default function Dopay({
+  itemData,
+  totalPriceAf,
+  appliedCoupon,
+}: DopayProp) {
   const [loginToken, setLoginToken] = useRecoilState<JwtToken>(loginState);
+  const [myCartStoreId, setMyCartStoreId] = useState<number>();
 
   const memberInfo: MemberInfo = GetUserAllInfo();
+
+  useEffect(() => {
+    const storeUrl = `${
+      import.meta.env.VITE_BACK_PORT
+    }/cart/myCartStoreId?memberId=${memberInfo.memberId}`;
+    axios.get(storeUrl).then((res) => {
+      setMyCartStoreId(res.data);
+    });
+  }, []);
 
   //수정 : 로직 고민...
   const preProcesse = async () => {
@@ -23,6 +46,33 @@ export default function Dopay({ itemData, totalPriceAf }: DopayProp) {
       console.log("응답", res);
       requestPayment();
     });
+  };
+
+  const saveToOrderList = async () => {
+    const orderedProductProducts: OrderProduct[] = itemData?.map((item) => {
+      return {
+        orderedQuantity: item.qty,
+        productId: Number(item.id),
+      };
+    });
+
+    const orderInfos = {
+      storeId: myCartStoreId,
+      couponId: appliedCoupon.couponId,
+      totalAmount: totalPriceAf,
+      orderedDate: new Date(),
+      orderedProductProduct: orderedProductProducts,
+    };
+
+    const orderUrl = `${
+      import.meta.env.VITE_BACK_PORT
+    }/orderedproduct/saveOrderedProductInfo`;
+
+    sendAxiosPostRequest(orderUrl, loginToken, setLoginToken, orderInfos).then(
+      (res) => {
+        alert("결제완료");
+      }
+    );
   };
 
   const requestPayment = async () => {
@@ -52,6 +102,7 @@ export default function Dopay({ itemData, totalPriceAf }: DopayProp) {
         card_quota: "0,2,3", // 카드 할부
       },
     }).then((res) => {
+      saveToOrderList();
       console.log("부트 페이 응답 ", res);
     });
   };
