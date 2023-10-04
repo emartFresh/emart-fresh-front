@@ -14,8 +14,8 @@ function ExpiryTime({ onClose, enableSendBtn, callCount }: ExpiryTimeProps) {
   const elapsedTimeRef = useRef(0); // useRef를 사용하여 변수 유지
 
   const clearTimer = () => {
-    setMinutes(0);
-    setSeconds(30);
+    setMinutes(5);
+    setSeconds(0);
     elapsedTimeRef.current = 0;
   };
 

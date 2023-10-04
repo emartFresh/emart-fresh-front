@@ -57,9 +57,6 @@ export default function Nav() {
             ) : (
               <Link to="/login">Login</Link>
             )}
-            {/* <Link to="/" onClick={logout}>
-                Logout
-            </Link> */}
           </span>
           <span>
             <Link to="/show">show</Link>
@@ -101,9 +98,6 @@ export default function Nav() {
         </div>
         <div></div>
       </nav>
-      {
-        `${loginToken.accessToken} // ${loginToken.refreshToken} // ${loginType}`
-      }
       <hr />
     </>
   );
