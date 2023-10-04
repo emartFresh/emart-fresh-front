@@ -19,6 +19,7 @@ import { loginState } from "../../atoms";
 import OrdinaryUser from "./OrdinaryUser";
 import Administrator from "./Administrator";
 import StoreManager from "./StoreManager";
+import { Link } from "react-router-dom";
 
 // npm install @mui/material @emotion/react @emotion/styled
 // npm install @mui/icons-material
@@ -104,7 +105,21 @@ const MyPageMenuBar = () => {
           >
             {getUserAuth === 0 && (
               <div className={styles.mypagemenubar}>
-                <OrdinaryUser />
+                <Link to="/mypageMain/mypageApplyManager">점포점주신청</Link>
+              </div>
+            )}
+            <hr />
+            {/* memberAuth==2일 때, 나오는 컴포넌트   수정: auth 2로 변경*/}
+            {getUserAuth === 0 && (
+              <div className={styles.mypagemenubar}>
+                <Link to="/mypageMain/HandleApplyManager">점포점주신청</Link>
+              </div>
+            )}
+            <hr />
+            {/* memberAuth==1(점주)일 때, 나오는 컴포넌트  */}
+            {getUserAuth === 1 && (
+              <div className={styles.mypagemenubar}>
+                {/* <MemberAuthManager /> */}
               </div>
             )}
 

@@ -28,6 +28,9 @@ import EventList from "./pages/eventPage/EventList";
 import Payment from "./pages/paymentPage/Payment";
 import EventListDetail from "./pages/eventPage/EventListDetail";
 import EventUpdate from "./pages/eventPage/EventUpdate";
+import ApplyManager from "./pages/applyManger/ApplyManager";
+import MakeStore from "./pages/makeStore/MakeStore";
+import HandleApplyManager from "./pages/HandleApplyManager";
 
 const queryClient = new QueryClient();
 
@@ -49,6 +52,14 @@ function App() {
                 <Route path="/mypageMain/myorder" element={<MyOrder />} />
                 <Route path="/mypageMain/myreview" element={<MyReview />} />
                 <Route path="/mypageMain/mycoupon" element={<MyCoupon />} />
+                <Route
+                  path="/mypageMain/mypageApplyManager"
+                  element={<ApplyManager />}
+                />
+                <Route
+                  path="/mypageMain/HandleApplyManager"
+                  element={<HandleApplyManager />}
+                />
 
                 <Route
                   path="/mypageMain/eventupdate"
@@ -82,6 +93,8 @@ function App() {
               <Route path="/storeproduct" element={<ShowStoreProduct />} />
               <Route path="/cart" element={<Cart />} />
               <Route path="/product/detail" element={<ProductDetail />} />
+              <Route path="/makeStore" element={<MakeStore />} />
+
               {/* <Route path="/payment" element={<Payment />} /> */}
             </Routes>
           </div>

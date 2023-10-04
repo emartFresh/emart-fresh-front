@@ -1,0 +1,167 @@
+.makeStoreContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: #f9fafb;
+  padding: 1rem;
+}
+.searchBtn {
+  background-color: white;
+  border: 2px solid #f9bb00;
+  padding-top: 0.3rem;
+  padding-bottom: 0.3rem;
+}
+.contentWrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 1rem;
+}
+
+.mapWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  border-radius: 1rem;
+  border: 1.5px solid #e1e1e1;
+  padding: 0.5rem;
+  width: 350px;
+  margin: 0.3rem;
+  background-color: white;
+}
+
+.makerMartinput {
+  border: 1px solid black;
+  border-radius: 8px;
+}
+
+.modalContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  overflow: scroll;
+}
+
+.scrollView {
+  display: block;
+  text-align: center;
+  border-top: 1.5px solid gray;
+  border-bottom: 1px solid gray;
+  padding: 0.3rem;
+  margin: 1rem 0rem 1rem 0rem;
+  width: 300px;
+  height: 300px;
+  overflow-y: scroll;
+}
+
+.selectBtn {
+  border: 2px solid orange;
+  padding: 0.3rem 0.5rem 0.3rem 0.5rem;
+  margin: 0.3rem;
+  background-color: transparent;
+}
+
+.selectBtn:hover {
+  background-color: #f9bb00;
+  margin: 0.3rem;
+}
+
+.cofirmBtn:hover {
+  background-color: orange;
+}
+
+.cancleBtn {
+  background-color: #d1d1d1;
+  color: white;
+  margin: 0.3rem;
+}
+.cancleBtn:hover {
+  background-color: black;
+}
+
+.storeInfo {
+  border-bottom: 1px solid #e1e1e1;
+  width: 100%;
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.storeInfo > div:nth-child(1) {
+  color: #8b8b8b;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.storeInfo > div:nth-child(2) {
+  margin-top: 0.3rem;
+  font-size: 1.2rem;
+}
+
+.mapContainer {
+  width: 100%;
+  height: 300px;
+  border-radius: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+/*----------------User info-------------------------*/
+
+.infoWrapper {
+  display: flex;
+  margin: 0.3rem;
+  flex-direction: column;
+  width: 350px;
+  height: auto;
+  border-radius: 1rem;
+  border: 1.5px solid #e1e1e1;
+  padding: 1rem;
+  background-color: white;
+}
+
+.imgWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 300px;
+  height: 350px;
+  padding: 0.3rem;
+  border-bottom: 1.5px solid #d1d1d1;
+}
+
+.infoWrapper > div {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  border-bottom: 2px solid #e1e1e1;
+}
+
+.title {
+  color: #8b8b8b;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.content {
+  font-size: 1;
+  font-weight: bold;
+  margin-top: 0.3em;
+}
+
+.regiBtn {
+  margin: 1rem;
+  width: 50%;
+  min-width: 200px;
+  max-width: 600px;
+}
+
+.certfImg {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+}
