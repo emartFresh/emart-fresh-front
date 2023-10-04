@@ -1,9 +1,19 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useState } from "react";
 import styles from "./EventList.module.css";
 import EventOngoing from "./EventOngoing";
 import EventEnded from "./EventEnded";
 
-function EventList() {
+interface EventList {
+  eventId: number;
+  eventTitle: string;
+  eventBannerImage: string;
+  eventDetailImage: string;
+  eventStartDate: string;
+  eventEndDate: string;
+  eventListCount: number;
+}
+export default function EventList() {
   const [isOngoingEvent, setIsOngoingEvent] = useState(true);
 
   const onChangeEventType = (mode: boolean) => {
@@ -30,5 +40,3 @@ function EventList() {
     </div>
   );
 }
-
-export default EventList;

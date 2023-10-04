@@ -3,11 +3,9 @@ import MyPageMenuBar from "../myPageMenuBar/MyPageMenuBar";
 
 export default function MyPageMain() {
   return (
-    <>
-      <div>
-        <MyPageMenuBar />
-        <Outlet />
-      </div>
-    </>
+    <div>
+      <MyPageMenuBar />
+      <Outlet />
+    </div>
   );
 }

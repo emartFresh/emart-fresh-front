@@ -1,19 +1,22 @@
 .eventWrapper {
-  width: 88vw;
+  width: 86vw;
   display: flex;
   flex-direction: column;
+  min-width: 900px;
 }
 .eventNavbar {
-  width: 85vw;
+  width: 72vw;
   height: 7vh;
   margin: auto;
   display: grid;
   grid-gap: 0.2rem;
   grid-template-columns: 1fr 1fr;
   background-color: #333333;
+  font-weight: 600;
   align-items: center;
   justify-items: center;
   border-radius: 0.8rem;
+  min-width: 400px;
 }
 .eventNavbar .event {
   display: flex;
@@ -21,9 +24,8 @@
   height: 100%;
   font-size: 16px;
   align-items: center;
-
   justify-content: center;
-  font-weight: 500;
+  font-weight: 600;
   color: #999999;
   cursor: pointer;
   border-radius: 0.6rem;
@@ -36,34 +38,30 @@
   justify-content: center;
   align-items: center;
   text-align: center;
-  font-weight: 500;
+  font-weight: 600;
   background-color: #f9bb00;
   cursor: pointer;
   border-radius: 0.6rem;
 }
 
 .eventContainer {
-  width: 82vw;
+  width: 70vw;
   display: grid;
   margin: auto;
+  margin-bottom: 1rem;
   padding-top: 2vw;
   grid-template-columns: 1fr 1fr;
   grid-gap: 2vw;
+  padding: auto;
 }
 .eventItem {
-  width: 100%;
+  width: 80%;
   position: relative;
   border: 3px solid transparent;
-  row-gap: 1rem;
 }
 .eventItem:hover {
   transition: 0.1s;
   color: #f9bb00;
-}
-.eventItem:hover .eventImage,
-.eventItem:hover .endedEventImage {
-  border-color: #f9bb00;
-  transform: scale(1.05);
 }
 
 .eventText {
@@ -81,7 +79,9 @@
   overflow: hidden;
   border-radius: 2.5rem;
   cursor: pointer;
+  transition: all 0.2s ease-in-out;
 }
+
 .endedEventImage {
   filter: grayscale(100%);
 }
@@ -89,7 +89,7 @@
 .eventImage:hover,
 .endedEventImage:hover {
   border-color: #f9bb00;
-  transform: scale(1.05);
+  transform: scale(1.04);
 }
 
 @media screen and (max-width: 768px) {
@@ -98,7 +98,16 @@
     margin: 1rem;
     padding: 1rem;
   }
+  .eventImage,
+  .endedEventImage {
+    margin-top: 1rem;
+  }
+  .eventImage:hover,
+  .endedEventImage:hover {
+    border-color: #f9bb00;
+    transform: scale(1.02);
+  }
   .eventNavbar {
-    width: 90vw;
+    width: 91vw;
   }
 }

@@ -1,15 +1,16 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { useState, useEffect } from "react";
 import styles from "../page_css/MyPage.module.css";
-// import axios from "axios";
 
 import CommonModalBasicEmail from "./CommonModalBasicEmail";
 import CommonModalBasic from "./CommonModalBasic";
+
 import {
   SendLoginPageIfNotLogin,
   GetUserName,
   GetUserAllInfo,
 } from "../../utils/LoginUtils";
+
 import { useRecoilState } from "recoil";
 import { loginState } from "../../atoms";
 import { sendAxiosGetRequest } from "../../utils/userUtils";
@@ -33,7 +34,6 @@ export default function MyPage() {
   const [ischange, setIsChange] = useState<boolean>(false);
   const [loginToken, setLoginToken] = useRecoilState<JwtToken>(loginState);
   const allMember = GetUserAllInfo();
-  const userName = GetUserName();
   SendLoginPageIfNotLogin();
   console.log("확인", GetUserAllInfo());
 
@@ -49,7 +49,6 @@ export default function MyPage() {
         console.log("Axios Response:", response);
 
         setMemberData(response.data);
-        console.log("멤버 아이디:", response.memberId);
       } catch (error) {
         console.error("Error fetching mypage:", error);
         alert("개인회원정보 조회 중 오류가 발생했습니다.");
@@ -59,34 +58,29 @@ export default function MyPage() {
   }, [memberEmail, ischange]);
 
   return (
-    <div className={styles.mypageMain}>
-      <div className={styles.container}>
-        <div className={styles.myinfo}>
-          <div className={styles.myTitleId}>아이디</div>
-          <div className={styles.myTitleIdValue}>{allMember.memberId}</div>
-          <div className={styles.myTitleName}>이름</div>
-          <div className={styles.myTitleNameValue}>{allMember.memberName}</div>
-          <div className={styles.myTitleEmail}>이메일</div>
-          <div className={styles.myTitleEmailValue}>
-            {allMember.memberEmail}&nbsp;&nbsp;&nbsp;
-            <div>
-              <CommonModalBasicEmail
-                ischange={ischange}
-                setIsChange={setIsChange}
-              />
+    <div className={styles.mainContent}>
+      <div className={styles.mypageMain}>
+        <div className={styles.container}>
+          <div className={styles.myinfo}>
+            <div className={styles.myTitleId}>아이디</div>
+            <div className={styles.myTitleIdValue}>{allMember.memberId}</div>
+            <div className={styles.myTitleName}>이름</div>
+            <div className={styles.myTitleNameValue}>
+              {allMember.memberName}
             </div>
-          </div>
-
-          {/* <div>비밀번호</div> */}
-
-          {/* <div className={styles.editEmail}>
-            <CommonModalBasicEmail
-              ischange={ischange}
-              setIsChange={setIsChange}
-            /> */}
-          {/* </div> */}
-          <div className={styles.editPassword}>
-            <CommonModalBasic />
+            <div className={styles.myTitleEmail}>이메일</div>
+            <div className={styles.myTitleEmailValue}>
+              {allMember.memberEmail}&nbsp;&nbsp;&nbsp;
+              <div>
+                <CommonModalBasicEmail
+                  ischange={ischange}
+                  setIsChange={setIsChange}
+                />
+              </div>
+            </div>
+            <div className={styles.editPassword}>
+              <CommonModalBasic />
+            </div>
           </div>
         </div>
       </div>

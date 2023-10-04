@@ -3,8 +3,8 @@ import { useState, useEffect } from "react";
 import Pagination from "@mui/material/Pagination";
 import styles from "../page_css/MyCoupon.module.css";
 import CouponCard from "./CouponCard";
-import axios from "axios";
 import icon_warning from "../../assets/images/icon_warning.svg";
+
 import { Link } from "react-router-dom";
 
 import { useRecoilState } from "recoil";
@@ -31,7 +31,8 @@ export default function MyCoupon() {
   const [totalPages, setTotalPages] = useState(0);
   const [totalElements, setTotalElements] = useState(0);
   const [loginToken, setLoginToken] = useRecoilState<JwtToken>(loginState);
-  GetUserName();
+  const allMember = GetUserAllInfo();
+
   useEffect(() => {
     async function fetchCoupons() {
       console.log("리프레쉬토큰", loginToken);
@@ -59,7 +60,7 @@ export default function MyCoupon() {
           console.log("Coupon Data:", couponData);
           setCoupons(couponData);
         } else {
-          alert("쿠폰내역이 없습니다.");
+          // alert("쿠폰내역이 없습니다.");
         }
       } catch (error) {
         console.error("Error fetching coupons:", error);
@@ -78,8 +79,7 @@ export default function MyCoupon() {
   for (let i = 0; i < totalPages; i++) {
     pages.push(i + 1);
   }
-  const allMember = GetUserAllInfo();
-  allMember.memberId;
+
   return (
     <div>
       <div className={styles.couponMain}>
@@ -93,7 +93,7 @@ export default function MyCoupon() {
         </div>
         <div>
           {coupons === undefined || (coupons && coupons.length === 0) ? (
-            <div style={{ alignItems: "center" }}>
+            <div className={styles.couponNoItem}>
               <img
                 src={icon_warning}
                 style={{ width: "1.2rem", marginBottom: "0.6rem" }}
