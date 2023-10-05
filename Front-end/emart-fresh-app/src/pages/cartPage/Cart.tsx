@@ -8,17 +8,18 @@ import { loginState } from "../../atoms";
 import { Checkbox } from "@mui/material";
 import { sendAxiosRequest } from "../../utils/userUtils";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faXmark } from "@fortawesome/free-solid-svg-icons";
+import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import cartNull from "../../assets/images/cartNull.png";
 import cartCalcNull from "../../assets/images/cartCalcNull.png";
 import Payment from "../paymentPage/Payment";
+
 
 interface responseData {
   data: CartData[];
 }
 
 // 수정 : 수량 변경 시  0이하/ 99이상 안됨.
-// 수정 : 장바구니 item 개수 nav
+// 수정 : 장바구니 item 개수 nav 
 // unmount : 수량 저장
 
 const Cart = () => {
@@ -65,6 +66,7 @@ const Cart = () => {
       // 수정 : 컴포넌트가 언마운트될 때 이벤트 리스너 정리
       window.removeEventListener("scroll", () => {});
     };
+  
   }, []);
 
   const handleQuantity = (
@@ -94,16 +96,17 @@ const Cart = () => {
     const newValue = value;
     const isValidInput = /^[1-9]\d*$/.test(newValue);
 
+
     // 수정 : 터짐
     if (newValue.length === 0) {
       // alert('수량을 입력해주세요. (임시 알림)');
       setCartItemList(
         cartItemList.map((item) => {
           if (item.cartProductId === cartProductId) {
-            return { ...item, cartProductQuantity: parseInt("1") };
+            return { ...item, cartProductQuantity: parseInt('1') };
           }
         })
-      );
+      )
     }
 
     if (isValidInput) {
@@ -120,16 +123,20 @@ const Cart = () => {
   };
 
   const handleCheckboxChange = (cartProductId: number) => {
-    let selectedList = [];
 
+    let selectedList = [];
+   
     if (selectedItems.includes(cartProductId)) {
       selectedList = selectedItems.filter((item) => item !== cartProductId);
+      
     } else {
-      selectedList = [...selectedItems, cartProductId];
+      selectedList =[...selectedItems, cartProductId];
+      
     }
     setSelectedItems(selectedList);
     settingPaymentItems(selectedList);
   };
+
 
   const handleAllCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.checked) {
@@ -151,25 +158,26 @@ const Cart = () => {
         );
         return selectedItem;
       });
-      setPaymentItems(newPaymentItems);
+      setPaymentItems(newPaymentItems);      
     }
-  };
+  }
+
 
   const deleteItem = (cartProductId: number) => {
     sendAxiosRequest(
-      "/cart/removeProduct?cartProductId=" + cartProductId,
+      "/cart/removeProduct?cartProductId="+cartProductId,
       "delete",
       loginToken,
       setLoginToken,
-      { cartProductId: cartProductId }
+      {cartProductId: cartProductId}
     )
-      .then((res) => {
-        setCartItemList((prevList) =>
-          prevList.filter((item) => item.cartProductId !== cartProductId)
-        );
-      })
-      .catch(console.error);
-  };
+    .then((res) => {
+      setCartItemList(
+        (prevList) => prevList.filter((item) => item.cartProductId !== cartProductId)
+      )
+    })
+    .catch(console.error)
+  }
 
   let totalPrice = 0;
 
@@ -188,15 +196,8 @@ const Cart = () => {
           cartItemList.length === 0 ? styles.hiddenWrap : styles.allCheckWrap
         }
       >
-        <input
-          type="checkbox"
-          id="allCheckBox"
-          className={styles.allCheckBox}
-          onChange={handleAllCheck}
-        />
-        <label htmlFor="allCheckBox" className={styles.allCheck}>
-          전체 선택
-        </label>
+        <input type='checkbox' id='allCheckBox' className={styles.allCheckBox} onChange={handleAllCheck} />
+        <label htmlFor="allCheckBox" className={styles.allCheck}>전체 선택</label>
       </div>
       <div className={styles.cartContainer}>
         <div
@@ -218,13 +219,7 @@ const Cart = () => {
                     checked={selectedItems.includes(item.cartProductId)}
                     onChange={() => handleCheckboxChange(item.cartProductId)}
                   />
-                  <FontAwesomeIcon
-                    icon={faXmark}
-                    className={styles.delItemMark}
-                    onClick={() => {
-                      deleteItem(item.cartProductId);
-                    }}
-                  />
+                  <FontAwesomeIcon icon={faXmark} className={styles.delItemMark} onClick={() => {deleteItem(item.cartProductId)}}/>
                   <img src={image} alt="" />
                   <p>{item.productTitle}</p>
                   <p>{item.priceNumber}</p>
@@ -264,78 +259,66 @@ const Cart = () => {
             })
           )}
         </div>
-        <div className={styles.cartCalculate}>
+        
           {selectedItems.length === 0 && (
-            <div className={styles.cartCalcNullWrap}>
-              <img src={cartCalcNull} alt="" className={styles.cartCalcNull} />
+            <div className={styles.cartCalculate}>
+              <div className={styles.cartCalcNullWrap}>
+                <img src={cartCalcNull} alt="" className={styles.cartCalcNull} />
+              </div>
             </div>
           )}
 
           {selectedItems.length > 0 && (
-            <>
+            <div className={styles.cartCalculate}>
               <h4 className={styles.storeName}>센텀시티점</h4>
-              {/* <h4>{storeName}<h4> */}
-              {/* 수정 : 응답에 store name을 하나로 뭉쳐서 */}
               <div className={styles.payItemListInfo}>
                 <p>제품명</p>
                 <p>가격</p>
                 <p>수량</p>
               </div>
               <ul className={styles.payItemListWrap}>
-                {selectedItems.map((selectedItemId) => {
+                {
+                selectedItems.map((selectedItemId) => {
                   const selectedItem = cartItemList.find(
                     (item) => item.cartProductId === selectedItemId
                   );
-                  totalPrice +=
-                    selectedItem.priceNumber * selectedItem.cartProductQuantity;
+                  totalPrice += selectedItem.priceNumber * selectedItem.cartProductQuantity; 
                   return (
                     <li key={selectedItemId} className={styles.payItemList}>
                       <p>{selectedItem.productTitle}</p>
                       <p>{selectedItem.priceNumber}원</p>
                       <p>{selectedItem.cartProductQuantity}개</p>
-                      <FontAwesomeIcon
-                        icon={faXmark}
-                        className={styles.delPayItemList}
-                        onClick={() =>
-                          handleCheckboxChange(selectedItem.cartProductId)
-                        }
-                      />
+                      <FontAwesomeIcon icon={faXmark} className={styles.delPayItemList} onClick={() => handleCheckboxChange(selectedItem.cartProductId)}/>
                     </li>
                   );
                 })}
               </ul>
-            </>
+              <div className={styles.payInfoWrap}>
+                <p className={styles.extendedPrice}>
+                  결제 금액 : {totalPrice} 원
+                </p>
+                <button
+                  className={styles.payBtn}
+                  onClick={() => setOpenPayment(true)}>
+                  결제하기
+                </button>
+              </div>
+            </div>
           )}
-          <div className={styles.payInfoWrap}>
-            <p
-              className={`${styles.extendedPrice} ${
-                selectedItems.length === 0 && styles.hidden
-              }`}
-            >
-              결제 금액 : {totalPrice} 원
-            </p>
-            <button
-              className={styles.payBtn}
-              disabled={selectedItems.length === 0}
-              onClick={() => setOpenPayment(true)}
-            >
-              결제하기
-            </button>
-          </div>
-        </div>
+      
+        {openPayment && (
+          <Payment
+            cartInfo={
+              (payItemsInfo = selectedItems.map((selectedItemId) => {
+                const payItemInfo = cartItemList.find(
+                  (item) => item.cartProductId === selectedItemId
+                );
+                return payItemInfo;
+              }))
+            }
+          />
+        )}
       </div>
-      {openPayment && (
-        <Payment
-          cartInfo={
-            (payItemsInfo = selectedItems.map((selectedItemId) => {
-              const payItemInfo = cartItemList.find(
-                (item) => item.cartProductId === selectedItemId
-              );
-              return payItemInfo;
-            }))
-          }
-        />
-      )}
     </div>
   );
 };

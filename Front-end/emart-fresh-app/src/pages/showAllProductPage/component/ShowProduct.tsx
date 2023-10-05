@@ -51,7 +51,7 @@ export default function ShowProduct({
             </button>
           </div>
           <div className={styles.priceInfo}>{product.priceString}</div>
-          <Link to={idLink}>리뷰보기</Link>
+          <Link to={idLink}>상품상세</Link>
         </section>
       </>
     );

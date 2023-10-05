@@ -110,6 +110,7 @@ export default function Dopay({
   return (
     <div>
       <button onClick={preProcesse}>결제하기</button>
+      <button onClick={saveToOrderList}>결제하기2</button>
     </div>
   );
 }
