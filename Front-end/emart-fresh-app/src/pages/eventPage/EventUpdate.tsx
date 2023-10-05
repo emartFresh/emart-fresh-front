@@ -199,7 +199,7 @@ export default function EventUpdate() {
                   <img
                     src={detailImagePreview}
                     alt="Detail Image Preview"
-                    style={{ width: "100px" }}
+                    style={{ width: "500px" }}
                   />
                 )}
               </div>
