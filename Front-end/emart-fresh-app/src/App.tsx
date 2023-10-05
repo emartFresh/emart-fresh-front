@@ -31,7 +31,7 @@ import EventUpdate from "./pages/eventPage/EventUpdate";
 import ApplyManager from "./pages/applyManger/ApplyManager";
 import MakeStore from "./pages/makeStore/MakeStore";
 import HandleApplyManager from "./pages/HandleApplyManager";
-import StoreOrderList from "./pages/StoreOrderList/StoreOrderList";
+import StoreOrderList from "./pages/storeOrderList/StoreOrderList";
 
 const queryClient = new QueryClient();
 

@@ -22,6 +22,8 @@
 }
 
 .dataWrapper {
+  display: flex;
+  justify-content: space-between;
   border-top: 1.5px solid gray;
   width: 100%;
   text-align: left;
@@ -71,9 +73,56 @@
 .totalAmountWrapper {
   width: 100%;
   padding: 1rem;
+  color: rgb(78, 77, 77);
+  font-size: 1.3rem;
 }
 
 .totalAmount {
-  color: rgb(78, 77, 77);
+  color: #555454;
+  margin-right: 0.3rem;
+  font-weight: bold;
+}
+.memberWrapper {
+  color: #555454;
+}
+
+/*           detail jjs          */
+.detailContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.detailWrapper {
+  margin: 0.5rem;
+  padding: 0.5rem;
+
+  border-bottom: 1.5px solid #e1e1e1;
+}
+
+.detailImg {
+  width: 80px;
+  height: 80px;
+}
+
+.detailName {
+  color: gray;
   font-size: 1.3rem;
+  margin: 0.5rem;
+}
+
+.detailPrice {
+  color: black;
+  font-size: 1.3rem;
+  margin: 0.5rem;
+}
+
+.cancleBtn {
+  background-color: gray;
+  color: white;
+}
+
+.btnWrapper {
+  text-align: center;
 }
