@@ -124,7 +124,7 @@ export default function MyOrder() {
         orderedProducts.map((orderedProduct, index) => (
           <div key={index}>
             <h6 style={{ textAlign: "left", marginLeft: "310px" }}>
-              {orderedProduct.orderCode}
+              {/* {orderedProduct.orderCode} */}
             </h6>
             <div className={styles.orderWrapper}>
               <div className={styles.orderContainer}>
