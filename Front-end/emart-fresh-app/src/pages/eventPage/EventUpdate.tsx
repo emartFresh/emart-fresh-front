@@ -44,7 +44,7 @@ export default function EventUpdate() {
       [name]: value,
     });
   };
-  const handleFileClick = () => {
+  const handleBannerImageFileClick = () => {
     if (eventBannerImageInputRef.current) {
       eventBannerImageInputRef.current.click();
     }
@@ -54,11 +54,10 @@ export default function EventUpdate() {
       eventDetailImageInputRef.current.click();
     }
   };
-  // const handleFileClick = () => {
-  //   eventBannerImageInputRef.current.click();
-  // };
+
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, files } = e.target;
+    console.log(name, files);
     if (files && files.length > 0) {
       const selectedFile = files[0];
       setFormData({
@@ -161,7 +160,7 @@ export default function EventUpdate() {
               value={formData.eventStartDate || ""}
               onChange={handleInputChange}
             />
-          </div>{" "}
+          </div>
           &nbsp;&nbsp;&nbsp;&nbsp;
           <div>
             이벤트 마지막날짜&nbsp;&nbsp;
@@ -173,32 +172,37 @@ export default function EventUpdate() {
             />
           </div>
         </div>
+
         <div>
-          <p>배너이미지</p>
-          <div className={styles.이미지사진} onClick={handleFileClick}>
-            <img
-              src={BannerImageIcon}
-              className={`${styles.previewImage} ${
-                bannerImageSelected ? styles.hidden : ""
-              }`}
-            />
-            <input
-              style={{ display: "none" }}
-              type="file"
-              name="eventBannerImage"
-              onChange={handleFileChange}
-              ref={eventBannerImageInputRef}
-            />
-            <div className={styles.배너이미지미리보기}>
-              {bannerImagePreview && (
-                <img
-                  src={bannerImagePreview}
-                  alt="Banner Image Preview"
-                  style={{ height: "200px" }}
-                />
-              )}
+          <div>
+            <p>배너이미지</p>
+            <div
+              className={styles.이미지사진}
+              onClick={handleBannerImageFileClick}
+            >
+              <img
+                src={BannerImageIcon}
+                className={`${bannerImageSelected ? styles.hidden : ""}`}
+              />
+              <input
+                style={{ display: "none" }}
+                type="file"
+                name="eventBannerImage"
+                onChange={handleFileChange}
+                ref={eventBannerImageInputRef}
+              />
+              <div className={styles.배너이미지미리보기}>
+                {bannerImagePreview && (
+                  <img
+                    src={bannerImagePreview}
+                    alt="Banner Image Preview"
+                    style={{ width: "500px" }}
+                  />
+                )}
+              </div>
             </div>
           </div>
+
           <div>
             <p>상세이미지</p>
             <div
@@ -207,9 +211,7 @@ export default function EventUpdate() {
             >
               <img
                 src={DetailImageIcon}
-                className={`${styles.previewImage} ${
-                  detailImageSelected ? styles.hidden : ""
-                }`}
+                className={`${detailImageSelected ? styles.hidden : ""}`}
               />
               <input
                 style={{ display: "none" }}
@@ -218,15 +220,15 @@ export default function EventUpdate() {
                 onChange={handleFileChange}
                 ref={eventDetailImageInputRef}
               />
-            </div>
-            <div className={styles.디테일이미지미리보기}>
-              {detailImagePreview && (
-                <img
-                  src={detailImagePreview}
-                  alt="Detail Image Preview"
-                  style={{ width: "460px" }}
-                />
-              )}
+              <div className={styles.디테일이미지미리보기}>
+                {detailImagePreview && (
+                  <img
+                    src={detailImagePreview}
+                    alt="Detail Image Preview"
+                    style={{ width: "460px" }}
+                  />
+                )}
+              </div>
             </div>
           </div>
         </div>
