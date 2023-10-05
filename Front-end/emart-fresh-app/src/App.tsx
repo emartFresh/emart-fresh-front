@@ -31,6 +31,7 @@ import EventUpdate from "./pages/eventPage/EventUpdate";
 import ApplyManager from "./pages/applyManger/ApplyManager";
 import MakeStore from "./pages/makeStore/MakeStore";
 import HandleApplyManager from "./pages/HandleApplyManager";
+import StoreOrderList from "./pages/StoreOrderList/StoreOrderList";
 
 const queryClient = new QueryClient();
 
@@ -94,6 +95,7 @@ function App() {
               <Route path="/cart" element={<Cart />} />
               <Route path="/product/detail" element={<ProductDetail />} />
               <Route path="/makeStore" element={<MakeStore />} />
+              <Route path="/storeOrderList" element={<StoreOrderList />} />
 
               {/* <Route path="/payment" element={<Payment />} /> */}
             </Routes>

@@ -15,6 +15,7 @@
 
 .contentSection {
   width: 30em;
+  padding: 1em;
 }
 
 .itemImage {
@@ -30,19 +31,58 @@
   border-top: 0.5px solid #ebebeb;
 }
 
-.priceInput {
-  width: 4em;
+.priceContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.productTitle {
+  color: #4b4b4b;
+  font-size: 1.5rem;
+}
+
+.productPrice {
+  color: #cb1400;
+  font-weight: 500;
+  font-size: 1.5rem;
+}
+
+.discountedPrice {
+  color: #4b4b4b;
+  margin-right: 0.6rem;
+  text-decoration: line-through;
 }
 
 /*----------------리뷰----------------*/
+
 .reviewContentContainer {
   display: flex;
-  width: 100%;
+  justify-content: center;
+  align-items: center;
   flex-direction: column;
   padding: 1em;
+  margin-top: 1.5rem;
+  width: 80%;
+  max-width: 800px;
+  min-width: 320px;
+}
+
+.selectOrder {
+  background-color: #f4f4f4;
+  border: 1px solid gray;
+  border-radius: 1rem;
+  padding: 0.1rem 0.5rem 0.1rem 0.5rem;
+}
+
+.reviewNumber {
+  margin: 0.8rem;
+  width: 100%;
+  margin-left: 2rem;
+  text-align: left;
 }
 .reviewContainer {
   display: flex;
+  width: 100%;
   flex-direction: column;
   justify-content: left;
   align-items: start;
@@ -75,13 +115,45 @@
 }
 
 .starFilled {
-  color: yellow;
+  color: #edb32c;
 }
 
+.cartWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
 .contentWrapper {
   background-color: #e1e1e1;
   width: 100%;
   text-align: left;
   padding: 1em;
   border-radius: 0.5em;
+}
+
+.buttonWrapper {
+  border: 1px solid gray;
+}
+.upBtn {
+  background-color: white;
+  border-left: 1px solid gray;
+  border-radius: 0;
+}
+.downBtn {
+  background-color: white;
+  border-right: 1px solid gray;
+  border-radius: 0;
+}
+
+.qttInput {
+  height: 30px;
+  width: 4em;
+  margin: 0.2rem;
+}
+
+.toCartBtn {
+  background-color: white;
+  border: 2px solid gray;
+  margin: 1rem;
 }
