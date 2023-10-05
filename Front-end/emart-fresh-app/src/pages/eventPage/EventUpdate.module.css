@@ -1,30 +1,31 @@
 .eventUpdateWrapper {
   display: flex;
   flex-direction: column;
-  width: 80vw;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  width: 90vw;
   max-width: 900px;
   min-width: 450px;
   margin: 0 auto;
-  margin-top: 30px;
   margin-bottom: 30px;
   padding: 20px;
   border: 1px solid #ccc;
   border-radius: 16px;
-  background-color: #fff;
+  background-color: whitesmoke;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .eventUpdateContainer {
   display: flex;
   flex-direction: column;
-  margin-top: 20px;
   justify-content: center;
   align-items: center;
 }
 
 .eventSubmitBtn {
   margin-top: 20px;
-  width: 60%;
+  width: 500px;
   padding: 10px;
   background-color: #f9bb00;
   color: #fff;
@@ -47,47 +48,25 @@
   margin: auto;
 }
 
-.배너이미지 {
-  border: transparent;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.상세이미지 {
-  border: transparent;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.등록이벤트 {
+.eventUpdateTitle {
   display: flex;
   align-items: center;
   font-weight: bold;
   margin-bottom: 10px;
 }
-
-.배너이미지미리보기,
-.디테일이미지미리보기 {
+.pTag {
+  font-weight: 900;
+  padding: 20px;
+}
+.bannerImagePrev,
+.detailImagePrev {
+  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   margin-top: 10px;
-  /* border-radius: 10px; */
-  /* object-fit: contain; */
 }
 
-.tableContainer {
-  overflow-x: auto;
-  max-width: 100%;
-  border-collapse: collapse;
-}
-
-.tableContainer td,
-.tableContainer th {
-  border: none;
-  padding: 8px;
-  /* white-space: nowrap; */
-}
 .eventDate {
   display: flex;
   justify-content: space-between;
@@ -99,16 +78,6 @@
     line-height: 1;
     margin-top: 5px;
     margin-bottom: 5px;
-  }
-  .tableContainer {
-    min-width: 380px;
-  }
-  .tableContainer td,
-  .tableContainer th {
-    display: flex;
-    flex-direction: column;
-    padding: 8px;
-    white-space: nowrap;
   }
   .배너이미지미리보기,
   .디테일이미지미리보기 {
