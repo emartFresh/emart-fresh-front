@@ -23,16 +23,12 @@ export default function EventUpdate() {
     eventStartDate: null,
     eventEndDate: null,
   });
-  const [bannerImageSelected, setBannerImageSelected] =
-    useState<boolean>(false);
-  const [detailImageSelected, setDetailImageSelected] =
-    useState<boolean>(false);
 
   const [bannerImagePreview, setBannerImagePreview] = useState<string | null>(
-    null
+    BannerImageIcon
   );
   const [detailImagePreview, setDetailImagePreview] = useState<string | null>(
-    null
+    DetailImageIcon
   );
   const eventBannerImageInputRef = useRef<HTMLInputElement>(null);
   const eventDetailImageInputRef = useRef<HTMLInputElement>(null);
@@ -70,10 +66,8 @@ export default function EventUpdate() {
         const imagePreview = reader.result as string;
         if (name === "eventBannerImage") {
           setBannerImagePreview(imagePreview);
-          setBannerImageSelected(true);
         } else if (name === "eventDetailImage") {
           setDetailImagePreview(imagePreview);
-          setDetailImageSelected(true);
         }
       };
       reader.readAsDataURL(selectedFile);
@@ -114,14 +108,6 @@ export default function EventUpdate() {
         console.log("이벤트 생성에 성공하였습니다.");
         alert("이벤트 등록성공!");
 
-        if (
-          eventBannerImageInputRef.current &&
-          eventDetailImageInputRef.current
-        ) {
-          eventBannerImageInputRef.current.value = "";
-          eventDetailImageInputRef.current.value = "";
-        }
-
         setFormData({
           eventTitle: "",
           eventBannerImage: null,
@@ -129,6 +115,8 @@ export default function EventUpdate() {
           eventStartDate: null,
           eventEndDate: null,
         });
+        setBannerImagePreview(BannerImageIcon);
+        setDetailImagePreview(DetailImageIcon);
       } else {
         console.error("이벤트 생성에 실패하였습니다.");
       }
@@ -140,7 +128,7 @@ export default function EventUpdate() {
   return (
     <div className={styles.eventUpdateWrapper}>
       <div className={styles.eventUpdateContainer}>
-        <div className={styles.등록이벤트}>
+        <div className={styles.eventUpdateTitle}>
           등록이벤트&nbsp;&nbsp;
           <input
             type="text"
@@ -175,15 +163,8 @@ export default function EventUpdate() {
 
         <div>
           <div>
-            <p>배너이미지</p>
-            <div
-              className={styles.이미지사진}
-              onClick={handleBannerImageFileClick}
-            >
-              <img
-                src={BannerImageIcon}
-                className={`${bannerImageSelected ? styles.hidden : ""}`}
-              />
+            <p className={styles.pTag}>배너이미지</p>
+            <div onClick={handleBannerImageFileClick}>
               <input
                 style={{ display: "none" }}
                 type="file"
@@ -191,7 +172,7 @@ export default function EventUpdate() {
                 onChange={handleFileChange}
                 ref={eventBannerImageInputRef}
               />
-              <div className={styles.배너이미지미리보기}>
+              <div className={styles.bannerImagePrev}>
                 {bannerImagePreview && (
                   <img
                     src={bannerImagePreview}
@@ -204,15 +185,8 @@ export default function EventUpdate() {
           </div>
 
           <div>
-            <p>상세이미지</p>
-            <div
-              className={styles.이미지사진}
-              onClick={handleDetailImageFileClick}
-            >
-              <img
-                src={DetailImageIcon}
-                className={`${detailImageSelected ? styles.hidden : ""}`}
-              />
+            <p className={styles.pTag}>상세이미지</p>
+            <div onClick={handleDetailImageFileClick}>
               <input
                 style={{ display: "none" }}
                 type="file"
@@ -220,12 +194,12 @@ export default function EventUpdate() {
                 onChange={handleFileChange}
                 ref={eventDetailImageInputRef}
               />
-              <div className={styles.디테일이미지미리보기}>
+              <div className={styles.detailImagePrev}>
                 {detailImagePreview && (
                   <img
                     src={detailImagePreview}
                     alt="Detail Image Preview"
-                    style={{ width: "460px" }}
+                    style={{ width: "100px" }}
                   />
                 )}
               </div>
