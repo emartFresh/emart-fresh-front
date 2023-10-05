@@ -38,23 +38,19 @@ export default function MyPage() {
   console.log("확인", GetUserAllInfo());
 
   useEffect(() => {
-    const getMemberInfo = async () => {
-      try {
-        const response = await sendAxiosGetRequest(
-          `${import.meta.env.VITE_BACK_PORT}/mypage/mypage-info`,
-          loginToken,
-          setLoginToken
-        );
-        console.log("완료 후 토큰", loginToken);
-        console.log("Axios Response:", response);
+    const response = sendAxiosGetRequest(
+      `${import.meta.env.VITE_BACK_PORT}/mypage/mypage-info`,
+      loginToken,
+      setLoginToken
+    );
 
-        setMemberData(response.data);
-      } catch (error) {
-        console.error("Error fetching mypage:", error);
-        alert("개인회원정보 조회 중 오류가 발생했습니다.");
-      }
-    };
-    getMemberInfo();
+    response
+      .then((res) => {
+        setMemberData(res.data);
+      })
+      .catch((err) => {
+        console.log("-----------------------------에러");
+      });
   }, [memberEmail, ischange]);
 
   return (

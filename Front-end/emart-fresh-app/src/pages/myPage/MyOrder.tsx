@@ -12,7 +12,7 @@ import { Link } from "react-router-dom";
 
 interface OrderedProductData {
   memberId: string | MemberData;
-  productId: number | ProductData;
+  productId: number;
   storeId: number | StoreData;
   storeName: string;
   orderedDate: Date;
@@ -124,7 +124,7 @@ export default function MyOrder() {
         orderedProducts.map((orderedProduct, index) => (
           <div key={index}>
             <h6 style={{ textAlign: "left", marginLeft: "310px" }}>
-              {/* {orderedProduct.orderCode} */}
+              {orderedProduct.productId}
             </h6>
             <div className={styles.orderWrapper}>
               <div className={styles.orderContainer}>
