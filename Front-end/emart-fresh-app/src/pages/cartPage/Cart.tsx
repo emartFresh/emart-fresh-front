@@ -259,18 +259,18 @@ const Cart = () => {
             })
           )}
         </div>
-        <div className={styles.cartCalculate}>
+        
           {selectedItems.length === 0 && (
-            <div className={styles.cartCalcNullWrap}>
-              <img src={cartCalcNull} alt="" className={styles.cartCalcNull} />
+            <div className={styles.cartCalculate}>
+              <div className={styles.cartCalcNullWrap}>
+                <img src={cartCalcNull} alt="" className={styles.cartCalcNull} />
+              </div>
             </div>
           )}
 
           {selectedItems.length > 0 && (
-            <>
+            <div className={styles.cartCalculate}>
               <h4 className={styles.storeName}>센텀시티점</h4>
-              {/* <h4>{storeName}<h4> */}
-              {/* 수정 : 응답에 store name을 하나로 뭉쳐서 */}
               <div className={styles.payItemListInfo}>
                 <p>제품명</p>
                 <p>가격</p>
@@ -293,28 +293,32 @@ const Cart = () => {
                   );
                 })}
               </ul>
-            </>
+              <div className={styles.payInfoWrap}>
+                <p className={styles.extendedPrice}>
+                  결제 금액 : {totalPrice} 원
+                </p>
+                <button
+                  className={styles.payBtn}
+                  onClick={() => setOpenPayment(true)}>
+                  결제하기
+                </button>
+              </div>
+            </div>
           )}
-          <div className={styles.payInfoWrap}>
-            <p className={`${styles.extendedPrice} ${selectedItems.length === 0 && styles.hidden}`}>결제 금액 : {totalPrice} 원</p>
-            <button
-              className={styles.payBtn}
-              disabled = {selectedItems.length === 0}
-              onClick={() => setOpenPayment(true)}
-            >
-              결제하기
-            </button>
-          </div>
-        </div>
+      
+        {openPayment && (
+          <Payment
+            cartInfo={
+              (payItemsInfo = selectedItems.map((selectedItemId) => {
+                const payItemInfo = cartItemList.find(
+                  (item) => item.cartProductId === selectedItemId
+                );
+                return payItemInfo;
+              }))
+            }
+          />
+        )}
       </div>
-      {openPayment && <Payment cartInfo={payItemsInfo = selectedItems.map((selectedItemId) => {
-          const payItemInfo = cartItemList.find(
-            (item) => item.cartProductId === selectedItemId
-          );
-          return (
-            payItemInfo
-          );
-        })} />}
     </div>
   );
 };

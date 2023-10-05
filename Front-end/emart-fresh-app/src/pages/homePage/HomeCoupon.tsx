@@ -6,14 +6,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styles from '../page_css/HomeCoupon.module.css';
 
 
-// const queryClient = new QueryClient();
-
-// async function fetchCouponList() {
-//     // const { data } = await axios.get('./coupon.json');
-//     const result = fetch('/coupon.json').then(res => res.json());
-//     return result;
-//}
-
 const fetchData =  () => {
   fetch("/coupon.json")
   .then((res) =>res.json())
@@ -35,11 +27,6 @@ const HomeCoupon = () => {
     //     staleTime: 5000,
     //   })
     // })
-      
-
-    // if(isLoading) return <p>Loading...</p>;
-    // if(error) return <p>{error}</p>;
-
   return (
     <div className={styles.couponContainer}>
         <div className={styles.couponHeader}>
