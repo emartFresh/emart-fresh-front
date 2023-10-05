@@ -7,15 +7,12 @@ interface ModalProps {
   children: ReactNode;
 }
 
-export default function CommonModal({ isOpen, onClose, children }: ModalProps) {
+export default function CommonModal({ isOpen, children }: ModalProps) {
   if (!isOpen) return null;
 
   return (
     <div className={styles.modaloverlay}>
-      <div className={styles.modal}>
-        <button className={styles.modalclose} onClick={onClose}></button>
-        {children}
-      </div>
+      <div className={styles.modal}>{children}</div>
     </div>
   );
 }

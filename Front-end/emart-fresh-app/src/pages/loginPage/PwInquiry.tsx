@@ -84,10 +84,10 @@ const PwInquiry = ({ setPwResetting, pwInquiryId, setPwInquiryId }: PwInquiryPro
         inquiryCertCode : '',
     }
 
-    const [formData, setFormData] = useState<FormState>(initialPwInquiryForm);
+    const [formData, setFormData] = useState<FormState>(initialPwInquiryForm); 
     const [enableCodeInput, setEnableCodeInput] = useState<boolean>(false);
-    const [enableCodeSendBtn, setEnableCodeSendBtn] = useState<boolean>(true);
-    const [enableResettingBtn, setEnableResettingBtn] = useState<boolean>(false); 
+    const [enableCodeSendBtn, setEnableCodeSendBtn] = useState<boolean>(false);
+    const [enableResettingBtn, setEnableResettingBtn] = useState<boolean>(false);
     const [codeSendCount, setCodeSendCount] = useState<number>(0);
     const [showTimer, setShowTimer] = useState<boolean>(false);
     const [completeCert, setCompleteCert] = useState<boolean>(false);
@@ -98,7 +98,6 @@ const PwInquiry = ({ setPwResetting, pwInquiryId, setPwInquiryId }: PwInquiryPro
             ...formData,
             [fieldName]: value,
         });
-        
     };
 
     const findUserInfo = async() => {        
@@ -110,6 +109,8 @@ const PwInquiry = ({ setPwResetting, pwInquiryId, setPwInquiryId }: PwInquiryPro
         })
         .then((response) => {
             console.log("일치하는 회원정보가 있음! >>> " + response.data);
+            handleStartTimer();
+            // 수정 : 이메일 전송까지 걸리는 시간 로딩 필요 
         }).catch(() => {
             console.log("일치하는 회원정보가 없습니다.");
             alert('일치하는 회원 정보가 없음! (임시 알림)');
@@ -124,10 +125,11 @@ const PwInquiry = ({ setPwResetting, pwInquiryId, setPwInquiryId }: PwInquiryPro
         })
         .then((response) => {
             console.log("인증코드 일치 >>> " + response.data);
+            setEnableCodeSendBtn(false);
             setEnableCodeInput(false);
             setEnableCodeSendBtn(false);
             setEnableResettingBtn(true);
-            setShowTimer(false);
+            handleCloseTimer();
             setCompleteCert(true);
             alert('인증번호가 일치합니다. (임시 알림)');
         })
@@ -139,12 +141,14 @@ const PwInquiry = ({ setPwResetting, pwInquiryId, setPwInquiryId }: PwInquiryPro
 
     const handleStartTimer = () => {
         setShowTimer(true);
-        setEnableCodeSendBtn(false);
+        setEnableCodeSendBtn(true);
         setEnableCodeInput(true);
     }
 
     const handleCloseTimer = () => {
         setShowTimer(false);
+        setEnableCodeInput(false);
+        setEnableCodeSendBtn(false);
     }
 
     return (
@@ -170,7 +174,7 @@ const PwInquiry = ({ setPwResetting, pwInquiryId, setPwInquiryId }: PwInquiryPro
                 maxLength={30}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleInputChange('inquiryEmail', e.target.value)}
             />
-            <CertificationBtn disabled={!enableCodeSendBtn} onClick={() => {findUserInfo(), handleStartTimer()}}>인증번호 전송</CertificationBtn>
+            <CertificationBtn disabled={enableCodeSendBtn} onClick={() => findUserInfo()}>인증번호 전송</CertificationBtn>
 
             <CertCodeInput 
                 type="text"
@@ -184,7 +188,7 @@ const PwInquiry = ({ setPwResetting, pwInquiryId, setPwInquiryId }: PwInquiryPro
             {showTimer && (
             <ExpiryTime 
                 onClose={handleCloseTimer}
-                enableSendBtn={() => setEnableCodeSendBtn(true)} 
+                enableSendBtn={() => setEnableCodeSendBtn(false)} 
                 callCount={codeSendCount}
             />
             )}

@@ -1,0 +1,117 @@
+.eventUpdateWrapper {
+  display: flex;
+  flex-direction: column;
+  width: 80vw;
+  max-width: 900px;
+  min-width: 450px;
+  margin: 0 auto;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 16px;
+  background-color: #fff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.eventUpdateContainer {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+  justify-content: center;
+  align-items: center;
+}
+
+.eventSubmitBtn {
+  margin-top: 20px;
+  width: 60%;
+  padding: 10px;
+  background-color: #f9bb00;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.eventSubmitBtn:hover {
+  background-color: #ff9900;
+}
+
+.inputEventUpdate {
+  /* width: 100%; */
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  margin: auto;
+}
+
+.배너이미지 {
+  border: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.상세이미지 {
+  border: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.등록이벤트 {
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.배너이미지미리보기,
+.디테일이미지미리보기 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
+  /* border-radius: 10px; */
+  /* object-fit: contain; */
+}
+
+.tableContainer {
+  overflow-x: auto;
+  max-width: 100%;
+  border-collapse: collapse;
+}
+
+.tableContainer td,
+.tableContainer th {
+  border: none;
+  padding: 8px;
+  /* white-space: nowrap; */
+}
+.eventDate {
+  display: flex;
+  justify-content: space-between;
+}
+@media screen and (min-width: 380px) and (max-width: 970px) {
+  .eventDate {
+    display: flex;
+    flex-direction: column;
+    line-height: 1;
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
+  .tableContainer {
+    min-width: 380px;
+  }
+  .tableContainer td,
+  .tableContainer th {
+    display: flex;
+    flex-direction: column;
+    padding: 8px;
+    white-space: nowrap;
+  }
+  .배너이미지미리보기,
+  .디테일이미지미리보기 {
+    width: 100%;
+  }
+}

@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { sendAxiosGetRequest } from "../../utils/userUtils";
 import { useRecoilState } from "recoil";
 import { loginState } from "../../atoms";
@@ -22,7 +22,6 @@ export default function CopuonApply({
   const [loginToken, setLoginToken] = useRecoilState<JwtToken>(loginState);
   const [couponList, setCouponList] = useState<Coupon[]>();
   const [open, setOpen] = useState(false);
-  const inputRef = useRef(null);
 
   const handleOpen = () => {
     setOpen(true);

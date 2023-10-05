@@ -1,13 +1,14 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import styles from "../page_css/MyOrder.module.css";
 import { useState, useEffect } from "react";
-import axios from "axios";
 import Pagination from "@mui/material/Pagination";
 import icon_warning from "../../assets/images/icon_warning.svg";
 import { useRecoilState } from "recoil";
 import { loginState } from "../../atoms";
 import { sendAxiosGetRequest } from "../../utils/userUtils";
 import { GetUserAllInfo } from "../../utils/LoginUtils";
+import order from "../../assets/images/order.png";
+import { Link } from "react-router-dom";
 
 interface OrderedProductData {
   memberId: string | MemberData;
@@ -22,14 +23,12 @@ interface OrderedProductData {
   totalAmount: number;
   myOrderedCount: number;
   productImgUrl: string;
-  isPickup: boolean;
+  pickup: boolean;
 }
 
 export default function MyOrder() {
   console.log("주문내역페이지");
-
   const pageSize = 5;
-  const [memberId, setMemberId] = useState("");
   const [orderedProducts, setOrderedProducts] = useState<OrderedProductData[]>(
     []
   );
@@ -67,7 +66,7 @@ export default function MyOrder() {
           console.log("Ordered Data:", OrderedData);
           setOrderedProducts(OrderedData);
         } else {
-          alert("주문내역이 없습니다.");
+          // alert("주문내역이 없습니다.");
         }
       } catch (error) {
         console.error("Error fetching orders:", error);
@@ -103,11 +102,23 @@ export default function MyOrder() {
       (orderedProducts && orderedProducts.length === 0) ? (
         <div style={{ alignItems: "center" }}>
           <img
+            src={order}
+            style={{
+              width: "200px",
+              marginBottom: "0.6rem",
+            }}
+          />
+          <img
             src={icon_warning}
             style={{ width: "1.2rem", marginBottom: "1vw" }}
             alt="Warning Icon"
           />
           <span style={{ fontSize: "1.2rem" }}>주문하신 내역이 없습니다</span>
+          <div>
+            <Link to="/" className={styles.orderBtn}>
+              상품보러가기
+            </Link>
+          </div>
         </div>
       ) : (
         orderedProducts.map((orderedProduct, index) => (
@@ -129,7 +140,7 @@ export default function MyOrder() {
                 <div>{orderedProduct.storeName}</div>
                 <div className={styles.orderText}>
                   <div>
-                    {orderedProduct.isPickup ? (
+                    {orderedProduct.pickup ? (
                       <div style={{ color: "gray" }}>픽업완료</div>
                     ) : (
                       <div style={{ color: "blue" }}>픽업대기중</div>
