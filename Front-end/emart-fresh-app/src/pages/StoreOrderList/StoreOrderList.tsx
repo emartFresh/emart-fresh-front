@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
+import { Modal, Box } from "@mui/material";
+
 import { GetUserAllInfo } from "../../utils/LoginUtils";
 
 import styles from "../page_css/StoreOrderList.module.css";
+import axios from "axios";
 
 interface Order {
   orderedProductId: number;
@@ -10,6 +13,8 @@ interface Order {
 }
 
 export default function StoreOrderList() {
+  const [showModal, setShowModal] = useState<boolean>(false);
+
   const [orders, setOrders] = useState<Order[]>([]);
 
   const userInfo = GetUserAllInfo();
@@ -27,6 +32,14 @@ export default function StoreOrderList() {
     audio.play();
   };
 
+  useEffect(() => {
+    connectToEventSource();
+  }, []);
+
+  const handleDetail = () => {
+    setShowModal(true);
+    //axios요청
+  };
   const connectToEventSource = () => {
     const eventSource = new EventSource(
       `http://localhost:8080/orderedproduct/storeordered-list?memberId=${userInfo.memberId}`
@@ -62,17 +75,63 @@ export default function StoreOrderList() {
     };
   };
 
-  useEffect(() => {}, []);
+  const handlePickUpComplete = (orderId: number) => {
+    console.log("픽", orderId);
+    const url = `${
+      import.meta.env.VITE_BACK_PORT
+    }/orderedproduct/completepickup`;
+    axios.post(url, { orderedProductId: orderId }).then((res) => {
+      console.log(res.data);
+      location.reload();
+    });
+  };
 
   return (
     <div className={styles.orderListContainer}>
-      <button onClick={connectToEventSource}>Connect to Server</button>
+      <Modal
+        open={showModal}
+        onClose={() => {
+          setShowModal(!showModal);
+        }}
+        aria-labelledby="modal-title"
+        aria-describedby="modal-description"
+      >
+        <Box
+          sx={{
+            position: "absolute",
+            bgcolor: "background.paper",
+            border: "2px solid #000",
+            boxShadow: 24,
+            p: 2,
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+          }}
+        >
+          <button
+            className={styles.cancleBtn}
+            onClick={() => {
+              setShowModal(!showModal);
+            }}
+          >
+            닫기
+          </button>
+        </Box>
+      </Modal>
+      {/* <button onClick={connectToEventSource}>Connect to Server</button> */}
 
       {orders.map((order, index) => (
         <div className={styles.orderListWrapper} key={index}>
           <div className={styles.badge_detail_Wrapper}>
             <span className={styles.badge}>{order.orderedProductId}</span>
-            <button className={styles.detail}>주문상세</button>
+            <button
+              onClick={() => {
+                handleDetail();
+              }}
+              className={styles.detail}
+            >
+              주문상세
+            </button>
           </div>
           <div className={styles.dataWrapper}>
             <span className={styles.date}>
@@ -89,7 +148,11 @@ export default function StoreOrderList() {
             </span>
           </div>
           <div>
-            <button>픽업완료 처리</button>
+            <button
+              onClick={() => handlePickUpComplete(order.orderedProductId)}
+            >
+              픽업완료 처리
+            </button>
           </div>
         </div>
       ))}
