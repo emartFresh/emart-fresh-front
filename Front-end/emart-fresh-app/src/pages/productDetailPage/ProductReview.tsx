@@ -1,5 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import Rating from "@mui/material/Rating";
+
 import styles from "../page_css/ProductDetail.module.css";
 
 interface ProductReviewProps {
@@ -12,7 +14,9 @@ export default function ProductReview({ productTitle }: ProductReviewProps) {
   useEffect(() => {
     axios
       .get(
-        `${import.meta.env.VITE_BACK_PORT}/review/product-review?productTitle=${productTitle}&select=${select}`
+        `${
+          import.meta.env.VITE_BACK_PORT
+        }/review/product-review?productTitle=${productTitle}&select=${select}`
       )
       .then((res) => {
         console.log("잉", res.data);
@@ -23,31 +27,12 @@ export default function ProductReview({ productTitle }: ProductReviewProps) {
   }, [select]);
 
   const Reviews = reviewData?.map((review) => {
-    const ReviewScore = (score: number) => {
-      const stars = [];
-      for (let i = 1; i <= 5; i++) {
-        if (i <= score) {
-          stars.push(
-            <span key={i} className={styles.starFilled}>
-              ★
-            </span>
-          );
-        } else {
-          stars.push(
-            <span key={i} className={styles.starEmpty}>
-              ☆
-            </span>
-          );
-        }
-      }
-      return stars;
-    };
     return (
       <div key={review.reviewId} className={styles.reviewContainer}>
         <button className={styles.reviewDelBtn}>리뷰삭제</button>
         <div className={styles.reviewMemberName}>{String(review.memberId)}</div>
         <div className={styles.starWrapper}>
-          {ReviewScore(review.reviewScore)}
+          <Rating name="simple-controlled" value={review.reviewScore} />
           <span>{String(review.reviewDate)}</span>
         </div>
         <div className={styles.contentWrapper}>{review.reviewContent}</div>
@@ -61,17 +46,20 @@ export default function ProductReview({ productTitle }: ProductReviewProps) {
 
   return (
     <div className={styles.reviewContentContainer}>
-      <section>
-        <button value={0} onClick={handleSelect}>
-          최신순
-        </button>
-        <button value={1} onClick={handleSelect}>
-          평점 높은순
-        </button>
-        <button value={2} onClick={handleSelect}>
-          평점 낮은순
-        </button>
-      </section>
+      <div className={styles.reviewNumber}>
+        <span>리뷰 개수 {reviewData?.length}개 </span>
+        <select
+          className={styles.selectOrder}
+          name=""
+          id=""
+          onChange={handleSelect}
+        >
+          <option value="0">최신순</option>
+          <option value="1">평점 높은순</option>
+          <option value="2">평점 낮은순</option>
+        </select>
+      </div>
+
       {Reviews}
     </div>
   );
