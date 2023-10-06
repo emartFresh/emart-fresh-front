@@ -48,6 +48,17 @@
   align-items: center;
   margin-bottom: 30px;
 }
+
+.eventListBtn {
+  background-color: #f9bb00;
+  color: #333333;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+}
+
 @media screen and (max-width: 768px) {
   .eventContainer {
     display: inline;

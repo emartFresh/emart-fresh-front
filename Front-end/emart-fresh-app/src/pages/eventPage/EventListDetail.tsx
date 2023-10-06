@@ -2,7 +2,8 @@
 import { useState, useEffect } from "react";
 import styles from "./EventListDetail.module.css";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import EventEnded from "./EventEnded";
 
 interface EventList {
   eventId: string;
@@ -14,6 +15,7 @@ interface EventList {
   eventListCount: number;
 }
 export default function EventListDetail() {
+  const navigate = useNavigate();
   const { eventId } = useParams();
   const [onGoingEventList, setOnGoingEventList] = useState<EventList>({
     eventId: eventId,
@@ -51,10 +53,30 @@ export default function EventListDetail() {
     <div>
       <div className={styles.eventWrapper}>
         <div>
+          {/* <Link to="/eventlist">
+            <button className={styles.eventListBtn}>목록</button>
+          </Link> */}
+
           <div className={styles.eventTitle}>
-            {new Date(onGoingEventList.eventEndDate) >= new Date()
-              ? "진행중인 이벤트"
-              : "종료된 이벤트"}
+            {new Date(onGoingEventList.eventEndDate) >= new Date() ? (
+              <div>
+                <div>
+                  <Link to="/eventlist">
+                    <button className={styles.eventListBtn}>목록</button>
+                  </Link>
+                </div>
+                <div>진행중인 이벤트</div>
+              </div>
+            ) : (
+              <div>
+                <div>
+                  <Link to="/eventlist">
+                    <button className={styles.eventListBtn}>목록</button>
+                  </Link>
+                </div>
+                <div>종료된 이벤트</div>
+              </div>
+            )}
           </div>
           <p className={styles.eventTitleText}>
             {new Date(onGoingEventList.eventEndDate) >= new Date()

@@ -4,6 +4,7 @@ import axios from "axios";
 import styles from "./EventUpdate.module.css";
 import BannerImageIcon from "../../assets/images/BannerImageIcon.png";
 import DetailImageIcon from "../../assets/images/DetailImageIcon.png";
+import { webpImageIncoder } from "./webpImageIncoder";
 
 // 이벤트 정보
 interface EventFormState {
@@ -45,17 +46,29 @@ export default function EventUpdate() {
       eventBannerImageInputRef.current.click();
     }
   };
+  console.log(handleBannerImageFileClick);
+
   const handleDetailImageFileClick = () => {
     if (eventDetailImageInputRef.current) {
       eventDetailImageInputRef.current.click();
     }
   };
 
-  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
     const { name, files } = e.target;
+
+    console.log("핸들파일체인지", handleFileChange);
+
     console.log(name, files);
     if (files && files.length > 0) {
       const selectedFile = files[0];
+      const webpfile = await webpImageIncoder(selectedFile);
+
+      setBannerImagePreview(webpfile + "");
+      // setDetailImagePreview(webpfile + "");
+      // console.log("배너이미지 프리뷰가 웹파일? ", setBannerImagePreview);
+
+      console.log("웹파일은어떻게 나와?", webpfile);
       setFormData({
         ...formData,
         [name]: selectedFile,
@@ -64,12 +77,15 @@ export default function EventUpdate() {
       const reader = new FileReader();
       reader.onloadend = () => {
         const imagePreview = reader.result as string;
+
+        console.log("이미지 미리보기 ", imagePreview);
         if (name === "eventBannerImage") {
           setBannerImagePreview(imagePreview);
         } else if (name === "eventDetailImage") {
           setDetailImagePreview(imagePreview);
         }
       };
+
       reader.readAsDataURL(selectedFile);
     }
   };
