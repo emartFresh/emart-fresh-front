@@ -8,3 +8,25 @@ export const convertDateToShortForm = (inputDate: string): string => {
 
   return formattedDate;
 };
+
+
+export const formatFullDate = (stringDate: string) : string => {
+  const date = new Date(stringDate);
+  const formattedDate = `${date.getFullYear()}년 ${date.getMonth() + 1}월 ${date.getDate()}일 ${date.getHours()}시 ${date.getMinutes()}분 ${date.getSeconds()}초`;
+
+  return formattedDate;
+}
+
+export const formatSlashSeparatedDate = (stringDate: string) : string => {
+  const date = new Date(stringDate);
+  const formattedDate = `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
+
+  return formattedDate;
+}
+
+export const formatHyphenSeparatedDate = (stringDate: string) : string => {
+  const date = new Date(stringDate);
+  const formattedDate = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
+
+  return formattedDate;
+}

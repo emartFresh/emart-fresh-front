@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { loginState } from "../../atoms";
-import { GetUserAllInfo, IsLogIn } from "../../utils/LoginUtils";
+import { GetUserAllInfo, IsLogin } from "../../utils/LoginUtils";
 import { sendAxiosPostRequest } from "../../utils/userUtils";
 
 import styles from "../page_css/ProductDetail.module.css";
@@ -37,7 +37,7 @@ export default function ProductDetail() {
 
   console.log("디테일");
   console.log("유저인포", GetUserAllInfo());
-  console.log("로그인 함 ", IsLogIn());
+  console.log("로그인 함 ", IsLogin());
 
   useEffect(() => {
     axios
@@ -51,30 +51,6 @@ export default function ProductDetail() {
         setProductData(res.data);
       });
   }, []);
-
-  //setInterval 29분마다 localstorage에 토큰 있는지 검사
-  //있으면 ? 새토큰 갈아끼우고
-  //없으면 ? 로그아웃한 거니까 setInterval중지
-
-  const handleTest = async () => {
-    await sendAxiosGetRequest(
-      `${import.meta.env.VITE_BACK_PORT}/review/hello`,
-      loginToken,
-      setLoginToken
-    );
-  };
-
-  const handleTest2 = async () => {
-    await sendAxiosGetRequest(
-      `${import.meta.env.VITE_BACK_PORT}/review/hello2`,
-      loginToken,
-      setLoginToken,
-      {
-        name: "정진성",
-        age: "27",
-      }
-    );
-  };
 
   const handleQuantityDown = () => {
     if (quantity > 1) {
@@ -104,6 +80,25 @@ export default function ProductDetail() {
     });
   };
 
+  function Price() {
+    const originalPrice: number = Number(productData?.priceString);
+    if (productData?.productEvent != null || productData?.productEvent !== 0) {
+      const discountRate: number = productData?.productEvent;
+      const discountedPrice =
+        originalPrice - (originalPrice * discountRate) / 100;
+      return (
+        <div className={styles.priceContainer}>
+          <div>
+            <span className={styles.discountedPrice}>{originalPrice}</span>
+            <span>{discountRate}%</span>
+          </div>
+          <div className={styles.productPrice}>{discountedPrice}</div>
+        </div>
+      );
+    }
+    return <div>{originalPrice}</div>;
+  }
+
   return (
     <div className={styles.productDetailContainer}>
       <div className={styles.itemContainer}>
@@ -113,38 +108,38 @@ export default function ProductDetail() {
           alt="no image"
         />
         <div className={styles.contentSection}>
-          <div>{productData?.productTitle}</div>
+          <div className={styles.productTitle}>{productData?.productTitle}</div>
           <div className={styles.itemLine}></div>
-          <div>{productData?.priceString}</div>
+          {Price()}
           <div className={styles.itemLine}></div>
-          <div>
-            이벤트 여부:
-            {/*  수정 : 이벤트 이쁘게 보여주기 */}
-            <div>{productData?.productEvent}</div>
-          </div>
         </div>
       </div>
       {storeId && (
-        <div>
-          <div>
-            <button onClick={handleQuantityDown}>-</button>
-            <input className={styles.priceInput} type="text" value={quantity} />
-            <button onClick={handleQuantityUp}>+</button>
+        <div className={styles.cartWrapper}>
+          <div className={styles.buttonWrapper}>
+            <button className={styles.downBtn} onClick={handleQuantityDown}>
+              -
+            </button>
+            <input className={styles.qttInput} type="text" value={quantity} />
+            <button className={styles.upBtn} onClick={handleQuantityUp}>
+              +
+            </button>
           </div>
 
           {GetUserAllInfo() ? (
-            <button onClick={handleCartInsert}>장바구니 담기</button>
+            <button className={styles.toCartBtn} onClick={handleCartInsert}>
+              장바구니 담기
+            </button>
           ) : (
-            <button disabled>장바구니 담기</button>
+            <button className={styles.toCartBtn} disabled>
+              장바구니 담기
+            </button>
           )}
         </div>
       )}
       {productId && productData?.productTitle && (
         <ProductReview productTitle={productData?.productTitle} />
       )}
-
-      <button onClick={handleTest}>테스트</button>
-      <button onClick={handleTest2}>테스트2</button>
     </div>
   );
 }

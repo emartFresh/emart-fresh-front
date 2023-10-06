@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useState, useEffect } from "react";
 
 import styles from "../page_css/MyPage.module.css";
@@ -16,7 +17,7 @@ import {
 import { sendAxiosGetRequest } from "../../utils/userUtils";
 import { useRecoilState } from "recoil";
 import { loginState } from "../../atoms";
-import OrdinaryUser from "./OrdinaryUser";
+import OrdinaryUser from "./OrdinaryUser"; // Auth =0 일때 추가할 컴포넌트
 import Administrator from "./Administrator";
 import StoreManager from "./StoreManager";
 import { Link } from "react-router-dom";
@@ -105,6 +106,7 @@ const MyPageMenuBar = () => {
           >
             {getUserAuth === 0 && (
               <div className={styles.mypagemenubar}>
+                <OrdinaryUser />
                 <Link to="/mypageMain/mypageApplyManager">점포점주신청</Link>
               </div>
             )}
@@ -125,14 +127,12 @@ const MyPageMenuBar = () => {
 
             {getUserAuth === 1 && (
               <div className={styles.mypagemenubar}>
-                {/* <ReorderIcon /> */}
                 <StoreManager />
               </div>
             )}
 
             {getUserAuth === 2 && (
               <div className={styles.mypagemenubar}>
-                {/* <ReorderIcon /> */}
                 <Administrator />
               </div>
             )}

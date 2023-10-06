@@ -1,8 +1,9 @@
 .productEventContainer{
     display: flex;
     margin: 6em auto;
-    width: 75%;
+    width: 80%;
     height: 25em;
+    text-align: center;
 }
 .eventType{
     width: 15%;
@@ -26,13 +27,13 @@
     padding: 0.7em 1.6em 0.7em 0;
 }
 .eventTypeBtn:hover {
-    width: 110%;
+    width: 120%;
     background-color: #f9bb00;
     color: white;
-    transition: 0.3s;
+    transition: 0.4s;
 }
 .selectedTypeBtn{
-    width: 110%;
+    width: 120%;
     background-color: #f9bb00;
     color: white;
 }

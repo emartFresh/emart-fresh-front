@@ -1,0 +1,86 @@
+.eventUpdateWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  width: 90vw;
+  max-width: 900px;
+  min-width: 450px;
+  margin: 0 auto;
+  margin-bottom: 30px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 16px;
+  background-color: whitesmoke;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.eventUpdateContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.eventSubmitBtn {
+  margin-top: 20px;
+  width: 500px;
+  padding: 10px;
+  background-color: #f9bb00;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.eventSubmitBtn:hover {
+  background-color: #ff9900;
+}
+
+.inputEventUpdate {
+  /* width: 100%; */
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  margin: auto;
+}
+
+.eventUpdateTitle {
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+.pTag {
+  font-weight: 900;
+  padding: 20px;
+}
+.bannerImagePrev,
+.detailImagePrev {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.eventDate {
+  display: flex;
+  justify-content: space-between;
+}
+@media screen and (min-width: 380px) and (max-width: 970px) {
+  .eventDate {
+    display: flex;
+    flex-direction: column;
+    line-height: 1;
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
+  .배너이미지미리보기,
+  .디테일이미지미리보기 {
+    width: 100%;
+  }
+}

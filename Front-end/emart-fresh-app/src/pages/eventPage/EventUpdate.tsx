@@ -1,7 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { useState, ChangeEvent, FormEvent, useRef } from "react";
 import axios from "axios";
-import styles from "./EventRegi.module.css";
+import styles from "./EventUpdate.module.css";
+import BannerImageIcon from "../../assets/images/BannerImageIcon.png";
+import DetailImageIcon from "../../assets/images/DetailImageIcon.png";
 
 // 이벤트 정보
 interface EventFormState {
@@ -12,8 +14,8 @@ interface EventFormState {
   eventStartDate: string | null; // 시작 날짜 (Date | null)
   eventEndDate: string | null; // 종료 날짜 (Date | null)
 }
+
 export default function EventUpdate() {
-  //
   const [formData, setFormData] = useState<EventFormState>({
     eventTitle: "",
     eventBannerImage: null,
@@ -21,6 +23,13 @@ export default function EventUpdate() {
     eventStartDate: null,
     eventEndDate: null,
   });
+
+  const [bannerImagePreview, setBannerImagePreview] = useState<string | null>(
+    BannerImageIcon
+  );
+  const [detailImagePreview, setDetailImagePreview] = useState<string | null>(
+    DetailImageIcon
+  );
   const eventBannerImageInputRef = useRef<HTMLInputElement>(null);
   const eventDetailImageInputRef = useRef<HTMLInputElement>(null);
 
@@ -31,15 +40,37 @@ export default function EventUpdate() {
       [name]: value,
     });
   };
+  const handleBannerImageFileClick = () => {
+    if (eventBannerImageInputRef.current) {
+      eventBannerImageInputRef.current.click();
+    }
+  };
+  const handleDetailImageFileClick = () => {
+    if (eventDetailImageInputRef.current) {
+      eventDetailImageInputRef.current.click();
+    }
+  };
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, files } = e.target;
+    console.log(name, files);
     if (files && files.length > 0) {
       const selectedFile = files[0];
       setFormData({
         ...formData,
         [name]: selectedFile,
       });
+
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const imagePreview = reader.result as string;
+        if (name === "eventBannerImage") {
+          setBannerImagePreview(imagePreview);
+        } else if (name === "eventDetailImage") {
+          setDetailImagePreview(imagePreview);
+        }
+      };
+      reader.readAsDataURL(selectedFile);
     }
   };
 
@@ -54,7 +85,6 @@ export default function EventUpdate() {
       eventStartDate,
       eventEndDate,
     } = formData;
-    console.log(formData);
 
     const formDataToSend = new FormData();
     formDataToSend.append("event_title", eventTitle);
@@ -77,13 +107,6 @@ export default function EventUpdate() {
       if (response.data === "success") {
         console.log("이벤트 생성에 성공하였습니다.");
         alert("이벤트 등록성공!");
-        // console.log(setFormData);
-        if (
-          (eventBannerImageInputRef.current, eventDetailImageInputRef.current)
-        ) {
-          eventBannerImageInputRef.current.value = "";
-          eventDetailImageInputRef.current.value = "";
-        }
 
         setFormData({
           eventTitle: "",
@@ -92,6 +115,8 @@ export default function EventUpdate() {
           eventStartDate: null,
           eventEndDate: null,
         });
+        setBannerImagePreview(BannerImageIcon);
+        setDetailImagePreview(DetailImageIcon);
       } else {
         console.error("이벤트 생성에 실패하였습니다.");
       }
@@ -101,42 +126,22 @@ export default function EventUpdate() {
   };
 
   return (
-    <div>
-      <div className={styles.eventRegiWrapper}>
-        <div className={styles.eventRegiContainer}>
+    <div className={styles.eventUpdateWrapper}>
+      <div className={styles.eventUpdateContainer}>
+        <div className={styles.eventUpdateTitle}>
+          등록이벤트&nbsp;&nbsp;
+          <input
+            type="text"
+            name="eventTitle"
+            className={styles.inputEventUpdate}
+            value={formData.eventTitle}
+            onChange={handleInputChange}
+            placeholder="이벤트이름을 등록하세요"
+          />
+        </div>
+        <div className={styles.eventDate}>
           <div>
-            등록이벤트:
-            <input
-              type="text"
-              name="eventTitle"
-              className={styles.inputEventRegi}
-              value={formData.eventTitle}
-              onChange={handleInputChange}
-              placeholder="이벤트 이름을 입력하세요"
-            />
-          </div>
-          <div>
-            배너이미지:
-            <input
-              type="file"
-              name="eventBannerImage"
-              onChange={handleFileChange}
-              ref={eventBannerImageInputRef}
-              // placeholder="배너이미지를 등록하세요"
-            />
-          </div>
-          <div>
-            상세이미지:
-            <input
-              type="file"
-              name="eventDetailImage"
-              onChange={handleFileChange}
-              ref={eventDetailImageInputRef}
-              // placeholder="상세이미지를 등록하세요"
-            />
-          </div>
-          <div>
-            시작날짜:
+            이벤트 시작날짜&nbsp;&nbsp;
             <input
               type="date"
               name="eventStartDate"
@@ -144,9 +149,9 @@ export default function EventUpdate() {
               onChange={handleInputChange}
             />
           </div>
-          &nbsp;&nbsp; &nbsp;&nbsp;
+          &nbsp;&nbsp;&nbsp;&nbsp;
           <div>
-            마지막날짜:
+            이벤트 마지막날짜&nbsp;&nbsp;
             <input
               type="date"
               name="eventEndDate"
@@ -154,11 +159,57 @@ export default function EventUpdate() {
               onChange={handleInputChange}
             />
           </div>
-          <button onClick={handleSubmit} className={styles.eventSubmitBtn}>
-            이벤트 등록
-          </button>
+        </div>
+
+        <div>
+          <div>
+            <p className={styles.pTag}>배너이미지</p>
+            <div onClick={handleBannerImageFileClick}>
+              <input
+                style={{ display: "none" }}
+                type="file"
+                name="eventBannerImage"
+                onChange={handleFileChange}
+                ref={eventBannerImageInputRef}
+              />
+              <div className={styles.bannerImagePrev}>
+                {bannerImagePreview && (
+                  <img
+                    src={bannerImagePreview}
+                    alt="Banner Image Preview"
+                    style={{ width: "500px" }}
+                  />
+                )}
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <p className={styles.pTag}>상세이미지</p>
+            <div onClick={handleDetailImageFileClick}>
+              <input
+                style={{ display: "none" }}
+                type="file"
+                name="eventDetailImage"
+                onChange={handleFileChange}
+                ref={eventDetailImageInputRef}
+              />
+              <div className={styles.detailImagePrev}>
+                {detailImagePreview && (
+                  <img
+                    src={detailImagePreview}
+                    alt="Detail Image Preview"
+                    style={{ width: "100px" }}
+                  />
+                )}
+              </div>
+            </div>
+          </div>
         </div>
       </div>
+      <button onClick={handleSubmit} className={styles.eventSubmitBtn}>
+        이벤트 등록
+      </button>
     </div>
   );
 }

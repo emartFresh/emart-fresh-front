@@ -16,7 +16,7 @@
     display: table;
     table-layout: fixed;
     display: flex;
-    align-items: center; /* 세로 가운데 정렬 */
+    align-items: center;
 }
 
 .allCheck, .allCheckBox{
@@ -52,7 +52,7 @@
     width: 60%;
     display: grid;
     grid-template-columns: repeat(4, 25%);
-    gap: 1.2rem;
+    gap: 2%;
     margin-right: 1rem;
     z-index: 0;
 }
@@ -91,6 +91,9 @@
     top: 8rem;
     z-index: 1;
     background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .cartProduct{
@@ -126,37 +129,101 @@
 
 .quantityInput{
     width: 100%;
-    padding: 0 1rem;
+    /* padding: 0 1rem; */
+    padding-right: 0.5rem;
     text-align: right;
-    border: 1px solid black;
+    border: 0.8px solid rgb(120, 120, 120);
+    border-radius: 0.3rem;
+}
+
+.quantityInput:focus:empty {
+    caret-color: auto;
 }
 
 .quantityBtn{
     background-color: white;
     border: 0;
+    border-radius: 0.3rem;
 }
 
 .storeName{
-    padding: 1em 0;
+    margin: 0;
+    height: 8%;
+    min-height: 7vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.payItemListInfo{
+    width: 100%;
+    height: 5%;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 0.3fr;
+    padding: 0 0.8rem;
+    margin-bottom: 0.5rem;
+}
+
+.payItemListWrap{
+    padding: 0;
+    overflow-y: scroll;
+    height: auto;
+    border-top: 0.5px solid black;
+    border-bottom: 0.5px solid black;
+    margin: 0;
+}
+
+.payItemListWrap::-webkit-scrollbar{
+    width: 10px;
+    display: flex;
+}
+
+.payItemListWrap::-webkit-scrollbar-thumb {
+    background: #f9bb00;
+    border-radius: 0.4rem;
+}
+
+.payItemList{
+    width: 100%;
+    padding: 0.8rem;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 0.2fr;
+    align-items: center;
+    cursor: default;
+}
+
+.payItemList:hover{
+    background-color: #f9bb002a;
+}
+
+.delPayItemList{
+    cursor: pointer;
 }
 
 .payInfoWrap{
     width: 100%;
-    position: absolute;
-    bottom: 0;
-    right: 0;
+    height: 17%;
+    min-height: 6rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .extendedPrice{
-    /* text-align: right;
-    margin-right: 5rem; */
     font-size: 1.2rem;
-    
+    height: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .payBtn{
     width: 100%;
-    padding: 1rem 0;
+    height: 50%;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
+}
+
+.hidden{
+    display: none;
 }

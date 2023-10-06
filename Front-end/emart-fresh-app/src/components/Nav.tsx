@@ -4,14 +4,14 @@ import styles from "./comp_css/Nav.module.css";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
 import { useState } from "react";
+import { useRecoilState } from "recoil";
+import { kakaoAccessToken, loginState, loginTypeState } from "../atoms";
+import { sendAxiosRequest } from "../utils/userUtils";
 import Badge, { BadgeProps } from "@mui/material/Badge";
 import { styled } from "@mui/material/styles";
 import IconButton from "@mui/material/IconButton";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import { useRecoilState } from "recoil";
-import { kakaoAccessToken, loginState, loginTypeState } from "../atoms";
-import axios from "axios";
-import { sendAxiosRequest } from "../utils/userUtils";
+// import logo from '../assets/images/default/defaultLogo.png';
 
 export default function Nav() {
   const navigate = useNavigate();
@@ -57,9 +57,6 @@ export default function Nav() {
             ) : (
               <Link to="/login">Login</Link>
             )}
-            {/* <Link to="/" onClick={logout}>
-                Logout
-            </Link> */}
           </span>
           <span>
             <Link to="/show">show</Link>
@@ -78,7 +75,10 @@ export default function Nav() {
         </div>
       </nav>
       <nav className={`${styles.nav} ${isHomePage ? styles.home : ""}`}>
-        <div>로고</div>
+        <div>
+          {/* <img src={logo} alt="" /> */}
+          로고
+        </div>
         <div className={styles.contentDiv}>
           <span>
             <Link to="/">Home</Link>
@@ -101,9 +101,6 @@ export default function Nav() {
         </div>
         <div></div>
       </nav>
-      {
-        `${loginToken.accessToken} // ${loginToken.refreshToken} // ${loginType}`
-      }
       <hr />
     </>
   );
