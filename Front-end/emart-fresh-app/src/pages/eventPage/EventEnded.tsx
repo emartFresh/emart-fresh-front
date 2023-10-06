@@ -44,6 +44,7 @@ export default function EventEnded() {
         );
         setEndedEventList(filteredEventList);
         setEventId(response.data.eventId);
+        console.log("종료된 이벤트", filteredEventList);
       } catch (error) {
         console.error("Error fetching eventlist:", error);
         alert(error);
@@ -51,7 +52,7 @@ export default function EventEnded() {
     }
     EventListup();
   }, []);
-  // console.log(endedEventList);
+  console.log(endedEventList);
 
   return (
     <div className={styles.eventContainer}>
