@@ -7,8 +7,8 @@ import { useRecoilState } from "recoil";
 import { kakaoAccessToken, loginState, loginTypeState } from "../../atoms";
 import Inquiry from "./Inquiry";
 import Modal from "./Modal";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Login = () => {
   const [memberId, setMemberId] = useState<string>("");
@@ -30,47 +30,42 @@ const Login = () => {
   const info = () => toast.info("Info...");
 
   const navigate = useNavigate();
-  const REDIRECT_URL = 'http://localhost:5173/login';
+  const REDIRECT_URL = "http://localhost:5173/login";
   const { Kakao } = window;
-
-  
-
-
-
 
   useEffect(() => {
     const code = new URL(window.location.href).searchParams.get("code");
-    if(code){
-      axios.post('https://kauth.kakao.com/oauth/token', {
-        grant_type: 'authorization_code',
-        client_id: "d19f32cfc8b52ff1cea52dd94e860f6b",
-        redirect_uri: REDIRECT_URL, 
-        code: code,
-      },
-        {
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded;charset=utf-8"
+    if (code) {
+      axios
+        .post(
+          "https://kauth.kakao.com/oauth/token",
+          {
+            grant_type: "authorization_code",
+            client_id: "d19f32cfc8b52ff1cea52dd94e860f6b",
+            redirect_uri: REDIRECT_URL,
+            code: code,
+          },
+          {
+            headers: {
+              "Content-Type": "application/x-www-form-urlencoded;charset=utf-8",
+            },
           }
-        }
-      )
-      .then(async (res) => {
-        console.log(res);
-        setKakaoToken(res.data.access_token);
-        await axios.post(`${import.meta.env.VITE_BACK_PORT}/member/kakaoLogin`, {
-          access_token: res.data.access_token,
-        })
-        .then((res) => {
-          setLoginToken(res.data.tokens);
-          setLoginType(res.data.loginType);
-          navigate("/");
-        })
-        .catch(
-          console.error
         )
-      })
-      .catch(
-        console.error
-      )
+        .then(async (res) => {
+          console.log(res);
+          setKakaoToken(res.data.access_token);
+          await axios
+            .post(`${import.meta.env.VITE_BACK_PORT}/member/kakaoLogin`, {
+              access_token: res.data.access_token,
+            })
+            .then((res) => {
+              setLoginToken(res.data.tokens);
+              setLoginType(res.data.loginType);
+              navigate("/");
+            })
+            .catch(console.error);
+        })
+        .catch(console.error);
     }
   });
 
@@ -92,10 +87,10 @@ const Login = () => {
         setLoginToken(response.data.tokens);
         setLoginType(response.data.loginType);
         // alert("로그인 완료! (임시 알림)");
-       
+
         navigate("/");
         toast.success("로그인 완료!", {
-          position:"top-center",
+          position: "top-center",
           autoClose: 5000,
           icon: "✅",
         });
@@ -108,7 +103,7 @@ const Login = () => {
 
     Kakao.Auth.authorize({
       redirectUri: REDIRECT_URL,
-      scope: 'account_email,profile_nickname'
+      scope: "account_email,profile_nickname",
     });
   };
 
@@ -129,8 +124,9 @@ const Login = () => {
           placeholder="비밀번호를 입력해주세요"
           className={styles.loginPw}
           onChange={(e) => setMemberPw(e.target.value)}
-          onKeyUp={(e) => { 
-            if(e.key === 'Enter') handleLogin() }}
+          onKeyUp={(e) => {
+            if (e.key === "Enter") handleLogin();
+          }}
         />
         <div className={styles.links}>
           <p onClick={openModal}>아이디 / 비밀번호 찾기</p>
@@ -144,17 +140,23 @@ const Login = () => {
         <button className={styles.loginBtn} onClick={handleLogin}>
           로그인
         </button>
-        <hr/>
+        <hr />
         <p>SNS 로그인</p>
-        <a id="kakao-login-btn" onClick={loginWithKakao} className={styles.kakaoLoginBtn}>
-          <img src="https://k.kakaocdn.net/14/dn/btroDszwNrM/I6efHub1SN5KCJqLm1Ovx1/o.jpg" 
+        <a
+          id="kakao-login-btn"
+          onClick={loginWithKakao}
+          className={styles.kakaoLoginBtn}
+        >
+          <img
+            src="https://k.kakaocdn.net/14/dn/btroDszwNrM/I6efHub1SN5KCJqLm1Ovx1/o.jpg"
             width="222"
-            alt="카카오 로그인 버튼" 
-            className={styles.kakaoLoginBtn}/>
+            alt="카카오 로그인 버튼"
+            className={styles.kakaoLoginBtn}
+          />
         </a>
-      <div>
-        <button onClick={success}>Notify!</button>
-        <ToastContainer
+        <div>
+          <button onClick={success}>Notify!</button>
+          {/* <ToastContainer
           position="top-center"
           autoClose={5000}
           hideProgressBar={false}
@@ -169,9 +171,8 @@ const Login = () => {
           toastStyle={{
             // color: "#f9bb00"
           }}
-        />
-
-      </div>
+        /> */}
+        </div>
       </div>
     </div>
   );

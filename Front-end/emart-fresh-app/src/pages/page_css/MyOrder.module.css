@@ -64,3 +64,44 @@
   margin-top: 1.25rem;
   margin-bottom: 1.25rem;
 }
+
+/*           detail jjs          */
+.detailContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.detailWrapper {
+  margin: 0.5rem;
+  padding: 0.5rem;
+
+  border-bottom: 1.5px solid #e1e1e1;
+}
+
+.detailImg {
+  width: 80px;
+  height: 80px;
+}
+
+.detailName {
+  color: gray;
+  font-size: 1.3rem;
+  margin: 0.5rem;
+}
+
+.detailPrice {
+  color: black;
+  font-size: 1.3rem;
+  margin: 0.5rem;
+}
+
+.cancleBtn {
+  background-color: gray;
+  color: white;
+}
+
+.btnWrapper {
+  text-align: center;
+}

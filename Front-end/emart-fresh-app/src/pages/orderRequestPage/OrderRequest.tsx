@@ -7,6 +7,8 @@ import { loginState } from "../../atoms";
 
 import axios from "axios";
 import styles from "../page_css/OrderRequest.module.css";
+import { sendAxiosPostRequest } from "../../utils/userUtils";
+import { SendHomePageIfNotAuth } from "../../utils/LoginUtils";
 
 //수정 : 인증 인가, 유통기한 처리
 //수정 : 전역 날짜 데이터 to String 처리 함수 추가해서 리팩토링
@@ -26,14 +28,10 @@ export default function OrderRequest() {
   const [loginToken, setLoginToken] = useRecoilState<JwtToken>(loginState);
   const [quantityData, setQuantityData] = useState<QuantityData[]>([]);
 
+  SendHomePageIfNotAuth(1);
+
   const fetchProductData = async () => {
     let resultData: ProductData | [] = [];
-
-    // 수정 : 작동하도록
-    // useEffect(() => {
-    //   console.log("우이ㅣㅇ", isValidMemberToken(loginToken));
-    // }, []);
-
     await axios
       .get(`${import.meta.env.VITE_BACK_PORT}/product/all-product-list`)
       .then((res) => {
@@ -107,25 +105,19 @@ export default function OrderRequest() {
     let sendingData: ManagerOrderData[] = [];
     sendingData = quantityData.map((data) => ({
       productId: data.productId,
-      storeId: 1, // 수정: 실제 가게 아이디로 변경
+      storeId: 0, // 수정: 실제 가게 아이디로 변경
       managerOrderStatus: false,
       managerOrderQuantity: data.quantity,
       managerOrderDate: new Date(),
     }));
-    console.log("실행");
-    console.log("ㄷ이터", sendingData);
-    await axios
-      .post(
-        `${import.meta.env.VITE_BACK_PORT}/order/add-manager-order`,
-        sendingData
-      )
-      .then((res) => {
-        console.log(res);
-        if (res.data === "success") {
-          navigate("/");
-          //수정 : 플래쉬 메시지 띄우기
-        }
-      });
+
+    const url = `${import.meta.env.VITE_BACK_PORT}/order/add-manager-order`;
+
+    sendAxiosPostRequest(url, loginToken, setLoginToken, sendingData).then(
+      (res) => {
+        console.log("응답", res);
+      }
+    );
   };
 
   const productListEle: JSX.Element[] | undefined = productData.data?.map(

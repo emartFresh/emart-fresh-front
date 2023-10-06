@@ -1,6 +1,7 @@
 import { useRecoilValue } from "recoil";
 import { loginState } from "../atoms";
 import { useNavigate } from "react-router-dom";
+
 import jwtDecode from "jwt-decode";
 
 export function IsLogin(): boolean {
@@ -58,6 +59,7 @@ export function GetUserName(): string {
 
 export function IsSameAuthNum(inpputedAuth: number): boolean {
   const userAuth: number = GetUserAuth();
+  console.log("유저 auth", userAuth);
   return userAuth === inpputedAuth;
 }
 

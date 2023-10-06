@@ -1,9 +1,9 @@
 .applyManagerContainer {
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: skyblue;
 }
 
 .applyManagerWrapper table {
@@ -70,4 +70,28 @@ td {
 }
 .cancleBtn:hover {
   background-color: black;
+}
+
+.nameWrapper {
+  margin: 0.8rem;
+}
+
+.userName {
+  color: #505050;
+  font-weight: 800;
+  font-size: 1.3rem;
+}
+
+/* 점주 신청 현황 */
+.certifImg {
+  width: 150px;
+  height: 150px;
+}
+
+.applyManagerTable {
+  width: 350px;
+}
+
+.applyManagerTable td {
+  color: #505050;
 }
