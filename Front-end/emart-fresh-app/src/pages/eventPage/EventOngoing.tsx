@@ -34,7 +34,7 @@ export default function EventOngoing() {
           }
         );
 
-        console.log(response.data);
+        console.log("응답데이터", response.data);
         const currentDate = new Date();
         const filteredEventList = response.data.content.filter(
           (event: { eventEndDate: Date }) => {

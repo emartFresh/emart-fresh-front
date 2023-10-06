@@ -44,7 +44,10 @@ export default function EventEnded() {
         );
         setEndedEventList(filteredEventList);
         setEventId(response.data.eventId);
-        console.log("종료된 이벤트", filteredEventList);
+        console.log(
+          "현재날짜 기준정리한 종료된 이벤트 리스트",
+          filteredEventList
+        );
       } catch (error) {
         console.error("Error fetching eventlist:", error);
         alert(error);
@@ -52,7 +55,7 @@ export default function EventEnded() {
     }
     EventListup();
   }, []);
-  console.log(endedEventList);
+  console.log("종료된 이벤트", endedEventList);
 
   return (
     <div className={styles.eventContainer}>

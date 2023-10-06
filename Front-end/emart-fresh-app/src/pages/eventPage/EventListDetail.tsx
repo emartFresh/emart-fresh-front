@@ -53,10 +53,6 @@ export default function EventListDetail() {
     <div>
       <div className={styles.eventWrapper}>
         <div>
-          {/* <Link to="/eventlist">
-            <button className={styles.eventListBtn}>목록</button>
-          </Link> */}
-
           <div className={styles.eventTitle}>
             {new Date(onGoingEventList.eventEndDate) >= new Date() ? (
               <div>

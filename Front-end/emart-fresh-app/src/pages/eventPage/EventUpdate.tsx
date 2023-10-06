@@ -1,10 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { useState, ChangeEvent, FormEvent, useRef } from "react";
+import { useState, ChangeEvent, FormEvent, useRef, useEffect } from "react";
 import axios from "axios";
 import styles from "./EventUpdate.module.css";
 import BannerImageIcon from "../../assets/images/BannerImageIcon.png";
 import DetailImageIcon from "../../assets/images/DetailImageIcon.png";
-import { webpImageIncoder } from "./webpImageIncoder";
 
 // 이벤트 정보
 interface EventFormState {
@@ -36,40 +35,40 @@ export default function EventUpdate() {
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormData({
+    setFormData((formData) => ({
       ...formData,
       [name]: value,
-    });
+    }));
+    console.log("값이 유효하니?", formData);
   };
+  const [isButtonDisabled, setIsButtonDisabled] = useState<boolean>(true);
+  useEffect(() => {
+    const calculatedButtonDisabled =
+      formData.eventTitle.trim() === "" ||
+      formData.eventBannerImage === null ||
+      formData.eventDetailImage === null ||
+      formData.eventStartDate === null ||
+      formData.eventEndDate === null;
+
+    setIsButtonDisabled(calculatedButtonDisabled);
+  }, [formData]);
+  console.log("유주이펙트 폼데이터 값", formData);
   const handleBannerImageFileClick = () => {
     if (eventBannerImageInputRef.current) {
       eventBannerImageInputRef.current.click();
     }
   };
-  console.log(handleBannerImageFileClick);
-
   const handleDetailImageFileClick = () => {
     if (eventDetailImageInputRef.current) {
       eventDetailImageInputRef.current.click();
     }
   };
 
-  const handleFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, files } = e.target;
-
-    console.log("핸들파일체인지", handleFileChange);
-
     console.log(name, files);
     if (files && files.length > 0) {
       const selectedFile = files[0];
-      const webpfile = await webpImageIncoder(selectedFile);
-
-      setBannerImagePreview(webpfile + "");
-      // setDetailImagePreview(webpfile + "");
-      // console.log("배너이미지 프리뷰가 웹파일? ", setBannerImagePreview);
-
-      console.log("웹파일은어떻게 나와?", webpfile);
-
       setFormData({
         ...formData,
         [name]: selectedFile,
@@ -78,15 +77,13 @@ export default function EventUpdate() {
       const reader = new FileReader();
       reader.onloadend = () => {
         const imagePreview = reader.result as string;
-
-        console.log("이미지 미리보기 ", imagePreview);
         if (name === "eventBannerImage") {
           setBannerImagePreview(imagePreview);
         } else if (name === "eventDetailImage") {
           setDetailImagePreview(imagePreview);
         }
+        // console.log("이미지 미리보기", imagePreview);
       };
-
       reader.readAsDataURL(selectedFile);
     }
   };
@@ -102,6 +99,15 @@ export default function EventUpdate() {
       eventStartDate,
       eventEndDate,
     } = formData;
+
+    console.log("eventTitle:", eventTitle);
+    if (!eventTitle && eventTitle.trim() === "") {
+      alert("이벤트 이름을 입력하세요.");
+    } else if (!eventStartDate || !eventEndDate) {
+      alert("이벤트 날짜를 입력하세요");
+    } else if (!eventBannerImage || !eventDetailImage) {
+      alert("이벤트이미지를 등록하세요");
+    }
 
     const formDataToSend = new FormData();
     formDataToSend.append("event_title", eventTitle);
@@ -224,7 +230,13 @@ export default function EventUpdate() {
           </div>
         </div>
       </div>
-      <button onClick={handleSubmit} className={styles.eventSubmitBtn}>
+      <button
+        onClick={handleSubmit}
+        className={`${styles.eventSubmitBtn} ${
+          isButtonDisabled && styles.disabledButton
+        }`}
+        disabled={isButtonDisabled}
+      >
         이벤트 등록
       </button>
     </div>

@@ -36,10 +36,6 @@
   transition: background-color 0.3s ease;
 }
 
-.eventSubmitBtn:hover {
-  background-color: #ff9900;
-}
-
 .inputEventUpdate {
   /* width: 100%; */
   padding: 10px;
@@ -66,7 +62,10 @@
   justify-content: center;
   margin-top: 10px;
 }
-
+.disabledButton {
+  background-color: gray;
+  cursor: not-allowed;
+}
 .eventDate {
   display: flex;
   justify-content: space-between;
