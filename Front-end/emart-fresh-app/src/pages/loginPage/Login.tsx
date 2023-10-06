@@ -7,6 +7,8 @@ import { useRecoilState } from "recoil";
 import { kakaoAccessToken, loginState, loginTypeState } from "../../atoms";
 import Inquiry from "./Inquiry";
 import Modal from "./Modal";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Login = () => {
   const [memberId, setMemberId] = useState<string>("");
@@ -14,12 +16,26 @@ const Login = () => {
   const [loginToken, setLoginToken] = useRecoilState<JwtToken>(loginState);
   const [kakaoToken, setKakaoToken] = useRecoilState<string>(kakaoAccessToken);
   const [loginType, setLoginType] = useRecoilState<string>(loginTypeState);
-
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const navigate = useNavigate();
 
+  const notify = () => toast("Wow so easy!");
+  // 성공 알람 ( 초록색 창 )
+  const success = () => toast.success("Success!");
+
+  // 실패 알람 ( 빨간색 창 )
+  const error = () => toast.error("Error!");
+  // 경고 알람 ( 노란색 창 )
+  const warning = () => toast.warning("Warnning!");
+  // 정보 알람
+  const info = () => toast.info("Info...");
+
+  const navigate = useNavigate();
   const REDIRECT_URL = 'http://localhost:5173/login';
   const { Kakao } = window;
+
+  
+
+
 
 
   useEffect(() => {
@@ -73,13 +89,16 @@ const Login = () => {
         memberPw: memberPw,
       })
       .then((response) => {
-        //jjs에 의한 수정
-        //setLoginToken(response.data);
-        console.log("수정값", response.data);
         setLoginToken(response.data.tokens);
         setLoginType(response.data.loginType);
-        alert("로그인 완료! (임시 알림)");
+        // alert("로그인 완료! (임시 알림)");
+       
         navigate("/");
+        toast.success("로그인 완료!", {
+          position:"top-center",
+          autoClose: 5000,
+          icon: "✅",
+        });
       })
       .catch((error) => console.log(error));
   };
@@ -133,6 +152,26 @@ const Login = () => {
             alt="카카오 로그인 버튼" 
             className={styles.kakaoLoginBtn}/>
         </a>
+      <div>
+        <button onClick={success}>Notify!</button>
+        <ToastContainer
+          position="top-center"
+          autoClose={5000}
+          hideProgressBar={false}
+          closeOnClick
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+          limit={2}
+          icon="✅"
+
+          toastStyle={{
+            // color: "#f9bb00"
+          }}
+        />
+
+      </div>
       </div>
     </div>
   );
