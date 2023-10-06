@@ -3,7 +3,7 @@ import { loginState } from "../atoms";
 import { useNavigate } from "react-router-dom";
 import jwtDecode from "jwt-decode";
 
-export function IsLogIn(): boolean {
+export function IsLogin(): boolean {
   const loginToken = useRecoilValue<JwtToken>(loginState);
   console.log("로그인 토큰", loginToken);
   if (loginToken.accessToken) return true;
@@ -12,7 +12,7 @@ export function IsLogIn(): boolean {
 
 export function SendLoginPageIfNotLogin() {
   const navigate = useNavigate();
-  if (!IsLogIn()) {
+  if (!IsLogin()) {
     navigate("/login");
   }
 }
