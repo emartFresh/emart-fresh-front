@@ -18,7 +18,6 @@ interface responseData {
   data: CartData[];
 }
 
-// 수정 : 수량 변경 시  0이하/ 99이상 안됨.
 // 수정 : 장바구니 item 개수 nav 
 
 const Cart = () => {
