@@ -88,6 +88,8 @@ export async function sendAxiosGetRequest(
         location.href = "/login";
         throw refreshError;
       }
+    } else {
+      throw err;
     }
   }
 }
@@ -116,10 +118,6 @@ export async function sendAxiosPostRequest(
     return response.data;
   } catch (err) {
     if (err instanceof AxiosError && err.response?.status === 401) {
-      //나오는 에러가 405다
-      //401에러를 안 뱉는다.
-      //"http://localhost:8080/order/add-manager-order"에서 authentication으로 실제 아이디 얻는 처리 해서 하자
-
       try {
         // 새로운 액세스 토큰을 사용하여 요청을 재시도
         console.log("401에러 발생!!!");
@@ -147,11 +145,11 @@ export async function sendAxiosPostRequest(
         );
       } catch (refreshError) {
         console.log("리프래쉬 에러");
-        //const currentURL = window.location.href;
-        // localStorage.setItem("preUrl", currentURL); // 수정 필요 리다이렉트 코드
         location.href = "/login";
         throw refreshError;
       }
+    } else {
+      throw err;
     }
   }
 }
@@ -176,7 +174,9 @@ export const sendAxiosRequest = async (
       Authorization: `Bearer ${loginToken.accessToken}`,
       refreshToken: loginToken.refreshToken,
     },
-    ...(httpMethod === "get" || httpMethod === "delete" ? { params: params } : { data: params }),
+    ...(httpMethod === "get" || httpMethod === "delete"
+      ? { params: params }
+      : { data: params }),
   })
     .then((response) => response.data)
     .catch(async (error) => {
@@ -206,7 +206,7 @@ export const sendAxiosRequest = async (
             console.error("refresh error");
             return;
           });
-          // 수정 : 로그인화면으로 보내기 
+        // 수정 : 로그인화면으로 보내기
       }
     });
   return result;

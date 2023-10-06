@@ -28,6 +28,8 @@ export default function OrderRequest() {
   const [loginToken, setLoginToken] = useRecoilState<JwtToken>(loginState);
   const [quantityData, setQuantityData] = useState<QuantityData[]>([]);
 
+  SendHomePageIfNotAuth(1);
+
   const fetchProductData = async () => {
     let resultData: ProductData | [] = [];
     await axios
