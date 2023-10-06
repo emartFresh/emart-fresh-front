@@ -2,6 +2,9 @@
 import { useState, ChangeEvent, FormEvent, useRef } from "react";
 import axios from "axios";
 import styles from "./EventUpdate.module.css";
+import BannerImageIcon from "../../assets/images/BannerImageIcon.png";
+import DetailImageIcon from "../../assets/images/DetailImageIcon.png";
+import { webpImageIncoder } from "./webpImageIncoder";
 
 // 이벤트 정보
 interface EventFormState {
@@ -66,6 +69,7 @@ export default function EventUpdate() {
       // console.log("배너이미지 프리뷰가 웹파일? ", setBannerImagePreview);
 
       console.log("웹파일은어떻게 나와?", webpfile);
+
       setFormData({
         ...formData,
         [name]: selectedFile,
