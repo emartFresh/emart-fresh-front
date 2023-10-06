@@ -136,6 +136,10 @@
     border-radius: 0.3rem;
 }
 
+.quantityInput:focus:empty {
+    caret-color: auto;
+}
+
 .quantityBtn{
     background-color: white;
     border: 0;

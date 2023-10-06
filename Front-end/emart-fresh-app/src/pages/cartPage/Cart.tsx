@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import styles from "../page_css/Cart.module.css";
 import image from "../../assets/images/product013.png";
 import axios from "axios";
@@ -20,7 +20,6 @@ interface responseData {
 
 // 수정 : 수량 변경 시  0이하/ 99이상 안됨.
 // 수정 : 장바구니 item 개수 nav 
-// unmount : 수량 저장
 
 const Cart = () => {
   const [loginToken, setLoginToken] = useRecoilState<JwtToken>(loginState);
@@ -28,7 +27,13 @@ const Cart = () => {
   const [selectedItems, setSelectedItems] = useState([]);
   const [paymentItems, setPaymentItems] = useState<CartData[]>([]);
   const [openPayment, setOpenPayment] = useState<boolean>(false);
+  const [initCartItemList, setInitCartItemList] = useState<CartData[]>([]);
+  const [updateCartItemList, setUpdateCartItemList] = useState<Array<object>>([]);
+  const updateListRef = useRef(updateCartItemList);
+  let totalPrice = 0;
   let payItemsInfo: CartData[] = [];
+
+  //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
   useEffect(() => {
     sendAxiosRequest(
@@ -40,6 +45,7 @@ const Cart = () => {
       console.log("response > ", response);
       const res: CartData[] = JSON.parse(JSON.stringify(response));
       setCartItemList(res);
+      setInitCartItemList(res);
     });
 
     window.addEventListener("scroll", () => {
@@ -62,12 +68,42 @@ const Cart = () => {
       }
     });
     return () => {
-      console.log("장바구니 업데이터 API");
-      // 수정 : 컴포넌트가 언마운트될 때 이벤트 리스너 정리
+      sendAxiosRequest(
+        '/cart/updateCartProductQuantity',
+        "post",
+        loginToken,
+        setLoginToken,
+        updateListRef.current
+      )
+      .then((res) => 
+        console.log(res)
+      )
+      .catch(console.error)
+
       window.removeEventListener("scroll", () => {});
     };
   
   }, []);
+
+  useEffect(() => {
+    updateListRef.current = handleUpdateItemList();
+  }, [cartItemList]);
+
+  //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+  const handleUpdateItemList = (): Array<object> => {
+
+    console.log('22 initCartItemList >', initCartItemList)
+    console.log('22 cartItemList >', cartItemList)
+    return cartItemList.filter(cart => {
+      const initItem = initCartItemList.find(item => item.cartProductId === cart.cartProductId );
+      return initItem.cartProductQuantity !== cart.cartProductQuantity
+    }).map(updateItem => {
+      return { cartProductId: updateItem.cartProductId, cartProductQuantity: updateItem.cartProductQuantity}
+    });    
+  }
+
+  //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
   const handleQuantity = (
     e: React.MouseEvent<HTMLInputElement, MouseEvent>,
@@ -92,18 +128,19 @@ const Cart = () => {
     );
   };
 
+  //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
   const handleInputQuantity = (value: string, cartProductId: number) => {
     const newValue = value;
     const isValidInput = /^[1-9]\d*$/.test(newValue);
-
-
-    // 수정 : 터짐
+  
     if (newValue.length === 0) {
-      // alert('수량을 입력해주세요. (임시 알림)');
       setCartItemList(
         cartItemList.map((item) => {
           if (item.cartProductId === cartProductId) {
-            return { ...item, cartProductQuantity: parseInt('1') };
+            return { ...item, cartProductQuantity: null };
+          } else {
+            return item;
           }
         })
       )
@@ -122,10 +159,10 @@ const Cart = () => {
     }
   };
 
-  const handleCheckboxChange = (cartProductId: number) => {
+  //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+  const handleCheckboxChange = (cartProductId: number) => {
     let selectedList = [];
-   
     if (selectedItems.includes(cartProductId)) {
       selectedList = selectedItems.filter((item) => item !== cartProductId);
       
@@ -137,6 +174,7 @@ const Cart = () => {
     settingPaymentItems(selectedList);
   };
 
+  //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
   const handleAllCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.checked) {
@@ -150,6 +188,8 @@ const Cart = () => {
     }
   };
 
+  //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
   const settingPaymentItems = (selectedList: number[]) => {
     if (selectedList.length > 0) {
       const newPaymentItems = selectedList.map((selectedItemId) => {
@@ -162,6 +202,7 @@ const Cart = () => {
     }
   }
 
+  //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
   const deleteItem = (cartProductId: number) => {
     sendAxiosRequest(
@@ -179,7 +220,7 @@ const Cart = () => {
     .catch(console.error)
   }
 
-  let totalPrice = 0;
+  //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
   return (
     <div>
@@ -188,8 +229,7 @@ const Cart = () => {
         onClick={() => {
           console.log(cartItemList);
         }}
-      >
-        장바구니
+      >장바구니
       </h3>
       <div
         className={
@@ -234,14 +274,13 @@ const Cart = () => {
                     {/* <RemoveIcon/> */}
                     <input
                       type="text"
-                      value={item.cartProductQuantity}
+                      value={item.cartProductQuantity }
                       className={styles.quantityInput}
                       onChange={(e) =>
                         handleInputQuantity(e.target.value, item.cartProductId)
                       }
                       minLength={1}
                       maxLength={2}
-                      min="1"
                       step="1"
                       pattern="[1-9]\d*"
                     />

@@ -16,7 +16,14 @@
 
 
 
-
+// useEffect(() =>
+//   const { isLoading, status, data, error, isFetching, isPreviousData } = useQuery({
+//     queryKey: ['couponList'],
+//     queryFn: fetchData,
+//     keepPreviousData: true,
+//     staleTime: 5000,
+//   })
+// })
 
 
 
