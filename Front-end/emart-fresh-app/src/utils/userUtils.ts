@@ -162,7 +162,7 @@ export const sendAxiosRequest = async (
   httpMethod: string,
   loginToken: JwtToken,
   setLoginToken: SetterOrUpdater<JwtToken>,
-  params?: Params,
+  params?: Params | Array<object>,
   callStack: number = 0
 ): Promise<responseData> => {
   if (callStack >= 10) {
