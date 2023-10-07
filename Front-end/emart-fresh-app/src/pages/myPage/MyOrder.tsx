@@ -33,7 +33,7 @@ interface OrderedProductData {
 
 //진성
 interface DetailData {
-  productId: int;
+  productId: number;
   productImgUrl: string;
   orderedQuantity: number;
   price: number;
