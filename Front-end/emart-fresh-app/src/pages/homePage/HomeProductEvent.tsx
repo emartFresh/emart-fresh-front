@@ -24,7 +24,6 @@ interface HomeProductEventProps{
 
 const HomeProductEvent = ({eventProductData}:HomeProductEventProps) => {
   const [selectedEventType, setSelectedEventType] = useState<number>(1);
-  const [mainThumbnail, setThumbnail] = useState<string>(product01);
   const currentMonth = new Date().getMonth() +1;
 
   const handleEventType = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
@@ -32,15 +31,12 @@ const HomeProductEvent = ({eventProductData}:HomeProductEventProps) => {
     switch(btn.id){
       case 'eventTypeOne' : 
         setSelectedEventType(1);
-        setThumbnail(product01);
         break;
       case 'eventTypeTwo' : 
         setSelectedEventType(2);
-        setThumbnail(product07);
         break;
       case 'eventTypeThree' : 
         setSelectedEventType(3);
-        setThumbnail(product03);
         break; 
     }        
   } 
@@ -115,8 +111,7 @@ const HomeProductEvent = ({eventProductData}:HomeProductEventProps) => {
                   <div className={styles.productImgWrapper}>
                     <img
                       className={styles.productImg}
-                      // src={product.productImgUrl}
-                      src={mainThumbnail}
+                      src={product.productImgUrl}
                       alt="no img"
                     />
                   </div>
