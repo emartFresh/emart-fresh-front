@@ -92,13 +92,10 @@ const Cart = () => {
   //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
   const handleUpdateItemList = (): Array<object> => {
-
-    console.log('22 initCartItemList >', initCartItemList)
-    console.log('22 cartItemList >', cartItemList)
-    return cartItemList.filter(cart => {
-      const initItem = initCartItemList.find(item => item.cartProductId === cart.cartProductId );
+    return cartItemList?.filter(cart => {
+      const initItem = initCartItemList?.find(item => item.cartProductId === cart.cartProductId );
       return initItem.cartProductQuantity !== cart.cartProductQuantity
-    }).map(updateItem => {
+    })?.map(updateItem => {
       return { cartProductId: updateItem.cartProductId, cartProductQuantity: updateItem.cartProductQuantity}
     });    
   }
