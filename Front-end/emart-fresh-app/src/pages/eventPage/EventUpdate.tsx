@@ -5,16 +5,6 @@ import styles from "./EventUpdate.module.css";
 import BannerImageIcon from "../../assets/images/BannerImageIcon.png";
 import DetailImageIcon from "../../assets/images/DetailImageIcon.png";
 
-// 이벤트 정보
-interface EventFormState {
-  eventId?: number; // 이벤트 아이디 (프라이머리 키)
-  eventTitle: string; // 이벤트 제목
-  eventBannerImage?: File | null; // 배너 이미지
-  eventDetailImage?: File | null; // 디테일 이미지
-  eventStartDate: string | null; // 시작 날짜 (Date | null)
-  eventEndDate: string | null; // 종료 날짜 (Date | null)
-}
-
 export default function EventUpdate() {
   const [formData, setFormData] = useState<EventFormState>({
     eventTitle: "",
@@ -39,20 +29,20 @@ export default function EventUpdate() {
       ...formData,
       [name]: value,
     }));
-    console.log("값이 유효하니?", formData);
   };
+
   const [isButtonDisabled, setIsButtonDisabled] = useState<boolean>(true);
   useEffect(() => {
-    const calculatedButtonDisabled =
+    const isButtonDisabled =
       formData.eventTitle.trim() === "" ||
       formData.eventBannerImage === null ||
       formData.eventDetailImage === null ||
       formData.eventStartDate === null ||
       formData.eventEndDate === null;
 
-    setIsButtonDisabled(calculatedButtonDisabled);
+    setIsButtonDisabled(isButtonDisabled);
   }, [formData]);
-  console.log("유주이펙트 폼데이터 값", formData);
+
   const handleBannerImageFileClick = () => {
     if (eventBannerImageInputRef.current) {
       eventBannerImageInputRef.current.click();
@@ -106,45 +96,47 @@ export default function EventUpdate() {
     } else if (!eventStartDate || !eventEndDate) {
       alert("이벤트 날짜를 입력하세요");
     } else if (!eventBannerImage || !eventDetailImage) {
-      alert("이벤트이미지를 등록하세요");
-    }
+      alert("이벤트 이미지를 등록하세요");
+    } else if (new Date(eventEndDate) < new Date(eventStartDate)) {
+      alert("이벤트 시작날짜는 종료날짜보다 빨라야합니다.");
+    } else {
+      const formDataToSend = new FormData();
+      formDataToSend.append("event_title", eventTitle);
+      formDataToSend.append("event_banner_image", eventBannerImage || "");
+      formDataToSend.append("event_detail_image", eventDetailImage || "");
+      formDataToSend.append("event_start_date", eventStartDate || "");
+      formDataToSend.append("event_end_date", eventEndDate || "");
 
-    const formDataToSend = new FormData();
-    formDataToSend.append("event_title", eventTitle);
-    formDataToSend.append("event_banner_image", eventBannerImage || "");
-    formDataToSend.append("event_detail_image", eventDetailImage || "");
-    formDataToSend.append("event_start_date", eventStartDate || "");
-    formDataToSend.append("event_end_date", eventEndDate || "");
+      try {
+        const response = await axios.post(
+          `${import.meta.env.VITE_BACK_PORT}/event/event-update`,
+          formDataToSend,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
 
-    try {
-      const response = await axios.post(
-        `${import.meta.env.VITE_BACK_PORT}/event/event-update`,
-        formDataToSend,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
+        if (response.data === "success") {
+          console.log("이벤트 생성에 성공하였습니다.");
+          alert("이벤트 등록성공!");
+
+          setFormData({
+            eventTitle: "",
+            eventBannerImage: null,
+            eventDetailImage: null,
+            eventStartDate: null,
+            eventEndDate: null,
+          });
+          setBannerImagePreview(BannerImageIcon);
+          setDetailImagePreview(DetailImageIcon);
+        } else {
+          console.error("이벤트 생성에 실패하였습니다.");
         }
-      );
-
-      if (response.data === "success") {
-        console.log("이벤트 생성에 성공하였습니다.");
-        alert("이벤트 등록성공!");
-
-        setFormData({
-          eventTitle: "",
-          eventBannerImage: null,
-          eventDetailImage: null,
-          eventStartDate: null,
-          eventEndDate: null,
-        });
-        setBannerImagePreview(BannerImageIcon);
-        setDetailImagePreview(DetailImageIcon);
-      } else {
-        console.error("이벤트 생성에 실패하였습니다.");
+      } catch (error) {
+        console.error("error", error);
       }
-    } catch (error) {
-      console.error("error", error);
     }
   };
 
@@ -174,7 +166,7 @@ export default function EventUpdate() {
           </div>
           &nbsp;&nbsp;&nbsp;&nbsp;
           <div>
-            이벤트 마지막날짜&nbsp;&nbsp;
+            이벤트 종료날짜&nbsp;&nbsp;
             <input
               type="date"
               name="eventEndDate"
