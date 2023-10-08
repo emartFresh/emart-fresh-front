@@ -15,7 +15,7 @@ interface EventList {
 }
 
 export default function EventOngoing() {
-  const [eventId, setEventId] = useState("");
+  const [eventId, setEventId] = useState<string>("");
   const [onGoingEventList, setOnGoingEventList] = useState<EventList[]>([]);
   const pageSize = 50;
   const [currentPage, setCurrentPage] = useState(1);
