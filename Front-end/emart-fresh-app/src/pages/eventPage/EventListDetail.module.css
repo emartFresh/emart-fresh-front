@@ -8,14 +8,14 @@
 .eventTitle {
   width: 70vw;
   margin-left: 2px;
-  font-size: 3.6vw;
+  font-size: 2.6vw;
   font-weight: 600;
   text-align: left;
 }
 
 .eventTitleText {
   margin-left: 2px;
-  font-size: 2vw;
+  font-size: 1.5vw;
   color: #999999;
   text-align: left;
   margin-bottom: 45px;
@@ -24,22 +24,38 @@
   width: 70vw;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  color: #333333;
   border-bottom: 1px solid #999999;
+  padding: 10px;
+  margin: 10px;
+  align-items: center;
   margin-bottom: 1rem;
 }
+
 .eventDetailTitle {
   margin-left: 0.5rem;
   font-size: 1.7vw;
+  font-weight: bold;
   text-align: left;
-  font-weight: 650;
+  margin: 0;
 }
 
 .eventDetailDate {
   margin-right: 0.5rem;
   font-size: 1vw;
-  text-align: right;
   color: #999999;
+  text-align: right;
+  margin: 0;
+}
+
+.eventListBtn {
+  width: 200px;
+  background-color: #f9bb00;
+  color: #333333;
+  align-items: left;
+  border-radius: 5px;
+  font-size: 12px;
+  font-weight: 600;
+  margin-bottom: 20px;
 }
 .eventDetailImage {
   width: 70vw;
@@ -48,17 +64,6 @@
   align-items: center;
   margin-bottom: 30px;
 }
-
-.eventListBtn {
-  background-color: #f9bb00;
-  color: #333333;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 14px;
-  font-weight: 600;
-}
-
 @media screen and (max-width: 768px) {
   .eventContainer {
     display: inline;
@@ -68,4 +73,25 @@
   .eventTitle {
     font-size: 3vw;
   }
+}
+
+.eventOngoingBadge {
+  border: 1px solid #ebebeb;
+  background-color: #f9bb00;
+  min-width: 12px;
+  font-size: 12px;
+  font-weight: 650;
+  padding: 5px 8px;
+  border-radius: 13px 13px 6px 13px;
+  display: inline-block;
+}
+.eventEndedBadge {
+  border: 1px solid #9e3900;
+  background-color: #f95a00;
+  min-width: 12px;
+  font-size: 12px;
+  font-weight: 650;
+  padding: 5px 8px;
+  border-radius: 13px 13px 6px 13px;
+  display: inline-block;
 }
