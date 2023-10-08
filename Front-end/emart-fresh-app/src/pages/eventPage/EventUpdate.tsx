@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useState, ChangeEvent, FormEvent, useRef, useEffect } from "react";
 import axios from "axios";
 import styles from "./EventUpdate.module.css";
