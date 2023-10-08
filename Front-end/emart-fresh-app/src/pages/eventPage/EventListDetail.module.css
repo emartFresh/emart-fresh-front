@@ -64,6 +64,23 @@
   align-items: center;
   margin-bottom: 30px;
 }
+.eventOngoingBadge,
+.eventEndedBadge {
+  min-width: 12px;
+  font-size: 12px;
+  font-weight: 650;
+  padding: 5px 8px;
+  border-radius: 13px 13px 6px 13px;
+  display: inline-block;
+}
+.eventOngoingBadge {
+  border: 1px solid #ebebeb;
+  background-color: #f9bb00;
+}
+.eventEndedBadge {
+  border: 1px solid #9e3900;
+  background-color: #f95a00;
+}
 @media screen and (max-width: 768px) {
   .eventContainer {
     display: inline;
@@ -73,25 +90,4 @@
   .eventTitle {
     font-size: 3vw;
   }
-}
-
-.eventOngoingBadge {
-  border: 1px solid #ebebeb;
-  background-color: #f9bb00;
-  min-width: 12px;
-  font-size: 12px;
-  font-weight: 650;
-  padding: 5px 8px;
-  border-radius: 13px 13px 6px 13px;
-  display: inline-block;
-}
-.eventEndedBadge {
-  border: 1px solid #9e3900;
-  background-color: #f95a00;
-  min-width: 12px;
-  font-size: 12px;
-  font-weight: 650;
-  padding: 5px 8px;
-  border-radius: 13px 13px 6px 13px;
-  display: inline-block;
 }
