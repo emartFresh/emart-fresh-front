@@ -3,14 +3,15 @@ import styles from "../page_css/MyOrder.module.css";
 import { useState, useEffect } from "react";
 import Pagination from "@mui/material/Pagination";
 import icon_warning from "../../assets/images/icon_warning.svg";
-import { useRecoilState } from "recoil";
+import { constSelector, useRecoilState } from "recoil";
 import { loginState } from "../../atoms";
 import { sendAxiosGetRequest } from "../../utils/userUtils";
 import { GetUserAllInfo } from "../../utils/LoginUtils";
 import order from "../../assets/images/order.png";
 import { Link } from "react-router-dom";
-import { Modal, Box } from "@mui/material";
+import { Modal, Box, TextareaAutosize } from "@mui/material";
 import axios from "axios";
+import OrderReview from "./OrderReview";
 
 interface OrderedProductData {
   memberId: string | MemberData;
@@ -32,10 +33,12 @@ interface OrderedProductData {
 
 //진성
 interface DetailData {
+  productId: int;
   productImgUrl: string;
   orderedQuantity: number;
   price: number;
   productName: string;
+  review: any;
 }
 
 export default function MyOrder() {
@@ -51,6 +54,7 @@ export default function MyOrder() {
   //진성
   const [showModal, setShowModal] = useState<boolean>(false);
   const [detailData, setDetailData] = useState<DetailData[]>([]);
+  const [resetReview, setResetReview] = useState<number>(0);
   //
   const allMember = GetUserAllInfo();
 
@@ -140,6 +144,7 @@ export default function MyOrder() {
         >
           <div className={styles.detailContainer}>
             {detailData.map((item, inx) => {
+              console.log("하나 데이터", item);
               return (
                 <div className={styles.detailWrapper} key={inx}>
                   <span>
@@ -151,6 +156,11 @@ export default function MyOrder() {
                   </span>
                   <span className={styles.detailName}>{item.productName}</span>
                   <span className={styles.detailPrice}>{item.price}원</span>
+                  <OrderReview
+                    setShowModal={setShowModal}
+                    orderedPpId={item.productId}
+                    review={item.review}
+                  ></OrderReview>
                 </div>
               );
             })}
