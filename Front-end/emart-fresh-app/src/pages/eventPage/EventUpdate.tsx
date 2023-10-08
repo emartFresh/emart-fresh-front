@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useState, ChangeEvent, FormEvent, useRef, useEffect } from "react";
 import axios from "axios";
 import styles from "./EventUpdate.module.css";
@@ -23,26 +22,6 @@ export default function EventUpdate() {
   const eventBannerImageInputRef = useRef<HTMLInputElement>(null);
   const eventDetailImageInputRef = useRef<HTMLInputElement>(null);
 
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData((formData) => ({
-      ...formData,
-      [name]: value,
-    }));
-  };
-
-  const [isButtonDisabled, setIsButtonDisabled] = useState<boolean>(true);
-  useEffect(() => {
-    const isButtonDisabled =
-      formData.eventTitle.trim() === "" ||
-      formData.eventBannerImage === null ||
-      formData.eventDetailImage === null ||
-      formData.eventStartDate === null ||
-      formData.eventEndDate === null;
-
-    setIsButtonDisabled(isButtonDisabled);
-  }, [formData]);
-
   const handleBannerImageFileClick = () => {
     if (eventBannerImageInputRef.current) {
       eventBannerImageInputRef.current.click();
@@ -55,8 +34,8 @@ export default function EventUpdate() {
   };
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { name, files } = e.target;
-    console.log(name, files);
+    const { name, value, files } = e.target;
+    console.log("이름  파일 벨류", name, value, files);
     if (files && files.length > 0) {
       const selectedFile = files[0];
       setFormData({
@@ -75,68 +54,69 @@ export default function EventUpdate() {
         // console.log("이미지 미리보기", imagePreview);
       };
       reader.readAsDataURL(selectedFile);
+    } else {
+      setFormData((formData) => ({
+        ...formData,
+        [name]: value,
+      }));
     }
   };
+  const [isButtonDisabled, setIsButtonDisabled] = useState<boolean>(true);
+  useEffect(() => {
+    const isTitleValid = formData.eventTitle.trim() !== "";
+    const isDateValid =
+      formData.eventStartDate &&
+      formData.eventEndDate &&
+      new Date(formData.eventEndDate) >= new Date(formData.eventStartDate);
+    const isImageValid = formData.eventBannerImage && formData.eventDetailImage;
 
-  // 폼 제출
+    setIsButtonDisabled(!(isTitleValid && isDateValid && isImageValid));
+  }, [formData]);
+
+  // 폼제출
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+    const formDataToSend = new FormData();
+    formDataToSend.append("event_title", formData.eventTitle);
+    formDataToSend.append(
+      "event_banner_image",
+      formData.eventBannerImage || ""
+    );
+    formDataToSend.append(
+      "event_detail_image",
+      formData.eventDetailImage || ""
+    );
+    formDataToSend.append("event_start_date", formData.eventStartDate || "");
+    formDataToSend.append("event_end_date", formData.eventEndDate || "");
 
-    const {
-      eventTitle,
-      eventBannerImage,
-      eventDetailImage,
-      eventStartDate,
-      eventEndDate,
-    } = formData;
-
-    console.log("eventTitle:", eventTitle);
-    if (!eventTitle && eventTitle.trim() === "") {
-      alert("이벤트 이름을 입력하세요.");
-    } else if (!eventStartDate || !eventEndDate) {
-      alert("이벤트 날짜를 입력하세요");
-    } else if (!eventBannerImage || !eventDetailImage) {
-      alert("이벤트 이미지를 등록하세요");
-    } else if (new Date(eventEndDate) < new Date(eventStartDate)) {
-      alert("이벤트 시작날짜는 종료날짜보다 빨라야합니다.");
-    } else {
-      const formDataToSend = new FormData();
-      formDataToSend.append("event_title", eventTitle);
-      formDataToSend.append("event_banner_image", eventBannerImage || "");
-      formDataToSend.append("event_detail_image", eventDetailImage || "");
-      formDataToSend.append("event_start_date", eventStartDate || "");
-      formDataToSend.append("event_end_date", eventEndDate || "");
-
-      try {
-        const response = await axios.post(
-          `${import.meta.env.VITE_BACK_PORT}/event/event-update`,
-          formDataToSend,
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          }
-        );
-
-        if (response.data === "success") {
-          console.log("이벤트 생성에 성공하였습니다.");
-          alert("이벤트 등록성공!");
-
-          setFormData({
-            eventTitle: "",
-            eventBannerImage: null,
-            eventDetailImage: null,
-            eventStartDate: null,
-            eventEndDate: null,
-          });
-          setBannerImagePreview(BannerImageIcon);
-          setDetailImagePreview(DetailImageIcon);
-        } else {
-          console.error("이벤트 생성에 실패하였습니다.");
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_BACK_PORT}/event/event-update`,
+        formDataToSend,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
         }
-      } catch (error) {
-        console.error("error", error);
+      );
+
+      if (response.data === "success") {
+        console.log("이벤트 생성에 성공하였습니다.");
+        alert("이벤트 등록성공!");
+        setFormData({
+          eventTitle: "",
+          eventBannerImage: null,
+          eventDetailImage: null,
+          eventStartDate: null,
+          eventEndDate: null,
+        });
+        setBannerImagePreview(BannerImageIcon);
+        setDetailImagePreview(DetailImageIcon);
+      } else {
+        console.error("이벤트 생성에 실패하였습니다.");
       }
+    } catch (error) {
+      console.error("error", error);
     }
   };
 
@@ -150,7 +130,7 @@ export default function EventUpdate() {
             name="eventTitle"
             className={styles.inputEventUpdate}
             value={formData.eventTitle}
-            onChange={handleInputChange}
+            onChange={handleFileChange}
             placeholder="이벤트이름을 등록하세요"
           />
         </div>
@@ -161,7 +141,7 @@ export default function EventUpdate() {
               type="date"
               name="eventStartDate"
               value={formData.eventStartDate || ""}
-              onChange={handleInputChange}
+              onChange={handleFileChange}
             />
           </div>
           &nbsp;&nbsp;&nbsp;&nbsp;
@@ -171,11 +151,10 @@ export default function EventUpdate() {
               type="date"
               name="eventEndDate"
               value={formData.eventEndDate || ""}
-              onChange={handleInputChange}
+              onChange={handleFileChange}
             />
           </div>
         </div>
-
         <div>
           <div>
             <p className={styles.pTag}>배너이미지</p>
@@ -187,7 +166,7 @@ export default function EventUpdate() {
                 onChange={handleFileChange}
                 ref={eventBannerImageInputRef}
               />
-              <div className={styles.bannerImagePrev}>
+              <div className={styles.bannerImagePreview}>
                 {bannerImagePreview && (
                   <img
                     src={bannerImagePreview}
@@ -198,7 +177,6 @@ export default function EventUpdate() {
               </div>
             </div>
           </div>
-
           <div>
             <p className={styles.pTag}>상세이미지</p>
             <div onClick={handleDetailImageFileClick}>

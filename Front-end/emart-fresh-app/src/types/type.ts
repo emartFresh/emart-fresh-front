@@ -137,7 +137,6 @@ declare global {
     eventDetailImage?: File | null; // 디테일 이미지
     eventStartDate: string | null; // 시작 날짜 (Date | null)
     eventEndDate: string | null; // 종료 날짜 (Date | null)
-    // isFormBalid: boolean;
   }
   interface JwtToken {
     accessToken: string;
