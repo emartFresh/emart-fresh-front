@@ -2,8 +2,8 @@
 import { useState, useEffect } from "react";
 import styles from "./EventListDetail.module.css";
 import axios from "axios";
-import { Link, useNavigate, useParams } from "react-router-dom";
-import EventEnded from "./EventEnded";
+import { Link, useParams } from "react-router-dom";
+import EventBadge from "./EventBadge";
 
 interface EventList {
   eventId: string;
@@ -15,7 +15,6 @@ interface EventList {
   eventListCount: number;
 }
 export default function EventListDetail() {
-  const navigate = useNavigate();
   const { eventId } = useParams();
   const [onGoingEventList, setOnGoingEventList] = useState<EventList>({
     eventId: eventId,
@@ -54,25 +53,9 @@ export default function EventListDetail() {
       <div className={styles.eventWrapper}>
         <div>
           <div className={styles.eventTitle}>
-            {new Date(onGoingEventList.eventEndDate) >= new Date() ? (
-              <div>
-                <div>
-                  <Link to="/eventlist">
-                    <button className={styles.eventListBtn}>목록</button>
-                  </Link>
-                </div>
-                <div>진행중인 이벤트</div>
-              </div>
-            ) : (
-              <div>
-                <div>
-                  <Link to="/eventlist">
-                    <button className={styles.eventListBtn}>목록</button>
-                  </Link>
-                </div>
-                <div>종료된 이벤트</div>
-              </div>
-            )}
+            {new Date(onGoingEventList.eventEndDate) >= new Date()
+              ? "진행중인 이벤트"
+              : "종료된 이벤트"}
           </div>
           <p className={styles.eventTitleText}>
             {new Date(onGoingEventList.eventEndDate) >= new Date()
@@ -81,9 +64,21 @@ export default function EventListDetail() {
           </p>
         </div>
         <div className={styles.eventDetailDiv}>
-          <p className={styles.eventDetailTitle}>
-            {onGoingEventList.eventTitle}
-          </p>
+          <div>
+            <p>
+              {new Date(onGoingEventList.eventEndDate) >= new Date() ? (
+                <EventBadge
+                  className={styles.eventOngoingBadge}
+                  text="진행중"
+                />
+              ) : (
+                <EventBadge className={styles.eventEndedBadge} text="종료" />
+              )}
+            </p>
+            <p className={styles.eventDetailTitle}>
+              {onGoingEventList.eventTitle}
+            </p>
+          </div>
           <p className={styles.eventDetailDate}>
             {new Date(onGoingEventList.eventStartDate).toLocaleDateString()}~
             {new Date(onGoingEventList.eventEndDate).toLocaleDateString()}
@@ -96,6 +91,9 @@ export default function EventListDetail() {
             alt="상세이미지"
           />
         </div>
+        <Link to="/eventlist">
+          <button className={styles.eventListBtn}>목록</button>
+        </Link>
       </div>
     </div>
   );
