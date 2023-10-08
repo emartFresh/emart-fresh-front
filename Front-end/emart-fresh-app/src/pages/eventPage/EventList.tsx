@@ -4,15 +4,6 @@ import styles from "./EventList.module.css";
 import EventOngoing from "./EventOngoing";
 import EventEnded from "./EventEnded";
 
-interface EventList {
-  eventId: number;
-  eventTitle: string;
-  eventBannerImage: string;
-  eventDetailImage: string;
-  eventStartDate: string;
-  eventEndDate: string;
-  eventListCount: number;
-}
 export default function EventList() {
   const [isOngoingEvent, setIsOngoingEvent] = useState(true);
 
