@@ -105,3 +105,19 @@
 .btnWrapper {
   text-align: center;
 }
+
+/* jjs review */
+.reviewContainer {
+  padding: 1rem;
+}
+.reviewBtn {
+  width: 100%;
+}
+
+.contentWrapper {
+  background-color: #e1e1e1;
+  width: 100%;
+  text-align: left;
+  padding: 1em;
+  border-radius: 0.5em;
+}

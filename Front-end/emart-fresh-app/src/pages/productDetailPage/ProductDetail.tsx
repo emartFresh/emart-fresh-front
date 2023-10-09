@@ -11,7 +11,6 @@ import { Modal, Box } from "@mui/material";
 
 import styles from "../page_css/ProductDetail.module.css";
 import ProductReview from "./ProductReview";
-import { sendAxiosGetRequest } from "../../utils/userUtils";
 /*
 public class AddToCartDto {
 	int storeId;

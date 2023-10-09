@@ -18,7 +18,6 @@ interface responseData {
   data: CartData[];
 }
 
-// 수정 : 수량 변경 시  0이하/ 99이상 안됨.
 // 수정 : 장바구니 item 개수 nav 
 
 const Cart = () => {
@@ -92,8 +91,9 @@ const Cart = () => {
   //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
   const handleUpdateItemList = (): Array<object> => {
-    return cartItemList?.filter(cart => {
-      const initItem = initCartItemList?.find(item => item.cartProductId === cart.cartProductId );
+    if(initCartItemList)
+    return cartItemList.filter(cart => {
+      const initItem = initCartItemList.find(item => item.cartProductId === cart.cartProductId );
       return initItem.cartProductQuantity !== cart.cartProductQuantity
     })?.map(updateItem => {
       return { cartProductId: updateItem.cartProductId, cartProductQuantity: updateItem.cartProductQuantity}
