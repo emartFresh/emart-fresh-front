@@ -17,9 +17,14 @@ export const kakaoAccessToken = atom({
   effects_UNSTABLE: [persistAtom], 
 });
 
-//jjs에 의한 수정 : 추가
 export const loginTypeState = atom({
   key: "loginType",
-  default: "", // 다른 상태의 초기값을 여기에 설정하세요.
-  effects_UNSTABLE: [persistAtom], // 다른 상태도 필요한 경우에만 추가하세요.
+  default: "", 
+  effects_UNSTABLE: [persistAtom],
+});
+
+export const cartItemCount = atom({
+  key: "cartItemCount",
+  default: 0,
+  effects_UNSTABLE: [persistAtom],
 });

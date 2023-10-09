@@ -1,7 +1,7 @@
 .productEventContainer{
     display: flex;
     margin: 6em auto;
-    width: 80%;
+    width: 70%;
     height: 25em;
     text-align: center;
 }
@@ -42,11 +42,11 @@
     margin-right: 0.5em;
 }
 
- .productWrapper {
+.productWrapper {
     display: flex;
     align-items: center;
     flex-direction: column;
-    width: 14em;
+    width: 25%;
     height: 18em;
     background-color: white;
     border-radius: 1em;

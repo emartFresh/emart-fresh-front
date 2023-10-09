@@ -13,7 +13,7 @@
 }
 
 .homeSwiper {
-    width: 80%;
+    width: 70%;
     border-bottom-left-radius: 5em;
     border-bottom-right-radius: 5em;
     z-index: 1; 
@@ -30,10 +30,6 @@
 .homeSwiper .swiper-button-prev, .homeSwiper .swiper-button-next{
     color: rgba(0, 0, 0, 0.8);
 }
-
-
-
-
 
 .eventProductSwiper {
   width: 92%;
