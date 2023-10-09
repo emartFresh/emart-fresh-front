@@ -12,10 +12,19 @@ import { Autoplay, Pagination, Navigation } from 'swiper/modules';
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-
-
 const HomeEventBanner = () => {
-    
+  const [eventList, setEventList] = useState<string[]>([]);
+
+  useEffect(() => {
+    axios.get(`${import.meta.env.VITE_BACK_PORT}/event/now-event-list`)
+    .then((res) => {
+      console.log(res.data);
+      setEventList(res.data);
+    })
+    .catch(console.error)
+  }, [])  
+
+
   return (
     <Swiper
     {...{
@@ -34,15 +43,11 @@ const HomeEventBanner = () => {
       className: "homeSwiper",
     } as SwiperProps}
     >
-        <SwiperSlide><img src={image1} alt="" /></SwiperSlide>
-        <SwiperSlide><img src={image2} alt="" /></SwiperSlide>
-        <SwiperSlide><img src={image3} alt="" /></SwiperSlide>
-        <SwiperSlide><img src={image4} alt="" /></SwiperSlide>
-        <SwiperSlide><img src={image5} alt="" /></SwiperSlide>
-        <SwiperSlide><img src={image6} alt="" /></SwiperSlide>
-        <SwiperSlide><img src={image7} alt="" /></SwiperSlide>
-        <SwiperSlide><img src={image8} alt="" /></SwiperSlide>
-        <SwiperSlide><img src={image9} alt="" /></SwiperSlide>
+      {
+        eventList.map((eventImage) => {
+          return <SwiperSlide key={eventImage}><img src={eventImage} alt="" /></SwiperSlide> 
+        })
+      }
     </Swiper>
   )
 }

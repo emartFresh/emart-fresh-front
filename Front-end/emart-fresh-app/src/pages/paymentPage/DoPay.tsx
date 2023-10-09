@@ -3,7 +3,10 @@ import { loginState } from "../../atoms";
 import { useRecoilState } from "recoil";
 import { MemberInfo, GetUserAllInfo } from "../../utils/LoginUtils";
 import { ItemData } from "./Payment";
-import { sendAxiosPostRequest } from "../../utils/userUtils";
+import {
+  sendAxiosPostRequest,
+  sendAxiosGetRequest,
+} from "../../utils/userUtils";
 
 import { Coupon } from "./Payment";
 import { useEffect, useState } from "react";
@@ -31,18 +34,18 @@ export default function Dopay({
   const memberInfo: MemberInfo = GetUserAllInfo();
 
   useEffect(() => {
-    const storeUrl = `${
-      import.meta.env.VITE_BACK_PORT
-    }/cart/myCartStoreId?memberId=${memberInfo.memberId}`;
-    axios.get(storeUrl).then((res) => {
-      setMyCartStoreId(res.data);
+    const storeUrl = `${import.meta.env.VITE_BACK_PORT}/cart/myCartStoreId`;
+
+    sendAxiosGetRequest(storeUrl, loginToken, setLoginToken).then((res) => {
+      setMyCartStoreId(res);
     });
   }, []);
 
+  console.log("가게 아이디22222", myCartStoreId);
   //수정 : 로직 고민...
   const preProcesse = async () => {
     const url = `${import.meta.env.VITE_BACK_PORT}/cart/decreaseCartProduct`;
-    sendAxiosPostRequest(url, loginToken, setLoginToken).then((res) => {
+    sendAxiosGetRequest(url, loginToken, setLoginToken).then((res) => {
       console.log("응답", res);
       requestPayment();
     });
@@ -68,6 +71,7 @@ export default function Dopay({
       import.meta.env.VITE_BACK_PORT
     }/orderedproduct/saveOrderedProductInfo`;
 
+    console.log("스토어", orderInfos);
     sendAxiosPostRequest(orderUrl, loginToken, setLoginToken, orderInfos).then(
       (res) => {
         alert("결제완료");
