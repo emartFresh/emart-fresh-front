@@ -4,7 +4,7 @@ import styles from "../page_css/Cart.module.css";
 import image from "../../assets/images/product013.png";
 import axios from "axios";
 import { useRecoilState } from "recoil";
-import { loginState } from "../../atoms";
+import { cartItemCount, loginState } from "../../atoms";
 import { Checkbox } from "@mui/material";
 import { sendAxiosRequest } from "../../utils/userUtils";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -22,12 +22,14 @@ interface responseData {
 
 const Cart = () => {
   const [loginToken, setLoginToken] = useRecoilState<JwtToken>(loginState);
+  const [cartCount, setCartCount] = useRecoilState<number>(cartItemCount);
   const [cartItemList, setCartItemList] = useState<CartData[]>([]);
   const [selectedItems, setSelectedItems] = useState([]);
   const [paymentItems, setPaymentItems] = useState<CartData[]>([]);
   const [openPayment, setOpenPayment] = useState<boolean>(false);
   const [initCartItemList, setInitCartItemList] = useState<CartData[]>([]);
   const [updateCartItemList, setUpdateCartItemList] = useState<Array<object>>([]);
+
   const updateListRef = useRef(updateCartItemList);
   let totalPrice = 0;
   let payItemsInfo: CartData[] = [];
@@ -45,6 +47,7 @@ const Cart = () => {
       const res: CartData[] = JSON.parse(JSON.stringify(response));
       setCartItemList(res);
       setInitCartItemList(res);
+      setCartCount(res.length);
     });
 
     window.addEventListener("scroll", () => {
@@ -207,12 +210,12 @@ const Cart = () => {
       "delete",
       loginToken,
       setLoginToken,
-      {cartProductId: cartProductId}
     )
     .then((res) => {
       setCartItemList(
         (prevList) => prevList.filter((item) => item.cartProductId !== cartProductId)
       )
+      setCartCount(cartCount-1);
     })
     .catch(console.error)
   }
@@ -257,9 +260,9 @@ const Cart = () => {
                     onChange={() => handleCheckboxChange(item.cartProductId)}
                   />
                   <FontAwesomeIcon icon={faXmark} className={styles.delItemMark} onClick={() => {deleteItem(item.cartProductId)}}/>
-                  <img src={image} alt="" />
-                  <p>{item.productTitle}</p>
-                  <p>{item.priceNumber}</p>
+                  <img src={image} alt="" className={styles.productImage}/>
+                  <p className={styles.productTitle}>{item.productTitle}</p>
+                  <p className={styles.productPrice}>{item.priceNumber}</p>
                   <p className={styles.quantityControl}>
                     <input
                       type="button"
