@@ -1,10 +1,12 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styles from "../page_css/CommonModal.module.css";
-import axios from "axios";
 
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import VisibilityIcon from "@mui/icons-material/Visibility";
+import { sendAxiosPostRequest } from "../../utils/userUtils";
+import { loginState } from "../../atoms";
+import { useRecoilState } from "recoil";
 
 interface ChangePWState {
   memberId: string;
@@ -31,9 +33,10 @@ const ChangePw = ({ onClose }: ModalProps) => {
   const [currentPwVisible, setCurrentPwVisible] = useState<boolean>(false);
   const [newPwVisible, setNewPwVisible] = useState<boolean>(false);
 
-  const [memberId, setMemberId] = useState("");
-  const [memberPw, setMemberPw] = useState("");
-  const [newPw, setNewPw] = useState("");
+  const [loginToken, setLoginToken] = useRecoilState<JwtToken>(loginState);
+
+  const [memberPw, setMemberPw] = useState<string>("");
+  const [newPw, setNewPw] = useState<string>("");
 
   const [formData, setFormData] = useState<ChangePWState>(initialChangePWState);
 
@@ -47,29 +50,31 @@ const ChangePw = ({ onClose }: ModalProps) => {
   const [isPasswordConfirmValid, setIsPasswordConfirmValid] =
     useState<boolean>(false);
 
+  // 비밀번호 변경부분!!
   async function changepassword() {
-    try {
-      const response = await axios.post(
-        `${import.meta.env.VITE_BACK_PORT}/mypage/mypage-changepassword`,
-        null,
-        {
-          params: {
-            memberId: memberId,
-            memberPw: memberPw,
-            newPw: newPw,
-          },
-        }
-      );
-      console.log(response.data);
-      if (response.data === "fail") {
-        alert("현재비밀번호를 확인하세요");
-      } else {
-        alert("비밀번호가 성공적으로 변경되었습니다");
-        onClose();
+    sendAxiosPostRequest(
+      `${import.meta.env.VITE_BACK_PORT}/mypage/mypage-changepassword`,
+      loginToken,
+      setLoginToken,
+      {
+        params: {
+          memberPw: memberPw,
+          newPw: newPw,
+        },
       }
-    } catch (error) {
-      console.error("Error fetching password:", error);
-    }
+    ).then((res) => {
+      console.log("응답데이터, res", res); //undefined
+      console.log("비밀번호", memberPw);
+      console.log("새로운 비밀번호", newPw);
+      // console.log("로그인토큰Access", loginToken);
+    });
+
+    // if (res.data === "fail") {
+    //   alert("현재비밀번호를 확인하세요");
+    // } else {
+    //   alert("비밀번호가 성공적으로 변경되었습니다");
+    //   onClose();
+    // }
   }
 
   const handleInputChange = (fieldName: keyof ChangePWState, value: string) => {
@@ -139,7 +144,6 @@ const ChangePw = ({ onClose }: ModalProps) => {
   };
   return (
     <div className={styles.container}>
-      {/* <h2 className={styles.title}>비밀번호변경</h2> */}
       <div className={styles.modifyPwForm}>
         <div className={styles.inputWrap}>
           <span className={styles.modifyControlBtn}>
@@ -151,7 +155,7 @@ const ChangePw = ({ onClose }: ModalProps) => {
               className={styles.inputPw}
               onChange={(e) => {
                 handleInputChange("currentPw", e.target.value);
-                // setMemberPw(e.target.value);
+                setMemberPw(e.target.value);
               }}
             />
             <button onClick={toggleCurrentPwVisibility}>
