@@ -1,4 +1,5 @@
 import axios from "axios";
+import { toast } from "react-toastify";
 import styles from "../page_css/OrderHandle.module.css";
 import { useState, useEffect } from "react";
 // 수정 : 인증, 인가
@@ -14,7 +15,7 @@ export default function OrderHandle() {
   const [applyBtnCliked, setApplyBtnCliked] = useState<boolean>(false);
 
   const handleCheckClick = (e) => {
-    const clickedOrderNum = e.target.name;
+    const clickedOrderNum = Number(e.target.name);
     const hasOrderId = applyOrderNumbers.includes(clickedOrderNum);
 
     if (hasOrderId) {
@@ -25,6 +26,13 @@ export default function OrderHandle() {
     } else {
       setApprayOrderNumbers([...applyOrderNumbers, clickedOrderNum]);
     }
+  };
+
+  const isChecked = (orderNum: number): boolean => {
+    console.log("이거ㅓ", orderNum);
+    console.log("이거222", applyOrderNumbers.includes(orderNum));
+
+    return applyOrderNumbers.includes(orderNum);
   };
 
   const handleSubmitDate = () => {
@@ -44,6 +52,8 @@ export default function OrderHandle() {
       setApprayOrderNumbers([]);
     }
   }, [applyBtnCliked]);
+
+  console.log("ㅇ", applyOrderNumbers);
 
   useEffect(() => {
     const datas: any = orderDatas;
@@ -67,11 +77,23 @@ export default function OrderHandle() {
 
   const handleDoOrder = () => {
     const orderNum = applyOrderNumbers;
+    if (applyOrderNumbers.length === 0) {
+      toast.error("선택된 물품이 없습니다!", {
+        position: "top-center",
+        autoClose: 1500,
+      });
+      return;
+    }
 
     axios
       .post(`${import.meta.env.VITE_BACK_PORT}/admin/handle-order`, orderNum)
       .then((res) => {
         setApplyBtnCliked(true);
+        toast.success("발주 처리 완료!", {
+          position: "top-center",
+          autoClose: 1500,
+          icon: "✅",
+        });
       });
   };
 
@@ -91,6 +113,7 @@ export default function OrderHandle() {
             <input
               name={String(oneData.managerOrderNum)}
               type="checkbox"
+              checked={isChecked(oneData.managerOrderNum)}
               className={styles.innerCheckBox}
               onClick={handleCheckClick}
             />
@@ -122,12 +145,20 @@ export default function OrderHandle() {
   );
 
   return (
-    <>
-      <input type="date" onChange={(e) => setDateVale(e.target.value)} />
-      <button onClick={handleSubmitDate}>발주 확인</button>
-      <div>{applyOrderNumbers.length}개 선택</div>
-      <button onClick={handleDoOrder}>발주 승인</button>
+    <div className={styles.orderHandleContainer}>
+      <div>
+        <input type="date" onChange={(e) => setDateVale(e.target.value)} />
+        <button className={styles.veriBtn} onClick={handleSubmitDate}>
+          발주 확인
+        </button>
+      </div>
+      <div>
+        <span>{applyOrderNumbers.length}개 선택</span>
+        <button className={styles.confirmBtn} onClick={handleDoOrder}>
+          발주 승인
+        </button>
+      </div>
       <div className={styles.orderListWrapper}>{orderListEle}</div>
-    </>
+    </div>
   );
 }
