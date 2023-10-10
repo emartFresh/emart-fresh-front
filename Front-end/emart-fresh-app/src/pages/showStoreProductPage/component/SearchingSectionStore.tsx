@@ -49,14 +49,12 @@ export default function SearchingSection({
       storeId: paramValue,
     };
     const searchingData = { params: filterDataWithStoreId };
-    console.log("넘기는 데이터 ", searchingData);
     axios
       .get(
         `${import.meta.env.VITE_BACK_PORT}/product/store-product-list/filter`, //수정 : 페이징 처리
         searchingData
       )
       .then((res) => {
-        console.log("받는 데이터", res.data);
         setProductDatas((prevProductDatas) => [
           ...prevProductDatas,
           ...res.data,

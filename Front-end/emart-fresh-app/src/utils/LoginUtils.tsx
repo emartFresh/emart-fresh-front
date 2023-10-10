@@ -71,3 +71,71 @@ export function SendHomePageIfNotAuth(validAuth: number) {
     return navigate("/");
   }
 }
+
+//---------------------convention------
+export function useIsLogin(): boolean {
+  const loginToken = useRecoilValue<JwtToken>(loginState);
+  console.log("로그인 토큰", loginToken);
+  if (loginToken.accessToken) return true;
+  else return false;
+}
+
+export function useSendLoginPageIfNotLogin() {
+  const navigate = useNavigate();
+  if (!useIsLogin()) {
+    navigate("/login");
+  }
+}
+
+export interface MemberInfo {
+  exp: number;
+  iat: number;
+  memberAuth: number;
+  memberEmail: string;
+  memberId: string;
+  memberName: string;
+}
+
+export function useGetUserAllInfo(): MemberInfo {
+  const loginToken = useRecoilValue<JwtToken>(loginState);
+  if (loginToken.accessToken) {
+    const memberInfo: MemberInfo = jwtDecode(loginToken.accessToken);
+    console.log("토큰 해석", jwtDecode(loginToken.accessToken));
+    return memberInfo;
+  }
+  return null;
+}
+
+export function useGetUserAuth(): number {
+  const loginToken = useRecoilValue<JwtToken>(loginState);
+  if (loginToken.accessToken) {
+    const memberInfo: MemberInfo = jwtDecode(loginToken.accessToken);
+    console.log("토큰 해석", jwtDecode(loginToken.accessToken));
+    return memberInfo.memberAuth;
+  }
+  return -1;
+}
+
+export function useGetUserName(): string {
+  const loginToken = useRecoilValue<JwtToken>(loginState);
+  if (loginToken.accessToken) {
+    const memberInfo: MemberInfo = jwtDecode(loginToken.accessToken);
+    console.log("토큰 해석", jwtDecode(loginToken.accessToken));
+    return memberInfo.memberName;
+  }
+  return "";
+}
+
+export function useIsSameAuthNum(inpputedAuth: number): boolean {
+  const userAuth: number = GetUserAuth();
+  return userAuth === inpputedAuth;
+}
+
+export function useSendHomePageIfNotAuth(validAuth: number) {
+  const navigate = useNavigate();
+  if (useIsSameAuthNum(validAuth)) {
+    return;
+  } else {
+    return navigate("/");
+  }
+}

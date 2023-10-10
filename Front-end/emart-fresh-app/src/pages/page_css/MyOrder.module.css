@@ -98,12 +98,13 @@
 }
 
 .cancleBtn {
-  background-color: gray;
-  color: white;
+  background-color: transparent;
 }
 
 .btnWrapper {
-  text-align: center;
+  position: sticky;
+  top: 0;
+  text-align: right;
 }
 
 /* jjs review */

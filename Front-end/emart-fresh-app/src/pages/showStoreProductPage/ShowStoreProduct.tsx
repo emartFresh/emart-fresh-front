@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { useState, useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
+import { useQuery } from "react-query";
 
 import ShowProduct from "./component/ShowProduct";
 import SearchingSection from "./component/SearchingSectionStore";
@@ -19,6 +20,7 @@ interface ProductFilterData {
 export default function ShowStoreProduct() {
   const [productDatas, setProductDatas] = useState<ProductData[]>([]);
   const [page, setPage] = useState<number>(0);
+  const [storeData, setStoreData] = useState();
   const [filteredData, setFilteredData] = useState<ProductFilterData>({
     searchingTerm: "",
     eventNumber: 0,
@@ -26,6 +28,15 @@ export default function ShowStoreProduct() {
     offset: 0,
     limit: 0,
   });
+
+  const searchParams = new URLSearchParams(location.search);
+  const paramValue: string | null = searchParams.get("storeid");
+
+  console.log("스토어 아이디", paramValue);
+
+  // const productData = useQuery(["products"], fetchProductData, {
+  //   staleTime: 100000,
+  // });
 
   const triggerRef = useRef(null);
   useEffect(() => {

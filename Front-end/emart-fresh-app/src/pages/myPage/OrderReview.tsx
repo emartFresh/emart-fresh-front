@@ -36,7 +36,7 @@ export default function OrderReview({
     const reviewData = {
       review: {
         reviewContent: reviewText,
-        reviewScore: newReviewScore, //수정 : 별점 기능 추가
+        reviewScore: newReviewScore,
       },
       orderedProductProductId: orderedPpId,
     };

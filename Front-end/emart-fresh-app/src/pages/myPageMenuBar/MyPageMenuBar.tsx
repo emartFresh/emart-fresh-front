@@ -108,16 +108,8 @@ const MyPageMenuBar = () => {
               (getUserAuth === 0 && (
                 <div className={styles.mypagemenubar}>
                   <OrdinaryUser />
-                  <Link to="/mypageMain/mypageApplyManager">점포점주신청</Link>
                 </div>
               ))}
-            <hr />
-            {/* memberAuth==2일 때, 나오는 컴포넌트   수정: auth 2로 변경*/}
-            {getUserAuth === 0 && (
-              <div className={styles.mypagemenubar}>
-                <Link to="/mypageMain/HandleApplyManager">점포점주신청</Link>
-              </div>
-            )}
             <hr />
             {/* memberAuth==1(점주)일 때, 나오는 컴포넌트  */}
             {getUserAuth === 1 && (

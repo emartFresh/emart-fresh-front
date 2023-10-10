@@ -25,7 +25,6 @@ import { RecoilRoot } from "recoil";
 
 import ProductDetail from "./pages/productDetailPage/ProductDetail";
 import EventList from "./pages/eventPage/EventList";
-import Payment from "./pages/paymentPage/Payment";
 import EventListDetail from "./pages/eventPage/EventListDetail";
 import EventUpdate from "./pages/eventPage/EventUpdate";
 import ApplyManager from "./pages/applyManger/ApplyManager";
