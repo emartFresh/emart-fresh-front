@@ -370,7 +370,6 @@ const Cart = () => {
 
         {openPayment && (
           <Payment
-            setOpenPayment={setOpenPayment}
             cartInfo={
               (payItemsInfo = selectedItems.map((selectedItemId) => {
                 const payItemInfo = cartItemList.find(
