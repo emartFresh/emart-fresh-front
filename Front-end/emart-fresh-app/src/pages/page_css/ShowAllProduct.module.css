@@ -10,3 +10,12 @@
 .showWrapper {
   min-height: 600px;
 }
+
+.nameWrapper {
+  margin: 1rem;
+}
+
+.nameWrapper > p {
+  color: gray;
+  font-weight: 700;
+}

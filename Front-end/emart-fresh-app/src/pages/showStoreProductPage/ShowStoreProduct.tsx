@@ -2,11 +2,11 @@
 import { useState, useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
 import { useQuery } from "react-query";
-
 import ShowProduct from "./component/ShowProduct";
 import SearchingSection from "./component/SearchingSectionStore";
 import SearchingSelection from "./component/SearchingSelectionStore";
 import styles from "../page_css/ShowAllProduct.module.css";
+import axios from "axios";
 //수정 : 무한 스크롤 적용(오프셋 리미트 0 30이 디폴트)
 
 interface ProductFilterData {
@@ -20,7 +20,6 @@ interface ProductFilterData {
 export default function ShowStoreProduct() {
   const [productDatas, setProductDatas] = useState<ProductData[]>([]);
   const [page, setPage] = useState<number>(0);
-  const [storeData, setStoreData] = useState();
   const [filteredData, setFilteredData] = useState<ProductFilterData>({
     searchingTerm: "",
     eventNumber: 0,
@@ -30,13 +29,20 @@ export default function ShowStoreProduct() {
   });
 
   const searchParams = new URLSearchParams(location.search);
-  const paramValue: string | null = searchParams.get("storeid");
+  const storeId: string | null = searchParams.get("storeid");
 
-  console.log("스토어 아이디", paramValue);
+  const fetchStoreData = async () => {
+    const url = `${
+      import.meta.env.VITE_BACK_PORT
+    }/store/get-storeinfo?storeId=${storeId}`;
+    const data = await axios.get(url);
 
-  // const productData = useQuery(["products"], fetchProductData, {
-  //   staleTime: 100000,
-  // });
+    return data;
+  };
+
+  const storeData = useQuery([`store${storeId}`], fetchStoreData, {
+    staleTime: 10000,
+  }).data;
 
   const triggerRef = useRef(null);
   useEffect(() => {
@@ -67,12 +73,12 @@ export default function ShowStoreProduct() {
     };
   }, []);
 
-  console.log("필터 데이터", filteredData);
-  //수정 : 삭제하기
-
   return (
     <div className={styles.showAllSection}>
-      <h1>가게페이지</h1>
+      <div className={styles.nameWrapper}>
+        <h1>{storeData?.data?.storeName}</h1>
+        <p>{storeData?.data?.storeAddress}</p>
+      </div>
       <SearchingSection
         page={page}
         setPage={setPage}
