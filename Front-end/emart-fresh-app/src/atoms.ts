@@ -28,3 +28,9 @@ export const cartItemCount = atom({
   default: 0,
   effects_UNSTABLE: [persistAtom],
 });
+
+export const naverAccessToken = atom({
+  key: "naverAccessToken",
+  default: "",
+  effects_UNSTABLE: [persistAtom], 
+});

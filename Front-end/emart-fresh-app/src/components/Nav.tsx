@@ -3,7 +3,7 @@ import styles from "./comp_css/Nav.module.css";
 
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import { kakaoAccessToken, loginState, loginTypeState, cartItemCount } from "../atoms";
 import { sendAxiosRequest } from "../utils/userUtils";
@@ -21,6 +21,10 @@ export default function Nav() {
   const [kakaoToken, setKakaoToken] = useRecoilState<string>(kakaoAccessToken);
   const [loginType, setLoginType] = useRecoilState<string>(loginTypeState);
   const [cartCount, setCartCount] = useRecoilState<number>(cartItemCount);
+
+  useEffect(() => {
+    console.log("nav useEffect!!");
+  }, []);
 
   const logout = () => {
     const checkLogout = confirm('로그아웃하시겠습니까?');

@@ -10,6 +10,7 @@ import Modal from "./Modal";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { IsLogin } from '../../utils/LoginUtils';
+import NaverLogin from "./NaverLogin";
 
 const Login = () => {
   const [memberId, setMemberId] = useState<string>("");
@@ -36,11 +37,13 @@ const Login = () => {
   
 
   useEffect(() => {
+    console.log("call useEffect");
     const code = new URL(window.location.href).searchParams.get("code");
 
     if(isLogin){
       navigate('/');
       toast.error('이미 로그인 상태입니다.');
+      return;
     }
 
     if (code) {
@@ -78,7 +81,11 @@ const Login = () => {
         })
         .catch(console.error);
     }
-  });
+
+    // 수정 : 로그인했을때도 뜸..
+    
+
+  },[]);
 
   const openModal = (): void => {
     setIsModalOpen(true);
@@ -162,6 +169,7 @@ const Login = () => {
             className={styles.kakaoLoginBtn}
           />
         </a>
+        <NaverLogin />
       </div>
     </div>
   );
