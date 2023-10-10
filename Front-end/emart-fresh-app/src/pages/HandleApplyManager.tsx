@@ -1,12 +1,23 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import styles from "./page_css/HandleApplyManager.module.css";
 import { convertDateToShortForm } from "../utils/dateUtils";
+import { useIsSameAuthNum } from "../utils/LoginUtils";
 export default function HandleApplyManager() {
+  const navigate = useNavigate();
+
   const [applyManagetList, setApplyManagetList] =
     useState<ApplyManagerData[]>();
+  const isValidUserAuth = useIsSameAuthNum(2);
+
+  useEffect(() => {
+    if (!isValidUserAuth) {
+      navigate("/home");
+    }
+  }, [isValidUserAuth]);
 
   useEffect(() => {
     const url = `${import.meta.env.VITE_BACK_PORT}/applymanager/apply-showList`;
@@ -21,6 +32,7 @@ export default function HandleApplyManager() {
       {applyManagetList?.map((ele, inx) => {
         return (
           <Link
+            key={inx}
             to={"/makeStore"}
             state={{ memberId: ele.memberId, certImg: ele.certifImgUrl }}
           >

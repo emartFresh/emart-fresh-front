@@ -106,6 +106,8 @@ declare global {
     storeId?: number; // 가게 아이디
     memberId: number | MemberData; // 멤버 아이디
     address: string; // 주소
+    storeLongitude?: number;
+    storeLatitude?: number;
   }
 
   // 가게 상품 정보

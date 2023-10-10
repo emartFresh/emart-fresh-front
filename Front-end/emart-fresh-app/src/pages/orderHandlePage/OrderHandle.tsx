@@ -2,7 +2,9 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import styles from "../page_css/OrderHandle.module.css";
 import { useState, useEffect } from "react";
-// 수정 : 인증, 인가
+import { useIsSameAuthNum } from "../../utils/LoginUtils";
+import { useNavigate } from "react-router-dom";
+
 interface ManagerOrderObjData extends ManagerOrderData {
   store: StoreData;
   product: ProductData;
@@ -13,7 +15,14 @@ export default function OrderHandle() {
   const [groupedOrderDatas, setGroupedOrderDatas] = useState([]);
   const [applyOrderNumbers, setApprayOrderNumbers] = useState<number[]>([]);
   const [applyBtnCliked, setApplyBtnCliked] = useState<boolean>(false);
+  const isValidUserAuth = useIsSameAuthNum(2);
+  const navigate = useNavigate();
 
+  useEffect(() => {
+    if (!isValidUserAuth) {
+      navigate("/home");
+    }
+  }, [isValidUserAuth]);
   const handleCheckClick = (e) => {
     const clickedOrderNum = Number(e.target.name);
     const hasOrderId = applyOrderNumbers.includes(clickedOrderNum);

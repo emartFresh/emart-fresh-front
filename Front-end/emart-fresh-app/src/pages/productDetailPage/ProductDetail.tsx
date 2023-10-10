@@ -11,6 +11,7 @@ import { Modal, Box } from "@mui/material";
 
 import styles from "../page_css/ProductDetail.module.css";
 import ProductReview from "./ProductReview";
+import formatCurrency from "../../utils/formatUtils";
 /*
 public class AddToCartDto {
 	int storeId;
@@ -48,7 +49,7 @@ export default function ProductDetail() {
         }/product/product-detail?productId=${productId}`
       )
       .then((res) => {
-        console.log(res.data);
+        console.log("fsd", res.data);
         setProductData(res.data);
       });
   }, []);
@@ -118,7 +119,7 @@ export default function ProductDetail() {
   };
 
   function Price() {
-    const originalPrice: number = Number(productData?.priceString);
+    const originalPrice: number = Number(productData?.priceNumber);
     if (productData?.productEvent !== 0) {
       const discountRate: number = productData?.productEvent;
       const discountedPrice =
@@ -126,15 +127,23 @@ export default function ProductDetail() {
       return (
         <div className={styles.priceContainer}>
           <div>
-            <span className={styles.discountedPrice}>{originalPrice}</span>
+            <span className={styles.discountedPrice}>
+              {formatCurrency(originalPrice)}원
+            </span>
             <span>{discountRate}%</span>
           </div>
-          <div className={styles.productPrice}>{discountedPrice}</div>
+          <div className={styles.productPrice}>
+            {formatCurrency(discountedPrice)}원
+          </div>
         </div>
       );
     }
 
-    return <div className={styles.productPrice}>{originalPrice}</div>;
+    return (
+      <div className={styles.productPrice}>
+        {formatCurrency(originalPrice)}원
+      </div>
+    );
   }
 
   return (

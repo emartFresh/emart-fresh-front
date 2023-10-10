@@ -139,9 +139,22 @@ export default function MyOrder() {
             p: 2,
             top: "50%",
             left: "50%",
+            maxHeight: "500px",
+            overflowY: "auto",
             transform: "translate(-50%, -50%)",
           }}
         >
+          {" "}
+          <div className={styles.btnWrapper}>
+            <button
+              className={styles.cancleBtn}
+              onClick={() => {
+                setShowModal(!showModal);
+              }}
+            >
+              ✖
+            </button>
+          </div>
           <div className={styles.detailContainer}>
             {detailData.map((item, inx) => {
               console.log("하나 데이터", item);
@@ -164,16 +177,6 @@ export default function MyOrder() {
                 </div>
               );
             })}
-          </div>
-          <div className={styles.btnWrapper}>
-            <button
-              className={styles.cancleBtn}
-              onClick={() => {
-                setShowModal(!showModal);
-              }}
-            >
-              닫기
-            </button>
           </div>
         </Box>
       </Modal>

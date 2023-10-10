@@ -9,7 +9,7 @@ export default function Administrator() {
         <Link to="/">점주 주문관리</Link>
       </div>
       <div className={styles.mypagemenubar}>
-        <Link to="/">점주 신청 승인</Link>
+        <Link to="/mypageMain/HandleApplyManager">점주 신청 승인</Link>
       </div>
       <div className={styles.mypagemenubar}>
         <Link to="/request-order-list">발주승인 페이지</Link>
