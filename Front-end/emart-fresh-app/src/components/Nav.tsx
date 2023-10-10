@@ -11,7 +11,7 @@ import Badge, { BadgeProps } from "@mui/material/Badge";
 import { styled } from "@mui/material/styles";
 import IconButton from "@mui/material/IconButton";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-// import logo from '../assets/images/default/defaultLogo.png';
+import { toast } from "react-toastify";
 
 export default function Nav() {
   const navigate = useNavigate();
@@ -20,6 +20,8 @@ export default function Nav() {
   const [loginToken, setLoginToken] = useRecoilState<JwtToken>(loginState);
   const [kakaoToken, setKakaoToken] = useRecoilState<string>(kakaoAccessToken);
   const [loginType, setLoginType] = useRecoilState<string>(loginTypeState);
+  const success = () => toast.success("Success!");
+  const error = () => toast.error("Error!");
 
   const logout = () => { 
     sendAxiosRequest('/member/logout', 'post', loginToken, setLoginToken, {loginType: loginType, kakaoAccessToken: kakaoToken})
@@ -29,7 +31,7 @@ export default function Nav() {
         refreshToken: "",
       });
       setLoginType("");
-      alert("로그아웃 완료! (임시 알림)");
+      toast.success('로그아웃되었습니다.')
     })
     .catch(
       console.error  
