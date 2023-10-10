@@ -4,8 +4,10 @@ import axios from "axios";
 import styles from "./EventUpdate.module.css";
 import BannerImageIcon from "../../assets/images/BannerImageIcon.png";
 import DetailImageIcon from "../../assets/images/DetailImageIcon.png";
+import { SendLoginPageIfNotLogin } from "../../utils/LoginUtils";
 
 export default function EventUpdate() {
+  SendLoginPageIfNotLogin();
   const [formData, setFormData] = useState<EventFormState>({
     eventTitle: "",
     eventBannerImage: null,
