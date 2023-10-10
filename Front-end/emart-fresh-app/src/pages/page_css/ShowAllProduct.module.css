@@ -6,3 +6,7 @@
   align-items: center;
   flex-direction: column;
 }
+
+.showWrapper {
+  min-height: 600px;
+}
