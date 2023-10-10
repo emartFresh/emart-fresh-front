@@ -4,7 +4,7 @@ import styles from "../page_css/Cart.module.css";
 import image from "../../assets/images/product013.png";
 import axios from "axios";
 import { useRecoilState } from "recoil";
-import { loginState } from "../../atoms";
+import { cartItemCount, loginState } from "../../atoms";
 import { Checkbox } from "@mui/material";
 import { sendAxiosRequest } from "../../utils/userUtils";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -17,11 +17,11 @@ interface responseData {
   data: CartData[];
 }
 
-// 수정 : 수량 변경 시  0이하/ 99이상 안됨.
 // 수정 : 장바구니 item 개수 nav
 
 const Cart = () => {
   const [loginToken, setLoginToken] = useRecoilState<JwtToken>(loginState);
+  const [cartCount, setCartCount] = useRecoilState<number>(cartItemCount);
   const [cartItemList, setCartItemList] = useState<CartData[]>([]);
   const [selectedItems, setSelectedItems] = useState([]);
   const [paymentItems, setPaymentItems] = useState<CartData[]>([]);
@@ -30,6 +30,7 @@ const Cart = () => {
   const [updateCartItemList, setUpdateCartItemList] = useState<Array<object>>(
     []
   );
+
   const updateListRef = useRef(updateCartItemList);
   let totalPrice = 0;
   let payItemsInfo: CartData[] = [];
@@ -47,6 +48,7 @@ const Cart = () => {
       const res: CartData[] = JSON.parse(JSON.stringify(response));
       setCartItemList(res);
       setInitCartItemList(res);
+      setCartCount(res.length);
     });
 
     window.addEventListener("scroll", () => {
@@ -90,21 +92,20 @@ const Cart = () => {
   //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
   const handleUpdateItemList = (): Array<object> => {
-    console.log("22 initCartItemList >", initCartItemList);
-    console.log("22 cartItemList >", cartItemList);
-    return cartItemList
-      .filter((cart) => {
-        const initItem = initCartItemList.find(
-          (item) => item.cartProductId === cart.cartProductId
-        );
-        return initItem.cartProductQuantity !== cart.cartProductQuantity;
-      })
-      .map((updateItem) => {
-        return {
-          cartProductId: updateItem.cartProductId,
-          cartProductQuantity: updateItem.cartProductQuantity,
-        };
-      });
+    if (initCartItemList)
+      return cartItemList
+        .filter((cart) => {
+          const initItem = initCartItemList.find(
+            (item) => item.cartProductId === cart.cartProductId
+          );
+          return initItem.cartProductQuantity !== cart.cartProductQuantity;
+        })
+        ?.map((updateItem) => {
+          return {
+            cartProductId: updateItem.cartProductId,
+            cartProductQuantity: updateItem.cartProductQuantity,
+          };
+        });
   };
 
   //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -211,13 +212,13 @@ const Cart = () => {
       "/cart/removeProduct?cartProductId=" + cartProductId,
       "delete",
       loginToken,
-      setLoginToken,
-      { cartProductId: cartProductId }
+      setLoginToken
     )
       .then((res) => {
         setCartItemList((prevList) =>
           prevList.filter((item) => item.cartProductId !== cartProductId)
         );
+        setCartCount(cartCount - 1);
       })
       .catch(console.error);
   };
@@ -276,9 +277,9 @@ const Cart = () => {
                       deleteItem(item.cartProductId);
                     }}
                   />
-                  <img src={image} alt="" />
-                  <p>{item.productTitle}</p>
-                  <p>{item.priceNumber}</p>
+                  <img src={image} alt="" className={styles.productImage} />
+                  <p className={styles.productTitle}>{item.productTitle}</p>
+                  <p className={styles.productPrice}>{item.priceNumber}</p>
                   <p className={styles.quantityControl}>
                     <input
                       type="button"

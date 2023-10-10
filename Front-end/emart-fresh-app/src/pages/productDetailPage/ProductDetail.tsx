@@ -79,7 +79,11 @@ export default function ProductDetail() {
       sendAxiosPostRequest(url, loginToken, setLoginToken, data)
         .then((res) => {
           console.log("응답 완료", res);
-          alert("장바구니 담기!");
+          toast.success("물건을 장바구니에 담았습니다.", {
+            position: "top-center",
+            autoClose: 1500,
+            icon: "✅",
+          });
         })
         .catch((e) => {
           if (e.response.status === 400) {
@@ -105,7 +109,11 @@ export default function ProductDetail() {
     const url = `${import.meta.env.VITE_BACK_PORT}/cart/changeCart/yes`;
 
     sendAxiosPostRequest(url, loginToken, setLoginToken, data).then((res) => {
-      alert("장바구니 담기!");
+      toast.success("물건을 장바구니에 담았습니다.", {
+        position: "top-center",
+        autoClose: 1500,
+        icon: "✅",
+      });
     });
   };
 

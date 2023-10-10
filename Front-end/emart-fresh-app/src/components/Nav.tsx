@@ -5,13 +5,13 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 
 import { useState } from "react";
 import { useRecoilState } from "recoil";
-import { kakaoAccessToken, loginState, loginTypeState } from "../atoms";
+import { kakaoAccessToken, loginState, loginTypeState, cartItemCount } from "../atoms";
 import { sendAxiosRequest } from "../utils/userUtils";
 import Badge, { BadgeProps } from "@mui/material/Badge";
 import { styled } from "@mui/material/styles";
 import IconButton from "@mui/material/IconButton";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-// import logo from '../assets/images/default/defaultLogo.png';
+import { toast } from "react-toastify";
 
 export default function Nav() {
   const navigate = useNavigate();
@@ -20,8 +20,11 @@ export default function Nav() {
   const [loginToken, setLoginToken] = useRecoilState<JwtToken>(loginState);
   const [kakaoToken, setKakaoToken] = useRecoilState<string>(kakaoAccessToken);
   const [loginType, setLoginType] = useRecoilState<string>(loginTypeState);
+  const [cartCount, setCartCount] = useRecoilState<number>(cartItemCount);
 
-  const logout = () => { 
+  const logout = () => {
+    const checkLogout = confirm('로그아웃하시겠습니까?');
+    if(checkLogout){
     sendAxiosRequest('/member/logout', 'post', loginToken, setLoginToken, {loginType: loginType, kakaoAccessToken: kakaoToken})
     .then(() => {
       setLoginToken({
@@ -29,11 +32,12 @@ export default function Nav() {
         refreshToken: "",
       });
       setLoginType("");
-      alert("로그아웃 완료! (임시 알림)");
+      toast.success('로그아웃되었습니다.')
     })
     .catch(
       console.error  
     )
+    }
   };
 
   const StyledBadge = styled(Badge)<BadgeProps>(({ theme }) => ({
@@ -64,7 +68,7 @@ export default function Nav() {
           <span>
             {/* <Link to="/search">Search</Link> */}
             <IconButton aria-label="cart" onClick={() => navigate("/cart")}>
-              <StyledBadge badgeContent={4} color="secondary">
+              <StyledBadge badgeContent={cartCount} color="secondary">
                 <ShoppingCartIcon />
               </StyledBadge>
             </IconButton>

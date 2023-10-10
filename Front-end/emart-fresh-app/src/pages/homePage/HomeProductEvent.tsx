@@ -6,9 +6,6 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCalendar, faFaceSmileWink } from '@fortawesome/free-regular-svg-icons';
 import { faGift, faGifts } from '@fortawesome/free-solid-svg-icons';
-import product01 from '../../assets/images/product01.png';
-import product07 from '../../assets/images/product07.png';
-import product03 from '../../assets/images/product03.png';
 
 import 'swiper/css';
 import 'swiper/css/pagination';
@@ -98,7 +95,6 @@ const HomeProductEvent = ({eventProductData}:HomeProductEventProps) => {
             }  
             })
           .reduce((chunks:ProductData[][], product:ProductData, index:number) => {
-            // 데이터를 4개씩 묶기 위한 로직
             if (index % 4 === 0) {
               chunks.push([]);
             }

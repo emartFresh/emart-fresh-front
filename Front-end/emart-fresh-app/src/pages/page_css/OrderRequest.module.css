@@ -1,7 +1,24 @@
+.orderRequestContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 1rem;
+}
+
+.title {
+  color: gray;
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-top: 2rem;
+}
+
 .productListWrapper {
   display: block;
   height: 200px;
-  margin: 2em;
+  border: 1px solid #e1e1e1;
+  border-radius: 0.5rem;
+  width: 80%;
   overflow: auto;
 }
 .productListSection {
@@ -10,6 +27,23 @@
   margin: 1em;
   border: 1px solid gray;
   border-radius: 0.3em;
-  padding: 1em;
-  height: 30px;
+  padding: 0.5rem;
+  padding-left: 1rem;
+}
+
+.addBtn {
+  width: 100px;
+  background-color: #e1e1e1;
+  min-width: 320px;
+  max-width: 500px;
+}
+
+.confirmBtn {
+  width: 100px;
+  min-width: 320px;
+  max-width: 500px;
+}
+
+.input {
+  border: 1px solid gray;
 }

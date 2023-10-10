@@ -7,8 +7,9 @@ import { useRecoilState } from "recoil";
 import { kakaoAccessToken, loginState, loginTypeState } from "../../atoms";
 import Inquiry from "./Inquiry";
 import Modal from "./Modal";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { IsLogin } from '../../utils/LoginUtils';
 
 const Login = () => {
   const [memberId, setMemberId] = useState<string>("");
@@ -17,11 +18,10 @@ const Login = () => {
   const [kakaoToken, setKakaoToken] = useRecoilState<string>(kakaoAccessToken);
   const [loginType, setLoginType] = useRecoilState<string>(loginTypeState);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const isLogin = IsLogin();
 
-  const notify = () => toast("Wow so easy!");
   // 성공 알람 ( 초록색 창 )
   const success = () => toast.success("Success!");
-
   // 실패 알람 ( 빨간색 창 )
   const error = () => toast.error("Error!");
   // 경고 알람 ( 노란색 창 )
@@ -33,8 +33,16 @@ const Login = () => {
   const REDIRECT_URL = "http://localhost:5173/login";
   const { Kakao } = window;
 
+  
+
   useEffect(() => {
     const code = new URL(window.location.href).searchParams.get("code");
+
+    if(isLogin){
+      navigate('/');
+      toast.error('이미 로그인 상태입니다.');
+    }
+
     if (code) {
       axios
         .post(
@@ -62,8 +70,11 @@ const Login = () => {
               setLoginToken(res.data.tokens);
               setLoginType(res.data.loginType);
               navigate("/");
+              toast.success(`로그인 되었습니다. 환영합니다 🙌🏻`,{ 
+                icon: "✅",
+              });
             })
-            .catch(console.error);
+            .catch(() => toast.error('로그인에 실패했습니다. 관리자에게 문의해주세요.'));
         })
         .catch(console.error);
     }
@@ -86,16 +97,12 @@ const Login = () => {
       .then((response) => {
         setLoginToken(response.data.tokens);
         setLoginType(response.data.loginType);
-        // alert("로그인 완료! (임시 알림)");
-
         navigate("/");
-        toast.success("로그인 완료!", {
-          position: "top-center",
-          autoClose: 5000,
+        toast.success(`로그인 되었습니다. 환영합니다 🙌🏻`,{ 
           icon: "✅",
         });
       })
-      .catch((error) => console.log(error));
+      .catch(() => toast.error('아이디 / 비밀번호를 확인해주세요.'));
   };
 
   const loginWithKakao = () => {
@@ -107,6 +114,7 @@ const Login = () => {
     });
   };
 
+  if(!IsLogin())
   return (
     <div className={styles.container}>
       <h2 className={styles.title}>로그인</h2>
@@ -154,25 +162,6 @@ const Login = () => {
             className={styles.kakaoLoginBtn}
           />
         </a>
-        <div>
-          <button onClick={success}>Notify!</button>
-          {/* <ToastContainer
-          position="top-center"
-          autoClose={5000}
-          hideProgressBar={false}
-          closeOnClick
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          theme="light"
-          limit={2}
-          icon="✅"
-
-          toastStyle={{
-            // color: "#f9bb00"
-          }}
-        /> */}
-        </div>
       </div>
     </div>
   );

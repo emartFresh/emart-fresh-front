@@ -9,6 +9,7 @@ import axios from "axios";
 import styles from "../page_css/OrderRequest.module.css";
 import { sendAxiosPostRequest } from "../../utils/userUtils";
 import { SendHomePageIfNotAuth } from "../../utils/LoginUtils";
+import { toast } from "react-toastify";
 
 //수정 : 인증 인가, 유통기한 처리
 //수정 : 전역 날짜 데이터 to String 처리 함수 추가해서 리팩토링
@@ -105,7 +106,7 @@ export default function OrderRequest() {
     let sendingData: ManagerOrderData[] = [];
     sendingData = quantityData.map((data) => ({
       productId: data.productId,
-      storeId: 0, // 수정: 실제 가게 아이디로 변경
+      storeId: 0, //백에서 아이디 기준으로 검사
       managerOrderStatus: false,
       managerOrderQuantity: data.quantity,
       managerOrderDate: new Date(),
@@ -116,6 +117,12 @@ export default function OrderRequest() {
     sendAxiosPostRequest(url, loginToken, setLoginToken, sendingData).then(
       (res) => {
         console.log("응답", res);
+        setBelowProductList([]);
+        toast.success("발주 요청 완료!", {
+          position: "top-center",
+          autoClose: 1500,
+          icon: "✅",
+        });
       }
     );
   };
@@ -153,12 +160,16 @@ export default function OrderRequest() {
             <span style={{ marginLeft: "1em" }}>{product.priceString}</span>
             <span style={{ marginLeft: "1em" }}></span>
           </div>
-          <input
-            type="text"
-            onChange={(event) => handleQuanInputChange(event, product)}
-            style={{ width: "5em" }}
-            value={quantityMap[product.productId] || ""}
-          />
+          <div>
+            <span>수량 </span>
+            <input
+              className={styles.input}
+              type="text"
+              onChange={(event) => handleQuanInputChange(event, product)}
+              style={{ width: "5em" }}
+              value={quantityMap[product.productId] || ""}
+            />
+          </div>
         </div>
       );
     }
@@ -168,10 +179,18 @@ export default function OrderRequest() {
   console.log("수량2", quantityData);
   return (
     <>
-      <div className={styles.productListWrapper}>{productListEle}</div>
-      <button onClick={insertToBelow}>버튼</button>
-      <div className={styles.productListWrapper}>{belowProducts}</div>
-      <button onClick={handleOrderBtn}>주문하기</button>
+      <div className={styles.orderRequestContainer}>
+        <div className={styles.title}>발주 가능 물품 목록</div>
+        <div className={styles.productListWrapper}>{productListEle}</div>
+        <button className={styles.addBtn} onClick={insertToBelow}>
+          발주 목록에 추가
+        </button>
+        <div className={styles.title}>발주 신청 목록</div>
+        <div className={styles.productListWrapper}>{belowProducts}</div>
+        <button className={styles.confirmBtn} onClick={handleOrderBtn}>
+          발주 신청
+        </button>
+      </div>
     </>
   );
 }
