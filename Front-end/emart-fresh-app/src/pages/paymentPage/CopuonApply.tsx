@@ -63,14 +63,19 @@ export default function CopuonApply({
     });
 
   return (
-    <div>
+    <div className={styles.couponContainer}>
       {/* <button>적용</button> */}
-      <input
-        type="text"
-        onClick={handleOpen}
-        readOnly
-        value={appliedCoupon && appliedCoupon.couponTitle}
-      />
+      <div className={styles.inputWrapper}>
+        <div>할인쿠폰</div>
+        <input
+          className={styles.couponInput}
+          type="text"
+          placeholder="쿠폰을 선택해주세요."
+          onClick={handleOpen}
+          readOnly
+          value={appliedCoupon && appliedCoupon.couponTitle}
+        />
+      </div>
       <Modal
         open={open}
         onClose={handleClose}

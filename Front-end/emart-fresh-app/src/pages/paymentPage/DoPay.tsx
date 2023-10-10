@@ -11,6 +11,7 @@ import {
 import { Coupon } from "./Payment";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import styles from "../page_css/Payment.module.css";
 
 interface OrderProduct {
   orderedQuantity: number;
@@ -44,11 +45,29 @@ export default function Dopay({
   console.log("가게 아이디22222", myCartStoreId);
   //수정 : 로직 고민...
   const preProcesse = async () => {
-    const url = `${import.meta.env.VITE_BACK_PORT}/cart/decreaseCartProduct`;
-    sendAxiosGetRequest(url, loginToken, setLoginToken).then((res) => {
-      console.log("응답", res);
-      requestPayment();
+    const orderedProductProducts: OrderProduct[] = itemData?.map((item) => {
+      return {
+        orderedQuantity: item.qty,
+        productId: Number(item.id),
+      };
     });
+
+    const orderInfos = {
+      storeId: myCartStoreId,
+      couponId: appliedCoupon.couponId,
+      totalAmount: totalPriceAf,
+      orderedDate: new Date(),
+      orderedProductProduct: orderedProductProducts,
+    };
+
+    const url = `${import.meta.env.VITE_BACK_PORT}/cart/decreaseCartProduct`;
+    sendAxiosPostRequest(url, loginToken, setLoginToken, orderInfos).then(
+      (res) => {
+        alert("ㅇㅇㅇ");
+        console.log("응답", res);
+        requestPayment();
+      }
+    );
   };
 
   const saveToOrderList = async () => {
@@ -113,8 +132,10 @@ export default function Dopay({
 
   return (
     <div>
-      <button onClick={preProcesse}>결제하기</button>
-      <button onClick={saveToOrderList}>결제하기2</button>
+      <button className={styles.doPayBtn} onClick={preProcesse}>
+        결제하기
+      </button>
+      {/* <button onClick={saveToOrderList}>결제하기2</button> */}
     </div>
   );
 }
