@@ -1,17 +1,21 @@
 .paymentContainer {
-  border: 1px solid black;
+  border: 1px solid gray;
   background-color: white;
   border-radius: 1rem;
   z-index: 1;
-  position: absolute;
+  position: fixed;
   top: 50%;
   left: 50%;
+  transform: translate(-50%, -50%);
+
   width: 500px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 2rem;
+  padding-bottom: 0.5rem;
+
+  background-color: #e1e1e1;
 }
 
 .couponItemContainer {
@@ -22,4 +26,75 @@
 
 .couponItemContainer:hover {
   background-color: #e1e1e1;
+}
+
+.couponContainer {
+  width: 100%;
+}
+
+.inputWrapper {
+  width: 100%;
+  padding: 1rem;
+  text-align: left;
+  background-color: white;
+  border: 1px solid #dadada;
+}
+
+.couponInput {
+  width: 100%;
+  margin-top: 1rem;
+  padding: 0.3rem;
+  border: 1px solid #e1e1e1;
+  border-radius: 0.3rem;
+}
+
+.allPayWrapper {
+  width: 100%;
+  padding: 1rem;
+  text-align: left;
+  background-color: white;
+  border: 1px solid #dadada;
+  margin-top: 1rem;
+}
+
+.totalPriceTitle {
+  font-weight: bold;
+}
+
+.applyCouponWrapper {
+  margin-bottom: 1rem;
+}
+
+.applyCoupon {
+  font-weight: bold;
+}
+
+.doPayBtn {
+  margin: 0.5rem;
+  width: 300px;
+  color: white;
+  background-color: #f95a00;
+}
+
+.applyCouponDis {
+  font-weight: bold;
+}
+
+.oneLine {
+  width: 100%;
+  border: 1px solid #e1e1e1;
+}
+
+.totalPriceWrapper {
+  margin-top: 1rem;
+}
+
+.closeBtnWrapper {
+  width: 100%;
+  text-align: right;
+}
+
+.closeBtn {
+  border: none;
+  background-color: transparent;
 }
