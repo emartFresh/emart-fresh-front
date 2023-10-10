@@ -9,6 +9,7 @@ import Inquiry from "./Inquiry";
 import Modal from "./Modal";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { IsLogin } from '../../utils/LoginUtils';
 
 const Login = () => {
   const [memberId, setMemberId] = useState<string>("");
@@ -17,6 +18,7 @@ const Login = () => {
   const [kakaoToken, setKakaoToken] = useRecoilState<string>(kakaoAccessToken);
   const [loginType, setLoginType] = useRecoilState<string>(loginTypeState);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const isLogin = IsLogin();
 
   // 성공 알람 ( 초록색 창 )
   const success = () => toast.success("Success!");
@@ -27,14 +29,20 @@ const Login = () => {
   // 정보 알람
   const info = () => toast.info("Info...");
 
-  const loading = () => toast.loading("loading...");
-
   const navigate = useNavigate();
   const REDIRECT_URL = "http://localhost:5173/login";
   const { Kakao } = window;
 
+  
+
   useEffect(() => {
     const code = new URL(window.location.href).searchParams.get("code");
+
+    if(isLogin){
+      navigate('/');
+      toast.error('이미 로그인 상태입니다.');
+    }
+
     if (code) {
       axios
         .post(
@@ -106,6 +114,7 @@ const Login = () => {
     });
   };
 
+  if(!IsLogin())
   return (
     <div className={styles.container}>
       <h2 className={styles.title}>로그인</h2>
