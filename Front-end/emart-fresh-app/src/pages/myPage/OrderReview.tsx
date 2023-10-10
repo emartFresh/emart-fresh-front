@@ -15,7 +15,7 @@ export default function OrderReview({
 }: {
   orderedPpId: number;
   review: any;
-  setShowModal: nay;
+  setShowModal: any;
 }) {
   const [loginToken, setLoginToken] = useRecoilState<JwtToken>(loginState);
   const [reviewText, setReviewText] = useState<string[]>([]);
@@ -70,7 +70,11 @@ export default function OrderReview({
   } else {
     reviewComponent = (
       <>
-        <Rating value={newReviewScore} onChange={handleRatingChange} min={1} />
+        <Rating
+          value={newReviewScore}
+          onChange={handleRatingChange}
+          precision={1}
+        />
         <TextareaAutosize
           aria-label="텍스트 입력"
           minRows={3} // 최소 행 수를 설정합니다.
