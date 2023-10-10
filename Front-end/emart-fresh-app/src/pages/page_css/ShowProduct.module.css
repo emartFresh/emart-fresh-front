@@ -51,3 +51,8 @@
   background-color: transparent;
   cursor: pointer;
 }
+
+.showWrapper {
+  background-color: red;
+  min-height: 500px;
+}
