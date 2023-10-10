@@ -143,7 +143,7 @@ const Cart = () => {
       setCartItemList(
         cartItemList.map((item) => {
           if (item.cartProductId === cartProductId) {
-            return { ...item, cartProductQuantity: null };
+            return { ...item, cartProductQuantity: 1 };
           } else {
             return item;
           }
@@ -163,6 +163,18 @@ const Cart = () => {
       );
     }
   };
+
+  // const handleEmptyInput = (value: string, cartProductId: number) => {
+  //   if(value.length === 0){
+  //     setCartItemList(
+  //       cartItemList.map((item) => {
+  //         if(item.cartProductId === cartProductId){
+  //           return {...item, cartProductQuantity: 1};
+  //         }
+  //       })
+  //     )
+  //   }
+  // }
 
   //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -296,6 +308,9 @@ const Cart = () => {
                       onChange={(e) =>
                         handleInputQuantity(e.target.value, item.cartProductId)
                       }
+                      // onBlur={
+                      //   (e) => handleEmptyInput(e.target.value, item.cartProductId)
+                      // }
                       minLength={1}
                       maxLength={2}
                       step="1"
@@ -371,6 +386,7 @@ const Cart = () => {
 
         {openPayment && (
           <Payment
+            setOpenPayment={setOpenPayment}
             cartInfo={
               (payItemsInfo = selectedItems.map((selectedItemId) => {
                 const payItemInfo = cartItemList.find(
