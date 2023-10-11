@@ -94,9 +94,7 @@ export default function ShowStoreProduct() {
       <div className={styles.showWrapper}>
         <ShowProduct productDatas={productDatas} />
       </div>
-      <div className={styles.infTrigger} ref={triggerRef}>
-        트리거
-      </div>
+      <div className={styles.infTrigger} ref={triggerRef}></div>
     </div>
   );
 }

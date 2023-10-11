@@ -7,15 +7,25 @@
   flex-direction: column;
 }
 
-.showWrapper {
-  min-height: 600px;
+.aboveTitle {
+  font-weight: 900;
 }
 
-.nameWrapper {
-  margin: 1rem;
+.aboveP {
+  color: gray;
+}
+
+.showWrapper {
+  min-height: 600px;
+  font-weight: 800;
+}
+
+@media screen and (max-width: 740px) {
+  .nameWrapper > h1 {
+    font-size: 1.3rem;
+  }
 }
 
 .nameWrapper > p {
   color: gray;
-  font-weight: 700;
 }
