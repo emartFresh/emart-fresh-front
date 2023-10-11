@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { useState, useEffect } from "react";
-// import styles from "../page_css/MyPage.module.css";
-import styles from "../page_css/Abc.module.css";
+import styles from "../page_css/MyPage.module.css";
 import CommonModalBasicEmail from "./CommonModalBasicEmail";
 import CommonModalBasic from "./CommonModalBasic";
 
