@@ -4,7 +4,7 @@
   padding: 20px;
 } */
 .mypageMain {
-  width: 100%;
+  width: 65vw;
   display: flex;
   flex-direction: column;
   margin: auto;
