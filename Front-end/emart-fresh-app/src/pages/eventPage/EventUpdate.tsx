@@ -5,7 +5,7 @@ import styles from "./EventUpdate.module.css";
 import BannerImageIcon from "../../assets/images/BannerImageIcon.png";
 import DetailImageIcon from "../../assets/images/DetailImageIcon.png";
 import { SendLoginPageIfNotLogin } from "../../utils/LoginUtils";
-
+import icon from "../../assets/images/i-icon.webp";
 export default function EventUpdate() {
   SendLoginPageIfNotLogin();
   const [formData, setFormData] = useState<EventFormState>({
@@ -136,6 +136,8 @@ export default function EventUpdate() {
             onChange={handleFileChange}
             placeholder="이벤트이름을 등록하세요"
           />
+          {/* 유의사항 수정 중 */}
+          <img src={icon} style={{ width: "30px" }} />
         </div>
         <div className={styles.eventDate}>
           <div>
