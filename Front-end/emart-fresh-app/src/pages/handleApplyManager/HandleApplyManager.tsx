@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
-import styles from "./page_css/HandleApplyManager.module.css";
+import styles from "../page_css/HandleApplyManager.module.css";
 import { convertDateToShortForm } from "../../utils/dateUtils";
 import { useIsSameAuthNum } from "../../utils/LoginUtils";
 export default function HandleApplyManager() {
