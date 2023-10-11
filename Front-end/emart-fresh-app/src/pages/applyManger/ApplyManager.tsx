@@ -22,6 +22,7 @@ export default function ApplyManager() {
     const url = `${
       import.meta.env.VITE_BACK_PORT
     }/applymanager/apply-requestapplymanager`;
+
     sendAxiosPostRequest(url, loginToken, setLoginToken, formData).then(
       (res) => {
         console.log("응답", res);

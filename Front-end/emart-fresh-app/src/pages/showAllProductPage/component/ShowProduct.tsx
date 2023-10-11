@@ -24,8 +24,9 @@ export default function ShowProduct({
       setSelectedItem([...selectedItem]);
     }
   };
+  console.log("프로덕트 데이터", productDatas);
 
-  const Datas = productDatas.map((product: ProductData, index: number) => {
+  const Datas = productDatas?.map((product: ProductData, index: number) => {
     const idLink = `/product/detail?product-id=${product.productId}`;
     return (
       <>

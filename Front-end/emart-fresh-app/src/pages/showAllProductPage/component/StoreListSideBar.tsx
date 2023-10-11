@@ -1,7 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { useState, useEffect } from "react";
 import axios from "axios";
-
+import { Tooltip, Button } from "@mui/material";
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styles from "../../page_css/StoreListSideBar.module.css";
 import { userLocation, setUserLoaction } from "../../../../modules/location";
 import { getUserLocation } from "../../../utils/userUtils";
@@ -64,7 +66,10 @@ export default function StoreListSideBar({
       };
       console.log("파람", params);
       axios
-        .post(`${import.meta.env.VITE_BACK_PORT}/store/get-store-witnin-n`, params)
+        .post(
+          `${import.meta.env.VITE_BACK_PORT}/store/get-store-witnin-n`,
+          params
+        )
         .then((res) => {
           console.log("넘겨받은 데이터", res);
           setSearchedStoreList(res.data);
@@ -77,7 +82,7 @@ export default function StoreListSideBar({
     <div className={styles.sidebarContainer}>
       <div style={{ width: "100%", textAlign: "right" }}>
         <button onClick={handleXClick} className={styles.defaultBtn}>
-          ☒
+          <FontAwesomeIcon icon={faXmark} />
         </button>
       </div>
       <div>해당 상품이 있는 점포</div>
@@ -93,54 +98,62 @@ export default function StoreListSideBar({
       )}
 
       {isVisible && (
-        <>
-          <section className={styles.itemNamesSection}>
-            {selectedItem.map((item) => {
-              return (
-                <span className={styles.itemNameSection}>
-                  {item}
-                  <button
-                    className={styles.itemDeleteBtn}
-                    name={item}
-                    onClick={(e) => {
-                      handleItemDelete(e);
-                    }}
-                  >
-                    x
-                  </button>
-                </span>
-              );
-            })}
-          </section>
+        <div>
+          <div className={styles.itemSectionWrapper}>
+            <section className={styles.itemNamesSection}>
+              {selectedItem.map((item) => {
+                return (
+                  <span className={styles.itemNameSection}>
+                    {item}
+                    <button
+                      className={styles.itemDeleteBtn}
+                      name={item}
+                      onClick={(e) => {
+                        handleItemDelete(e);
+                      }}
+                    >
+                      <FontAwesomeIcon icon={faXmark} />
+                    </button>
+                  </span>
+                );
+              })}
+            </section>
+          </div>
           <span className={styles.listLine} />
-          <select
-            value={choosedDis}
-            onChange={(e) => {
-              setChoosedDis(parseInt(e.target.value));
-            }}
-            name=""
-            id=""
-            className={styles.eventSelectTag}
-          >
-            <option value="1">1km 이내</option>
-            <option value="3">3km이내</option>
-            <option value="5">5km 이내</option>
-          </select>
-          <button onClick={handleSerachBtn}>찾기</button>
-          {searchedStoreList.map((storeData: SearchedStoreData) => {
-            const url = `/storeproduct?storeid=${storeData.storeId}`;
-            return <Link to={url}>{storeData.storeName}</Link>;
-          })}
-        </>
+          <div className={styles.selectWrpper}>
+            <select
+              value={choosedDis}
+              onChange={(e) => {
+                setChoosedDis(parseInt(e.target.value));
+              }}
+              name=""
+              id=""
+              className={styles.eventSelectTag}
+            >
+              <option value="1">1km 이내</option>
+              <option value="3">3km이내</option>
+              <option value="5">5km 이내</option>
+            </select>
+            <button onClick={handleSerachBtn}>찾기</button>
+            {searchedStoreList.map((storeData: SearchedStoreData) => {
+              const url = `/storeproduct?storeid=${storeData.storeId}`;
+              return <Link to={url}>{storeData.storeName}</Link>;
+            })}
+          </div>
+        </div>
       )}
     </div>
   ) : (
     <div className={styles.sidebarContainerClosed}>
-      <button className={styles.defaultBtn} onClick={handleXClick}>
-        {" "}
-        점포 찾기
-      </button>
-      <div style={{ color: "gray" }}>{selectedItem.length}개 선택</div>
+      <Tooltip title="선택한 상품이 있는 가게를 보여줍니다." arrow>
+        <button className={styles.defaultBtn} onClick={handleXClick}>
+          가게찾기
+        </button>
+      </Tooltip>
+
+      <div className={styles.selectCount} style={{ color: "gray" }}>
+        {selectedItem.length}개 선택
+      </div>
     </div>
   );
 }

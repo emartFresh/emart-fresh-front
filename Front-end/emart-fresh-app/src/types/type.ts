@@ -62,6 +62,7 @@ declare global {
     cartId?: number; // 장바구니 아이디 (프라이머리 키)
     productId?: number;
     cartProductQuantity: number;
+    cartProductQuantityOfString?: string;
     priceNumber: number;
     productTitle: string;
     cartProductId: number; // 제품 아이디 (외래 키)
@@ -95,8 +96,10 @@ declare global {
   interface CouponData {
     couponId?: number; // 쿠폰의 프라이머리 키 (auto_increment)
     memberId: string | MemberData; // 멤버 아이디 (외래 키)
-    couponExpirationDate: Date; // 쿠폰 기한
+    couponExpirationDate: string; // 쿠폰 기한
     couponType: 10 | 20 | 30; // 쿠폰 종류 (1: 10%, 2: 20%, 3: 30%)
+    couponTitle?: string;
+    couponDel?: number;
   }
 
   // 가게 정보
@@ -104,6 +107,9 @@ declare global {
     storeId?: number; // 가게 아이디
     memberId: number | MemberData; // 멤버 아이디
     address: string; // 주소
+    storeName?: string;
+    storeLongitude?: number;
+    storeLatitude?: number;
   }
 
   // 가게 상품 정보

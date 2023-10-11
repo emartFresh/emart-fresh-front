@@ -1,9 +1,17 @@
+/* color: #f95a00; 주황*/
+/* color: #f9bb00; 노랑*/
+/* color: #4e5059; 검-회색 */
+/* color: #ebebeb; border -> 연회색 */
+/* 인풋 클릭시 border 노랑 */
+
+
 * {
   border: 0;
   margin: 0;
   box-sizing: border-box;
   -ms-overflow-style: none; /* 익스플로러, 앳지 */
   scrollbar-width: none; /* 파이어폭스 */
+  /* color: #333333; */
 }
 
 *::-webkit-scrollbar {

@@ -3,11 +3,12 @@
   align-items: center;
   flex-direction: column;
   width: 13em;
-  height: 18em;
+  height: auto;
   background-color: white;
   border-radius: 1em;
-  margin: 1.5em;
+  margin: 0.7em;
 }
+
 .productImg {
   transform: translate(50, 50);
   width: 100%;
@@ -27,7 +28,6 @@
   font-size: 1.3em;
   margin-top: 0.5em;
   margin-bottom: 0.5em;
-
   color: #f95a00;
 }
 
@@ -42,12 +42,21 @@
   width: 100%;
   display: flex;
   flex-wrap: wrap;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
+  row-gap: 60px;
 }
 
 .defaultBtn {
   border: none;
   background-color: transparent;
   cursor: pointer;
+}
+
+.defaultBtn:hover {
+  color: #f7c83d;
+}
+.showWrapper {
+  background-color: red;
+  min-height: 500px;
 }

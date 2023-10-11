@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
+
 import styles from "../page_css/Payment.module.css";
 import Dopay from "./DoPay";
 import CopuonApply from "./CopuonApply";
 
 interface PaymentProps {
+  setOpenPayment: React.Dispatch<React.SetStateAction<boolean>>;
   cartInfo: CartData[];
 }
 
@@ -22,7 +24,7 @@ export interface Coupon {
   memberId: string;
 }
 
-export default function Payment({ cartInfo }: PaymentProps) {
+export default function Payment({ setOpenPayment, cartInfo }: PaymentProps) {
   const [itemData, setItemData] = useState<ItemData[]>();
   const [totalPriceAf, setTotalPriceAf] = useState<number>();
   const [appliedCoupon, setAppliedCoupon] = useState<Coupon>({
@@ -59,13 +61,32 @@ export default function Payment({ cartInfo }: PaymentProps) {
 
   return (
     <div className={styles.paymentContainer}>
-      가게 위치 및 이름 보여주기
-      <hr />
+      <div className={styles.closeBtnWrapper}>
+        <button
+          onClick={() => setOpenPayment(false)}
+          className={styles.closeBtn}
+        >
+          ✖
+        </button>
+      </div>
       <CopuonApply
         setAppliedCoupon={setAppliedCoupon}
         appliedCoupon={appliedCoupon}
       />
-      총결제액:{totalPriceAf}
+      <div className={styles.allPayWrapper}>
+        <div className={styles.applyCouponWrapper}>
+          <span className={styles.applyCoupon}>적용 쿠폰 </span>
+          <span>{appliedCoupon.couponTitle}</span>
+          <br />
+          <span className={styles.applyCouponDis}>쿠폰 할인률</span>
+          <span> {appliedCoupon.couponType}%</span>
+        </div>
+        <div className={styles.oneLine}></div>
+        <div className={styles.totalPriceWrapper}>
+          <span className={styles.totalPriceTitle}>총 결제액 </span>
+          <span>{totalPriceAf}원</span>
+        </div>
+      </div>
       <Dopay
         itemData={itemData}
         totalPriceAf={totalPriceAf}

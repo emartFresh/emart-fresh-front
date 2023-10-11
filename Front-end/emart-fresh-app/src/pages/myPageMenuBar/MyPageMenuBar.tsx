@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { useState, useEffect } from "react";
+import { Modal, Box } from "@mui/material";
 
 import styles from "../page_css/MyPage.module.css";
-import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import Button from "@mui/material/Button";
 // import ReorderIcon from "@mui/icons-material/Reorder";
@@ -94,19 +94,12 @@ const MyPageMenuBar = () => {
             onClick={toggleDrawer(false)}
             onKeyDown={toggleDrawer(false)}
           >
-            {getUserAuth === 0 && (
-              <div className={styles.mypagemenubar}>
-                <OrdinaryUser />
-                <Link to="/mypageMain/mypageApplyManager">점포점주신청</Link>
-              </div>
-            )}
-            <hr />
-            {/* memberAuth==2일 때, 나오는 컴포넌트   수정: auth 2로 변경*/}
-            {getUserAuth === 0 && (
-              <div className={styles.mypagemenubar}>
-                <Link to="/mypageMain/HandleApplyManager">점포점주신청</Link>
-              </div>
-            )}
+            {getUserAuth === 1 ||
+              (getUserAuth === 0 && (
+                <div className={styles.mypagemenubar}>
+                  <OrdinaryUser />
+                </div>
+              ))}
             <hr />
             {/* memberAuth==1(점주)일 때, 나오는 컴포넌트  */}
             {getUserAuth === 1 && (

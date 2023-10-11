@@ -10,12 +10,20 @@ interface Order {
   orderedProductId: number;
   orderedDate: string;
   totalAmount: number;
+  memberId: string;
+}
+
+interface DetailData {
+  productImgUrl: string;
+  orderedQuantity: number;
+  price: number;
+  productName: string;
 }
 
 export default function StoreOrderList() {
   const [showModal, setShowModal] = useState<boolean>(false);
-
   const [orders, setOrders] = useState<Order[]>([]);
+  const [detailData, setDetailData] = useState<DetailData[]>([]);
 
   const userInfo = GetUserAllInfo();
 
@@ -36,14 +44,23 @@ export default function StoreOrderList() {
     connectToEventSource();
   }, []);
 
-  const handleDetail = () => {
-    setShowModal(true);
+  const handleDetail = (orderedProductId: number) => {
+    const url = `${
+      import.meta.env.VITE_BACK_PORT
+    }/orderedproduct/getProductDetails?orderedProductId=${orderedProductId}`;
+    axios.get(url).then((res) => {
+      setDetailData(res.data);
+      setShowModal(true);
+    });
+
     //axios요청
   };
   const connectToEventSource = () => {
-    const eventSource = new EventSource(
-      `http://localhost:8080/orderedproduct/storeordered-list?memberId=${userInfo.memberId}`
-    );
+    const url = `${
+      import.meta.env.VITE_BACK_PORT
+    }/orderedproduct/storeordered-list?memberId=${userInfo.memberId}`;
+
+    const eventSource = new EventSource(url);
 
     eventSource.onmessage = (event) => {
       const order = JSON.parse(event.data);
@@ -108,14 +125,33 @@ export default function StoreOrderList() {
             transform: "translate(-50%, -50%)",
           }}
         >
-          <button
-            className={styles.cancleBtn}
-            onClick={() => {
-              setShowModal(!showModal);
-            }}
-          >
-            닫기
-          </button>
+          <div className={styles.detailContainer}>
+            {detailData.map((item, inx) => {
+              return (
+                <div className={styles.detailWrapper} key={inx}>
+                  <span>
+                    <img
+                      className={styles.detailImg}
+                      src={item.productImgUrl}
+                      alt=""
+                    />
+                  </span>
+                  <span className={styles.detailName}>{item.productName}</span>
+                  <span className={styles.detailPrice}>{item.price}원</span>
+                </div>
+              );
+            })}
+          </div>
+          <div className={styles.btnWrapper}>
+            <button
+              className={styles.cancleBtn}
+              onClick={() => {
+                setShowModal(!showModal);
+              }}
+            >
+              닫기
+            </button>
+          </div>
         </Box>
       </Modal>
       {/* <button onClick={connectToEventSource}>Connect to Server</button> */}
@@ -126,7 +162,7 @@ export default function StoreOrderList() {
             <span className={styles.badge}>{order.orderedProductId}</span>
             <button
               onClick={() => {
-                handleDetail();
+                handleDetail(order.orderedProductId);
               }}
               className={styles.detail}
             >
@@ -141,11 +177,14 @@ export default function StoreOrderList() {
                 minute: "2-digit",
               })}
             </span>
+            <div className={styles.memberWrapper}>
+              <span>아이디</span>
+              <span> {order.memberId}</span>
+            </div>
           </div>
           <div className={styles.totalAmountWrapper}>
-            <span className={styles.totalAmount}>
-              총 결제액 {order.totalAmount}원
-            </span>
+            <span className={styles.totalAmount}>총 결제액</span>
+            {order.totalAmount}원
           </div>
           <div>
             <button
