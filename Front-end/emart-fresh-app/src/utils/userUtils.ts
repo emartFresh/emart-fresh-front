@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import axios, { AxiosError, AxiosResponse } from "axios";
+import { toast } from "react-toastify";
 import { SetterOrUpdater } from "recoil";
 
 export function getUserLocation(): Promise<{
@@ -204,9 +205,12 @@ export const sendAxiosRequest = async (
           })
           .catch(() => {
             console.error("refresh error");
+            toast.error('로그인 유효시간이 만료되었습니다. 다시 로그인해주세요.')
+            location.href = "/login";
             return;
           });
-        // 수정 : 로그인화면으로 보내기
+        }else {
+          throw error;
       }
     });
   return result;

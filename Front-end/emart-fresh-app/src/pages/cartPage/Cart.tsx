@@ -13,11 +13,16 @@ import cartNull from "../../assets/images/cartNull.png";
 import cartCalcNull from "../../assets/images/cartCalcNull.png";
 import Payment from "../paymentPage/Payment";
 
+// 이벤트 없을때 없는표시
+// grid -> flex : wrap 
+// 네이버 버튼 정렬 
+// toast alert 모두 적용
+// 받은 쿠폰은 막기
+// cart item recoil -> login/logout 처리
+
 interface responseData {
   data: CartData[];
 }
-
-// 수정 : 장바구니 item 개수 nav
 
 const Cart = () => {
   const [loginToken, setLoginToken] = useRecoilState<JwtToken>(loginState);
@@ -27,16 +32,15 @@ const Cart = () => {
   const [paymentItems, setPaymentItems] = useState<CartData[]>([]);
   const [openPayment, setOpenPayment] = useState<boolean>(false);
   const [initCartItemList, setInitCartItemList] = useState<CartData[]>([]);
-  const [updateCartItemList, setUpdateCartItemList] = useState<Array<object>>(
-    []
-  );
+  const [updateCartItemList, setUpdateCartItemList] = useState<Array<object>>([]);
+  // const [dialogOpen, setDialogOpen] = useState<boolean>(false);
+  const [agreements, setAgreements] = useState<object>({});
 
   const updateListRef = useRef(updateCartItemList);
   let totalPrice = 0;
   let payItemsInfo: CartData[] = [];
 
   //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
   useEffect(() => {
     sendAxiosRequest(
       "/cart/getCartInfo",
@@ -46,7 +50,9 @@ const Cart = () => {
     ).then((response) => {
       console.log("response > ", response);
       const res: CartData[] = JSON.parse(JSON.stringify(response));
-      setCartItemList(res);
+      setCartItemList(res.map(item => {
+        return {...item, cartProductQuantityOfString: item.cartProductQuantity+""}
+      }));
       setInitCartItemList(res);
       setCartCount(res.length);
     });
@@ -98,12 +104,16 @@ const Cart = () => {
           const initItem = initCartItemList.find(
             (item) => item.cartProductId === cart.cartProductId
           );
-          return initItem.cartProductQuantity !== cart.cartProductQuantity;
+
+        // cartProductQuantityOfString이 null 또는 빈 문자열("")이면 1로 설정
+        const quantity = cart.cartProductQuantityOfString === null || cart.cartProductQuantityOfString === "" ? 1 : parseInt(cart.cartProductQuantityOfString);
+
+          return initItem.cartProductQuantity !== parseInt(cart.cartProductQuantityOfString);
         })
         ?.map((updateItem) => {
           return {
             cartProductId: updateItem.cartProductId,
-            cartProductQuantity: updateItem.cartProductQuantity,
+            cartProductQuantity: updateItem.cartProductQuantityOfString === "" || updateItem.cartProductQuantityOfString === null ? 1 : parseInt(updateItem.cartProductQuantityOfString),
           };
         });
   };
@@ -122,9 +132,10 @@ const Cart = () => {
         if (item.cartProductId === cartProductId) {
           return {
             ...item,
-            cartProductQuantity: isMinusBtn
-              ? item.cartProductQuantity - 1
-              : item.cartProductQuantity + 1,
+            cartProductQuantityOfString: 
+              isMinusBtn
+              ? parseInt(item.cartProductQuantityOfString) - 1 +""
+              : parseInt(item.cartProductQuantityOfString) + 1 +"",
           };
         } else {
           return item;
@@ -136,45 +147,37 @@ const Cart = () => {
   //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
   const handleInputQuantity = (value: string, cartProductId: number) => {
-    const newValue = value;
-    const isValidInput = /^[1-9]\d*$/.test(newValue);
-
-    if (newValue.length === 0) {
-      setCartItemList(
-        cartItemList.map((item) => {
-          if (item.cartProductId === cartProductId) {
-            return { ...item, cartProductQuantity: 1 };
-          } else {
-            return item;
+    setCartItemList((prevCartItemList) => {
+      return prevCartItemList.map((item) => {
+        if (item.cartProductId === cartProductId) {
+          const newValue = value;
+          const isValidInput = /^[1-9]\d*$/.test(newValue);
+  
+          if (newValue.length === 0) {
+            return { ...item, cartProductQuantityOfString: "" };
           }
-        })
-      );
-    }
-
-    if (isValidInput) {
-      setCartItemList(
-        cartItemList.map((item) => {
-          if (item.cartProductId === cartProductId) {
-            return { ...item, cartProductQuantity: parseInt(value) };
-          } else {
-            return item;
+  
+          if (isValidInput) {
+            return { ...item, cartProductQuantityOfString: value };
           }
-        })
-      );
-    }
+        }
+        return item;
+      });
+    });
   };
 
-  // const handleEmptyInput = (value: string, cartProductId: number) => {
-  //   if(value.length === 0){
-  //     setCartItemList(
-  //       cartItemList.map((item) => {
-  //         if(item.cartProductId === cartProductId){
-  //           return {...item, cartProductQuantity: 1};
-  //         }
-  //       })
-  //     )
-  //   }
-  // }
+  const handleEmptyInput = (value: string, cartProductId: number) => {
+    if (value === "") {
+      setCartItemList((prevCartItemList) => {
+        return prevCartItemList.map((item) => {
+          if (item.cartProductId === cartProductId) {
+            return { ...item, cartProductQuantityOfString: "1" };
+          }
+          return item;
+        });
+      });
+    }
+  };
 
   //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -219,7 +222,7 @@ const Cart = () => {
 
   //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-  const deleteItem = (cartProductId: number) => {
+  const handleDeleteItem = (cartProductId: number) => {
     sendAxiosRequest(
       "/cart/removeProduct?cartProductId=" + cartProductId,
       "delete",
@@ -230,7 +233,7 @@ const Cart = () => {
         setCartItemList((prevList) =>
           prevList.filter((item) => item.cartProductId !== cartProductId)
         );
-        setCartCount(cartCount - 1);
+        setCartCount(cartCount - 1);  
       })
       .catch(console.error);
   };
@@ -286,7 +289,7 @@ const Cart = () => {
                     icon={faXmark}
                     className={styles.delItemMark}
                     onClick={() => {
-                      deleteItem(item.cartProductId);
+                      handleDeleteItem(item.cartProductId);
                     }}
                   />
                   <img src={image} alt="" className={styles.productImage} />
@@ -303,14 +306,14 @@ const Cart = () => {
                     {/* <RemoveIcon/> */}
                     <input
                       type="text"
-                      value={item.cartProductQuantity}
+                      value={item.cartProductQuantityOfString}
                       className={styles.quantityInput}
                       onChange={(e) =>
                         handleInputQuantity(e.target.value, item.cartProductId)
                       }
-                      // onBlur={
-                      //   (e) => handleEmptyInput(e.target.value, item.cartProductId)
-                      // }
+                      onBlur={
+                        (e) => handleEmptyInput(e.target.value, item.cartProductId)
+                      }
                       minLength={1}
                       maxLength={2}
                       step="1"
@@ -353,12 +356,12 @@ const Cart = () => {
                   (item) => item.cartProductId === selectedItemId
                 );
                 totalPrice +=
-                  selectedItem.priceNumber * selectedItem.cartProductQuantity;
+                  selectedItem.priceNumber * parseInt(selectedItem.cartProductQuantityOfString);
                 return (
                   <li key={selectedItemId} className={styles.payItemList}>
                     <p>{selectedItem.productTitle}</p>
                     <p>{selectedItem.priceNumber}원</p>
-                    <p>{selectedItem.cartProductQuantity}개</p>
+                    <p>{selectedItem.cartProductQuantityOfString}개</p>
                     <FontAwesomeIcon
                       icon={faXmark}
                       className={styles.delPayItemList}
