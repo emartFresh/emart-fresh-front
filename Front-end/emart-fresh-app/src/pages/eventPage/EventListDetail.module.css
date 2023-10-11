@@ -79,7 +79,7 @@
   background-color: #f9bb00;
 }
 .eventEndedBadge {
-  border: 1px solid #9e3900;
+  /* border: 1px solid #9e3900; */
   background-color: #f95a00;
 }
 @media screen and (max-width: 768px) {
