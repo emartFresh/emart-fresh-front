@@ -18,7 +18,6 @@ const HomeEventBanner = () => {
   useEffect(() => {
     axios.get(`${import.meta.env.VITE_BACK_PORT}/event/now-event-list`)
     .then((res) => {
-      console.log(res.data);
       setEventList(res.data);
     })
     .catch(console.error)

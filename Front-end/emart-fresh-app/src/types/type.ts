@@ -62,6 +62,7 @@ declare global {
     cartId?: number; // 장바구니 아이디 (프라이머리 키)
     productId?: number;
     cartProductQuantity: number;
+    cartProductQuantityOfString?: string;
     priceNumber: number;
     productTitle: string;
     cartProductId: number; // 제품 아이디 (외래 키)

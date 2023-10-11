@@ -6,7 +6,7 @@ import jwtDecode from "jwt-decode";
 
 export function IsLogin(): boolean {
   const loginToken = useRecoilValue<JwtToken>(loginState);
-  console.log("로그인 토큰", loginToken);
+  // console.log("로그인 토큰", loginToken);
   if (loginToken.accessToken) return true;
   else return false;
 }
