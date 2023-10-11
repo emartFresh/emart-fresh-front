@@ -7,6 +7,10 @@ import { loginState } from "../../atoms";
 
 import axios from "axios";
 import styles from "../page_css/OrderRequest.module.css";
+import { sendAxiosPostRequest } from "../../utils/userUtils";
+import { useIsSameAuthNum } from "../../utils/LoginUtils";
+import { toast } from "react-toastify";
+import { formatHyphenSeparatedDate } from "../../utils/dateUtils";
 
 //수정 : 인증 인가, 유통기한 처리
 //수정 : 전역 날짜 데이터 to String 처리 함수 추가해서 리팩토링
@@ -25,25 +29,28 @@ export default function OrderRequest() {
   const navigate = useNavigate();
   const [loginToken, setLoginToken] = useRecoilState<JwtToken>(loginState);
   const [quantityData, setQuantityData] = useState<QuantityData[]>([]);
+  const isValidUserAuth = useIsSameAuthNum(1);
+
+  useEffect(() => {
+    if (!isValidUserAuth) {
+      navigate("/home");
+    }
+  }, [isValidUserAuth]);
 
   const fetchProductData = async () => {
     let resultData: ProductData | [] = [];
 
-    // 수정 : 작동하도록
-    // useEffect(() => {
-    //   console.log("우이ㅣㅇ", isValidMemberToken(loginToken));
-    // }, []);
-
-    await axios
-      .get(`${import.meta.env.VITE_BACK_PORT}/product/all-product-list`)
-      .then((res) => {
-        resultData = res.data;
-        console.log("결과 데이터", resultData);
-        if (res.data === "success") {
-          navigate("/");
-        }
-      });
-
+    if (isValidUserAuth) {
+      await axios
+        .get(`${import.meta.env.VITE_BACK_PORT}/product/all-product-list`)
+        .then((res) => {
+          resultData = res.data;
+          console.log("결과 데이터", resultData);
+          if (res.data === "success") {
+            navigate("/");
+          }
+        });
+    }
     return resultData;
   };
 
@@ -107,38 +114,37 @@ export default function OrderRequest() {
     let sendingData: ManagerOrderData[] = [];
     sendingData = quantityData.map((data) => ({
       productId: data.productId,
-      storeId: 1, // 수정: 실제 가게 아이디로 변경
+      storeId: 0, //백에서 아이디 기준으로 검사
       managerOrderStatus: false,
       managerOrderQuantity: data.quantity,
       managerOrderDate: new Date(),
     }));
-    console.log("실행");
-    console.log("ㄷ이터", sendingData);
-    await axios
-      .post(
-        `${import.meta.env.VITE_BACK_PORT}/order/add-manager-order`,
-        sendingData
-      )
-      .then((res) => {
-        console.log(res);
-        if (res.data === "success") {
-          navigate("/");
-          //수정 : 플래쉬 메시지 띄우기
-        }
-      });
+
+    const url = `${import.meta.env.VITE_BACK_PORT}/order/add-manager-order`;
+
+    sendAxiosPostRequest(url, loginToken, setLoginToken, sendingData).then(
+      (res) => {
+        console.log("응답", res);
+        setBelowProductList([]);
+        toast.success("발주 요청 완료!", {
+          position: "top-center",
+          autoClose: 1500,
+          icon: "✅",
+        });
+      }
+    );
   };
 
   const productListEle: JSX.Element[] | undefined = productData.data?.map(
     (product: ProductData, index: number) => {
-      console.log("데이터 하나", product);
       return (
         <div key={index} className={styles.productListSection}>
           <div>
             <span>{product.productTitle}</span>
             <span style={{ marginLeft: "1em" }}>{product.priceString}</span>
-            <span style={{ marginLeft: "1em" }}>
-              {String(product.productExpirationDate)}
-            </span>
+            {/* <span style={{ marginLeft: "1em" }}>
+              {formatHyphenSeparatedDate(String(product.productExpirationDate))}
+            </span> */}
           </div>
           <input
             type="checkbox"
@@ -161,12 +167,16 @@ export default function OrderRequest() {
             <span style={{ marginLeft: "1em" }}>{product.priceString}</span>
             <span style={{ marginLeft: "1em" }}></span>
           </div>
-          <input
-            type="text"
-            onChange={(event) => handleQuanInputChange(event, product)}
-            style={{ width: "5em" }}
-            value={quantityMap[product.productId] || ""}
-          />
+          <div>
+            <span>수량 </span>
+            <input
+              className={styles.input}
+              type="text"
+              onChange={(event) => handleQuanInputChange(event, product)}
+              style={{ width: "5em" }}
+              value={quantityMap[product.productId] || ""}
+            />
+          </div>
         </div>
       );
     }
@@ -176,10 +186,18 @@ export default function OrderRequest() {
   console.log("수량2", quantityData);
   return (
     <>
-      <div className={styles.productListWrapper}>{productListEle}</div>
-      <button onClick={insertToBelow}>버튼</button>
-      <div className={styles.productListWrapper}>{belowProducts}</div>
-      <button onClick={handleOrderBtn}>주문하기</button>
+      <div className={styles.orderRequestContainer}>
+        <div className={styles.title}>발주 가능 물품 목록</div>
+        <div className={styles.productListWrapper}>{productListEle}</div>
+        <button className={styles.addBtn} onClick={insertToBelow}>
+          발주 목록에 추가
+        </button>
+        <div className={styles.title}>발주 신청 목록</div>
+        <div className={styles.productListWrapper}>{belowProducts}</div>
+        <button className={styles.confirmBtn} onClick={handleOrderBtn}>
+          발주 신청
+        </button>
+      </div>
     </>
   );
 }

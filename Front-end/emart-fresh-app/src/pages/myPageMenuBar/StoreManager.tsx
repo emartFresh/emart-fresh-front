@@ -12,7 +12,7 @@ export default function StoreManager() {
         <Link to="/">발주현황확인</Link>
       </div>
       <div className={styles.mypagemenubar}>
-        <Link to="/order-request">발주 보내는 페이지</Link>
+        <Link to="/order-request">발주</Link>
       </div>
       <div className={styles.mypagemenubar}>
         <Link to="/">매출현황</Link>

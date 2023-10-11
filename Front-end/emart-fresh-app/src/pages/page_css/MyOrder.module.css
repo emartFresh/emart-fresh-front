@@ -64,3 +64,61 @@
   margin-top: 1.25rem;
   margin-bottom: 1.25rem;
 }
+
+/*           detail jjs          */
+.detailContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.detailWrapper {
+  margin: 0.5rem;
+  padding: 0.5rem;
+
+  border-bottom: 1.5px solid #e1e1e1;
+}
+
+.detailImg {
+  width: 80px;
+  height: 80px;
+}
+
+.detailName {
+  color: gray;
+  font-size: 1.3rem;
+  margin: 0.5rem;
+}
+
+.detailPrice {
+  color: black;
+  font-size: 1.3rem;
+  margin: 0.5rem;
+}
+
+.cancleBtn {
+  background-color: transparent;
+}
+
+.btnWrapper {
+  position: sticky;
+  top: 0;
+  text-align: right;
+}
+
+/* jjs review */
+.reviewContainer {
+  padding: 1rem;
+}
+.reviewBtn {
+  width: 100%;
+}
+
+.contentWrapper {
+  background-color: #e1e1e1;
+  width: 100%;
+  text-align: left;
+  padding: 1em;
+  border-radius: 0.5em;
+}

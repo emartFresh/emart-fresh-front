@@ -32,7 +32,11 @@ export default function ProductReview({ productTitle }: ProductReviewProps) {
         <button className={styles.reviewDelBtn}>리뷰삭제</button>
         <div className={styles.reviewMemberName}>{String(review.memberId)}</div>
         <div className={styles.starWrapper}>
-          <Rating name="simple-controlled" value={review.reviewScore} />
+          <Rating
+            name="simple-controlled"
+            value={review.reviewScore}
+            readOnly
+          />
           <span>{String(review.reviewDate)}</span>
         </div>
         <div className={styles.contentWrapper}>{review.reviewContent}</div>

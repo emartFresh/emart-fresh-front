@@ -3,11 +3,14 @@ import { loginState } from "../../atoms";
 import { useRecoilState } from "recoil";
 import { MemberInfo, GetUserAllInfo } from "../../utils/LoginUtils";
 import { ItemData } from "./Payment";
-import { sendAxiosPostRequest } from "../../utils/userUtils";
+import {
+  sendAxiosPostRequest,
+  sendAxiosGetRequest,
+} from "../../utils/userUtils";
 
 import { Coupon } from "./Payment";
 import { useEffect, useState } from "react";
-import axios from "axios";
+import styles from "../page_css/Payment.module.css";
 
 interface OrderProduct {
   orderedQuantity: number;
@@ -31,21 +34,49 @@ export default function Dopay({
   const memberInfo: MemberInfo = GetUserAllInfo();
 
   useEffect(() => {
-    const storeUrl = `${
-      import.meta.env.VITE_BACK_PORT
-    }/cart/myCartStoreId?memberId=${memberInfo.memberId}`;
-    axios.get(storeUrl).then((res) => {
-      setMyCartStoreId(res.data);
+    const storeUrl = `${import.meta.env.VITE_BACK_PORT}/cart/myCartStoreId`;
+
+    sendAxiosGetRequest(storeUrl, loginToken, setLoginToken).then((res) => {
+      setMyCartStoreId(res);
     });
   }, []);
 
+  const deleteMyCoupon = () => {
+    // 수정 : 테스트하기
+    const url = `${import.meta.env.VITE_BACK_PORT}/coupon//coupon-delete`;
+    sendAxiosPostRequest(url, loginToken, setLoginToken, {
+      couponId: appliedCoupon,
+    }).then((res) => {
+      console.log("쿠폰 사용하였슴", res);
+    });
+  };
+
+  console.log("가게 아이디22222", myCartStoreId);
   //수정 : 로직 고민...
   const preProcesse = async () => {
-    const url = `${import.meta.env.VITE_BACK_PORT}/cart/decreaseCartProduct`;
-    sendAxiosPostRequest(url, loginToken, setLoginToken).then((res) => {
-      console.log("응답", res);
-      requestPayment();
+    const orderedProductProducts: OrderProduct[] = itemData?.map((item) => {
+      return {
+        orderedQuantity: item.qty,
+        productId: Number(item.id),
+      };
     });
+
+    const orderInfos = {
+      storeId: myCartStoreId,
+      couponId: appliedCoupon.couponId,
+      totalAmount: totalPriceAf,
+      orderedDate: new Date(),
+      orderedProductProduct: orderedProductProducts,
+    };
+
+    const url = `${import.meta.env.VITE_BACK_PORT}/cart/decreaseCartProduct`;
+    sendAxiosPostRequest(url, loginToken, setLoginToken, orderInfos).then(
+      (res) => {
+        alert("ㅇㅇㅇ");
+        console.log("응답", res);
+        requestPayment();
+      }
+    );
   };
 
   const saveToOrderList = async () => {
@@ -68,6 +99,7 @@ export default function Dopay({
       import.meta.env.VITE_BACK_PORT
     }/orderedproduct/saveOrderedProductInfo`;
 
+    console.log("스토어", orderInfos);
     sendAxiosPostRequest(orderUrl, loginToken, setLoginToken, orderInfos).then(
       (res) => {
         alert("결제완료");
@@ -103,13 +135,18 @@ export default function Dopay({
       },
     }).then((res) => {
       saveToOrderList();
+      if (appliedCoupon !== null && appliedCoupon !== undefined) {
+        deleteMyCoupon();
+      }
       console.log("부트 페이 응답 ", res);
     });
   };
 
   return (
     <div>
-      <button onClick={preProcesse}>결제하기</button>
+      <button className={styles.doPayBtn} onClick={preProcesse}>
+        결제하기
+      </button>
       <button onClick={saveToOrderList}>결제하기2</button>
     </div>
   );
