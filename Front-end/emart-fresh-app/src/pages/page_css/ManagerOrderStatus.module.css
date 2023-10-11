@@ -1,0 +1,43 @@
+.statusContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: #e1e1e1;
+  padding: 1rem;
+}
+.statusWrapper {
+  background-color: white;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  place-items: center;
+  margin: 0.5rem;
+  padding: 0.5rem;
+}
+
+.productName {
+  color: gray;
+  width: 300px;
+  font-weight: 800;
+  font-size: 1.3rem;
+}
+
+.productPrice {
+  color: #f95a00;
+  font-weight: 500;
+}
+
+.ok {
+  background-color: #f95a00;
+  padding: 0.5rem 1rem 0.5rem 1rem;
+  border-radius: 1rem;
+  color: white;
+}
+
+.no {
+  background-color: gray;
+  padding: 0.5rem 1rem 0.5rem 1rem;
+  border-radius: 1rem;
+  color: white;
+}
