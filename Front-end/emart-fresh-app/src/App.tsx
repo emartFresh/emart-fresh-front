@@ -29,7 +29,7 @@ import EventListDetail from "./pages/eventPage/EventListDetail";
 import EventUpdate from "./pages/eventPage/EventUpdate";
 import ApplyManager from "./pages/applyManger/ApplyManager";
 import MakeStore from "./pages/makeStore/MakeStore";
-import HandleApplyManager from "./pages/HandleApplyManager";
+import HandleApplyManager from "./pages/handleApplyManager/HandleApplyManager";
 import StoreOrderList from "./pages/storeOrderList/StoreOrderList";
 import NaverCallBack from "./pages/callBackPage/NaverCallBack";
 
