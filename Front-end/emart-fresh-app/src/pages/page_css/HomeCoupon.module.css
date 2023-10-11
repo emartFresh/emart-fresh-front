@@ -24,13 +24,14 @@
 }
 
 .couponWrap{
+    width: 65rem;
     height: 85%;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 2%;
 }
 
-@media screen and (max-width: 1700px) {
+/* @media screen and (max-width: 1700px) {
     .couponContainer{
         height: 36rem;
     }
@@ -55,7 +56,7 @@
     .couponWrap {
       grid-template-columns: 1fr; 
     }
-}
+} */
 
 .coupon{
     width: 100%;

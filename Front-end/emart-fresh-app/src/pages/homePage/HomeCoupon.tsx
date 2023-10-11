@@ -13,7 +13,7 @@ import { loginState } from '../../atoms';
 import { sendAxiosRequest } from '../../utils/userUtils';
 
 const HomeCoupon = () => {
-  const [couponData, setCoupondata] = useState<CouponData[]>([]);  
+  const [couponData, setCoupondata] = useState<ExtendedCoupon[]>([]);  
   const [loginToken, setLoginToken] = useRecoilState<JwtToken>(loginState);
   const [totalPages, setTotalPages] = useState<number>(0);
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -30,6 +30,8 @@ const HomeCoupon = () => {
     .then((res) => {
       setCoupondata(res.data.content);
       setTotalPages(res.data.totalPages);
+      console.log(JSON.parse(JSON.stringify(res.data.content)));
+      
     })
     .catch(console.error)
   }, [currentPage])
@@ -40,7 +42,7 @@ const HomeCoupon = () => {
     
   }
 
-  const handleGetCoupon = (coupon: CouponData) => {
+  const handleGetCoupon = (coupon: ExtendedCoupon) => {
     if(!isLogined){
       const userResponse = confirm('로그인이 필요한 서비스입니다. 로그인하시겠습니까?');
       if(userResponse){
@@ -86,11 +88,22 @@ const HomeCoupon = () => {
                       <div>{coupon.couponType}%</div>
                       <div>{formatFullDate(coupon.couponExpirationDate)}까지</div>
                     </div>
-                    <button 
-                      className={styles.couponDownloadBtn}
-                      onClick={() => {handleGetCoupon(coupon), console.log(coupon)}
-                      }
-                    >쿠폰받기</button>
+                    {
+                      coupon.existing ? 
+                      (
+                        <button
+                        className={styles.couponDownloadBtn}
+                        disabled={coupon.existing}
+                        >받기완료</button>
+                      )
+                      :
+                      (
+                        <button 
+                        className={styles.couponDownloadBtn}
+                        onClick={() => {handleGetCoupon(coupon)}}
+                        >쿠폰받기</button>
+                      )
+                    }
                   </div>
                 )
               })

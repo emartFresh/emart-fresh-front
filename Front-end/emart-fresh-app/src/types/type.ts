@@ -102,6 +102,10 @@ declare global {
     couponDel?: number;
   }
 
+  interface ExtendedCoupon extends CouponData {
+    existing: boolean;
+  }
+
   // 가게 정보
   interface StoreData {
     storeId?: number; // 가게 아이디
