@@ -27,7 +27,6 @@ export default function EventOngoing() {
           `${import.meta.env.VITE_BACK_PORT}/event/event-list`,
           {
             params: {
-              eventId: eventId,
               page: currentPage,
               size: pageSize,
             },
