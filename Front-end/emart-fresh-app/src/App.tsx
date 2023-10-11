@@ -32,6 +32,7 @@ import MakeStore from "./pages/makeStore/MakeStore";
 import HandleApplyManager from "./pages/handleApplyManager/HandleApplyManager";
 import StoreOrderList from "./pages/storeOrderList/StoreOrderList";
 import NaverCallBack from "./pages/callBackPage/NaverCallBack";
+import ManagerOrderStatus from "./pages/managerOrderStatus/ManagerOrderStatus";
 
 const queryClient = new QueryClient();
 
@@ -97,7 +98,10 @@ function App() {
               <Route path="/product/detail" element={<ProductDetail />} />
               <Route path="/makeStore" element={<MakeStore />} />
               <Route path="/storeOrderList" element={<StoreOrderList />} />
-
+              <Route
+                path="/manager-order-status"
+                element={<ManagerOrderStatus />}
+              />
               {/* <Route path="/payment" element={<Payment />} /> */}
             </Routes>
           </div>
