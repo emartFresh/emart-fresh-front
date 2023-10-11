@@ -28,17 +28,7 @@ import { Link } from "react-router-dom";
 // interface Props {
 //   memberAuth: 0 | 1 | 2;
 // }
-// 회원 정보
-interface MemberData {
-  memberId: string; // 회원 아이디 (로그인용)
-  memberPw: string; // 회원 비밀번호
-  newPw?: string; // 비밀번호 재설정 (선택적 필드)
-  memberName: string; // 사용자 이름
-  memberEmail: string; // 사용자 메일
-  memberAuth: 0 | 1 | 2; // 사용자 구분 (0: 일반유저, 1: 점주, 2: 웹 관리자)
-  memberWarning: number; // 경고 횟수
-  memberDel: boolean; // 회원 탈퇴 여부
-}
+
 // const MyPageMenuBar: React.FC<Props> = ({ memberAuth = 2 }) => {
 //   const [open, setOpen] = useState(false);
 

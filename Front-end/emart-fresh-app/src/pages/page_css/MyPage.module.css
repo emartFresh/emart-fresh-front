@@ -1,12 +1,16 @@
+/* .mainContent {
+  width: 65vw;
+  background-color: #f4f4f4;
+  padding: 20px;
+} */
 .mypageMain {
   width: 65vw;
   display: flex;
   flex-direction: column;
+  margin: auto;
   margin-top: 4rem;
-  margin-left: 14rem;
   margin-bottom: 4rem;
   background-color: whitesmoke;
-
   border-radius: 15px;
   border: 1px solid whitesmoke;
 
@@ -39,7 +43,6 @@
 
 .myinfo {
   font-size: 1.2em;
-  /* margin: 2rem; */
   padding: 2rem;
   display: grid;
   /* grid-template-columns: 0.5fr 0.5fr; */

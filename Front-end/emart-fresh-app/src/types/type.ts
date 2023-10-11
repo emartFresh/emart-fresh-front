@@ -135,7 +135,15 @@ declare global {
     eventStartDate: Date; // 시작 날짜
     eventEndDate: Date; // 종료 날짜
   }
-
+  // 이벤트 정보
+  interface EventFormState {
+    eventId?: number; // 이벤트 아이디 (프라이머리 키)
+    eventTitle: string; // 이벤트 제목
+    eventBannerImage?: File | null; // 배너 이미지
+    eventDetailImage?: File | null; // 디테일 이미지
+    eventStartDate: string | null; // 시작 날짜 (Date | null)
+    eventEndDate: string | null; // 종료 날짜 (Date | null)
+  }
   interface JwtToken {
     accessToken: string;
     refreshToken: string;

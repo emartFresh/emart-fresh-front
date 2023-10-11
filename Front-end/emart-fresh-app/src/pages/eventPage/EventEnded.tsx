@@ -15,7 +15,7 @@ interface EventList {
 }
 
 export default function EventEnded() {
-  const [eventId, setEventId] = useState("");
+  const [eventId, setEventId] = useState<string>("");
   const [endedEventList, setEndedEventList] = useState<EventList[]>([]);
   const pageSize = 50;
   const [currentPage, setCurrentPage] = useState(1);
@@ -27,7 +27,6 @@ export default function EventEnded() {
           `${import.meta.env.VITE_BACK_PORT}/event/event-list`,
           {
             params: {
-              eventId: eventId,
               page: currentPage,
               size: pageSize,
             },
@@ -44,6 +43,10 @@ export default function EventEnded() {
         );
         setEndedEventList(filteredEventList);
         setEventId(response.data.eventId);
+        console.log(
+          "현재날짜 기준정리한 종료된 이벤트 리스트",
+          filteredEventList
+        );
       } catch (error) {
         console.error("Error fetching eventlist:", error);
         alert(error);
@@ -51,7 +54,7 @@ export default function EventEnded() {
     }
     EventListup();
   }, []);
-  // console.log(endedEventList);
+  console.log("종료된 이벤트", endedEventList);
 
   return (
     <div className={styles.eventContainer}>

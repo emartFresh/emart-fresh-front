@@ -15,7 +15,7 @@ interface EventList {
 }
 
 export default function EventOngoing() {
-  const [eventId, setEventId] = useState("");
+  const [eventId, setEventId] = useState<string>("");
   const [onGoingEventList, setOnGoingEventList] = useState<EventList[]>([]);
   const pageSize = 50;
   const [currentPage, setCurrentPage] = useState(1);
@@ -27,14 +27,13 @@ export default function EventOngoing() {
           `${import.meta.env.VITE_BACK_PORT}/event/event-list`,
           {
             params: {
-              eventId: eventId,
               page: currentPage,
               size: pageSize,
             },
           }
         );
 
-        console.log(response.data);
+        console.log("응답데이터", response.data);
         const currentDate = new Date();
         const filteredEventList = response.data.content.filter(
           (event: { eventEndDate: Date }) => {
