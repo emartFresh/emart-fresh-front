@@ -56,11 +56,15 @@ export default function ShowAllProduct() {
     };
   }, []);
 
-  console.log("페이지", page);
-
   return (
     <div className={styles.showAllSection}>
-      <h1>올페이지</h1>
+      <div>
+        <h1 className={styles.aboveTitle}>전체 상품</h1>
+        <p className={styles.aboveP}>
+          fresh가 취급하는 물품들을 만나보세요. <br></br> 상품을 클릭하면 해당
+          상품이 있는 근처 가게를 볼 수 있습니다.
+        </p>
+      </div>
 
       <StoreListSideBar
         selectedItem={selectedItem}
@@ -85,9 +89,7 @@ export default function ShowAllProduct() {
           setSelectedItem={setSelectedItem}
         />
       </div>
-      <div className={styles.infTrigger} ref={triggerRef}>
-        트리거
-      </div>
+      <div className={styles.infTrigger} ref={triggerRef}></div>
     </div>
   );
 }

@@ -5,7 +5,12 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 
 import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
-import { kakaoAccessToken, loginState, loginTypeState, cartItemCount } from "../atoms";
+import {
+  kakaoAccessToken,
+  loginState,
+  loginTypeState,
+  cartItemCount,
+} from "../atoms";
 import { sendAxiosRequest } from "../utils/userUtils";
 import Badge, { BadgeProps } from "@mui/material/Badge";
 import { styled } from "@mui/material/styles";
@@ -27,20 +32,21 @@ export default function Nav() {
   }, []);
 
   const logout = () => {
-    const checkLogout = confirm('로그아웃하시겠습니까?');
-    if(checkLogout){
-    sendAxiosRequest('/member/logout', 'post', loginToken, setLoginToken, {loginType: loginType, kakaoAccessToken: kakaoToken})
-    .then(() => {
-      setLoginToken({
-        accessToken: "",
-        refreshToken: "",
-      });
-      setLoginType("");
-      toast.success('로그아웃되었습니다.')
-    })
-    .catch(
-      console.error  
-    )
+    const checkLogout = confirm("로그아웃하시겠습니까?");
+    if (checkLogout) {
+      sendAxiosRequest("/member/logout", "post", loginToken, setLoginToken, {
+        loginType: loginType,
+        kakaoAccessToken: kakaoToken,
+      })
+        .then(() => {
+          setLoginToken({
+            accessToken: "",
+            refreshToken: "",
+          });
+          setLoginType("");
+          toast.success("로그아웃되었습니다.");
+        })
+        .catch(console.error);
     }
   };
 
@@ -90,12 +96,6 @@ export default function Nav() {
         <div className={styles.contentDiv}>
           <span>
             <Link to="/">Home</Link>
-          </span>
-          <span>
-            <Link to="/order-request">발주</Link>
-          </span>
-          <span>
-            <Link to="/request-order-list">발주승인</Link>
           </span>
           <span>
             <Link to="/show-all-product">전체</Link>
