@@ -32,6 +32,7 @@ import MakeStore from "./pages/makeStore/MakeStore";
 import HandleApplyManager from "./pages/handleApplyManager/HandleApplyManager";
 import StoreOrderList from "./pages/storeOrderList/StoreOrderList";
 import NaverCallBack from "./pages/callBackPage/NaverCallBack";
+import CouponUpdate from "./pages/couponUpdate/CouponUpdate";
 
 const queryClient = new QueryClient();
 
@@ -65,6 +66,10 @@ function App() {
                 <Route
                   path="/mypageMain/eventupdate"
                   element={<EventUpdate />}
+                ></Route>
+                <Route
+                  path="/mypageMain/couponupdate"
+                  element={<CouponUpdate />}
                 ></Route>
               </Route>
               <Route path="/eventlist" element={<EventList />}></Route>
