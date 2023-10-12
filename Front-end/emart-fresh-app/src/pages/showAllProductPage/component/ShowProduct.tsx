@@ -7,6 +7,7 @@ interface ShowProductProps {
   selectedItem: string[];
 }
 import styles from "../../page_css/ShowProduct.module.css";
+import { getTruncateString } from "../../../utils/formatUtils";
 
 export default function ShowProduct({
   productDatas,
@@ -48,7 +49,7 @@ export default function ShowProduct({
                 handleItemClick(e);
               }}
             >
-              {product.productTitle}
+              {getTruncateString(product.productTitle, 16)}
             </button>
           </div>
           <div className={styles.priceInfo}>{product.priceString}</div>
