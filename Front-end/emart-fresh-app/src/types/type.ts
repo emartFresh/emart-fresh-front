@@ -20,6 +20,7 @@ declare global {
 
   // 수정
   interface responseData {
+    // [key: string]: string | number | boolean | undefined| ExtendedCoupon[];
     [key: string]: string | number | boolean | undefined;
   }
 

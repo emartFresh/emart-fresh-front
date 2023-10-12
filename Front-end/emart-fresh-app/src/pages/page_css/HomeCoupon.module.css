@@ -73,6 +73,16 @@
     border: 1.5px solid #ffd555;
 }
 
+.unableCoupon{
+    width: 100%;
+    height: 10rem;
+    border: 1.5px solid #ebebeb;
+    border-radius: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
 .coupon:hover .couponTitle { /* 쿠폰에 호버 시 .couponTitle 선택자 적용 */
     font-weight: bold;
 }
@@ -98,6 +108,18 @@
     border-top-right-radius: 0;
     background-color: #ffd555;
     border: 1px solid #ffd555;
+    color: rgb(50, 50, 50);
+}
+
+.unableDownBtn{
+    cursor: default;
+        width: 100%;    
+    height: 30%;
+    border-radius: 0.9em;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    background-color: #ebebeb;
+    border: 1px solid #ebebeb;
     color: rgb(50, 50, 50);
 }
 
