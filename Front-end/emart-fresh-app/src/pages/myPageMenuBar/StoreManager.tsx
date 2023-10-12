@@ -17,6 +17,9 @@ export default function StoreManager() {
       <div className={styles.mypagemenubar}>
         <Link to="/">매출현황</Link>
       </div>
+      <div className={styles.mypagemenubar}>
+        <Link to="/StoreOrderList">주문현황</Link>
+      </div>
     </div>
   );
 }
