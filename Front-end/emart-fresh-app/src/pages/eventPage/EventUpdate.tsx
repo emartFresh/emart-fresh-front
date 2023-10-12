@@ -124,7 +124,7 @@ export default function EventUpdate() {
   };
 
   return (
-    <div className={styles.eventUpdateWrapper}>
+    <div className={styles.eventUpdateMain}>
       <div className={styles.eventUpdateContainer}>
         <div className={styles.eventUpdateTitle}>
           등록이벤트&nbsp;&nbsp;
