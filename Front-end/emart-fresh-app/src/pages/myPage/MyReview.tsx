@@ -85,7 +85,7 @@ export default function MyReview() {
       console.log("API Response:", response.data);
       const ReviewDeleteData = response.data;
 
-      if (response.data === "삭제") {
+      if (response.status === 200) {
         console.log("Review Data:", ReviewDeleteData);
         setReviews((prevReviews) =>
           prevReviews.filter((review) => review.reviewId !== reviewId)

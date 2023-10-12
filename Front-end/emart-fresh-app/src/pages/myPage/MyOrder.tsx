@@ -220,8 +220,9 @@ export default function MyOrder() {
                 </div>
                 <div className={styles.ordernameText}>
                   {orderedProduct.productTitle}
-                  {orderedProduct.orderedQuantity > 1 &&
-                    ` 외 ${orderedProduct.orderedQuantity - 1}종`}
+                  {orderedProduct.myOrderedCount > 1 &&
+                    ` 외 ${orderedProduct.myOrderedCount - 1}종`}{" "}
+                  {/* 퀀티티가 -> 마이오더 카운티로 바뀌었다.*/}
                   <div>{orderedProduct.totalAmount}원</div>
                 </div>
                 <div>{orderedProduct.storeName}</div>
