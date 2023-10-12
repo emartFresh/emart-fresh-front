@@ -82,6 +82,15 @@ declare global {
     managerOrderDate: Date; // 발주 날짜
   }
 
+  interface ManagerOrderDataWithObj {
+    product: ProductData; // 제품 아이디 (외래 키)
+    storeId?: StoreData; // 가게 아이디 (외래 키)
+    managerOrderNum?: number; // 발주 번호
+    managerOrderStatus: boolean; // 상태 (false: 대기, true: 처리 완료)
+    managerOrderQuantity: number; // 수량
+    managerOrderDate: Date; // 발주 날짜
+  }
+
   // 리뷰 정보
   interface ReviewData {
     reviewId?: number; // 리뷰의 프라이머리 키 (auto_increment)
