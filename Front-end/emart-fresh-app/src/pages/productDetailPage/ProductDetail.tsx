@@ -11,7 +11,7 @@ import { Modal, Box } from "@mui/material";
 
 import styles from "../page_css/ProductDetail.module.css";
 import ProductReview from "./ProductReview";
-import formatCurrency from "../../utils/formatUtils";
+import { formatCurrency } from "../../utils/formatUtils";
 /*
 public class AddToCartDto {
 	int storeId;

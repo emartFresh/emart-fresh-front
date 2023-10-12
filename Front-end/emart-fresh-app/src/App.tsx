@@ -36,6 +36,7 @@ import NaverCallBack from "./pages/callBackPage/NaverCallBack";
 import CouponUpdate from "./pages/couponUpdate/CouponUpdate";
 
 import ManagerOrderStatus from "./pages/managerOrderStatus/ManagerOrderStatus";
+import SearchStore from "./pages/searchStorePage/SearchStorePage";
 
 
 const queryClient = new QueryClient();
@@ -52,7 +53,7 @@ function App() {
               <Route path="/:coupon" element={<Home />} />
               {/* 쿠폰받으러가기 추가사항 */}
               <Route path="/show" element={<Show />} />
-
+              <Route path="/search-store" element={<SearchStore />} />
               <Route path="/mypageMain" element={<MyPageMain />}>
                 <Route index element={<MyPage />} />
                 <Route path="/mypageMain/myorder" element={<MyOrder />} />
