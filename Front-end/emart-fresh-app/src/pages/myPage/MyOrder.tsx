@@ -241,7 +241,7 @@ export default function MyOrder() {
                         handleDetail(orderedProduct?.orderedProductId)
                       }
                     >
-                      상세보기
+                      리뷰쓰기
                     </button>
                   </div>
                 </div>
