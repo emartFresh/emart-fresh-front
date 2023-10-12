@@ -7,8 +7,10 @@ import { useRecoilState } from "recoil";
 import { kakaoAccessToken, loginState, loginTypeState } from "../../atoms";
 import Inquiry from "./Inquiry";
 import Modal from "./Modal";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { IsLogin } from '../../utils/LoginUtils';
+import NaverLogin from "./NaverLogin";
 
 const Login = () => {
   const [memberId, setMemberId] = useState<string>("");
@@ -17,11 +19,10 @@ const Login = () => {
   const [kakaoToken, setKakaoToken] = useRecoilState<string>(kakaoAccessToken);
   const [loginType, setLoginType] = useRecoilState<string>(loginTypeState);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const isLogin = IsLogin();
 
-  const notify = () => toast("Wow so easy!");
   // 성공 알람 ( 초록색 창 )
   const success = () => toast.success("Success!");
-
   // 실패 알람 ( 빨간색 창 )
   const error = () => toast.error("Error!");
   // 경고 알람 ( 노란색 창 )
@@ -30,49 +31,61 @@ const Login = () => {
   const info = () => toast.info("Info...");
 
   const navigate = useNavigate();
-  const REDIRECT_URL = 'http://localhost:5173/login';
+  const REDIRECT_URL = "http://localhost:5173/login";
   const { Kakao } = window;
 
   
 
-
-
-
   useEffect(() => {
+    console.log("call useEffect");
     const code = new URL(window.location.href).searchParams.get("code");
-    if(code){
-      axios.post('https://kauth.kakao.com/oauth/token', {
-        grant_type: 'authorization_code',
-        client_id: "d19f32cfc8b52ff1cea52dd94e860f6b",
-        redirect_uri: REDIRECT_URL, 
-        code: code,
-      },
-        {
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded;charset=utf-8"
-          }
-        }
-      )
-      .then(async (res) => {
-        console.log(res);
-        setKakaoToken(res.data.access_token);
-        await axios.post(`${import.meta.env.VITE_BACK_PORT}/member/kakaoLogin`, {
-          access_token: res.data.access_token,
-        })
-        .then((res) => {
-          setLoginToken(res.data.tokens);
-          setLoginType(res.data.loginType);
-          navigate("/");
-        })
-        .catch(
-          console.error
-        )
-      })
-      .catch(
-        console.error
-      )
+
+    if(isLogin){
+      navigate('/');
+      toast.error('이미 로그인 상태입니다.');
+      return;
     }
-  });
+
+    if (code) {
+      axios
+        .post(
+          "https://kauth.kakao.com/oauth/token",
+          {
+            grant_type: "authorization_code",
+            client_id: "d19f32cfc8b52ff1cea52dd94e860f6b",
+            redirect_uri: REDIRECT_URL,
+            code: code,
+          },
+          {
+            headers: {
+              "Content-Type": "application/x-www-form-urlencoded;charset=utf-8",
+            },
+          }
+        )
+        .then(async (res) => {
+          console.log(res);
+          setKakaoToken(res.data.access_token);
+          await axios
+            .post(`${import.meta.env.VITE_BACK_PORT}/member/kakaoLogin`, {
+              access_token: res.data.access_token,
+            })
+            .then((res) => {
+              setLoginToken(res.data.tokens);
+              setLoginType(res.data.loginType);
+              navigate("/");
+              toast.success(`로그인 되었습니다. 환영합니다 🙌🏻`,{ 
+                icon: "✅",
+              });
+            })
+            .catch(() => toast.error('로그인에 실패했습니다. 관리자에게 문의해주세요.'));
+        })
+        .catch(console.error);
+    }
+
+    // 수정 : 로그인했을때도 뜸..
+    
+
+  },[]);
 
   const openModal = (): void => {
     setIsModalOpen(true);
@@ -91,16 +104,12 @@ const Login = () => {
       .then((response) => {
         setLoginToken(response.data.tokens);
         setLoginType(response.data.loginType);
-        // alert("로그인 완료! (임시 알림)");
-       
         navigate("/");
-        toast.success("로그인 완료!", {
-          position:"top-center",
-          autoClose: 5000,
+        toast.success(`로그인 되었습니다. 환영합니다 🙌🏻`,{ 
           icon: "✅",
         });
       })
-      .catch((error) => console.log(error));
+      .catch(() => toast.error('아이디 / 비밀번호를 확인해주세요.'));
   };
 
   const loginWithKakao = () => {
@@ -108,10 +117,11 @@ const Login = () => {
 
     Kakao.Auth.authorize({
       redirectUri: REDIRECT_URL,
-      scope: 'account_email,profile_nickname'
+      scope: "account_email,profile_nickname",
     });
   };
 
+  if(!IsLogin())
   return (
     <div className={styles.container}>
       <h2 className={styles.title}>로그인</h2>
@@ -129,8 +139,9 @@ const Login = () => {
           placeholder="비밀번호를 입력해주세요"
           className={styles.loginPw}
           onChange={(e) => setMemberPw(e.target.value)}
-          onKeyUp={(e) => { 
-            if(e.key === 'Enter') handleLogin() }}
+          onKeyUp={(e) => {
+            if (e.key === "Enter") handleLogin();
+          }}
         />
         <div className={styles.links}>
           <p onClick={openModal}>아이디 / 비밀번호 찾기</p>
@@ -144,34 +155,21 @@ const Login = () => {
         <button className={styles.loginBtn} onClick={handleLogin}>
           로그인
         </button>
-        <hr/>
+        <hr />
         <p>SNS 로그인</p>
-        <a id="kakao-login-btn" onClick={loginWithKakao} className={styles.kakaoLoginBtn}>
-          <img src="https://k.kakaocdn.net/14/dn/btroDszwNrM/I6efHub1SN5KCJqLm1Ovx1/o.jpg" 
+        <a
+          id="kakao-login-btn"
+          onClick={loginWithKakao}
+          className={styles.kakaoLoginBtn}
+        >
+          <img
+            src="https://k.kakaocdn.net/14/dn/btroDszwNrM/I6efHub1SN5KCJqLm1Ovx1/o.jpg"
             width="222"
-            alt="카카오 로그인 버튼" 
-            className={styles.kakaoLoginBtn}/>
+            alt="카카오 로그인 버튼"
+            className={styles.kakaoLoginBtn}
+          />
         </a>
-      <div>
-        <button onClick={success}>Notify!</button>
-        <ToastContainer
-          position="top-center"
-          autoClose={5000}
-          hideProgressBar={false}
-          closeOnClick
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          theme="light"
-          limit={2}
-          icon="✅"
-
-          toastStyle={{
-            // color: "#f9bb00"
-          }}
-        />
-
-      </div>
+        <NaverLogin />
       </div>
     </div>
   );

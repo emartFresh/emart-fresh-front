@@ -3,16 +3,19 @@ import styles from "../page_css/MyOrder.module.css";
 import { useState, useEffect } from "react";
 import Pagination from "@mui/material/Pagination";
 import icon_warning from "../../assets/images/icon_warning.svg";
-import { useRecoilState } from "recoil";
+import { constSelector, useRecoilState } from "recoil";
 import { loginState } from "../../atoms";
 import { sendAxiosGetRequest } from "../../utils/userUtils";
 import { GetUserAllInfo } from "../../utils/LoginUtils";
 import order from "../../assets/images/order.png";
 import { Link } from "react-router-dom";
+import { Modal, Box, TextareaAutosize } from "@mui/material";
+import axios from "axios";
+import OrderReview from "./OrderReview";
 
 interface OrderedProductData {
   memberId: string | MemberData;
-  productId: number | ProductData;
+  productId: number;
   storeId: number | StoreData;
   storeName: string;
   orderedDate: Date;
@@ -24,6 +27,18 @@ interface OrderedProductData {
   myOrderedCount: number;
   productImgUrl: string;
   pickup: boolean;
+  //진성
+  orderedProductId?: number;
+}
+
+//진성
+interface DetailData {
+  productId: number;
+  productImgUrl: string;
+  orderedQuantity: number;
+  price: number;
+  productName: string;
+  review: any;
 }
 
 export default function MyOrder() {
@@ -35,6 +50,12 @@ export default function MyOrder() {
   const [loginToken, setLoginToken] = useRecoilState<JwtToken>(loginState);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
+
+  //진성
+  const [showModal, setShowModal] = useState<boolean>(false);
+  const [detailData, setDetailData] = useState<DetailData[]>([]);
+  const [resetReview, setResetReview] = useState<number>(0);
+  //
   const allMember = GetUserAllInfo();
 
   useEffect(() => {
@@ -58,6 +79,7 @@ export default function MyOrder() {
         console.log("API Response:", response);
         const OrderedData = response.content;
 
+        console.log("데이터터터", OrderedData);
         if (response.totalPages) {
           setTotalPages(response.totalPages);
         }
@@ -86,13 +108,78 @@ export default function MyOrder() {
     pages.push(i + 1);
   }
 
-  const handleClick = () => {
-    alert("상세보기 페이지로 이동");
+  //진성
+  const handleDetail = (orderedProductId: number) => {
+    const url = `${
+      import.meta.env.VITE_BACK_PORT
+    }/orderedproduct/getProductDetails?orderedProductId=${orderedProductId}`;
+    axios.get(url).then((res) => {
+      setDetailData(res.data);
+      setShowModal(true);
+    });
   };
 
   allMember.memberId;
   return (
     <div className={styles.orderMain}>
+      <Modal
+        open={showModal}
+        onClose={() => {
+          setShowModal(!showModal);
+        }}
+        aria-labelledby="modal-title"
+        aria-describedby="modal-description"
+      >
+        <Box
+          sx={{
+            position: "absolute",
+            bgcolor: "background.paper",
+            border: "2px solid #000",
+            boxShadow: 24,
+            p: 2,
+            top: "50%",
+            left: "50%",
+            maxHeight: "500px",
+            overflowY: "auto",
+            transform: "translate(-50%, -50%)",
+          }}
+        >
+          {" "}
+          <div className={styles.btnWrapper}>
+            <button
+              className={styles.cancleBtn}
+              onClick={() => {
+                setShowModal(!showModal);
+              }}
+            >
+              ✖
+            </button>
+          </div>
+          <div className={styles.detailContainer}>
+            {detailData.map((item, inx) => {
+              console.log("하나 데이터", item);
+              return (
+                <div className={styles.detailWrapper} key={inx}>
+                  <span>
+                    <img
+                      className={styles.detailImg}
+                      src={item.productImgUrl}
+                      alt=""
+                    />
+                  </span>
+                  <span className={styles.detailName}>{item.productName}</span>
+                  <span className={styles.detailPrice}>{item.price}원</span>
+                  <OrderReview
+                    setShowModal={setShowModal}
+                    orderedPpId={item.productId}
+                    review={item.review}
+                  ></OrderReview>
+                </div>
+              );
+            })}
+          </div>
+        </Box>
+      </Modal>
       <h3>
         <span className={styles.tossface}>😀</span>
         {allMember.memberId}님 반갑습니다.
@@ -124,7 +211,7 @@ export default function MyOrder() {
         orderedProducts.map((orderedProduct, index) => (
           <div key={index}>
             <h6 style={{ textAlign: "left", marginLeft: "310px" }}>
-              {orderedProduct.orderCode}
+              {orderedProduct.productId}
             </h6>
             <div className={styles.orderWrapper}>
               <div className={styles.orderContainer}>
@@ -133,8 +220,9 @@ export default function MyOrder() {
                 </div>
                 <div className={styles.ordernameText}>
                   {orderedProduct.productTitle}
-                  {orderedProduct.orderedQuantity > 1 &&
-                    ` 외 ${orderedProduct.orderedQuantity - 1}종`}
+                  {orderedProduct.myOrderedCount > 1 &&
+                    ` 외 ${orderedProduct.myOrderedCount - 1}종`}{" "}
+                  {/* 퀀티티가 -> 마이오더 카운티로 바뀌었다.*/}
                   <div>{orderedProduct.totalAmount}원</div>
                 </div>
                 <div>{orderedProduct.storeName}</div>
@@ -149,7 +237,9 @@ export default function MyOrder() {
                   <div>
                     <button
                       className={styles.orderDetailBtn}
-                      onClick={handleClick}
+                      onClick={() =>
+                        handleDetail(orderedProduct?.orderedProductId)
+                      }
                     >
                       상세보기
                     </button>

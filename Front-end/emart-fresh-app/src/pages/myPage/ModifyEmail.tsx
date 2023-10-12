@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import styles from "../page_css/CommonModal.module.css";
 import ExpiryTime from "../signupPage/ExpiryTime";
+import { GetUserAllInfo } from "../../utils/LoginUtils";
 
 // 이메일변경 메세지 1)
 interface Messages {
@@ -30,6 +31,10 @@ const ModifyEmail: React.FC<ModifyEmailProps> = ({
   const [newEmail, setNewEmail] = useState<string>("");
   const [certificationCode, setCertificationCode] = useState<string>("");
 
+  const userInfos = GetUserAllInfo();
+  // 실행시점 보장 되지 않는다 - 우선적으로 null 처리해야한다.
+
+  console.log("sadffffsda", userInfos);
   //이메일 메세지 2)
   const [messages, setMessages] = useState<Messages>({
     email: "",

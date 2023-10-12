@@ -62,6 +62,7 @@ declare global {
     cartId?: number; // 장바구니 아이디 (프라이머리 키)
     productId?: number;
     cartProductQuantity: number;
+    cartProductQuantityOfString?: string;
     priceNumber: number;
     productTitle: string;
     cartProductId: number; // 제품 아이디 (외래 키)
@@ -75,6 +76,15 @@ declare global {
   interface ManagerOrderData {
     productId: number | ProductData; // 제품 아이디 (외래 키)
     storeId?: number | StoreData; // 가게 아이디 (외래 키)
+    managerOrderNum?: number; // 발주 번호
+    managerOrderStatus: boolean; // 상태 (false: 대기, true: 처리 완료)
+    managerOrderQuantity: number; // 수량
+    managerOrderDate: Date; // 발주 날짜
+  }
+
+  interface ManagerOrderDataWithObj {
+    product: ProductData; // 제품 아이디 (외래 키)
+    storeId?: StoreData; // 가게 아이디 (외래 키)
     managerOrderNum?: number; // 발주 번호
     managerOrderStatus: boolean; // 상태 (false: 대기, true: 처리 완료)
     managerOrderQuantity: number; // 수량
@@ -106,6 +116,9 @@ declare global {
     storeId?: number; // 가게 아이디
     memberId: number | MemberData; // 멤버 아이디
     address: string; // 주소
+    storeName?: string;
+    storeLongitude?: number;
+    storeLatitude?: number;
   }
 
   // 가게 상품 정보
@@ -131,7 +144,15 @@ declare global {
     eventStartDate: Date; // 시작 날짜
     eventEndDate: Date; // 종료 날짜
   }
-
+  // 이벤트 정보
+  interface EventFormState {
+    eventId?: number; // 이벤트 아이디 (프라이머리 키)
+    eventTitle: string; // 이벤트 제목
+    eventBannerImage?: File | null; // 배너 이미지
+    eventDetailImage?: File | null; // 디테일 이미지
+    eventStartDate: string | null; // 시작 날짜 (Date | null)
+    eventEndDate: string | null; // 종료 날짜 (Date | null)
+  }
   interface JwtToken {
     accessToken: string;
     refreshToken: string;
