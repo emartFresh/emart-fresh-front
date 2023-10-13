@@ -11,7 +11,7 @@ COPY . .
 RUN npm run build 
 
 #certbot
-FROM certbot/certbot:latest as certbot
+FROM certbot:latest as certbot
 
 RUN certbot certonly --webroot --webroot-path=/var/www/certbot --email wjdjwl545@naver.com --agree-tos -d pick-fresh24.com
 
