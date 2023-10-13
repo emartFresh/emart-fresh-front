@@ -105,12 +105,6 @@ export default function Nav() {
             <Link to="/">Home</Link>
           </span>
           <span>
-            <Link to="/order-request">발주</Link>
-          </span>
-          <span>
-            <Link to="/request-order-list">발주승인</Link>
-          </span>
-          <span>
             <Link to="/show-all-product">전체</Link>
           </span>
           <span>

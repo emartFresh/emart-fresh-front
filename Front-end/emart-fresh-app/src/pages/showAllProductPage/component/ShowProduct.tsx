@@ -7,6 +7,7 @@ interface ShowProductProps {
   selectedItem: string[];
 }
 import styles from "../../page_css/ShowProduct.module.css";
+import { getTruncateString } from "../../../utils/formatUtils";
 
 export default function ShowProduct({
   productDatas,
@@ -24,8 +25,9 @@ export default function ShowProduct({
       setSelectedItem([...selectedItem]);
     }
   };
+  console.log("프로덕트 데이터", productDatas);
 
-  const Datas = productDatas.map((product: ProductData, index: number) => {
+  const Datas = productDatas?.map((product: ProductData, index: number) => {
     const idLink = `/product/detail?product-id=${product.productId}`;
     return (
       <>
@@ -39,7 +41,6 @@ export default function ShowProduct({
           </div>
           <span className={styles.itemLine}></span>
           <div className={styles.titleWrapper}>
-            {/* 수정 : 실제 데이터로 이동 */}
             <button
               className={styles.defaultBtn}
               name={product.productTitle}
@@ -47,7 +48,7 @@ export default function ShowProduct({
                 handleItemClick(e);
               }}
             >
-              {product.productTitle}
+              {getTruncateString(product.productTitle, 16)}
             </button>
           </div>
           <div className={styles.priceInfo}>{product.priceString}</div>

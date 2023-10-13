@@ -1,6 +1,7 @@
 .inputSection {
   width: 100%;
   display: flex;
+  align-items: center;
 }
 .searchingInput {
   flex: 1;
@@ -29,4 +30,5 @@
   align-items: center;
   justify-content: center;
   margin: 1em;
+  white-space: nowrap;
 }

@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import Pagination from "@mui/material/Pagination";
 import styles from "../page_css/MyCoupon.module.css";
+// import styles from "./abc.module.css";
 import CouponCard from "./CouponCard";
 import icon_warning from "../../assets/images/icon_warning.svg";
 
@@ -10,7 +11,7 @@ import { Link } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { loginState } from "../../atoms";
 import { sendAxiosGetRequest } from "../../utils/userUtils";
-import { GetUserAllInfo, GetUserName } from "../../utils/LoginUtils";
+import { GetUserAllInfo } from "../../utils/LoginUtils";
 
 //쿠폰 정보
 interface CouponData {
@@ -82,11 +83,11 @@ export default function MyCoupon() {
   return (
     <div>
       <div className={styles.couponMain}>
-        <h3>
+        <h4>
           <span className={styles.tossface}>😀</span>
           {allMember.memberId}님 반갑습니다.
           <span className={styles.tossface}>😀</span>
-        </h3>
+        </h4>
         <div>
           <CouponCard totalElements={totalElements} />
         </div>

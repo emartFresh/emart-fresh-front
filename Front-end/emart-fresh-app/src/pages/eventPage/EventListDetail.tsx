@@ -2,7 +2,8 @@
 import { useState, useEffect } from "react";
 import styles from "./EventListDetail.module.css";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import EventBadge from "./EventBadge";
 
 interface EventList {
   eventId: string;
@@ -63,9 +64,21 @@ export default function EventListDetail() {
           </p>
         </div>
         <div className={styles.eventDetailDiv}>
-          <p className={styles.eventDetailTitle}>
-            {onGoingEventList.eventTitle}
-          </p>
+          <div>
+            <p>
+              {new Date(onGoingEventList.eventEndDate) >= new Date() ? (
+                <EventBadge
+                  className={styles.eventOngoingBadge}
+                  text="진행중"
+                />
+              ) : (
+                <EventBadge className={styles.eventEndedBadge} text="종료" />
+              )}
+            </p>
+            <p className={styles.eventDetailTitle}>
+              {onGoingEventList.eventTitle}
+            </p>
+          </div>
           <p className={styles.eventDetailDate}>
             {new Date(onGoingEventList.eventStartDate).toLocaleDateString()}~
             {new Date(onGoingEventList.eventEndDate).toLocaleDateString()}
@@ -78,6 +91,9 @@ export default function EventListDetail() {
             alt="상세이미지"
           />
         </div>
+        <Link to="/eventlist">
+          <button className={styles.eventListBtn}>목록</button>
+        </Link>
       </div>
     </div>
   );

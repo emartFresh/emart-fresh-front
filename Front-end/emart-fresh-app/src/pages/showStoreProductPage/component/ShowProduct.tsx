@@ -4,6 +4,7 @@ interface ShowProductProps {
   productDatas: ProductData[];
 }
 import styles from "../../page_css/ShowProduct.module.css";
+import { getTruncateString } from "../../../utils/formatUtils";
 
 export default function ShowProduct({ productDatas }: ShowProductProps) {
   const location = useLocation();
@@ -24,7 +25,10 @@ export default function ShowProduct({ productDatas }: ShowProductProps) {
         <span className={styles.itemLine}></span>
         <div className={styles.titleWrapper}>
           {/* 수정 : 실제 데이터로 이동 */}
-          <Link to="/show-all-product">{product.productTitle}</Link>
+          <Link to="/show-all-product">
+            {" "}
+            {getTruncateString(product.productTitle, 16)}
+          </Link>
         </div>
         <div className={styles.priceInfo}>{product.priceString}</div>
         <Link to={idLink}>상품상세</Link>

@@ -10,7 +10,6 @@ import {
 
 import { Coupon } from "./Payment";
 import { useEffect, useState } from "react";
-import axios from "axios";
 import styles from "../page_css/Payment.module.css";
 
 interface OrderProduct {
@@ -41,6 +40,16 @@ export default function Dopay({
       setMyCartStoreId(res);
     });
   }, []);
+
+  const deleteMyCoupon = () => {
+    // 수정 : 테스트하기
+    const url = `${import.meta.env.VITE_BACK_PORT}/coupon//coupon-delete`;
+    sendAxiosPostRequest(url, loginToken, setLoginToken, {
+      couponId: appliedCoupon,
+    }).then((res) => {
+      console.log("쿠폰 사용하였슴", res);
+    });
+  };
 
   console.log("가게 아이디22222", myCartStoreId);
   //수정 : 로직 고민...
@@ -126,6 +135,9 @@ export default function Dopay({
       },
     }).then((res) => {
       saveToOrderList();
+      if (appliedCoupon !== null && appliedCoupon !== undefined) {
+        deleteMyCoupon();
+      }
       console.log("부트 페이 응답 ", res);
     });
   };
@@ -135,7 +147,7 @@ export default function Dopay({
       <button className={styles.doPayBtn} onClick={preProcesse}>
         결제하기
       </button>
-      {/* <button onClick={saveToOrderList}>결제하기2</button> */}
+      <button onClick={saveToOrderList}>결제하기2</button>
     </div>
   );
 }

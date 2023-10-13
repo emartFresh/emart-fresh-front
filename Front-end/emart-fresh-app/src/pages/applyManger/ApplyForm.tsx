@@ -32,7 +32,8 @@ export default function ApplyForm() {
         console.log("데이터ㅓ", res.data);
         setApplyData(res.data);
       });
-  });
+  }, []);
+
   return (
     <div className={styles.applyManagerWrapper}>
       <div className={styles.nameWrapper}>

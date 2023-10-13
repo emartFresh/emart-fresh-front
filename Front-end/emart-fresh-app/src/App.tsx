@@ -25,15 +25,20 @@ import { RecoilRoot } from "recoil";
 
 import ProductDetail from "./pages/productDetailPage/ProductDetail";
 import EventList from "./pages/eventPage/EventList";
-import Payment from "./pages/paymentPage/Payment";
 import EventListDetail from "./pages/eventPage/EventListDetail";
 import EventUpdate from "./pages/eventPage/EventUpdate";
 import ApplyManager from "./pages/applyManger/ApplyManager";
 import MakeStore from "./pages/makeStore/MakeStore";
-import HandleApplyManager from "./pages/HandleApplyManager";
+import HandleApplyManager from "./pages/handleApplyManager/HandleApplyManager";
 import StoreOrderList from "./pages/storeOrderList/StoreOrderList";
 import NaverCallBack from "./pages/callBackPage/NaverCallBack";
 import SalesChart from "./pages/salesChart/SalesChart";
+
+import CouponUpdate from "./pages/couponUpdate/CouponUpdate";
+
+import ManagerOrderStatus from "./pages/managerOrderStatus/ManagerOrderStatus";
+import SearchStore from "./pages/searchStorePage/SearchStorePage";
+
 
 const queryClient = new QueryClient();
 
@@ -49,7 +54,7 @@ function App() {
               <Route path="/:coupon" element={<Home />} />
               {/* 쿠폰받으러가기 추가사항 */}
               <Route path="/show" element={<Show />} />
-
+              <Route path="/search-store" element={<SearchStore />} />
               <Route path="/mypageMain" element={<MyPageMain />}>
                 <Route index element={<MyPage />} />
                 <Route path="/mypageMain/myorder" element={<MyOrder />} />
@@ -67,6 +72,10 @@ function App() {
                 <Route
                   path="/mypageMain/eventupdate"
                   element={<EventUpdate />}
+                ></Route>
+                <Route
+                  path="/mypageMain/couponupdate"
+                  element={<CouponUpdate />}
                 ></Route>
               </Route>
               <Route path="/eventlist" element={<EventList />}></Route>
@@ -100,7 +109,10 @@ function App() {
               <Route path="/product/detail" element={<ProductDetail />} />
               <Route path="/makeStore" element={<MakeStore />} />
               <Route path="/storeOrderList" element={<StoreOrderList />} />
-
+              <Route
+                path="/manager-order-status"
+                element={<ManagerOrderStatus />}
+              />
               {/* <Route path="/payment" element={<Payment />} /> */}
             </Routes>
           </div>

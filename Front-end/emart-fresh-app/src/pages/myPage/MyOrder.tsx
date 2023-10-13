@@ -15,7 +15,7 @@ import OrderReview from "./OrderReview";
 
 interface OrderedProductData {
   memberId: string | MemberData;
-  productId: number | ProductData;
+  productId: number;
   storeId: number | StoreData;
   storeName: string;
   orderedDate: Date;
@@ -139,9 +139,22 @@ export default function MyOrder() {
             p: 2,
             top: "50%",
             left: "50%",
+            maxHeight: "500px",
+            overflowY: "auto",
             transform: "translate(-50%, -50%)",
           }}
         >
+          {" "}
+          <div className={styles.btnWrapper}>
+            <button
+              className={styles.cancleBtn}
+              onClick={() => {
+                setShowModal(!showModal);
+              }}
+            >
+              ✖
+            </button>
+          </div>
           <div className={styles.detailContainer}>
             {detailData.map((item, inx) => {
               console.log("하나 데이터", item);
@@ -164,16 +177,6 @@ export default function MyOrder() {
                 </div>
               );
             })}
-          </div>
-          <div className={styles.btnWrapper}>
-            <button
-              className={styles.cancleBtn}
-              onClick={() => {
-                setShowModal(!showModal);
-              }}
-            >
-              닫기
-            </button>
           </div>
         </Box>
       </Modal>
@@ -208,7 +211,7 @@ export default function MyOrder() {
         orderedProducts.map((orderedProduct, index) => (
           <div key={index}>
             <h6 style={{ textAlign: "left", marginLeft: "310px" }}>
-              {orderedProduct.orderCode}
+              {orderedProduct.productId}
             </h6>
             <div className={styles.orderWrapper}>
               <div className={styles.orderContainer}>
@@ -217,8 +220,9 @@ export default function MyOrder() {
                 </div>
                 <div className={styles.ordernameText}>
                   {orderedProduct.productTitle}
-                  {orderedProduct.orderedQuantity > 1 &&
-                    ` 외 ${orderedProduct.orderedQuantity - 1}종`}
+                  {orderedProduct.myOrderedCount > 1 &&
+                    ` 외 ${orderedProduct.myOrderedCount - 1}종`}{" "}
+                  {/* 퀀티티가 -> 마이오더 카운티로 바뀌었다.*/}
                   <div>{orderedProduct.totalAmount}원</div>
                 </div>
                 <div>{orderedProduct.storeName}</div>
@@ -237,7 +241,7 @@ export default function MyOrder() {
                         handleDetail(orderedProduct?.orderedProductId)
                       }
                     >
-                      상세보기
+                      리뷰쓰기
                     </button>
                   </div>
                 </div>

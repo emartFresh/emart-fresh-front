@@ -8,8 +8,9 @@ import { loginState } from "../../atoms";
 import axios from "axios";
 import styles from "../page_css/OrderRequest.module.css";
 import { sendAxiosPostRequest } from "../../utils/userUtils";
-import { SendHomePageIfNotAuth } from "../../utils/LoginUtils";
+import { useIsSameAuthNum } from "../../utils/LoginUtils";
 import { toast } from "react-toastify";
+import { formatHyphenSeparatedDate } from "../../utils/dateUtils";
 
 //수정 : 인증 인가, 유통기한 처리
 //수정 : 전역 날짜 데이터 to String 처리 함수 추가해서 리팩토링
@@ -28,21 +29,28 @@ export default function OrderRequest() {
   const navigate = useNavigate();
   const [loginToken, setLoginToken] = useRecoilState<JwtToken>(loginState);
   const [quantityData, setQuantityData] = useState<QuantityData[]>([]);
+  const isValidUserAuth = useIsSameAuthNum(1);
 
-  SendHomePageIfNotAuth(1);
+  useEffect(() => {
+    if (!isValidUserAuth) {
+      navigate("/home");
+    }
+  }, [isValidUserAuth]);
 
   const fetchProductData = async () => {
     let resultData: ProductData | [] = [];
-    await axios
-      .get(`${import.meta.env.VITE_BACK_PORT}/product/all-product-list`)
-      .then((res) => {
-        resultData = res.data;
-        console.log("결과 데이터", resultData);
-        if (res.data === "success") {
-          navigate("/");
-        }
-      });
 
+    if (isValidUserAuth) {
+      await axios
+        .get(`${import.meta.env.VITE_BACK_PORT}/product/all-product-list`)
+        .then((res) => {
+          resultData = res.data;
+          console.log("결과 데이터", resultData);
+          if (res.data === "success") {
+            navigate("/");
+          }
+        });
+    }
     return resultData;
   };
 
@@ -129,15 +137,14 @@ export default function OrderRequest() {
 
   const productListEle: JSX.Element[] | undefined = productData.data?.map(
     (product: ProductData, index: number) => {
-      console.log("데이터 하나", product);
       return (
         <div key={index} className={styles.productListSection}>
           <div>
             <span>{product.productTitle}</span>
             <span style={{ marginLeft: "1em" }}>{product.priceString}</span>
-            <span style={{ marginLeft: "1em" }}>
-              {String(product.productExpirationDate)}
-            </span>
+            {/* <span style={{ marginLeft: "1em" }}>
+              {formatHyphenSeparatedDate(String(product.productExpirationDate))}
+            </span> */}
           </div>
           <input
             type="checkbox"
