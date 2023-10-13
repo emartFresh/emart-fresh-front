@@ -40,9 +40,6 @@ jobs:
             docker pull ${{ secrets.DOCKERHUB_USERNAME }}/front-end:latest  
             docker rm -f fresh-frontend 
             docker run -d \
-                -v ./data/certbot/conf:/etc/letsencrypt \
-                -v ./data/certbot/www:/var/www/certbot \
-                -v ./nginx:/etc/nginx/conf.d \
                 --name fresh-frontend \
                 -p 80:80 \
                 ${{ secrets.DOCKERHUB_USERNAME }}/front-end:latest
