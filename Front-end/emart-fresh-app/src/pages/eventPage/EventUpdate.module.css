@@ -84,3 +84,29 @@
     margin-left: 250px;
   }
 }
+/* I 아이콘에 호버시 이벤트 등록 유의사항이 나오게 하자 */
+
+.iconContainer {
+  position: relative;
+  display: inline-block;
+}
+
+.iconContainer:hover .hoverText {
+  display: block;
+  opacity: 1;
+}
+.hoverText {
+  position: absolute;
+  bottom: -1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: none;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 10px;
+  border-radius: 4px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.5s;
+  white-space: nowrap;
+}

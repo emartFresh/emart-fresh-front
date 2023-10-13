@@ -54,7 +54,6 @@ export default function EventUpdate() {
         } else if (name === "eventDetailImage") {
           setDetailImagePreview(imagePreview);
         }
-        // console.log("이미지 미리보기", imagePreview);
       };
       reader.readAsDataURL(selectedFile);
     } else {
@@ -62,8 +61,15 @@ export default function EventUpdate() {
         ...formData,
         [name]: value,
       }));
+
+      if (name === "eventBannerImage") {
+        setBannerImagePreview(BannerImageIcon);
+      } else if (name === "eventDetailImage") {
+        setDetailImagePreview(DetailImageIcon);
+      }
     }
   };
+
   const [isButtonDisabled, setIsButtonDisabled] = useState<boolean>(true);
   useEffect(() => {
     const isTitleValid = formData.eventTitle.trim() !== "";
@@ -71,14 +77,23 @@ export default function EventUpdate() {
       formData.eventStartDate &&
       formData.eventEndDate &&
       new Date(formData.eventEndDate) >= new Date(formData.eventStartDate);
-    const isImageValid = formData.eventBannerImage && formData.eventDetailImage;
+    const isBannerImageValid = formData.eventBannerImage;
+    const isDetailImage = formData.eventDetailImage;
 
-    setIsButtonDisabled(!(isTitleValid && isDateValid && isImageValid));
+    console.log(isTitleValid);
+    console.log(isDateValid);
+    console.log(isBannerImageValid);
+    console.log(isDetailImage);
+
+    setIsButtonDisabled(
+      !(isTitleValid && isDateValid && isBannerImageValid && isDetailImage)
+    );
   }, [formData]);
 
   // 폼제출
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+
     const formDataToSend = new FormData();
     formDataToSend.append("event_title", formData.eventTitle);
     formDataToSend.append(
@@ -136,8 +151,17 @@ export default function EventUpdate() {
             onChange={handleFileChange}
             placeholder="이벤트이름을 등록하세요"
           />
+          &nbsp;&nbsp;
           {/* 유의사항 수정 중 */}
-          <img src={icon} style={{ width: "30px" }} />
+          <div className={styles.iconContainer}>
+            <img src={icon} style={{ width: "30px" }} />
+            <div className={styles.hoverText}>
+              이벤트 이름과 날짜를 등록하면 <br />
+              이벤트 등록 버튼이 활성화됩니다. <br />
+              시작날짜는 종료날짜보다 빨라야합니다.
+              <br />
+            </div>
+          </div>
         </div>
         <div className={styles.eventDate}>
           <div>
