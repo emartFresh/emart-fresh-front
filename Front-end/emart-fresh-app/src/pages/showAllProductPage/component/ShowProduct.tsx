@@ -41,7 +41,6 @@ export default function ShowProduct({
           </div>
           <span className={styles.itemLine}></span>
           <div className={styles.titleWrapper}>
-            {/* 수정 : 실제 데이터로 이동 */}
             <button
               className={styles.defaultBtn}
               name={product.productTitle}
