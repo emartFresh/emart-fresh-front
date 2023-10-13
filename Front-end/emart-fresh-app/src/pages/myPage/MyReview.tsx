@@ -111,8 +111,8 @@ export default function MyReview() {
   return (
     <div className={styles.reviewMain}>
       <h3>
-        <span className={styles.tossface}>😀</span>
-        {allMember.memberId}님 반갑습니다.
+        <span className={styles.tossface}>😀</span>&nbsp;&nbsp;
+        {allMember.memberId}님 반갑습니다.&nbsp;&nbsp;
         <span className={styles.tossface}>😀</span>
       </h3>
 
@@ -175,11 +175,13 @@ export default function MyReview() {
         ))
       )}
       <div className={styles.paginationList}>
-        <Pagination
-          count={totalPages}
-          page={currentPage}
-          onChange={(event, value) => handlePageChange(value)}
-        />
+        {reviews && reviews.length > 0 && (
+          <Pagination
+            count={totalPages}
+            page={currentPage}
+            onChange={(_event, value) => handlePageChange(value)}
+          />
+        )}
       </div>
     </div>
   );

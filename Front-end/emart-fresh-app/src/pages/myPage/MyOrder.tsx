@@ -3,13 +3,13 @@ import styles from "../page_css/MyOrder.module.css";
 import { useState, useEffect } from "react";
 import Pagination from "@mui/material/Pagination";
 import icon_warning from "../../assets/images/icon_warning.svg";
-import { constSelector, useRecoilState } from "recoil";
+import { useRecoilState } from "recoil";
 import { loginState } from "../../atoms";
 import { sendAxiosGetRequest } from "../../utils/userUtils";
 import { GetUserAllInfo } from "../../utils/LoginUtils";
 import order from "../../assets/images/order.png";
 import { Link } from "react-router-dom";
-import { Modal, Box, TextareaAutosize } from "@mui/material";
+import { Modal, Box } from "@mui/material";
 import axios from "axios";
 import OrderReview from "./OrderReview";
 
@@ -119,7 +119,6 @@ export default function MyOrder() {
     });
   };
 
-  allMember.memberId;
   return (
     <div className={styles.orderMain}>
       <Modal
@@ -251,11 +250,13 @@ export default function MyOrder() {
         ))
       )}
       <div className={styles.paginationList}>
-        <Pagination
-          count={totalPages}
-          page={currentPage}
-          onChange={(_event, value) => handlePageChange(value)}
-        />
+        {orderedProducts && orderedProducts.length > 0 && (
+          <Pagination
+            count={totalPages}
+            page={currentPage}
+            onChange={(_event, value) => handlePageChange(value)}
+          />
+        )}
       </div>
     </div>
   );
