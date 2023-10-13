@@ -8,11 +8,15 @@ import { sendAxiosPostRequest } from "../../utils/userUtils";
 import { loginState } from "../../atoms";
 import { useRecoilState } from "recoil";
 
+interface Validity {
+  isPasswordValid: boolean;
+  isPasswordConfirmValid: boolean;
+}
 interface ChangePWState {
   memberId: string;
-  // currentPw: string;
   memberPw: string;
   newPw?: string;
+  newPwAgain: string;
 }
 // 비밀번호변경 메세지1)
 interface Messages {
@@ -25,18 +29,18 @@ interface ModalProps {
 const ChangePw = ({ onClose }: ModalProps) => {
   const initialChangePWState: ChangePWState = {
     memberId: "",
-    // currentPw: "",
     memberPw: "",
     newPw: "",
+    newPwAgain: "",
   };
 
-  const [currentPwVisible, setCurrentPwVisible] = useState<boolean>(false);
+  const [memberPwVisible, setMemberPwVisible] = useState<boolean>(false);
   const [newPwVisible, setNewPwVisible] = useState<boolean>(false);
 
   const [loginToken, setLoginToken] = useRecoilState<JwtToken>(loginState);
   const [memberPw, setMemberPw] = useState<string>("");
   const [newPw, setNewPw] = useState<string>("");
-  // const [currentPw, setCurrentPw] = useState<string>("");
+
   const [formData, setFormData] = useState<ChangePWState>(initialChangePWState);
 
   // 비밀번호변경 메세지2)
@@ -45,13 +49,14 @@ const ChangePw = ({ onClose }: ModalProps) => {
     passwordConfirm: "",
   });
 
-  const [isPasswordValid, setIsPasswordValid] = useState<boolean>(false);
-  const [isPasswordConfirmValid, setIsPasswordConfirmValid] =
-    useState<boolean>(false);
+  // 유효성
+  const [formValidity, setFormValidity] = useState<Validity>({
+    isPasswordValid: false,
+    isPasswordConfirmValid: false,
+  });
 
   // 비밀번호 변경부분!!
   async function changepassword() {
-    console.log("콘솔 나오니?");
     const data = {
       memberPw: memberPw,
       newPw: newPw,
@@ -59,20 +64,27 @@ const ChangePw = ({ onClose }: ModalProps) => {
     const url = `${
       import.meta.env.VITE_BACK_PORT
     }/mypage/mypage-changepassword`;
-    sendAxiosPostRequest(url, loginToken, setLoginToken, data).then((res) => {
-      console.log("응답데이터, res", res); //undefined
-      console.log("현재비밀번호 memberPW", memberPw);
-      console.log("새비밀번호 newPW", newPw);
+    sendAxiosPostRequest(url, loginToken, setLoginToken, data)
+      .then((res) => {
+        console.log("응답데이터, res", res);
+        console.log("현재비밀번호 memberPW", memberPw);
+        console.log("새비밀번호 newPW", newPw);
 
-      // console.log("로그인토큰Access", loginToken);
-    });
-
-    // if (res.data === "fail") {
-    //   alert("현재비밀번호를 확인하세요");
-    // } else {
-    //   alert("비밀번호가 성공적으로 변경되었습니다");
-    //   onClose();
-    // }
+        if (res.status === 200) {
+          alert("비밀번호가 성공적으로 변경되었습니다.");
+        } else if (res.status === 400) {
+          alert("현재 비밀번호가 잘못되었습니다. 다시 시도해주세요.");
+        }
+        // } else {
+        //   alert("비밀번호 변경 중에 문제가 발생했습니다.");
+        // }
+        alert("비밀번호가 성공적으로 변경되었습니다.");
+        onClose();
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+        alert("비밀번호 변경 중에 문제가 발생했습니다.");
+      });
   }
 
   const handleInputChange = (fieldName: keyof ChangePWState, value: string) => {
@@ -88,53 +100,64 @@ const ChangePw = ({ onClose }: ModalProps) => {
       [fieldName]: value,
     });
   };
+  // 유효성
+  const handleValidityChange = (fieldName: keyof Validity, value: boolean) => {
+    setFormValidity({
+      ...formValidity,
+      [fieldName]: value,
+    });
+  };
 
-  // const validatePassword = (value: string) => {
-  //   // 비밀번호 유효성 검사 로직 / 결과에 따라 메시지 및 유효성 상태 업데이트
-  //   // const password = value; // 비밀번호 값 별도 변수에 저장
-  //   if (value.trim() === "") {
-  //     handleMessageChange("password", "비밀번호를 입력해주세요.");
-  //     setIsPasswordValid(false);
-  //   } else if (
-  //     !/^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[~!@#$%^&*]).{8,16}$/.test(value)
-  //   ) {
-  //     handleMessageChange(
-  //       "password",
-  //       "영문/숫자/특수문자를 포함하고, 최소8자 최대16자로 입력해주세요."
-  //     );
-  //     setIsPasswordValid(false);
-  //   } else if (value === formData.memberId) {
-  //     handleMessageChange(
-  //       "password",
-  //       "비밀번호는 아이디와 동일할 수 없습니다."
-  //     );
-  //     setIsPasswordValid(false);
-  //   } else {
-  //     handleMessageChange("password", "");
-  //     setIsPasswordValid(true);
-  //   }
-  // };
+  const validatePassword = (value: string) => {
+    // 비밀번호 유효성 검사 로직 / 결과에 따라 메시지 및 유효성 상태 업데이트
+    // const password = value; // 비밀번호 값 별도 변수에 저장
+    if (value.trim() === "") {
+      handleMessageChange("password", "비밀번호를 입력해주세요.");
+      setMemberPwVisible(false);
+    } else if (
+      !/^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[~!@#$%^&*]).{8,16}$/.test(value)
+    ) {
+      handleMessageChange(
+        "password",
+        "영문/숫자/특수문자를 포함하고, 최소8자 최대16자로 입력해주세요."
+      );
+      setMemberPwVisible(false);
+    } else if (value === formData.memberId) {
+      handleMessageChange(
+        "password",
+        "비밀번호는 아이디와 동일할 수 없습니다."
+      );
+      setMemberPwVisible(false);
+    } else {
+      handleMessageChange("password", "");
+      // setMemberPwVisible(true);
+    }
+  };
 
-  // const validatePasswordConfirm = (value: string) => {
-  //   // 비밀번호 확인 유효성 검사 로직 / 결과에 따라 메시지 및 유효성 상태 업데이트
-  //   if (value !== formData.newPw) {
-  //     handleMessageChange(
-  //       "passwordConfirm",
-  //       "비밀번호를 동일하게 입력해주세요"
-  //     );
-  //     setIsPasswordConfirmValid(false);
-  //   } else if (value === formData.newPw) {
-  //     handleMessageChange("passwordConfirm", "");
-  //     setIsPasswordConfirmValid(true);
-  //   }
-  // };
+  const validatePasswordConfirm = (value: string) => {
+    // 비밀번호 확인 유효성 검사 로직 / 결과에 따라 메시지 및 유효성 상태 업데이트
+    if (value.trim() === "") {
+      handleMessageChange("passwordConfirm", "확인 비밀번호을 입력해주세요.");
+      handleValidityChange("isPasswordConfirmValid", false);
+    } else if (value !== formData.newPw) {
+      handleMessageChange(
+        "passwordConfirm",
+        "비밀번호를 동일하게 입력해주세요"
+      );
+      handleValidityChange("isPasswordConfirmValid", false);
+    } else if (value === formData.newPw) {
+      handleMessageChange("passwordConfirm", "");
+      handleValidityChange("isPasswordConfirmValid", false);
+    }
+  };
+
   // 취소
   const handleCancelClick = () => {
     onClose();
   };
 
-  const toggleCurrentPwVisibility = () => {
-    setCurrentPwVisible(!currentPwVisible);
+  const toggleMemberPwVisibility = () => {
+    setMemberPwVisible(!memberPwVisible);
   };
 
   const toggleNewPwVisibility = () => {
@@ -146,20 +169,18 @@ const ChangePw = ({ onClose }: ModalProps) => {
         <div className={styles.inputWrap}>
           <span className={styles.modifyControlBtn}>
             <input
-              type={currentPwVisible ? "text" : "password"}
-              // name="currentPw"
+              type={memberPwVisible ? "text" : "password"}
               name="memberPw"
               placeholder="현재비밀번호를 입력해주세요"
               autoComplete="off"
               className={styles.inputPw}
               onChange={(e) => {
-                // handleInputChange("currentPw", e.target.value);
                 handleInputChange("memberPw", e.target.value);
                 setMemberPw(e.target.value);
               }}
             />
-            <button onClick={toggleCurrentPwVisibility}>
-              {currentPwVisible ? <VisibilityIcon /> : <VisibilityOffIcon />}
+            <button onClick={toggleMemberPwVisibility}>
+              {memberPwVisible ? <VisibilityIcon /> : <VisibilityOffIcon />}
             </button>
           </span>
           <p></p>
@@ -175,7 +196,7 @@ const ChangePw = ({ onClose }: ModalProps) => {
               onChange={(e) => {
                 setNewPw(e.target.value);
                 handleInputChange("newPw", e.target.value);
-                // validatePassword(e.target.value);
+                validatePassword(e.target.value);
               }}
             />
             <button onClick={toggleNewPwVisibility}>
@@ -189,13 +210,13 @@ const ChangePw = ({ onClose }: ModalProps) => {
           <span className={styles.modifyControlBtn}>
             <input
               type={newPwVisible ? "text" : "password"}
-              name="newNewPw"
+              name="newPwAgain"
               placeholder="비밀번호를 다시 입력해주세요"
               autoComplete="off"
               className={styles.inputPw}
               onChange={(e) => {
-                handleInputChange("newPw", e.target.value);
-                // validatePasswordConfirm(e.target.value);
+                handleInputChange("newPwAgain", e.target.value);
+                validatePasswordConfirm(e.target.value);
               }}
             />
 

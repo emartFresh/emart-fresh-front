@@ -18,6 +18,9 @@ export default function Administrator() {
         {/* <EventIcon /> */}
         <Link to="/mypageMain/eventupdate">이벤트 생성</Link>
       </div>
+      <div className={styles.mypagemenubar}>
+        <Link to="/mypageMain/couponupdate">쿠폰 생성</Link>
+      </div>
     </div>
   );
 }

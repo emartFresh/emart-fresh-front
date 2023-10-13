@@ -154,7 +154,6 @@ export async function sendAxiosPostRequest(
     }
   }
 }
-
 //yewon=========================================================
 export const sendAxiosRequest = async (
   url: string,
@@ -205,12 +204,13 @@ export const sendAxiosRequest = async (
           })
           .catch(() => {
             console.error("refresh error");
-            toast.error('로그인 유효시간이 만료되었습니다. 다시 로그인해주세요.')
+            toast.error(
+              "로그인 유효시간이 만료되었습니다. 다시 로그인해주세요."
+            );
             location.href = "/login";
             return;
           });
-        }else {
-          throw error;
+        // 수정 : 로그인화면으로 보내기
       }
     });
   return result;
