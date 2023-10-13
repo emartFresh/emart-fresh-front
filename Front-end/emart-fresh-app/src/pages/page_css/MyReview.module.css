@@ -13,16 +13,12 @@
 .reviewWrapper {
   display: flex;
   flex-direction: row;
-  width: 65vw;
   align-items: center;
   margin-bottom: 1rem;
-
   padding: 8px;
-  border: 1px solid grey;
-
+  /* border: 1px solid grey; */
   border-radius: 1rem;
-
-  box-shadow: 2px 2px 5px 2px rgba(0, 0, 0, 0.5);
+  box-shadow: 2px 2px 5px 2px rgba(0, 0, 0, 0.2);
 }
 
 .imageContainer {
