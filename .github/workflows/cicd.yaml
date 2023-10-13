@@ -40,6 +40,7 @@ jobs:
             docker pull ${{ secrets.DOCKERHUB_USERNAME }}/front-end:latest  
             docker rm -f fresh-frontend 
             docker run -d \
+                -v ./config/nginx/nginx.conf:/etc/nginx/nginx.conf
                 --name fresh-frontend \
                 -p 80:80 \
                 ${{ secrets.DOCKERHUB_USERNAME }}/front-end:latest
