@@ -18,7 +18,7 @@ RUN certbot certonly --webroot --webroot-path=/var/www/certbot --email wjdjwl545
 #nginx 
 FROM nginx:1.25-alpine
 
-COPY nginx.conf /etc/nginx/nginx.conf
+COPY /nginx/nginx.conf /etc/nginx/nginx.conf
 
 COPY --from=builder /app/dist/ /usr/share/nginx/html
 
