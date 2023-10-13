@@ -55,18 +55,11 @@ const CouponUpdate = () => {
       alert("10,20,30 중에 입력하세요");
       console.log("10,20,30 중에 입력하세요", formData.couponType);
       return;
+    } else if (formData.couponExpirationDate.trim() === "") {
+      alert("쿠폰종료 날짜를 입력해주세요");
+      console.log("쿠폰이름.", formData.couponTitle);
+      return;
     }
-    // if (![10, 20, 30].includes(formData.couponType)) {
-    //   // Handle the case where couponType is not a valid value, for example, by showing an error message.
-    //   alert("10,20,30 중에 입력하세요");
-    //   console.log("10,20,30 중에 입력해", formData.couponType);
-    //   return;
-    // }
-    // // Check if couponType is not provided
-    // if (!formData.couponType) {
-    //   alert("쿠폰 할인률을 입력해주세요");
-    //   return;
-    // }
 
     const data = {
       couponTitle: formData.couponTitle,
@@ -83,13 +76,13 @@ const CouponUpdate = () => {
         console.log("쿠폰 생성에 성공했엉");
         console.log("쿠폰 이름", formData.couponTitle);
         console.log("쿠폰 타입", formData.couponType);
-        console.log(res.status);
+        console.log(res);
         // response.status === 200
-        // if (res.status === 200) {
-        //   console.log("쿠폰 생성에 성공했엉");
-        // } else {
-        //   console.error("쿠폰 생성에 실패하였어");
-        // }
+        if (res === "쿠폰생성 완료") {
+          console.log("쿠폰 생성에 성공했엉");
+        } else {
+          console.error("쿠폰 생성에 실패하였어");
+        }
 
         setFormData({
           couponTitle: "",
@@ -105,37 +98,33 @@ const CouponUpdate = () => {
   return (
     <div className={styles.couponUpdateMain}>
       <div className={styles.couponUpdateContainer}>
-        <div className={styles.couponUpdateTitle}>
-          쿠폰 이름
-          <input
-            type="text"
-            name="couponTitle"
-            value={formData.couponTitle}
-            className={styles.couponUpdateInput}
-            placeholder="쿠폰 이름을 등록하세요"
-            onChange={handleInputChange}
-          />
-        </div>
-        <div className={styles.couponUpdateTitle}>
-          쿠폰 할인률
-          <input
-            type="text"
-            name="couponType"
-            value={formData.couponType}
-            className={styles.couponUpdateInput}
-            onChange={handleInputChange}
-          />
-        </div>
-        <div className={styles.couponDate}>
-          쿠폰 종료 날짜
-          <input
-            type="date"
-            name="couponExpirationDate"
-            value={formData.couponExpirationDate}
-            className={styles.couponUpdateInput}
-            onChange={handleInputChange}
-          />
-        </div>
+        <div className={styles.couponUpdateTitle}>쿠폰 이름 </div>
+        <input
+          type="text"
+          name="couponTitle"
+          value={formData.couponTitle}
+          className={styles.couponUpdateInput}
+          placeholder="쿠폰 이름을 등록하세요"
+          onChange={handleInputChange}
+        />
+
+        <div className={styles.couponUpdateType}>쿠폰 할인률</div>
+        <input
+          type="text"
+          name="couponType"
+          value={formData.couponType}
+          className={styles.couponUpdateInput}
+          onChange={handleInputChange}
+        />
+
+        <div className={styles.couponUpdateDate}>쿠폰 종료 날짜</div>
+        <input
+          type="date"
+          name="couponExpirationDate"
+          value={formData.couponExpirationDate}
+          className={styles.couponUpdateInput}
+          onChange={handleInputChange}
+        />
       </div>
       <button onClick={handleCouponUpdate}>쿠폰 생성</button>
     </div>
