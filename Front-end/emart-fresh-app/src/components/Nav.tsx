@@ -5,12 +5,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 
 import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
-import {
-  kakaoAccessToken,
-  loginState,
-  loginTypeState,
-  cartItemCount,
-} from "../atoms";
+import { kakaoAccessToken, loginState, loginTypeState, cartItemCount, naverAccessToken } from "../atoms";
 import { sendAxiosRequest } from "../utils/userUtils";
 import Badge, { BadgeProps } from "@mui/material/Badge";
 import { styled } from "@mui/material/styles";
@@ -24,6 +19,7 @@ export default function Nav() {
   const isHomePage = location.pathname === "/"; // 홈 페이지 여부 확인
   const [loginToken, setLoginToken] = useRecoilState<JwtToken>(loginState);
   const [kakaoToken, setKakaoToken] = useRecoilState<string>(kakaoAccessToken);
+  const [naverToken, setNaverToken] = useRecoilState<string>(naverAccessToken);
   const [loginType, setLoginType] = useRecoilState<string>(loginTypeState);
   const [cartCount, setCartCount] = useRecoilState<number>(cartItemCount);
 
@@ -32,21 +28,29 @@ export default function Nav() {
   }, []);
 
   const logout = () => {
-    const checkLogout = confirm("로그아웃하시겠습니까?");
-    if (checkLogout) {
-      sendAxiosRequest("/member/logout", "post", loginToken, setLoginToken, {
-        loginType: loginType,
-        kakaoAccessToken: kakaoToken,
+    // aws 클라이언트 - 서버 에서 로그아웃 안되는 오류 있음
+    setLoginToken({
+      accessToken: "",
+      refreshToken: "",
+    });
+
+    const checkLogout = confirm('로그아웃하시겠습니까?');
+    if(checkLogout){
+      sendAxiosRequest('/member/logout', 'post', loginToken, setLoginToken, {loginType: loginType, kakaoAccessToken: kakaoToken, naverAccessToken: naverToken})
+      .then(() => {
+        // setLoginToken({
+        //   accessToken: "",
+        //   refreshToken: "",
+        // });
+        setLoginType("");
+        setKakaoToken("");
+        // setNaverToken("");
+        setCartCount(0);
+        toast.success('로그아웃되었습니다.');
       })
-        .then(() => {
-          setLoginToken({
-            accessToken: "",
-            refreshToken: "",
-          });
-          setLoginType("");
-          toast.success("로그아웃되었습니다.");
-        })
-        .catch(console.error);
+      .catch(
+        console.error  
+      )
     }
   };
 
@@ -74,6 +78,9 @@ export default function Nav() {
           </span>
           <span>
             <Link to="/show">show</Link>
+          </span>
+          <span>
+            <Link to="/chart">chart</Link>
           </span>
           <span>
             {/* <Link to="/search">Search</Link> */}

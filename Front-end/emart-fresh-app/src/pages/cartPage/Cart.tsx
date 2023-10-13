@@ -15,10 +15,8 @@ import Payment from "../paymentPage/Payment";
 
 // 이벤트 없을때 없는표시
 // grid -> flex : wrap 
-// 네이버 버튼 정렬 
+// 네이버 / 카카오 버튼 사이즈
 // toast alert 모두 적용
-// 받은 쿠폰은 막기
-// cart item recoil -> login/logout 처리
 
 interface responseData {
   data: CartData[];

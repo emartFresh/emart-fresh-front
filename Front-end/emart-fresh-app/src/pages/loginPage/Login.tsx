@@ -11,6 +11,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { IsLogin } from '../../utils/LoginUtils';
 import NaverLogin from "./NaverLogin";
+import kakaoLogin from "../../assets/images/kakao_login.png";
 
 const Login = () => {
   const [memberId, setMemberId] = useState<string>("");
@@ -81,10 +82,6 @@ const Login = () => {
         })
         .catch(console.error);
     }
-
-    // 수정 : 로그인했을때도 뜸..
-    
-
   },[]);
 
   const openModal = (): void => {
@@ -156,20 +153,19 @@ const Login = () => {
           로그인
         </button>
         <hr />
-        <p>SNS 로그인</p>
-        <a
-          id="kakao-login-btn"
-          onClick={loginWithKakao}
-          className={styles.kakaoLoginBtn}
-        >
-          <img
-            src="https://k.kakaocdn.net/14/dn/btroDszwNrM/I6efHub1SN5KCJqLm1Ovx1/o.jpg"
-            width="222"
-            alt="카카오 로그인 버튼"
-            className={styles.kakaoLoginBtn}
-          />
-        </a>
-        <NaverLogin />
+        <h6 className={styles.snsLoginTitle}>SNS 로그인</h6>
+        <div className={styles.snsBtnWrap}>
+          <a id="kakao-login-btn" >
+            <img
+              onClick={loginWithKakao}
+              src={kakaoLogin}
+              width="220"
+              alt="카카오 로그인 버튼"
+              className={styles.kakaoLoginBtn}
+            />
+          </a>
+          <NaverLogin />
+        </div>
       </div>
     </div>
   );

@@ -58,7 +58,23 @@ input:focus{
     margin: 2em auto;
 }
 
+.snsLoginTitle{
+    display: block;
+    width: 78%;
+    margin: 2rem auto;
+}
+
+.snsBtnWrap{
+    display: flex;
+    justify-content: space-around;
+    width: 80%;
+    margin: 1rem auto;
+}
+
 .kakaoLoginBtn{
     display: block;
-    margin: 0 auto;
+}
+
+.naverLoginBtn a img{
+    display: block;
 }

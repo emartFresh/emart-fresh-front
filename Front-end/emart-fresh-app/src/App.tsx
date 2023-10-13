@@ -32,6 +32,7 @@ import MakeStore from "./pages/makeStore/MakeStore";
 import HandleApplyManager from "./pages/handleApplyManager/HandleApplyManager";
 import StoreOrderList from "./pages/storeOrderList/StoreOrderList";
 import NaverCallBack from "./pages/callBackPage/NaverCallBack";
+import SalesChart from "./pages/salesChart/SalesChart";
 
 import CouponUpdate from "./pages/couponUpdate/CouponUpdate";
 
@@ -99,6 +100,7 @@ function App() {
               <Route path="/login" element={<Login />} />
               <Route path="/naverCallBack" element={<NaverCallBack />} />
               <Route path="/signup" element={<Signup />} />
+              <Route path="/chart" element={<SalesChart />} />
               <Route path="/order-request" element={<OrderRequest />} />
               <Route path="/request-order-list" element={<OrderHandle />} />
               <Route path="/show-all-product" element={<ShowAllProduct />} />

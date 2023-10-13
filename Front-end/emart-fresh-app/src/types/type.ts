@@ -20,6 +20,7 @@ declare global {
 
   // 수정
   interface responseData {
+    // [key: string]: string | number | boolean | undefined| ExtendedCoupon[];
     [key: string]: string | number | boolean | undefined;
   }
 
@@ -109,6 +110,10 @@ declare global {
     couponType: 10 | 20 | 30; // 쿠폰 종류 (1: 10%, 2: 20%, 3: 30%)
     couponTitle?: string;
     couponDel?: number;
+  }
+
+  interface ExtendedCoupon extends CouponData {
+    existing: boolean;
   }
 
   // 가게 정보
