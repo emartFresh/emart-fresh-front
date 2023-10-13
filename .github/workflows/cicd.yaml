@@ -45,4 +45,5 @@ jobs:
                 -v /app/docker/certbot/conf:/etc/letsencrypt:rw \
                 -v /app/docker/certbot/logs:/var/log/letsencrypt:rw \
                 -v /app/docker/certbot/data:/var/www/certbot:rw \
+                -v ./nginx.conf:/etc/nginx/nginx.conf:ro \
                 ${{ secrets.DOCKERHUB_USERNAME }}/front-end:latest
