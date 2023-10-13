@@ -80,6 +80,9 @@ export default function Nav() {
             <Link to="/show">show</Link>
           </span>
           <span>
+            <Link to="/chart">chart</Link>
+          </span>
+          <span>
             {/* <Link to="/search">Search</Link> */}
             <IconButton aria-label="cart" onClick={() => navigate("/cart")}>
               <StyledBadge badgeContent={cartCount} color="secondary">
