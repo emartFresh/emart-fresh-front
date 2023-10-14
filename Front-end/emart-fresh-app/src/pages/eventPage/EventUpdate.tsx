@@ -1,11 +1,15 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { useState, ChangeEvent, FormEvent, useRef, useEffect } from "react";
-import axios from "axios";
 import styles from "./EventUpdate.module.css";
 import BannerImageIcon from "../../assets/images/BannerImageIcon.png";
 import DetailImageIcon from "../../assets/images/DetailImageIcon.png";
 import { SendLoginPageIfNotLogin } from "../../utils/LoginUtils";
 import icon from "../../assets/images/i-icon.webp";
+
+import { sendAxiosMediaPostRequest } from "../../utils/userUtils";
+import { loginState } from "../../atoms";
+import { useRecoilState } from "recoil";
+
 export default function EventUpdate() {
   SendLoginPageIfNotLogin();
   const [formData, setFormData] = useState<EventFormState>({
@@ -15,7 +19,7 @@ export default function EventUpdate() {
     eventStartDate: null,
     eventEndDate: null,
   });
-
+  const [loginToken, setLoginToken] = useRecoilState<JwtToken>(loginState);
   const [bannerImagePreview, setBannerImagePreview] = useState<string | null>(
     BannerImageIcon
   );
@@ -95,47 +99,37 @@ export default function EventUpdate() {
     e.preventDefault();
 
     const formDataToSend = new FormData();
-    formDataToSend.append("event_title", formData.eventTitle);
-    formDataToSend.append(
-      "event_banner_image",
-      formData.eventBannerImage || ""
-    );
-    formDataToSend.append(
-      "event_detail_image",
-      formData.eventDetailImage || ""
-    );
-    formDataToSend.append("event_start_date", formData.eventStartDate || "");
-    formDataToSend.append("event_end_date", formData.eventEndDate || "");
+    formDataToSend.append("eventTitle", formData.eventTitle);
+    formDataToSend.append("eventBannerImage", formData.eventBannerImage || "");
+    formDataToSend.append("eventDetailImage", formData.eventDetailImage || "");
+    formDataToSend.append("eventStartDate", formData.eventStartDate || "");
+    formDataToSend.append("eventEndDate", formData.eventEndDate || "");
 
-    try {
-      const response = await axios.post(
-        `${import.meta.env.VITE_BACK_PORT}/event/event-update`,
-        formDataToSend,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
+    const url = `${import.meta.env.VITE_BACK_PORT}/event/event-update`;
+
+    sendAxiosMediaPostRequest(url, loginToken, setLoginToken, formDataToSend)
+      .then((response) => {
+        console.log("파일전송" + response);
+
+        if (response.data === "이벤트생성 완료") {
+          console.log("이벤트 생성에 성공하였습니다.");
+          alert("이벤트 등록성공!");
+          setFormData({
+            eventTitle: "",
+            eventBannerImage: null,
+            eventDetailImage: null,
+            eventStartDate: null,
+            eventEndDate: null,
+          });
+          setBannerImagePreview(BannerImageIcon);
+          setDetailImagePreview(DetailImageIcon);
+        } else {
+          console.error("이벤트 생성에 실패하였습니다.");
         }
-      );
-
-      if (response.data === "success") {
-        console.log("이벤트 생성에 성공하였습니다.");
-        alert("이벤트 등록성공!");
-        setFormData({
-          eventTitle: "",
-          eventBannerImage: null,
-          eventDetailImage: null,
-          eventStartDate: null,
-          eventEndDate: null,
-        });
-        setBannerImagePreview(BannerImageIcon);
-        setDetailImagePreview(DetailImageIcon);
-      } else {
-        console.error("이벤트 생성에 실패하였습니다.");
-      }
-    } catch (error) {
-      console.error("error", error);
-    }
+      })
+      .catch((error) => {
+        console.error("error", error);
+      });
   };
 
   return (
