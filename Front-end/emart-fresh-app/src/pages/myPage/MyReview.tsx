@@ -152,11 +152,7 @@ export default function MyReview() {
                     alt="상품"
                   />
                 </div>
-                <div className={styles.reviewText}>
-                  {review.productTitle.split("&")[0]}
-                  <br />
-                  {review.productTitle.split("&")[1]}
-                </div>
+                <div className={styles.reviewText}>{review.productTitle}</div>
                 <div className={styles.reviewText}>{review.reviewContent}</div>
                 <div className={styles.reviewText}>
                   {new Date(review.reviewDate).toLocaleDateString()}
@@ -174,6 +170,7 @@ export default function MyReview() {
           </div>
         ))
       )}
+
       <div className={styles.paginationList}>
         {reviews && reviews.length > 0 && (
           <Pagination
