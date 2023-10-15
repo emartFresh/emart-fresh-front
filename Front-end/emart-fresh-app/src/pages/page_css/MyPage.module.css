@@ -58,6 +58,8 @@
   align-items: center;
 }
 .myTitleId {
+  min-width: 100px;
+  margin-left: 20px;
   grid-column-start: 1;
   grid-column-end: 2;
   grid-row-start: 1;
@@ -72,6 +74,7 @@
 }
 
 .myTitleName {
+  margin-left: 20px;
   grid-column-start: 1;
   grid-column-end: 2;
   grid-row-start: 2;
@@ -86,6 +89,7 @@
 }
 
 .myTitleEmail {
+  margin-left: 20px;
   grid-column-start: 1;
   grid-column-end: 2;
   grid-row-start: 3;
@@ -155,5 +159,17 @@
 @media screen and (max-width: 1600px) {
   .mypageMain {
     margin-left: 250px;
+  }
+}
+@media screen and (max-width: 400px) {
+  .sideMenuBarWrapper {
+    display: none;
+  }
+  .sideMenuBar {
+    display: none;
+  }
+  .mypageMain {
+    margin-left: 0px;
+    width: 2vw;
   }
 }
