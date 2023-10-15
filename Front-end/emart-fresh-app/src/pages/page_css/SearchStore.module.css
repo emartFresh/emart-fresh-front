@@ -67,7 +67,6 @@
 
 .productWrapper {
   width: 100%;
-  margin: 1rem;
 }
 
 .productSelectWrapper {
@@ -164,4 +163,45 @@
   padding-bottom: 0.3rem;
   border-radius: 0 1rem 1rem 0;
   border-left: 3px solid white;
+}
+
+/* -----------------product item --------- */
+.productItemWrapper {
+  padding: 0.5rem;
+  cursor: pointer;
+}
+
+.productItemWrapper:hover {
+  background-color: #e1e1e1;
+}
+
+.productTitle {
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 1rem;
+}
+
+.productOrderCount {
+  font-size: 0.9rem;
+}
+/* -----------------store item --------- */
+.storeItemWrapper {
+  padding: 0.5rem;
+  cursor: pointer;
+}
+
+.storeItemWrapper:hover {
+  background-color: #e1e1e1;
+}
+
+.storeitle {
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 1rem;
+}
+
+.storeAddress {
+  font-size: 0.8rem;
 }

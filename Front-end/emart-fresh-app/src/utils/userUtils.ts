@@ -86,7 +86,7 @@ export async function sendAxiosGetRequest(
         console.log("리프래쉬 에러");
         //const currentURL = window.location.href;
         // localStorage.setItem("preUrl", currentURL); // 수정 필요 리다이렉트 코드
-        location.href = "/login";
+        //location.href = "/login";
         throw refreshError;
       }
     } else {
@@ -146,7 +146,7 @@ export async function sendAxiosPostRequest(
         );
       } catch (refreshError) {
         console.log("리프래쉬 에러");
-        location.href = "/login";
+        //location.href = "/login";
         throw refreshError;
       }
     } else {

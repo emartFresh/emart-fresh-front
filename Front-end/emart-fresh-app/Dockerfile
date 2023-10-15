@@ -10,17 +10,10 @@ COPY . .
 
 RUN npm run build 
 
-#certbot
-FROM certbot/certbot:latest as certbot
-
-RUN certbot certonly --webroot --webroot-path=/var/www/certbot --email wjdjwl545@naver.com --agree-tos -d pick-fresh24.com
-
-#nginx 
 FROM nginx:1.25-alpine
 
-COPY nginx.conf /etc/nginx/nginx.conf
-
 COPY --from=builder /app/dist/ /usr/share/nginx/html
+COPY nginx.conf /etc/nginx/nginx.conf
 
 EXPOSE 80
 
