@@ -121,6 +121,7 @@ declare global {
     storeId?: number; // 가게 아이디
     memberId: number | MemberData; // 멤버 아이디
     address: string; // 주소
+    storeAddress?: string;
     storeName?: string;
     storeLongitude?: number;
     storeLatitude?: number;

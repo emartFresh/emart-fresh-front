@@ -5,7 +5,13 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 
 import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
-import { kakaoAccessToken, loginState, loginTypeState, cartItemCount, naverAccessToken } from "../atoms";
+import {
+  kakaoAccessToken,
+  loginState,
+  loginTypeState,
+  cartItemCount,
+  naverAccessToken,
+} from "../atoms";
 import { sendAxiosRequest } from "../utils/userUtils";
 import Badge, { BadgeProps } from "@mui/material/Badge";
 import { styled } from "@mui/material/styles";
@@ -34,23 +40,25 @@ export default function Nav() {
       refreshToken: "",
     });
 
-    const checkLogout = confirm('로그아웃하시겠습니까?');
-    if(checkLogout){
-      sendAxiosRequest('/member/logout', 'post', loginToken, setLoginToken, {loginType: loginType, kakaoAccessToken: kakaoToken, naverAccessToken: naverToken})
-      .then(() => {
-        // setLoginToken({
-        //   accessToken: "",
-        //   refreshToken: "",
-        // });
-        setLoginType("");
-        setKakaoToken("");
-        // setNaverToken("");
-        setCartCount(0);
-        toast.success('로그아웃되었습니다.');
+    const checkLogout = confirm("로그아웃하시겠습니까?");
+    if (checkLogout) {
+      sendAxiosRequest("/member/logout", "post", loginToken, setLoginToken, {
+        loginType: loginType,
+        kakaoAccessToken: kakaoToken,
+        naverAccessToken: naverToken,
       })
-      .catch(
-        console.error  
-      )
+        .then(() => {
+          // setLoginToken({
+          //   accessToken: "",
+          //   refreshToken: "",
+          // });
+          setLoginType("");
+          setKakaoToken("");
+          // setNaverToken("");
+          setCartCount(0);
+          toast.success("로그아웃되었습니다.");
+        })
+        .catch(console.error);
     }
   };
 
@@ -109,6 +117,9 @@ export default function Nav() {
           </span>
           <span>
             <Link to="/storeproduct">가게</Link>
+          </span>
+          <span>
+            <Link to="/search-store">지도</Link>
           </span>
           <span>
             <Link to="/eventlist">이벤트</Link>

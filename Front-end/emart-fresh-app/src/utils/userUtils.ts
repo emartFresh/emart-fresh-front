@@ -86,7 +86,7 @@ export async function sendAxiosGetRequest(
         console.log("리프래쉬 에러");
         //const currentURL = window.location.href;
         // localStorage.setItem("preUrl", currentURL); // 수정 필요 리다이렉트 코드
-        location.href = "/login";
+        //location.href = "/login";
         throw refreshError;
       }
     } else {
@@ -146,7 +146,7 @@ export async function sendAxiosPostRequest(
         );
       } catch (refreshError) {
         console.log("리프래쉬 에러");
-        location.href = "/login";
+        //location.href = "/login";
         throw refreshError;
       }
     } else {
@@ -207,7 +207,7 @@ export const sendAxiosRequest = async (
             toast.error(
               "로그인 유효시간이 만료되었습니다. 다시 로그인해주세요."
             );
-            location.href = "/login";
+            //location.href = "/login";
             return;
           });
         // 수정 : 로그인화면으로 보내기
