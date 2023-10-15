@@ -2,7 +2,7 @@
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { DemoContainer, DemoItem } from '@mui/x-date-pickers/internals/demo'
-import dayjs from 'dayjs'
+import dayjs, { Dayjs } from 'dayjs'
 import React from 'react'
 import styles from "./Chart.module.css";
 
@@ -12,11 +12,11 @@ interface PickerProps{
 
 export const PickerCalendar = ({setDate} : PickerProps) => {
     const handleDate = (e: dayjs.Dayjs) => {
-        const year = e.$y;
-        const month = e.$M + 1;
-        const day = e.$D;
-        
-        console.log(year + "/" + month + "/" + day);
+        const dayjs = e as Dayjs;
+        const year = e.year();
+        const month = e.month() + 1;
+        const day = e.date();
+     
         setDate(year + "/" + month + "/" + day);
     }
   return (

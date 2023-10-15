@@ -23,7 +23,8 @@ const Chart = () => {
   }, [date])
 
   const clickButton = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    setSelectOption(e.target.id);
+    const btn = e.target as HTMLButtonElement;
+    setSelectOption(btn.id);
   }
   
   return (
