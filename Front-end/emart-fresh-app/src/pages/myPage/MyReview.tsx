@@ -135,28 +135,26 @@ export default function MyReview() {
         </div>
       ) : (
         reviews.map((review) => (
-          <div key={review.reviewId}>
-            <div className={styles.reviewRating}>
-              <Rating
-                name={`rating-${review.reviewId}`}
-                value={review.reviewScore}
-                readOnly
-              />
+          <div key={review.reviewId} className={styles.reviewWrapper}>
+            <div className={styles.dateAndImg}>
+              <div className={styles.reviewDate}>
+                {new Date(review.reviewDate).toLocaleDateString()}
+              </div>
+              <div className={styles.imageContainer}>
+                <img
+                  src={review.productImgUrl}
+                  className={styles.image}
+                  alt="상품"
+                />
+              </div>
             </div>
-            <div className={styles.reviewWrapper}>
-              <div className={styles.reviewContainer}>
-                <div className={styles.imageContainer}>
-                  <img
-                    src={review.productImgUrl}
-                    className={styles.image}
-                    alt="상품"
-                  />
-                </div>
-                <div className={styles.reviewText}>{review.productTitle}</div>
-                <div className={styles.reviewText}>{review.reviewContent}</div>
-                <div className={styles.reviewText}>
-                  {new Date(review.reviewDate).toLocaleDateString()}
-                </div>
+            <div className={styles.reviewContainer}>
+              <div className={styles.reviewRating}>
+                <Rating
+                  name={`rating-${review.reviewId}`}
+                  value={review.reviewScore}
+                  readOnly
+                />
                 <div>
                   <button
                     className={styles.reviewDetailBtn}
@@ -166,6 +164,8 @@ export default function MyReview() {
                   </button>
                 </div>
               </div>
+              <div className={styles.reviewText}>{review.productTitle}</div>
+              <div className={styles.reviewContent}>{review.reviewContent}</div>
             </div>
           </div>
         ))
