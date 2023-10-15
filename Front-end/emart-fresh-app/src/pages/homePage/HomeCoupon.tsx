@@ -94,7 +94,7 @@ const HomeCoupon = () => {
       )
       .catch(() => {
         console.error()
-        alert('쿠폰받기에 실패했습니다.');      
+        toast.error('쿠폰받기에 실패했습니다.');
       })
     }
   }

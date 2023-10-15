@@ -3,6 +3,7 @@ import { useState } from 'react';
 import axios from 'axios'
 import styled from 'styled-components';
 import ExpiryTime from '../signupPage/ExpiryTime';
+import { toast } from 'react-toastify';
 
 const InquiryFormWrap = styled.div`
     width: 100%;
@@ -100,7 +101,9 @@ const PwInquiry = ({ setPwResetting, pwInquiryId, setPwInquiryId }: PwInquiryPro
         });
     };
 
-    const findUserInfo = async() => {        
+    const findUserInfo = async() => { 
+        // 수정 : 입력 없을때 toast.error('아이디/이름/이메일을 모두 입력해주세요.');
+        
         await axios.post(`${import.meta.env.VITE_BACK_PORT}/member/findPw`,
         {
             memberEmail: formData.inquiryEmail,
@@ -112,8 +115,7 @@ const PwInquiry = ({ setPwResetting, pwInquiryId, setPwInquiryId }: PwInquiryPro
             handleStartTimer();
             // 수정 : 이메일 전송까지 걸리는 시간 로딩 필요 
         }).catch(() => {
-            console.log("일치하는 회원정보가 없습니다.");
-            alert('일치하는 회원 정보가 없음! (임시 알림)');
+            toast.error('일치하는 회원 정보가 없습니다.');
         })
     };
 
@@ -131,11 +133,10 @@ const PwInquiry = ({ setPwResetting, pwInquiryId, setPwInquiryId }: PwInquiryPro
             setEnableResettingBtn(true);
             handleCloseTimer();
             setCompleteCert(true);
-            alert('인증번호가 일치합니다. (임시 알림)');
+            toast.success('인증번호가 일치합니다.');
         })
         .catch(() => {
-            console.log("인증코드 일치하지 않음!!! ");
-            alert('인증번호가 일치하지 않습니다. (임시 알림)');
+            toast.error('인증번호가 일치하지 않습니다.');
         })
     }
 

@@ -141,8 +141,8 @@ const Login = () => {
           }}
         />
         <div className={styles.links}>
-          <p onClick={openModal}>아이디 / 비밀번호 찾기</p>
-          <Link to="/signup">아직 회원이 아니신가요?</Link>
+          <p onClick={openModal} className={styles.inquiryOpen}>아이디 / 비밀번호 찾기</p>
+          <Link to="/signup" className={styles.signupLink}>아직 회원이 아니신가요?</Link>
         </div>
         {isModalOpen && (
           <Modal closeModal={closeModal}>

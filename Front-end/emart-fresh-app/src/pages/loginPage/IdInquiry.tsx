@@ -2,6 +2,7 @@ import { useState } from 'react'
 import styled from 'styled-components';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const InquiryFormWrap = styled.div`
     width: 100%;
@@ -40,16 +41,22 @@ const IdInquiry = () => {
     const [resultId, setResultId] = useState<string>('');
 
         const findId = async() => {
-            await axios.post(`${import.meta.env.VITE_BACK_PORT}/member/findId`, {
-                memberName: inquiryName,
-                memberEmail: inquiryEmail
-            })
-            .then((response) => {
-                console.log(response.data);
-                setResultId(response.data);
-            })
-            .catch(() => console.error()
-            );
+            if(inquiryName === '' || inquiryEmail === ''){
+                toast.error('이름 또는 이메일을 입력해주세요.');
+            }
+
+            if(inquiryName !== '' && inquiryEmail !== ''){
+                await axios.post(`${import.meta.env.VITE_BACK_PORT}/member/findId`, {
+                    memberName: inquiryName,
+                    memberEmail: inquiryEmail
+                })
+                .then((response) => {
+                    console.log(response.data);
+                    setResultId(response.data);
+                })
+                .catch(() => console.error()
+                );
+            }
         }
 
   return (

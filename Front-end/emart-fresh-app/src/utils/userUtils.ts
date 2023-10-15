@@ -184,33 +184,35 @@ export const sendAxiosRequest = async (
       if (error.response?.status === 401) {
         console.log("401error, refreshToken >>> " + loginToken.refreshToken);
         return await axios
-          .post("http://localhost:8080/refreshToken/newAccessToken", {
-            refreshToken: loginToken.refreshToken,
-          })
-          .then((response) => {
-            const newAccessToken = response.data.newAccessToken;
-            setLoginToken({
-              ...loginToken,
-              accessToken: newAccessToken,
-            });
-            return sendAxiosRequest(
-              url,
-              httpMethod,
-              { ...loginToken, accessToken: newAccessToken },
-              setLoginToken,
-              params,
-              ++callStack
-            );
-          })
-          .catch(() => {
-            console.error("refresh error");
-            toast.error(
-              "로그인 유효시간이 만료되었습니다. 다시 로그인해주세요."
-            );
-            location.href = "/login";
-            return;
+        .post("http://localhost:8080/refreshToken/newAccessToken", {
+          refreshToken: loginToken.refreshToken,
+        })
+        .then((response) => {
+          const newAccessToken = response.data.newAccessToken;
+          setLoginToken({
+            ...loginToken,
+            accessToken: newAccessToken,
           });
-        // 수정 : 로그인화면으로 보내기
+          return sendAxiosRequest(
+            url,
+            httpMethod,
+            { ...loginToken, accessToken: newAccessToken },
+            setLoginToken,
+            params,
+            ++callStack
+          );
+        })
+        .catch(() => { // refresh token 만료 status
+          console.error("refresh error");
+          toast.error(
+            "로그인 유효시간이 만료되었습니다. 다시 로그인해주세요."
+          );
+          // axios.post()
+          // location.href = "/login";
+          return;
+        });
+      }else{
+        throw error;
       }
     });
   return result;
