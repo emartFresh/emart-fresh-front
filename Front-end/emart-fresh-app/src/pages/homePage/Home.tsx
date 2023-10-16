@@ -18,7 +18,7 @@ export default function Home() {
 
   useEffect(() => {
     if(isLogined){
-      sendAxiosRequest('/cart/myCartInfoCount', 'get', loginToken, setLoginToken)
+      sendAxiosRequest('/cart/myCartInfoCount', 'get', loginToken, setLoginToken, setCartCount)
       .then((res) => {
         setCartCount(JSON.parse(JSON.stringify(res)));
       })

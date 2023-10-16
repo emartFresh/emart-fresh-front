@@ -19,7 +19,7 @@
   padding: 20px;
   border: 1px solid #ccc;
   border-radius: 15px;
-  background-color: whitesmoke;
+  /* background-color: whitesmoke; */
   /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); */
   box-shadow: 0px 0px 10px 0.5px #f9bb00;
 }
@@ -58,6 +58,8 @@
   align-items: center;
 }
 .myTitleId {
+  min-width: 100px;
+  margin-left: 20px;
   grid-column-start: 1;
   grid-column-end: 2;
   grid-row-start: 1;
@@ -72,6 +74,7 @@
 }
 
 .myTitleName {
+  margin-left: 20px;
   grid-column-start: 1;
   grid-column-end: 2;
   grid-row-start: 2;
@@ -86,6 +89,7 @@
 }
 
 .myTitleEmail {
+  margin-left: 20px;
   grid-column-start: 1;
   grid-column-end: 2;
   grid-row-start: 3;
@@ -139,16 +143,33 @@
 .passwordBtn {
   width: 8.8rem;
   font-size: 0.9rem;
-
-  background-color: rgb(204, 204, 204);
+  color: white;
+  /* background-color: rgb(204, 204, 204); */
 }
 .emailChangeBtn {
-  width: 7.8rem;
+  width: 5.4em;
   font-size: 0.9rem;
-  background-color: rgb(204, 204, 204);
+  color: white;
+  /* color: #f9bb00; */
+  /* border: 3px solid #f95a00; */
+  /* background-color: white; */
+  /* background-color: rgb(204, 204, 204); */
+  background-color: #f9bb00;
 }
 @media screen and (max-width: 1600px) {
   .mypageMain {
     margin-left: 250px;
+  }
+}
+@media screen and (max-width: 415px) {
+  .sideMenuBarWrapper {
+    display: none;
+  }
+  .sideMenuBar {
+    display: none;
+  }
+  .mypageMain {
+    margin-left: 0px;
+    width: 2vw;
   }
 }

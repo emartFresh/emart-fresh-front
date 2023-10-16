@@ -75,6 +75,8 @@
   display: flex;
   margin-bottom: 7px;
   margin-top: 2px;
+  /* border: 1px solid #ccc; */
+  border-radius: 5px;
 }
 
 .inputEmail,
@@ -86,6 +88,7 @@
 }
 
 .modifyBtn {
+  border: 1px solid transparent;
   margin: 2em 0 4.5em 0;
   width: 26em;
   padding: 0.8em 0;
@@ -96,4 +99,8 @@
   width: 26em;
   padding: 0.8em 0;
   background-color: #d3d1d1;
+}
+.passwordVisibility {
+  /* background-color: white; */
+  background-color: #f9bb00;
 }
