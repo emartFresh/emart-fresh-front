@@ -9,6 +9,7 @@ import icon from "../../assets/images/i-icon.webp";
 import { sendAxiosMediaPostRequest } from "../../utils/userUtils";
 import { loginState } from "../../atoms";
 import { useRecoilState } from "recoil";
+import { toast } from "react-toastify";
 
 export default function EventUpdate() {
   SendLoginPageIfNotLogin();
@@ -112,8 +113,7 @@ export default function EventUpdate() {
         console.log("파일전송" + response);
 
         if (response.data === "이벤트생성 완료") {
-          console.log("이벤트 생성에 성공하였습니다.");
-          alert("이벤트 등록성공!");
+          toast.success("이벤트가 등록되었습니다!");
           setFormData({
             eventTitle: "",
             eventBannerImage: null,
@@ -124,11 +124,11 @@ export default function EventUpdate() {
           setBannerImagePreview(BannerImageIcon);
           setDetailImagePreview(DetailImageIcon);
         } else {
-          console.error("이벤트 생성에 실패하였습니다.");
+          toast.error("이벤트 생성에 실패하였습니다.");
         }
       })
       .catch((error) => {
-        console.error("error", error);
+        toast.error("이벤트 등록에 오류가 발생하였습니다", error);
       });
   };
 

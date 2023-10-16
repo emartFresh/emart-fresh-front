@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import styles from "./EventList.module.css";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 interface EventList {
   eventId: string;
@@ -49,7 +50,7 @@ export default function EventEnded() {
         );
       } catch (error) {
         console.error("Error fetching eventlist:", error);
-        alert(error);
+        toast.error("이벤트조회 중 오류가 발생했습니다");
       }
     }
     EventListup();

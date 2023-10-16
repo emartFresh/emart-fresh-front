@@ -12,6 +12,7 @@ import { useRecoilState } from "recoil";
 import { loginState } from "../../atoms";
 import { sendAxiosGetRequest } from "../../utils/userUtils";
 import { GetUserAllInfo } from "../../utils/LoginUtils";
+import { toast } from "react-toastify";
 
 //쿠폰 정보
 interface CouponData {
@@ -64,7 +65,7 @@ export default function MyCoupon() {
         }
       } catch (error) {
         console.error("Error fetching coupons:", error);
-        alert("쿠폰 조회 중 오류가 발생했습니다.");
+        toast.error("쿠폰 조회 중 오류가 발생했습니다.");
       }
     }
 
@@ -123,17 +124,6 @@ export default function MyCoupon() {
               </div>
             ))
           )}
-
-          {/* <div className={styles.paginationList}>
-            {coupons === undefined ||
-              (coupons && coupons.length === 0 && (
-                <Pagination
-                  count={totalPages}
-                  page={currentPage}
-                  onChange={(_event, value) => handlePageChange(value)}
-                />
-              ))}
-          </div> */}
           <div className={styles.paginationList}>
             {coupons && coupons.length > 0 && (
               <Pagination
