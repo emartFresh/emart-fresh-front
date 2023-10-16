@@ -32,7 +32,8 @@ const Login = () => {
   const info = () => toast.info("Info...");
 
   const navigate = useNavigate();
-  const REDIRECT_URL = "http://localhost:5173/login";
+  // const REDIRECT_URL = "http://localhost:5173/login";
+  const REDIRECT_URL = "https://pick-fresh24.com/login";
   const { Kakao } = window;
 
   
