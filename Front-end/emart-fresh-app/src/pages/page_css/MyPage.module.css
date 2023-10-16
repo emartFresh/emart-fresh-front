@@ -147,7 +147,7 @@
   /* background-color: rgb(204, 204, 204); */
 }
 .emailChangeBtn {
-  width: 7.8rem;
+  width: 5.4em;
   font-size: 0.9rem;
   color: white;
   /* color: #f9bb00; */
@@ -161,7 +161,7 @@
     margin-left: 250px;
   }
 }
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 415px) {
   .sideMenuBarWrapper {
     display: none;
   }
