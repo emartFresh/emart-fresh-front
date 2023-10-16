@@ -16,7 +16,6 @@ export default function MyPageMain() {
     <div>
       {isValidUserAuth && <MyPageMenuBar />}
       {isValidUserAuth && <Outlet />}
-      {/* <Outlet></Outlet> */}
     </div>
   );
 }

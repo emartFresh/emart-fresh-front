@@ -1,6 +1,8 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import styles from "../page_css/Login.module.css";
 import axios from 'axios';
 import { useRecoilState } from "recoil";
 import { naverAccessToken, loginState, loginTypeState } from "../../atoms";
@@ -22,7 +24,7 @@ const NaverLogin = () => {
                 script.onload = () => {
                     const naver_id_login = new (window as any).naver_id_login("cK9SlUJ8PJ4TPM9Vuxir", "http://localhost:5173/naverCallBack");
                     const state = naver_id_login.getUniqState();
-                    naver_id_login.setButton("green", 3, 45);
+                    naver_id_login.setButton("green", 3, 50);
                     naver_id_login.setDomain("http://localhost:5173");
                     naver_id_login.setState(state);
                     naver_id_login.init_naver_id_login();
@@ -72,9 +74,7 @@ const NaverLogin = () => {
 
 
     return (
-        <div>
-            <div id="naver_id_login"></div>
-        </div>
+        <div id="naver_id_login" className={styles.naverLoginBtn}></div>
     );
 };
 

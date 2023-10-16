@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useState } from 'react'
+import { toast } from 'react-toastify';
 import styles from '../page_css/PwResetting.module.css';
 
 interface pwresettingProps {
@@ -26,12 +27,12 @@ const PwResetting = ({pwInquiryId, closeModal}: pwresettingProps) => {
         })
         .then((response) => {
             console.log(response.data);
-            alert('비밀번호가 변경되었습니다. 로그인 페이지로 이동합니다. (임시 알림)');
+            toast.success('비밀번호가 변경되었습니다. 다시 로그인 해주세요.');
             closeModal();
         })
         .catch((error) => {
             console.error(error);
-            alert('비밀번호 변경 실패 (임시 알림)');
+            toast.error('비밀번호 변경에 실패했습니다.');
         })
     }
 
