@@ -181,8 +181,8 @@ export default function MyOrder() {
         </Box>
       </Modal>
       <h3>
-        <span className={styles.tossface}>😀</span>
-        {allMember.memberId}님 반갑습니다.
+        <span className={styles.tossface}>😀</span>&nbsp;&nbsp;
+        {allMember.memberId}님 반갑습니다.&nbsp;&nbsp;
         <span className={styles.tossface}>😀</span>
       </h3>
       {orderedProducts === undefined ||

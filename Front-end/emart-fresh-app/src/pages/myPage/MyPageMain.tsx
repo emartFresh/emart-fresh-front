@@ -1,12 +1,22 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 import MyPageMenuBar from "../myPageMenuBar/MyPageMenuBar";
-// import styles from "./sideMunuBar.module.css";
+import { useIsLogin } from "../../utils/LoginUtils";
 
 export default function MyPageMain() {
+  const isValidUserAuth = useIsLogin();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!isValidUserAuth) {
+      navigate("/login");
+    }
+  }, []);
   return (
     <div>
-      <MyPageMenuBar />
-      <Outlet />
+      {isValidUserAuth && <MyPageMenuBar />}
+      {isValidUserAuth && <Outlet />}
+      {/* <Outlet></Outlet> */}
     </div>
   );
 }
