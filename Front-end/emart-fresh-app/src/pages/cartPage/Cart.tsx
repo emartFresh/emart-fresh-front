@@ -102,10 +102,8 @@ const Cart = () => {
           const initItem = initCartItemList.find(
             (item) => item.cartProductId === cart.cartProductId
           );
-
         // cartProductQuantityOfString이 null 또는 빈 문자열("")이면 1로 설정
-        const quantity = cart.cartProductQuantityOfString === null || cart.cartProductQuantityOfString === "" ? 1 : parseInt(cart.cartProductQuantityOfString);
-
+        // const quantity = cart.cartProductQuantityOfString === null || cart.cartProductQuantityOfString === "" ? 1 : parseInt(cart.cartProductQuantityOfString);
           return initItem.cartProductQuantity !== parseInt(cart.cartProductQuantityOfString);
         })
         ?.map((updateItem) => {
@@ -132,8 +130,13 @@ const Cart = () => {
             ...item,
             cartProductQuantityOfString: 
               isMinusBtn
-              ? parseInt(item.cartProductQuantityOfString) - 1 +""
-              : parseInt(item.cartProductQuantityOfString) + 1 +"",
+              ? parseInt(item.cartProductQuantityOfString) - 1 + ""
+              : parseInt(item.cartProductQuantityOfString) + 1 + "",
+
+            cartProductQuantity: 
+            isMinusBtn 
+            ? parseInt(item.cartProductQuantityOfString) - 1
+            : parseInt(item.cartProductQuantityOfString) + 1,
           };
         } else {
           return item;
@@ -152,11 +155,11 @@ const Cart = () => {
           const isValidInput = /^[1-9]\d*$/.test(newValue);
   
           if (newValue.length === 0) {
-            return { ...item, cartProductQuantityOfString: "" };
+            return { ...item, cartProductQuantityOfString: "",};
           }
   
           if (isValidInput) {
-            return { ...item, cartProductQuantityOfString: value };
+            return { ...item, cartProductQuantityOfString: value, cartProductQuantity: parseInt(value)};
           }
         }
         return item;
@@ -169,7 +172,7 @@ const Cart = () => {
       setCartItemList((prevCartItemList) => {
         return prevCartItemList.map((item) => {
           if (item.cartProductId === cartProductId) {
-            return { ...item, cartProductQuantityOfString: "1" };
+            return { ...item, cartProductQuantityOfString: "1", cartProductQuantity: 1 };
           }
           return item;
         });
@@ -353,8 +356,12 @@ const Cart = () => {
                 const selectedItem = cartItemList.find(
                   (item) => item.cartProductId === selectedItemId
                 );
-                totalPrice +=
-                  selectedItem.priceNumber * parseInt(selectedItem.cartProductQuantityOfString);
+                if(selectedItem.cartProductQuantityOfString === ''){
+                  totalPrice === 0;
+                }else{
+                  totalPrice +=
+                    selectedItem.priceNumber * parseInt(selectedItem.cartProductQuantityOfString);
+                }
                 return (
                   <li key={selectedItemId} className={styles.payItemList}>
                     <p>{selectedItem.productTitle}</p>
@@ -368,6 +375,7 @@ const Cart = () => {
                       }
                     />
                   </li>
+
                 );
               })}
             </ul>

@@ -57,7 +57,7 @@ const HomeCoupon = () => {
       })
       .catch(console.error)
     }
-  }, [initialSetter,currentPage])
+  }, [isLogined, initialSetter,currentPage])
 
   const handlePage = (page: number) => {
     setCurrentPage(page);

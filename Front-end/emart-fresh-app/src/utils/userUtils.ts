@@ -166,6 +166,7 @@ export const sendAxiosRequest = async (
   if (callStack >= 10) {
     return { isError: true };
   }
+  console.log("sendAxios!!!!!!!!!!!!!!!!!!!!!!!");
 
   const result = await axios({
     method: httpMethod,
@@ -181,7 +182,7 @@ export const sendAxiosRequest = async (
     .then((response) => response.data)
     .catch(async (error) => {
       console.error("ecatch error status>>> ", error.response?.status);
-      if (error.response?.status === 401) {
+      if (error.response?.status === 401) { 
         console.log("401error, refreshToken >>> " + loginToken.refreshToken);
         return await axios
         .post("http://localhost:8080/refreshToken/newAccessToken", {
@@ -202,14 +203,16 @@ export const sendAxiosRequest = async (
             ++callStack
           );
         })
-        .catch(() => { // refresh token 만료 status
-          console.error("refresh error");
-          toast.error(
-            "로그인 유효시간이 만료되었습니다. 다시 로그인해주세요."
-          );
-          // axios.post()
-          // location.href = "/login";
-          return;
+        .catch((error) => { // refresh token 만료 status
+          if(error.response.data === "Refresh Token이 유효하지 않습니다."){
+            console.log("refresh error >>> " + error.response.data);
+            setLoginToken({
+              accessToken: "",
+              refreshToken: "",
+            });            
+            toast.error("로그인 유효시간이 만료되었습니다. 다시 로그인해주세요.");
+            return;
+          }
         });
       }else{
         throw error;
