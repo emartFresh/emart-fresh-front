@@ -23,7 +23,6 @@ export default function HandleApplyManager() {
     const url = `${import.meta.env.VITE_BACK_PORT}/applymanager/apply-showList`;
     axios.get(url, { params: { page: 1, size: 50 } }).then((res) => {
       setApplyManagetList(res.data.content);
-      console.log("컨텐츠", res.data.content);
     });
   }, []);
 

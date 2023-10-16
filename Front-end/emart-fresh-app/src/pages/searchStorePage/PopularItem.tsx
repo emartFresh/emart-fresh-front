@@ -36,9 +36,9 @@ export default function PopularItem({
       return (
         <div key={inx} className={styles.productItemWrapper}>
           <div className={styles.productTitle}>{ele.productTitle}</div>
-          <div className={styles.productOrderCount}>
+          {/* <div className={styles.productOrderCount}>
             총 주문 횟수 {ele.orderedCount}
-          </div>
+          </div> */}
         </div>
       );
     });

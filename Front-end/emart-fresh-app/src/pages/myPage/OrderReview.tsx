@@ -43,23 +43,25 @@ export default function OrderReview({
 
     console.log("넘기는 값", reviewData);
 
-    sendAxiosPostRequest(url, loginToken, setLoginToken, reviewData).then(
-      (res) => {
+    sendAxiosPostRequest(url, loginToken, setLoginToken, reviewData)
+      .then((res) => {
         toast.success("댓글 쓰기 완료!", {
           position: "top-center",
           autoClose: 1500,
           icon: "✅",
         });
         setShowModal(false);
-      }
-    );
+      })
+      .catch((e) => {
+        toast.error(e.message, {
+          position: "top-center",
+          autoClose: 1500,
+        });
+        setShowModal(false);
+      });
   };
 
   let reviewComponent = <></>;
-
-  console.log("리뷰", review);
-  console.log("리뷰컨텐츠 ", review?.reviewContent);
-
   if (review !== null) {
     reviewComponent = (
       <>

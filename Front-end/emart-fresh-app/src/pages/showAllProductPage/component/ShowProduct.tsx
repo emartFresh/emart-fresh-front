@@ -32,6 +32,21 @@ export default function ShowProduct({
     return (
       <>
         <section key={index} className={styles.productWrapper}>
+          {product.productEvent === 1 ? (
+            <span className={styles.badgeOnePlus}>1+1</span>
+          ) : (
+            <></>
+          )}
+          {product.productEvent === 2 ? (
+            <span className={styles.badgeTwoPlus}>2+1</span>
+          ) : (
+            <></>
+          )}
+          {product.productEvent === 3 ? (
+            <span className={styles.badgeThreePlus}>2+2</span>
+          ) : (
+            <></>
+          )}
           <div className={styles.productImgWrapper}>
             <img
               className={styles.productImg}

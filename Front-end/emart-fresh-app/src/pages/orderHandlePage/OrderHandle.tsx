@@ -142,10 +142,10 @@ export default function OrderHandle() {
             </div>
           </summary>
           <div className={styles.innerListSection}>
-            <span>사진</span>
-            <span>상품명</span>
-            <span>발주량</span>
-            <span>승인 처리</span>
+            <span className={styles.title}>사진</span>
+            <span className={styles.title}>상품명</span>
+            <span className={styles.title}>발주량</span>
+            <span className={styles.title}>승인 처리</span>
           </div>
           {innerListEle(order)}
         </details>

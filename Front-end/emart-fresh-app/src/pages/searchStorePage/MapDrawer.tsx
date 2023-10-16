@@ -45,6 +45,7 @@ export default function MapDrawer({
   const [selectedProductOption, setSelectedProductOption] = useState<number>(1);
   // const [selectedDistance, setSelectedDistance] = useState<number>(5);
   const [selectedProductName, setSelectedProductName] = useState<string>(null);
+  const [searchInputValue, setSearchInputValue] = useState<string>("");
 
   const oneKmBtn = useRef(null);
   const twoKmBtn = useRef(null);
@@ -52,6 +53,12 @@ export default function MapDrawer({
   const kmBtnRefs = [oneKmBtn, twoKmBtn, threeKmBtn];
 
   const drawerRef = useRef(null);
+
+  const handelSearch = () => {
+    console.log("아아아");
+
+    // axios.get();// 수정 : 구현하기
+  };
 
   useEffect(() => {
     const url = `${
@@ -174,8 +181,13 @@ export default function MapDrawer({
               5km
             </button>
             <div className={styles.inputWraaper}>
-              <input className={styles.disInput} type="text" />
-              <button className={styles.searchBtn}>
+              <input
+                onChange={(e) => setSearchInputValue(e.target.value)}
+                value={searchInputValue}
+                className={styles.disInput}
+                type="text"
+              />
+              <button onClick={handelSearch} className={styles.searchBtn}>
                 <TravelExploreIcon />
               </button>
             </div>
@@ -189,8 +201,8 @@ export default function MapDrawer({
               id=""
               onChange={(e) => setSelectedProductOption(Number(e.target.value))}
             >
-              <option value={1}>구매 횟수</option>
-              <option value={2}>평점</option>
+              <option value={1}>평점</option>
+              <option value={2}>판매량</option>
             </select>
           </div>
           <div className={styles.productListWrapper}>

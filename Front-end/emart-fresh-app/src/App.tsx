@@ -39,7 +39,6 @@ import CouponUpdate from "./pages/couponUpdate/CouponUpdate";
 import ManagerOrderStatus from "./pages/managerOrderStatus/ManagerOrderStatus";
 import SearchStore from "./pages/searchStorePage/SearchStorePage";
 
-
 const queryClient = new QueryClient();
 
 function App() {
@@ -77,6 +76,10 @@ function App() {
                   path="/mypageMain/couponupdate"
                   element={<CouponUpdate />}
                 ></Route>
+                <Route
+                  path="/mypageMain/request-order-list"
+                  element={<OrderHandle />}
+                ></Route>
               </Route>
               <Route path="/eventlist" element={<EventList />}></Route>
               <Route
@@ -85,10 +88,7 @@ function App() {
               ></Route>
 
               <Route path="/order-request" element={<OrderRequest />}></Route>
-              <Route
-                path="/request-order-list"
-                element={<OrderHandle />}
-              ></Route>
+
               <Route
                 path="/show-all-product"
                 element={<ShowAllProduct />}

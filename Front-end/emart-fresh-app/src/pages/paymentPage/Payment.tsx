@@ -41,7 +41,6 @@ export default function Payment({ setOpenPayment, cartInfo }: PaymentProps) {
     const items =
       cartInfo &&
       cartInfo.map((item) => {
-        console.log("아이디", item.productId);
         totalPrice +=
           item.priceNumber *
           (1 - appliedCoupon.couponType / 100) * //수정 : productTimeSale (떙처리)적용
@@ -53,8 +52,8 @@ export default function Payment({ setOpenPayment, cartInfo }: PaymentProps) {
           price: item.priceNumber * (1 - appliedCoupon.couponType / 100),
         };
       });
+    console.log("최종값", totalPrice);
 
-    console.log("이거 이거");
     setItemData(items);
     setTotalPriceAf(totalPrice);
   }, [appliedCoupon, cartInfo]);
