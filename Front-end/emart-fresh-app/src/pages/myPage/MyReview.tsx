@@ -11,6 +11,7 @@ import { sendAxiosGetRequest } from "../../utils/userUtils";
 import { GetUserAllInfo } from "../../utils/LoginUtils";
 import review from "../../assets/images/review.png";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 
 // 리뷰 정보
 interface ReviewData {
@@ -90,13 +91,13 @@ export default function MyReview() {
         setReviews((prevReviews) =>
           prevReviews.filter((review) => review.reviewId !== reviewId)
         );
-        alert("삭제!");
+        toast.success("삭제되었습니다");
       } else {
-        alert("삭제실패.");
+        toast.error("삭제되지 않았습니다.");
       }
     } catch (error) {
       console.error("Error fetching reviews:", error);
-      alert("삭제 중 오류가 발생했습니다.");
+      toast.error("삭제 중 오류가 발생했습니다.");
     }
   }
 
