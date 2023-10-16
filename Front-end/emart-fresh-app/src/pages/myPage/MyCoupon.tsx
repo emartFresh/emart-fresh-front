@@ -85,8 +85,8 @@ export default function MyCoupon() {
     <div>
       <div className={styles.couponMain}>
         <h4>
-          <span className={styles.tossface}>😀</span>
-          {allMember.memberId}님 반갑습니다.
+          <span className={styles.tossface}>😀</span>&nbsp;&nbsp;
+          {allMember.memberId}님 반갑습니다.&nbsp;&nbsp;
           <span className={styles.tossface}>😀</span>
         </h4>
         <div>
