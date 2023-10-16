@@ -3,15 +3,15 @@ import { useRecoilState } from "recoil";
 import { loginState } from "../../atoms";
 import { sendAxiosPostRequest } from "../../utils/userUtils";
 import styles from "./CouponUpdate.module.css";
-// import styles from "./abc.module.css";
+import { toast } from "react-toastify";
 
 // 쿠폰 정보
 interface CouponData {
   couponId?: number;
   memberId?: string | MemberData;
   couponExpirationDate: string;
-  couponType: 10 | 20 | 30;
-  couponTitle?: string;
+  couponType: null | 10 | 20 | 30;
+  couponTitle: string;
   couponDel?: number;
 }
 
@@ -20,21 +20,20 @@ const CouponUpdate = () => {
 
   const [formData, setFormData] = useState<CouponData>({
     couponTitle: "",
-    couponType: 10,
+    couponType: null,
     couponExpirationDate: "",
   });
 
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (
+    e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>
+  ) => {
     const { name, value } = e.target;
     if (name === "couponExpirationDate") {
       const selectedDate = new Date(value);
       const currentDate = new Date();
 
       if (selectedDate < currentDate) {
-        setFormData((formData) => ({
-          ...formData,
-          [name]: currentDate.toISOString().split("T")[0],
-        }));
+        toast.error("쿠폰 종료 날짜는 현재 날짜 이후로 설정해야 합니다");
         return;
       }
     }
@@ -48,16 +47,13 @@ const CouponUpdate = () => {
   const handleCouponUpdate = async (e: FormEvent) => {
     e.preventDefault();
     if (formData.couponTitle.trim() === "") {
-      alert("쿠폰 이름을 입력해주세요");
-      console.log("쿠폰이름.", formData.couponTitle);
+      toast.error("쿠폰 이름을 입력해주세요");
       return;
-    } else if (![10, 20, 30].includes(formData.couponType)) {
-      alert("10,20,30 중에 입력하세요");
-      console.log("10,20,30 중에 입력하세요", formData.couponType);
+    } else if (formData.couponType === null) {
+      toast.error("쿠폰 할인률을 입력해주세요");
       return;
     } else if (formData.couponExpirationDate.trim() === "") {
-      alert("쿠폰종료 날짜를 입력해주세요");
-      console.log("쿠폰이름.", formData.couponTitle);
+      toast.error("쿠폰종료 날짜를 입력해주세요");
       return;
     }
 
@@ -68,7 +64,6 @@ const CouponUpdate = () => {
     };
 
     const url = `${import.meta.env.VITE_BACK_PORT}/coupon/coupon-create`;
-
     sendAxiosPostRequest(url, loginToken, setLoginToken, data)
       .then((res) => {
         console.log("쿠폰생성: " + res);
@@ -77,16 +72,16 @@ const CouponUpdate = () => {
         console.log("쿠폰 이름", formData.couponTitle);
         console.log("쿠폰 타입", formData.couponType);
         console.log(res);
-        // response.status === 200
+
         if (res === "쿠폰생성 완료") {
-          console.log("쿠폰 생성에 성공했엉");
+          toast.success("쿠폰 등록이 완료 되었습니다!");
         } else {
-          console.error("쿠폰 생성에 실패하였어");
+          toast.error("쿠폰 등록이 되지 않았습니다!");
         }
 
         setFormData({
           couponTitle: "",
-          couponType: 10,
+          couponType: null,
           couponExpirationDate: "",
         });
       })
@@ -109,14 +104,17 @@ const CouponUpdate = () => {
         />
 
         <div className={styles.couponUpdateType}>쿠폰 할인률</div>
-        <input
-          type="text"
+        <select
           name="couponType"
           value={formData.couponType}
           className={styles.couponUpdateInput}
           onChange={handleInputChange}
-        />
-
+        >
+          <option value={""} />
+          <option value={10}>10</option>
+          <option value={20}>20</option>
+          <option value={30}>30</option>
+        </select>
         <div className={styles.couponUpdateDate}>쿠폰 종료 날짜</div>
         <input
           type="date"

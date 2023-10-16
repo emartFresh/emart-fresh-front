@@ -12,6 +12,7 @@
   padding: 40px;
   border-radius: 16px;
   margin-bottom: 10px;
+  min-width: 2vw;
 }
 .couponUpdateTitle {
   font-weight: bold;
@@ -32,8 +33,18 @@
   outline: none;
 }
 
-@media screen and (max-width: 1600px) {
+@media screen and (max-width: 1200px) {
   .couponUpdateMain {
-    margin-left: 200px;
+    margin-left: 250px;
+  }
+}
+@media screen and (max-width: 640px) {
+  .couponUpdateMain {
+    min-width: 300px;
+  }
+}
+@media screen and (max-width: 415px) {
+  .couponUpdateMain {
+    margin-left: 0px;
   }
 }
