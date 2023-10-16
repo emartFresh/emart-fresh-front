@@ -31,9 +31,9 @@ export default function CommonModalBasicEmail({
       </button>
       <CommonModal isOpen={isModalOpen} onClose={closeModal}>
         <ModifyEmail
-        // ischange={ischange}
-        // setIsChange={setIsChange}
-        // onClose={closeModal}
+          ischange={ischange}
+          setIsChange={setIsChange}
+          onClose={closeModal}
         />
         {/* <ChangeEmail */}
         {/* // ischange={ischange}
