@@ -17,6 +17,13 @@ interface MapDrawerProps {
   setSelectedDistance: React.Dispatch<React.SetStateAction<number>>;
 }
 
+interface SearchingData {
+  userLatitude: number;
+  userLongitude: number;
+  n: number;
+  partOfStoreName: string;
+}
+
 export interface ReviewSummary {
   productTitle: string;
   avgReviewScore: number;
@@ -45,7 +52,7 @@ export default function MapDrawer({
   const [selectedProductOption, setSelectedProductOption] = useState<number>(1);
   // const [selectedDistance, setSelectedDistance] = useState<number>(5);
   const [selectedProductName, setSelectedProductName] = useState<string>(null);
-  const [searchInputValue, setSearchInputValue] = useState<string>("");
+  const [searchingTerm, setSearchingTerm] = useState<string>("");
 
   const oneKmBtn = useRef(null);
   const twoKmBtn = useRef(null);
@@ -54,10 +61,18 @@ export default function MapDrawer({
 
   const drawerRef = useRef(null);
 
-  const handelSearch = () => {
-    console.log("아아아");
+  const handleSearch = () => {
+    const searchingData: SearchingData = {
+      n: selectedDistance,
+      partOfStoreName: searchingTerm,
+      userLatitude: userLocation.latitude,
+      userLongitude: userLocation.latitude,
+    };
 
-    // axios.get();// 수정 : 구현하기
+    const url = `${import.meta.env.VITE_BACK_PORT}/store/get-storeList`;
+    axios.get(url, { params: searchingData }).then((res) => {
+      setStoreData(res?.data); // 수정 : 테스트 하기
+    });
   };
 
   useEffect(() => {
@@ -182,12 +197,11 @@ export default function MapDrawer({
             </button>
             <div className={styles.inputWraaper}>
               <input
-                onChange={(e) => setSearchInputValue(e.target.value)}
-                value={searchInputValue}
+                onChange={(e) => setSearchingTerm(e.target.value)}
                 className={styles.disInput}
                 type="text"
               />
-              <button onClick={handelSearch} className={styles.searchBtn}>
+              <button className={styles.searchBtn} onClick={handleSearch}>
                 <TravelExploreIcon />
               </button>
             </div>
@@ -201,8 +215,8 @@ export default function MapDrawer({
               id=""
               onChange={(e) => setSelectedProductOption(Number(e.target.value))}
             >
-              <option value={1}>평점</option>
-              <option value={2}>판매량</option>
+              <option value={1}>구매 횟수</option>
+              <option value={2}>평점</option>
             </select>
           </div>
           <div className={styles.productListWrapper}>
