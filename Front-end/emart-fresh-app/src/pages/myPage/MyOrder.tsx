@@ -12,6 +12,7 @@ import { Link } from "react-router-dom";
 import { Modal, Box } from "@mui/material";
 import axios from "axios";
 import OrderReview from "./OrderReview";
+import { toast } from "react-toastify";
 
 interface OrderedProductData {
   memberId: string | MemberData;
@@ -92,7 +93,7 @@ export default function MyOrder() {
         }
       } catch (error) {
         console.error("Error fetching orders:", error);
-        alert("주문내역 조회 중 오류가 발생했습니다.");
+        toast.error("주문내역 조회 중 오류가 발생했습니다.");
       }
     }
 
