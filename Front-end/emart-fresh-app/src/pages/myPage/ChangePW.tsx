@@ -7,11 +7,8 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import { sendAxiosPostRequest } from "../../utils/userUtils";
 import { loginState } from "../../atoms";
 import { useRecoilState } from "recoil";
+import { toast } from "react-toastify";
 
-interface Validity {
-  isPasswordValid: boolean;
-  isPasswordConfirmValid: boolean;
-}
 interface ChangePWState {
   memberId: string;
   memberPw: string;
@@ -22,6 +19,11 @@ interface ChangePWState {
 interface Messages {
   password: string;
   passwordConfirm: string;
+}
+// 인증번호
+interface Validity {
+  isPasswordValid: boolean;
+  isPasswordConfirmValid: boolean;
 }
 interface ModalProps {
   onClose: () => void;
@@ -70,20 +72,17 @@ const ChangePw = ({ onClose }: ModalProps) => {
         console.log("현재비밀번호 memberPW", memberPw);
         console.log("새비밀번호 newPW", newPw);
 
-        if (res.status === 200) {
-          alert("비밀번호가 성공적으로 변경되었습니다.");
-        } else if (res.status === 400) {
-          alert("현재 비밀번호가 잘못되었습니다. 다시 시도해주세요.");
+        if (res === "비밀번호변경 성공") {
+          toast.success("비밀번호가 성공적으로 변경되었습니다.");
+        } else {
+          toast.error("현재 비밀번호가 잘못되었습니다. 다시 시도해주세요.");
         }
-        // } else {
-        //   alert("비밀번호 변경 중에 문제가 발생했습니다.");
-        // }
-        alert("비밀번호가 성공적으로 변경되었습니다.");
+
         onClose();
       })
       .catch((error) => {
         console.error("Error:", error);
-        alert("비밀번호 변경 중에 문제가 발생했습니다.");
+        toast.error("비밀번호 변경 중에 문제가 발생했습니다.");
       });
   }
 
@@ -179,7 +178,10 @@ const ChangePw = ({ onClose }: ModalProps) => {
                 setMemberPw(e.target.value);
               }}
             />
-            <button onClick={toggleMemberPwVisibility}>
+            <button
+              className={styles.passwordVisibility}
+              onClick={toggleMemberPwVisibility}
+            >
               {memberPwVisible ? <VisibilityIcon /> : <VisibilityOffIcon />}
             </button>
           </span>
@@ -199,7 +201,10 @@ const ChangePw = ({ onClose }: ModalProps) => {
                 validatePassword(e.target.value);
               }}
             />
-            <button onClick={toggleNewPwVisibility}>
+            <button
+              className={styles.passwordVisibility}
+              onClick={toggleNewPwVisibility}
+            >
               {newPwVisible ? <VisibilityIcon /> : <VisibilityOffIcon />}
             </button>
           </span>
@@ -220,7 +225,10 @@ const ChangePw = ({ onClose }: ModalProps) => {
               }}
             />
 
-            <button onClick={toggleNewPwVisibility}>
+            <button
+              className={styles.passwordVisibility}
+              onClick={toggleNewPwVisibility}
+            >
               {newPwVisible ? <VisibilityIcon /> : <VisibilityOffIcon />}
             </button>
           </span>

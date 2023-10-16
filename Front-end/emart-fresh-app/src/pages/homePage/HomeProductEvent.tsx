@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import styles from "../page_css/HomeProductEvent.module.css";
 import axios from 'axios';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -14,14 +14,25 @@ import './styles.css';
 
 import { Autoplay, Pagination, Navigation } from 'swiper/modules';
 import { SwiperProps } from 'swiper/react';
+import { useNavigate } from 'react-router-dom';
 
 interface HomeProductEventProps{
   eventProductData:ProductData[];
 }
 
-const HomeProductEvent = ({eventProductData}:HomeProductEventProps) => {
+const HomeProductEvent = () => {
   const [selectedEventType, setSelectedEventType] = useState<number>(1);
   const currentMonth = new Date().getMonth() +1;
+  const [eventProductData, setEventProductHomeData] = useState<ProductData[]>([]);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    axios.get(`${import.meta.env.VITE_BACK_PORT}/product/all-product-list`)
+    .then((response) => {
+      setEventProductHomeData(response.data);
+    })
+    .catch((error) => console.log(error));
+    }, []);
 
   const handleEventType = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     const btn = e.target as HTMLButtonElement;
@@ -37,6 +48,10 @@ const HomeProductEvent = ({eventProductData}:HomeProductEventProps) => {
         break; 
     }        
   } 
+
+  const showProductDetail = (productId: number) => {
+    navigate('/product/detail?product-id='+ productId)
+  }
 
   return (
     <div className={styles.productEventContainer}>
@@ -102,17 +117,18 @@ const HomeProductEvent = ({eventProductData}:HomeProductEventProps) => {
             return chunks;
           }, []).map((chunk:ProductData[], chunkIndex:number) => (
             <SwiperSlide key={chunkIndex}>
-              {chunk.map((product: ProductData, productId: number) => (
-              <section key={productId} className={styles.productWrapper}>
+              {chunk.map((product: ProductData) => (
+              <section key={product.productId} className={styles.productWrapper}>
                   <div className={styles.productImgWrapper}>
                     <img
                       className={styles.productImg}
                       src={product.productImgUrl}
                       alt="no img"
+                      onClick={() => showProductDetail(product.productId)}
                     />
                   </div>
                   <span className={styles.itemLine}></span>
-                  <div className={styles.titleWrapper}>
+                  <div className={styles.titleWrapper} onClick={() => showProductDetail(product.productId)}>
                       {product.productTitle}
                   </div>
                   <div className={styles.priceInfo}>{product.priceString}</div>

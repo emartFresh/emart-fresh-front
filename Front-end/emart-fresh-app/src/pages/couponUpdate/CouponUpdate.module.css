@@ -3,46 +3,48 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  /* text-align: center; */
-  /* width: 80vw; */
-  /* height: 250px; */
-  /* max-width: 900px; */
-  /* min-width: 450px; */
-  /* margin: auto; */
   margin-top: 40px;
   margin-bottom: 30px;
   border-radius: 16px;
 }
 .couponUpdateContainer {
-  display: flex;
-  flex-direction: column;
-  /* justify-content: center; */
-  /* align-items: center; */
   border: 1px solid #ccc;
-  padding: 20px;
+  padding: 40px;
   border-radius: 16px;
   margin-bottom: 10px;
+  min-width: 2vw;
 }
 .couponUpdateTitle {
   font-weight: bold;
-  padding: auto;
-  margin: auto;
+}
+.couponUpdateType {
+  font-weight: bold;
+  margin-top: 13px;
+}
+.couponUpdateDate {
+  font-weight: bold;
+  margin-top: 13px;
 }
 .couponUpdateInput {
   width: 100%;
   padding: 10px;
-  margin: 10px;
   border: 1px solid hsl(0, 0%, 80%);
   border-radius: 5px;
   outline: none;
 }
-.couponDate {
-  font-weight: bold;
-  margin-bottom: 10px;
-}
 
-@media screen and (max-width: 1600px) {
+@media screen and (max-width: 1200px) {
   .couponUpdateMain {
-    margin-left: 200px;
+    margin-left: 250px;
+  }
+}
+@media screen and (max-width: 640px) {
+  .couponUpdateMain {
+    min-width: 300px;
+  }
+}
+@media screen and (max-width: 415px) {
+  .couponUpdateMain {
+    margin-left: 0px;
   }
 }

@@ -1,0 +1,68 @@
+.chartTitle{
+    text-align: center;
+}
+
+.chartContainer{
+    width: 1200px;
+    display: flex;
+    margin: 0 auto;
+    margin-bottom: 1rem;
+    /* display: grid;
+    grid-template-columns: 300px 300px 400px;
+    grid-template-rows: 400px 400px; */
+}
+
+.selectDateContainer{
+    text-align: center;
+    margin: 0 auto;
+}
+
+.selectBtnWrap{
+    margin: 3rem 0 5rem 0;
+}
+
+.pickerContainer{
+    display: flex;
+    justify-content: center;
+}
+
+.weeklyOptionBtn{
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.monthlyOptionBtn{
+    border-radius: 0;
+}
+
+.yearlyOptionBtn{
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.weeklyOptionBtn:hover, .monthlyOptionBtn:hover, .yearlyOptionBtn:hover{
+    background-color: white;
+    color: #f9bb00;
+    border: 1px solid #f9bb00;
+}
+
+.selectedOptionBtn{
+    background-color: white;
+    color: #f9bb00;
+    border: 1px solid #f9bb00;
+}
+
+  /* .salesChart{
+grid-column: 1 / 3;
+grid-row: 1 / 3;
+}
+
+.productTypeChart{
+grid-column: 3 / 4;
+grid-row: 1 / 2;
+}
+
+.productChart{
+grid-column: 3 / 4;
+grid-row: 2 / 3;
+} */

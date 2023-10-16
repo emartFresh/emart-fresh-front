@@ -3,15 +3,16 @@ import styles from "../page_css/MyOrder.module.css";
 import { useState, useEffect } from "react";
 import Pagination from "@mui/material/Pagination";
 import icon_warning from "../../assets/images/icon_warning.svg";
-import { constSelector, useRecoilState } from "recoil";
+import { useRecoilState } from "recoil";
 import { loginState } from "../../atoms";
 import { sendAxiosGetRequest } from "../../utils/userUtils";
 import { GetUserAllInfo } from "../../utils/LoginUtils";
 import order from "../../assets/images/order.png";
 import { Link } from "react-router-dom";
-import { Modal, Box, TextareaAutosize } from "@mui/material";
+import { Modal, Box } from "@mui/material";
 import axios from "axios";
 import OrderReview from "./OrderReview";
+import { toast } from "react-toastify";
 
 interface OrderedProductData {
   memberId: string | MemberData;
@@ -92,7 +93,7 @@ export default function MyOrder() {
         }
       } catch (error) {
         console.error("Error fetching orders:", error);
-        alert("주문내역 조회 중 오류가 발생했습니다.");
+        toast.error("주문내역 조회 중 오류가 발생했습니다.");
       }
     }
 
@@ -119,7 +120,6 @@ export default function MyOrder() {
     });
   };
 
-  allMember.memberId;
   return (
     <div className={styles.orderMain}>
       <Modal
@@ -181,8 +181,8 @@ export default function MyOrder() {
         </Box>
       </Modal>
       <h3>
-        <span className={styles.tossface}>😀</span>
-        {allMember.memberId}님 반갑습니다.
+        <span className={styles.tossface}>😀</span>&nbsp;&nbsp;
+        {allMember.memberId}님 반갑습니다.&nbsp;&nbsp;
         <span className={styles.tossface}>😀</span>
       </h3>
       {orderedProducts === undefined ||
@@ -241,7 +241,7 @@ export default function MyOrder() {
                         handleDetail(orderedProduct?.orderedProductId)
                       }
                     >
-                      상세보기
+                      리뷰쓰기
                     </button>
                   </div>
                 </div>
@@ -251,11 +251,13 @@ export default function MyOrder() {
         ))
       )}
       <div className={styles.paginationList}>
-        <Pagination
-          count={totalPages}
-          page={currentPage}
-          onChange={(_event, value) => handlePageChange(value)}
-        />
+        {orderedProducts && orderedProducts.length > 0 && (
+          <Pagination
+            count={totalPages}
+            page={currentPage}
+            onChange={(_event, value) => handlePageChange(value)}
+          />
+        )}
       </div>
     </div>
   );

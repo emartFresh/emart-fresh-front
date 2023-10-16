@@ -4,6 +4,7 @@ import { useState } from "react";
 import CommonModal from "./CommonModal";
 import ModifyEmail from "./ModifyEmail";
 import styles from "../page_css/MyPage.module.css";
+
 interface ModifyEmailProps {
   ischange: boolean;
   setIsChange: React.Dispatch<React.SetStateAction<boolean>>;
@@ -26,7 +27,7 @@ export default function CommonModalBasicEmail({
   return (
     <div>
       <button className={styles.emailChangeBtn} onClick={openModal}>
-        이메일 수정
+        수정
       </button>
       <CommonModal isOpen={isModalOpen} onClose={closeModal}>
         <ModifyEmail
@@ -34,6 +35,11 @@ export default function CommonModalBasicEmail({
           setIsChange={setIsChange}
           onClose={closeModal}
         />
+        {/* <ChangeEmail */}
+        {/* // ischange={ischange}
+        // setIsChange={setIsChange}
+        // onClose={closeModal}
+        /> */}
       </CommonModal>
     </div>
   );

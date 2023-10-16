@@ -20,6 +20,7 @@ declare global {
 
   // 수정
   interface responseData {
+    // [key: string]: string | number | boolean | undefined| ExtendedCoupon[];
     [key: string]: string | number | boolean | undefined;
   }
 
@@ -111,11 +112,16 @@ declare global {
     couponDel?: number;
   }
 
+  interface ExtendedCoupon extends CouponData {
+    existing: boolean;
+  }
+
   // 가게 정보
   interface StoreData {
     storeId?: number; // 가게 아이디
     memberId: number | MemberData; // 멤버 아이디
     address: string; // 주소
+    storeAddress?: string;
     storeName?: string;
     storeLongitude?: number;
     storeLatitude?: number;

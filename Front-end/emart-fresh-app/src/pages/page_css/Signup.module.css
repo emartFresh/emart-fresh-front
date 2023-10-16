@@ -7,11 +7,14 @@
     margin-top: 2em;
     margin-bottom: 1.8em;
     font-size: 1.8em;
+    text-align: center;
 }
 
 .signupForm{
     margin: 0 auto;
     width: 48em;
+    display: flex;
+    flex-direction: column;
 }
 
 .inputWrap{
@@ -94,7 +97,7 @@
 }
 
 .signupBtn{
-    margin: 2em 0 4.5em 0;
+    margin: 2em auto 4.5em auto;
     /* width: 50%; */
     width: 30em;
     padding: 0.8em 0;

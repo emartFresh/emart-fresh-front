@@ -11,6 +11,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { IsLogin } from '../../utils/LoginUtils';
 import NaverLogin from "./NaverLogin";
+import kakaoLogin from "../../assets/images/kakao_login.png";
 
 const Login = () => {
   const [memberId, setMemberId] = useState<string>("");
@@ -31,7 +32,8 @@ const Login = () => {
   const info = () => toast.info("Info...");
 
   const navigate = useNavigate();
-  const REDIRECT_URL = "http://localhost:5173/login";
+  // const REDIRECT_URL = "http://localhost:5173/login";
+  const REDIRECT_URL = "https://pick-fresh24.com/login";
   const { Kakao } = window;
 
   
@@ -81,10 +83,6 @@ const Login = () => {
         })
         .catch(console.error);
     }
-
-    // 수정 : 로그인했을때도 뜸..
-    
-
   },[]);
 
   const openModal = (): void => {
@@ -144,8 +142,8 @@ const Login = () => {
           }}
         />
         <div className={styles.links}>
-          <p onClick={openModal}>아이디 / 비밀번호 찾기</p>
-          <Link to="/signup">아직 회원이 아니신가요?</Link>
+          <p onClick={openModal} className={styles.inquiryOpen}>아이디 / 비밀번호 찾기</p>
+          <Link to="/signup" className={styles.signupLink}>아직 회원이 아니신가요?</Link>
         </div>
         {isModalOpen && (
           <Modal closeModal={closeModal}>
@@ -156,20 +154,19 @@ const Login = () => {
           로그인
         </button>
         <hr />
-        <p>SNS 로그인</p>
-        <a
-          id="kakao-login-btn"
-          onClick={loginWithKakao}
-          className={styles.kakaoLoginBtn}
-        >
-          <img
-            src="https://k.kakaocdn.net/14/dn/btroDszwNrM/I6efHub1SN5KCJqLm1Ovx1/o.jpg"
-            width="222"
-            alt="카카오 로그인 버튼"
-            className={styles.kakaoLoginBtn}
-          />
-        </a>
-        <NaverLogin />
+        <h6 className={styles.snsLoginTitle}>SNS 로그인</h6>
+        <div className={styles.snsBtnWrap}>
+          <a id="kakao-login-btn" >
+            <img
+              onClick={loginWithKakao}
+              src={kakaoLogin}
+              width="220"
+              alt="카카오 로그인 버튼"
+              className={styles.kakaoLoginBtn}
+            />
+          </a>
+          <NaverLogin />
+        </div>
       </div>
     </div>
   );

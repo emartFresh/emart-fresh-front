@@ -27,8 +27,14 @@
     height: 100%;
     object-fit: cover;
 }
+
+.homeSwiper .swiper-slide img:hover {
+  cursor: pointer;
+}
+
 .homeSwiper .swiper-button-prev, .homeSwiper .swiper-button-next{
     color: rgba(0, 0, 0, 0.8);
+    padding: 2rem;
 }
 
 .eventProductSwiper {
