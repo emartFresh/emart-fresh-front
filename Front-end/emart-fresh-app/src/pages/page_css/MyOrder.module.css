@@ -37,7 +37,10 @@
   color: black;
   font-size: 16px;
 }
-
+.orderBtn {
+  display: flex;
+  justify-content: center;
+}
 .orderDetailBtn {
   /* margin: 2em 0 4.5em 0; */
   width: 8em;

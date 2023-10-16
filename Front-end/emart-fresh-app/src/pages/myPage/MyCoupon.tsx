@@ -102,7 +102,7 @@ export default function MyCoupon() {
               <span style={{ fontSize: "1.2rem" }}>
                 고객님이 보유하신 쿠폰이 없습니다
               </span>
-              <br />
+
               {/* <div>다양한 쿠폰과 혜택을 받아보세요.</div> */}
               <div>
                 <Link to="/mycoupon" className={styles.couponBtn}>

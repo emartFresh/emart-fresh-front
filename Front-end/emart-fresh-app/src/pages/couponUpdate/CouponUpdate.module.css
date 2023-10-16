@@ -8,11 +8,12 @@
   border-radius: 16px;
 }
 .couponUpdateContainer {
+  width: 500px;
   border: 1px solid #ccc;
   padding: 40px;
   border-radius: 16px;
   margin-bottom: 10px;
-  min-width: 2vw;
+  min-width: 400;
 }
 .couponUpdateTitle {
   font-weight: bold;
@@ -33,18 +34,31 @@
   outline: none;
 }
 
-@media screen and (max-width: 1200px) {
+@media screen and (max-width: 1400px) {
   .couponUpdateMain {
     margin-left: 250px;
+  }
+  .couponUpdateContainer {
+    margin-left: 150px;
   }
 }
 @media screen and (max-width: 640px) {
   .couponUpdateMain {
     min-width: 300px;
   }
+  .couponUpdateContainer {
+    min-width: 300px;
+  }
 }
 @media screen and (max-width: 415px) {
   .couponUpdateMain {
-    margin-left: 0px;
+    margin: auto;
+  }
+  .couponUpdateContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: auto;
+    width: 350px;
   }
 }
