@@ -21,11 +21,19 @@
 .couponItemContainer {
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
   padding: 0.5rem 1rem 0.5rem 1rem;
 }
 
 .couponItemContainer:hover {
   background-color: #e1e1e1;
+}
+
+.couponSelectBtn {
+  background-color: skyblue;
+  color: white;
+  padding: 0.3rem 0.5rem 0.3rem 0.5rem;
 }
 
 .couponContainer {

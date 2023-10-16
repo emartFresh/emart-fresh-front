@@ -7,6 +7,7 @@ import {
   sendAxiosPostRequest,
   sendAxiosGetRequest,
 } from "../../utils/userUtils";
+import { toast } from "react-toastify";
 
 import { Coupon } from "./Payment";
 import { useEffect, useState } from "react";
@@ -21,12 +22,14 @@ interface DopayProp {
   itemData: ItemData[];
   totalPriceAf: number;
   appliedCoupon: Coupon;
+  setOpenPayment: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export default function Dopay({
   itemData,
   totalPriceAf,
   appliedCoupon,
+  setOpenPayment,
 }: DopayProp) {
   const [loginToken, setLoginToken] = useRecoilState<JwtToken>(loginState);
   const [myCartStoreId, setMyCartStoreId] = useState<number>();
@@ -42,10 +45,9 @@ export default function Dopay({
   }, []);
 
   const deleteMyCoupon = () => {
-    // 수정 : 테스트하기
-    const url = `${import.meta.env.VITE_BACK_PORT}/coupon//coupon-delete`;
+    const url = `${import.meta.env.VITE_BACK_PORT}/coupon/coupon-delete`;
     sendAxiosPostRequest(url, loginToken, setLoginToken, {
-      couponId: appliedCoupon,
+      couponId: appliedCoupon.couponId,
     }).then((res) => {
       console.log("쿠폰 사용하였슴", res);
     });
@@ -137,6 +139,8 @@ export default function Dopay({
       saveToOrderList();
       if (appliedCoupon !== null && appliedCoupon !== undefined) {
         deleteMyCoupon();
+        setOpenPayment(false);
+        toast.success("결제되었습니다 👏🏻");
       }
       console.log("부트 페이 응답 ", res);
     });
@@ -148,6 +152,7 @@ export default function Dopay({
         결제하기
       </button>
       <button onClick={saveToOrderList}>결제하기2</button>
+      <button onClick={deleteMyCoupon}>쿠폰 깎기</button>
     </div>
   );
 }
