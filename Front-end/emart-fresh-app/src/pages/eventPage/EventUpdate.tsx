@@ -189,12 +189,12 @@ export default function EventUpdate() {
                 onChange={handleFileChange}
                 ref={eventBannerImageInputRef}
               />
-              <div className={styles.bannerImagePreview}>
+              <div className={styles.bannerImagePrev}>
                 {bannerImagePreview && (
                   <img
                     src={bannerImagePreview}
                     alt="Banner Image Preview"
-                    style={{ width: "500px" }}
+                    style={{ width: "70%" }}
                   />
                 )}
               </div>
@@ -215,7 +215,7 @@ export default function EventUpdate() {
                   <img
                     src={detailImagePreview}
                     alt="Detail Image Preview"
-                    style={{ width: "500px" }}
+                    style={{ width: "70%" }}
                   />
                 )}
               </div>
