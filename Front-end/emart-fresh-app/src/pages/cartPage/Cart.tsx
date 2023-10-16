@@ -44,7 +44,8 @@ const Cart = () => {
       "/cart/getCartInfo",
       "get",
       loginToken,
-      setLoginToken
+      setLoginToken,
+      setCartCount
     ).then((response) => {
       console.log("response > ", response);
       const res: CartData[] = JSON.parse(JSON.stringify(response));
@@ -80,6 +81,7 @@ const Cart = () => {
         "post",
         loginToken,
         setLoginToken,
+        setCartCount,
         updateListRef.current
       )
         .then((res) => console.log(res))
@@ -228,7 +230,8 @@ const Cart = () => {
       "/cart/removeProduct?cartProductId=" + cartProductId,
       "delete",
       loginToken,
-      setLoginToken
+      setLoginToken,
+      setCartCount
     )
       .then((res) => {
         setCartItemList((prevList) =>

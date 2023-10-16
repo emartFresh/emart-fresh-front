@@ -160,6 +160,7 @@ export const sendAxiosRequest = async (
   httpMethod: string,
   loginToken: JwtToken,
   setLoginToken: SetterOrUpdater<JwtToken>,
+  setCartCount:SetterOrUpdater<number>,
   params?: Params | Array<object>,
   callStack: number = 0
 ): Promise<responseData> => {
@@ -199,6 +200,7 @@ export const sendAxiosRequest = async (
             httpMethod,
             { ...loginToken, accessToken: newAccessToken },
             setLoginToken,
+            setCartCount,
             params,
             ++callStack
           );
@@ -209,7 +211,8 @@ export const sendAxiosRequest = async (
             setLoginToken({
               accessToken: "",
               refreshToken: "",
-            });            
+            });
+            setCartCount(0);
             toast.error("로그인 유효시간이 만료되었습니다. 다시 로그인해주세요.");
             return;
           }
