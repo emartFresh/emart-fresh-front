@@ -57,7 +57,7 @@ const HomeCoupon = () => {
       })
       .catch(console.error)
     }
-  }, [initialSetter,currentPage])
+  }, [isLogined, initialSetter,currentPage])
 
   const handlePage = (page: number) => {
     setCurrentPage(page);
@@ -94,7 +94,7 @@ const HomeCoupon = () => {
       )
       .catch(() => {
         console.error()
-        alert('쿠폰받기에 실패했습니다.');      
+        toast.error('쿠폰받기에 실패했습니다.');
       })
     }
   }
