@@ -42,7 +42,7 @@ export default function SalesChart() {
   };
 
   return (
-    <div style={{ maxWidth: '600px' }} className={styles.salesChart}>
+    <div style={{ maxWidth: '1200px' }} className={styles.salesChart}>
       <HighchartsReact highcharts={Highcharts} options={options} />
     </div>
   );

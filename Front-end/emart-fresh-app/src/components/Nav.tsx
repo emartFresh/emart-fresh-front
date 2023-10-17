@@ -18,6 +18,8 @@ import { styled } from "@mui/material/styles";
 import IconButton from "@mui/material/IconButton";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { toast } from "react-toastify";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faRightToBracket } from "@fortawesome/free-solid-svg-icons";
 
 export default function Nav() {
   const navigate = useNavigate();
@@ -81,7 +83,10 @@ export default function Nav() {
                 Logout
               </Link>
             ) : (
-              <Link to="/login">Login</Link>
+              // <i class="fa-solid fa-right-to-bracket"></i>
+              <Link to="/login">
+                {/* <FontAwesomeIcon icon={faRightToBracket}/> */}
+                 Login</Link>
             )}
           </span>
           <span>

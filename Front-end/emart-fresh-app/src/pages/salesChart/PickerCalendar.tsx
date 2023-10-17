@@ -17,7 +17,7 @@ export const PickerCalendar = ({setDate} : PickerProps) => {
         const month = e.month() + 1;
         const day = e.date();
      
-        setDate(year + "/" + month + "/" + day);
+        setDate(year + "-" + month + "-" + day);
     }
   return (
     <div className={styles.pickerContainer}>

@@ -49,7 +49,7 @@ const Cart = () => {
     ).then((response) => {
       console.log("response > ", response);
       const res: CartData[] = JSON.parse(JSON.stringify(response));
-      setCartItemList(res.map(item => {
+      setCartItemList(res?.map(item => {
         return {...item, cartProductQuantityOfString: item.cartProductQuantity+""}
       }));
       setInitCartItemList(res);

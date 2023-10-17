@@ -8,18 +8,40 @@ import { PickerCalendar } from './PickerCalendar';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { useRecoilState } from 'recoil';
-import { loginState } from '../../atoms';
+import { cartItemCount, loginState } from '../../atoms';
+import { IsLogin } from '../../utils/LoginUtils';
+import { sendAxiosRequest } from '../../utils/userUtils';
+import dayjs from 'dayjs';
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 const Chart = () => {
   const [loginToken, setLoginToken] = useRecoilState<JwtToken>(loginState);
+  const [cartCount, setCartCount] = useRecoilState<number>(cartItemCount);
   const [selectOption, setSelectOption] = useState('weekly');
-  const [date, setDate] = useState<string>('');
+  const nowYear = dayjs().year();
+  const nowMonth = dayjs().month()+1;
+  const nowDate = dayjs().date();
+  const [date, setDate] = useState<string>(nowYear + "-" + nowMonth + "-" + nowDate);
+  const isLogined = IsLogin();
+  const navigate = useNavigate();
+
 
   useEffect(() => {
-    // sendAxiosRequest('', 'get', loginToken, setLoginToken, {})
-    //   .then(() => {})
-    //   .catch();
+    if(!isLogined){
+      toast.error('로그인이 필요한 서비스입니다');
+      navigate('/login');
+      return;
+    }
+
+    if(isLogined){
+    sendAxiosRequest('/mypage/saleschart', 'get', loginToken, setLoginToken, setCartCount, {searchDate:date, period:selectOption})
+    .then((response) => {
+      console.log("chartData >>> " + response);
+    })
+    .catch(console.error);
     console.log(date);
+    }
   }, [date])
 
   const clickButton = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
@@ -48,8 +70,10 @@ const Chart = () => {
         </div>
         
         <div className={styles.chartContainer}>
-            <SalesChart/>
-            <div>
+            <div className={styles.lineChart}>
+              <SalesChart/>
+            </div>
+            <div className={styles.pieCharts}>
               <ProductTypeChart/>
               <ProductChart/>
             </div>

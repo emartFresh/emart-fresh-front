@@ -5,6 +5,8 @@
 .chartContainer{
     width: 1200px;
     display: flex;
+    flex-direction: column;
+    justify-content: center;
     margin: 0 auto;
     margin-bottom: 1rem;
     /* display: grid;
@@ -50,6 +52,16 @@
     background-color: white;
     color: #f9bb00;
     border: 1px solid #f9bb00;
+}
+
+.lineChart{
+    display: flex;
+    justify-content: center;
+}
+
+.pieCharts{
+    display: flex;
+    
 }
 
   /* .salesChart{
