@@ -31,7 +31,8 @@ const HomeCoupon = () => {
         // responseData 타입에 ExtendedCoupon[] 만 넣어준경우 
         // const content:ExtendedCoupon[] = res.contnet;
         // setCoupondata(content);
-
+        console.log(res);
+        
         const response: ExtendedCoupon[] = JSON.parse(JSON.stringify(res.content));
         setCoupondata(response);
 
@@ -41,7 +42,6 @@ const HomeCoupon = () => {
         //   setCoupondata(content);
         // }
         setTotalPages(JSON.parse(JSON.stringify(res.totalPages)));
-        console.log(res);
       })
       .catch(console.error)
     }else{
@@ -54,7 +54,7 @@ const HomeCoupon = () => {
       .then((res) => {
         setCoupondata(res.data.content);
         setTotalPages(res.data.totalPages);
-        console.log(JSON.parse(JSON.stringify(res.data.content)));
+        // console.log(JSON.parse(JSON.stringify(res.data.content)));
       })
       .catch(console.error)
     }

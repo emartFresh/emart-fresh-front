@@ -1,10 +1,18 @@
-import React from 'react';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import React, { useState } from 'react';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import styles from './Chart.module.css';
 import './chart.css';
 
 export default function SalesChart() {
+  const [salesData, setSalseData] = useState({});
+
+  fetch('/data.json')
+  .then((response) => {
+    console.log(response);  
+  })
+
   const options = {
     colors: ['#f9bb00', '#333333'],
     chart: {
@@ -41,8 +49,13 @@ export default function SalesChart() {
     ],
   };
 
+  const chartStyle = {
+    maxWidth: '1000px',
+    width: '100%',
+  };
+
   return (
-    <div style={{ maxWidth: '1200px' }} className={styles.salesChart}>
+    <div style={chartStyle} className={styles.salesChart}>
       <HighchartsReact highcharts={Highcharts} options={options} />
     </div>
   );

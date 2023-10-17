@@ -12,6 +12,8 @@ import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import cartNull from "../../assets/images/cartNull.png";
 import cartCalcNull from "../../assets/images/cartCalcNull.png";
 import Payment from "../paymentPage/Payment";
+import { useNavigate } from "react-router-dom";
+import { useIsLogin } from "../../utils/LoginUtils";
 
 // 이벤트 없을때 없는표시
 // grid -> flex : wrap 
@@ -32,7 +34,9 @@ const Cart = () => {
   const [initCartItemList, setInitCartItemList] = useState<CartData[]>([]);
   const [updateCartItemList, setUpdateCartItemList] = useState<Array<object>>([]);
   // const [dialogOpen, setDialogOpen] = useState<boolean>(false);
-  const [agreements, setAgreements] = useState<object>({});
+  // const [agreements, setAgreements] = useState<object>({});
+  const navigate = useNavigate();
+  const isLogined = useIsLogin();
 
   const updateListRef = useRef(updateCartItemList);
   let totalPrice = 0;
@@ -40,21 +44,26 @@ const Cart = () => {
 
   //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   useEffect(() => {
-    sendAxiosRequest(
-      "/cart/getCartInfo",
-      "get",
-      loginToken,
-      setLoginToken,
-      setCartCount
-    ).then((response) => {
-      console.log("response > ", response);
-      const res: CartData[] = JSON.parse(JSON.stringify(response));
-      setCartItemList(res?.map(item => {
-        return {...item, cartProductQuantityOfString: item.cartProductQuantity+""}
-      }));
-      setInitCartItemList(res);
-      setCartCount(res.length);
-    });
+
+    if(isLogined){
+      sendAxiosRequest(
+        "/cart/getCartInfo",
+        "get",
+        loginToken,
+        setLoginToken,
+        setCartCount
+      )
+      .then((response) => {
+        console.log("response > ", response);
+        const res: CartData[] = JSON.parse(JSON.stringify(response));
+        setCartItemList(res?.map(item => {
+          return {...item, cartProductQuantityOfString: item.cartProductQuantity+""}
+        }));
+        setInitCartItemList(res);
+        setCartCount(res.length);
+      })
+      .catch(console.error);
+    }
 
     window.addEventListener("scroll", () => {
       const cartCalculate = document.querySelector(
@@ -296,7 +305,7 @@ const Cart = () => {
                       handleDeleteItem(item.cartProductId);
                     }}
                   />
-                  <img src={image} alt="" className={styles.productImage} />
+                  <img src={item.productImgUrl} alt="product Image" className={styles.productImage} />
                   <p className={styles.productTitle}>{item.productTitle}</p>
                   <p className={styles.productPrice}>{item.priceNumber}</p>
                   <p className={styles.quantityControl}>

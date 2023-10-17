@@ -4,8 +4,9 @@
 }
 
 .allCheckWrap{
+    max-width: 90rem;
     width: 88%;
-    padding: 3rem 0 1rem 0;
+    padding: 3rem 0 1rem 1rem;
     margin: 0 auto;
     display: table;
     table-layout: fixed;
@@ -43,7 +44,7 @@
 }
 
 .cartProducts{
-    width: 60%;
+    width: 70%;
     /* display: grid;
     grid-template-columns: repeat(4, 25%); */    
     display: flex;
@@ -51,7 +52,6 @@
     gap: 1.6%; /* 각 항목 간 간격 설정 */
     margin-right: 1rem;
     z-index: 0;
-    
 }
 
 .cartNullWrap{
@@ -81,7 +81,7 @@
 
 .cartCalculate{
     width: 30%;
-    height: 56vh;
+    height: 34rem;
     border: 0.05rem solid rgba(0, 0, 0, 0.6);
     border-radius: 0.5rem;
     position: sticky;
@@ -97,11 +97,15 @@
     position: relative;
     display: flex;
     flex-direction: column;    
-    width: 200px;
+    width: 14rem;
     height: 20rem;
     border: 0.5px solid rgba(0, 0, 0, 0.6);
     border-radius: 1rem;
     padding: 1rem;
+}
+
+.cartPorduct:hover{
+  border-color: #f9bb00;
 }
 
 .cartProduct span{
