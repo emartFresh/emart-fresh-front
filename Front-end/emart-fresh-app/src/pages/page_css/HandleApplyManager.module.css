@@ -9,6 +9,7 @@
 
 .applyManagerLink {
   text-decoration: none;
+  margin: 1rem;
 }
 
 .applyManagerLink:hover {
@@ -24,6 +25,7 @@
   border: 1px solid #e1e1e1;
   border-radius: 0.5rem;
   width: 300px;
+  margin: 0.3rem;
   transition: transform 0.2s ease;
 }
 

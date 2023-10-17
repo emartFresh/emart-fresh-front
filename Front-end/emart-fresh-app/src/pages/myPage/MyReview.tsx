@@ -11,6 +11,7 @@ import { sendAxiosGetRequest } from "../../utils/userUtils";
 import { GetUserAllInfo } from "../../utils/LoginUtils";
 import review from "../../assets/images/review.png";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 
 // 리뷰 정보
 interface ReviewData {
@@ -90,13 +91,13 @@ export default function MyReview() {
         setReviews((prevReviews) =>
           prevReviews.filter((review) => review.reviewId !== reviewId)
         );
-        alert("삭제!");
+        toast.success("삭제되었습니다");
       } else {
-        alert("삭제실패.");
+        toast.error("삭제되지 않았습니다.");
       }
     } catch (error) {
       console.error("Error fetching reviews:", error);
-      alert("삭제 중 오류가 발생했습니다.");
+      toast.error("삭제 중 오류가 발생했습니다.");
     }
   }
 
@@ -111,8 +112,8 @@ export default function MyReview() {
   return (
     <div className={styles.reviewMain}>
       <h3>
-        <span className={styles.tossface}>😀</span>
-        {allMember.memberId}님 반갑습니다.
+        <span className={styles.tossface}>😀</span>&nbsp;&nbsp;
+        {allMember.memberId}님 반갑습니다.&nbsp;&nbsp;
         <span className={styles.tossface}>😀</span>
       </h3>
 
@@ -135,32 +136,26 @@ export default function MyReview() {
         </div>
       ) : (
         reviews.map((review) => (
-          <div key={review.reviewId}>
-            <div className={styles.reviewRating}>
-              <Rating
-                name={`rating-${review.reviewId}`}
-                value={review.reviewScore}
-                readOnly
-              />
+          <div key={review.reviewId} className={styles.reviewWrapper}>
+            <div className={styles.dateAndImg}>
+              <div className={styles.reviewDate}>
+                {new Date(review.reviewDate).toLocaleDateString()}
+              </div>
+              <div className={styles.imageContainer}>
+                <img
+                  src={review.productImgUrl}
+                  className={styles.image}
+                  alt="상품"
+                />
+              </div>
             </div>
-            <div className={styles.reviewWrapper}>
-              <div className={styles.reviewContainer}>
-                <div className={styles.imageContainer}>
-                  <img
-                    src={review.productImgUrl}
-                    className={styles.image}
-                    alt="상품"
-                  />
-                </div>
-                <div className={styles.reviewText}>
-                  {review.productTitle.split("&")[0]}
-                  <br />
-                  {review.productTitle.split("&")[1]}
-                </div>
-                <div className={styles.reviewText}>{review.reviewContent}</div>
-                <div className={styles.reviewText}>
-                  {new Date(review.reviewDate).toLocaleDateString()}
-                </div>
+            <div className={styles.reviewContainer}>
+              <div className={styles.reviewRating}>
+                <Rating
+                  name={`rating-${review.reviewId}`}
+                  value={review.reviewScore}
+                  readOnly
+                />
                 <div>
                   <button
                     className={styles.reviewDetailBtn}
@@ -170,16 +165,21 @@ export default function MyReview() {
                   </button>
                 </div>
               </div>
+              <div className={styles.reviewText}>{review.productTitle}</div>
+              <div className={styles.reviewContent}>{review.reviewContent}</div>
             </div>
           </div>
         ))
       )}
+
       <div className={styles.paginationList}>
-        <Pagination
-          count={totalPages}
-          page={currentPage}
-          onChange={(event, value) => handlePageChange(value)}
-        />
+        {reviews && reviews.length > 0 && (
+          <Pagination
+            count={totalPages}
+            page={currentPage}
+            onChange={(_event, value) => handlePageChange(value)}
+          />
+        )}
       </div>
     </div>
   );

@@ -154,6 +154,66 @@ export async function sendAxiosPostRequest(
     }
   }
 }
+
+export async function sendAxiosMediaPostRequest(
+  url: string,
+  jwtToken: JwtToken,
+  setLoginToken: any,
+  queryParams: null | object = null,
+  callStack: number = 0
+): Promise<any> {
+  console.log("post 콜스택", callStack);
+  if (callStack >= 5) return null; // callStack이 5 이상이면 null을 반환합니다.
+
+  try {
+    console.log("post쿼리 파람", queryParams);
+
+    const response = await axios.post(url, queryParams, {
+      headers: {
+        Authorization: `Bearer ${jwtToken.accessToken}`,
+        refreshToken: jwtToken.refreshToken,
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    console.log("데이터", response.data);
+    return response.data;
+  } catch (err) {
+    if (err instanceof AxiosError && err.response?.status === 401) {
+      try {
+        // 새로운 액세스 토큰을 사용하여 요청을 재시도
+        console.log("401에러 발생!!!");
+        const res = await axios.post(
+          `${import.meta.env.VITE_BACK_PORT}/refreshToken/newAccessToken`,
+          jwtToken
+        );
+
+        const newJwtToken: JwtToken = {
+          refreshToken: jwtToken.refreshToken,
+          accessToken: res.data.newAccessToken,
+        };
+
+        console.log("세팅전 값 전 ", res.data.newAccessToken);
+        console.log("세팅전 값", newJwtToken);
+        setLoginToken(newJwtToken);
+
+        // 재귀 호출에서 반환 값을 명시적으로 반환합니다.
+        return await sendAxiosPostRequest(
+          url,
+          newJwtToken,
+          setLoginToken,
+          queryParams,
+          ++callStack
+        );
+      } catch (refreshError) {
+        console.log("리프래쉬 에러");
+        location.href = "/login";
+        throw refreshError;
+      }
+    } else {
+      throw err;
+    }
+  }
+}
 //yewon=========================================================
 export const sendAxiosRequest = async (
   url: string,

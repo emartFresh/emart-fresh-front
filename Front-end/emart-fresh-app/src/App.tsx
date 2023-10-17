@@ -36,8 +36,8 @@ import CouponUpdate from "./pages/couponUpdate/CouponUpdate";
 
 import ManagerOrderStatus from "./pages/managerOrderStatus/ManagerOrderStatus";
 import SearchStore from "./pages/searchStorePage/SearchStorePage";
-import Chart from "./pages/salesChart/Chart";
 
+import Chart from "./pages/salesChart/Chart";
 
 const queryClient = new QueryClient();
 
@@ -52,6 +52,7 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/:coupon" element={<Home />} />
               <Route path="/search-store" element={<SearchStore />} />
+
               <Route path="/mypageMain" element={<MyPageMain />}>
                 <Route index element={<MyPage />} />
                 <Route path="/mypageMain/myorder" element={<MyOrder />} />
@@ -74,6 +75,10 @@ function App() {
                   path="/mypageMain/couponupdate"
                   element={<CouponUpdate />}
                 ></Route>
+                <Route
+                  path="/mypageMain/request-order-list"
+                  element={<OrderHandle />}
+                ></Route>
               </Route>
               <Route path="/eventlist" element={<EventList />}></Route>
               <Route
@@ -82,10 +87,7 @@ function App() {
               ></Route>
 
               <Route path="/order-request" element={<OrderRequest />}></Route>
-              <Route
-                path="/request-order-list"
-                element={<OrderHandle />}
-              ></Route>
+
               <Route
                 path="/show-all-product"
                 element={<ShowAllProduct />}

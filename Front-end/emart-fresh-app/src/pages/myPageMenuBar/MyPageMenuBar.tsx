@@ -13,6 +13,7 @@ import {
 import { loginState } from "../../atoms";
 import { useRecoilState } from "recoil";
 import { sendAxiosGetRequest } from "../../utils/userUtils";
+import { toast } from "react-toastify";
 
 const MyPageMenuBar = () => {
   const [memberData, setMemberData] = useState<MemberData[]>([]);
@@ -30,15 +31,10 @@ const MyPageMenuBar = () => {
           loginToken,
           setLoginToken
         );
-        console.log("완료 후 토큰", loginToken);
-        console.log("Axios Response:", response);
-
         setMemberData(response.data);
-        console.log("멤버 아이디:", response.memberId);
-        console.log("멤버Auth:", response.memberAuth);
       } catch (error) {
         console.error("Error fetching mypageMenuBar:", error);
-        alert("오류가 발생했습니다.");
+        toast.error("오류가 발생했습니다.");
       }
     };
     getMemberAuth();

@@ -16,8 +16,7 @@
   margin-bottom: 1rem;
   /* margin-left: 250px; */
   padding: 0.5rem;
-  border: 1px solid grey;
-  box-shadow: 2px 2px 5px 2px rgba(0, 0, 0, 0.5);
+  box-shadow: 2px 2px 5px 2px rgba(0, 0, 0, 0.2);
   border-radius: 16px;
   text-align: center;
   transition: transform 0.3s ease-in-out;
@@ -57,16 +56,18 @@
   align-items: center;
 }
 .couponBtn {
-  background-color: #333333;
+  display: flex;
+  justify-content: center;
+  /* background-color: #333333;
   border-radius: 8px;
   padding: 0.3rem;
-  color: whitesmoke;
+  color: whitesmoke; */
 }
 .couponNoItem {
-  display: flex;
+  /* display: flex;c
+  flex-direction: column;
   justify-self: center;
-  align-self: center;
-  text-align: center;
+  align-self: center; */
 }
 @media screen and (max-width: 1600px) {
   .couponMain {

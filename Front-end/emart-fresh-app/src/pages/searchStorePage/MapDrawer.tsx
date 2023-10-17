@@ -17,6 +17,13 @@ interface MapDrawerProps {
   setSelectedDistance: React.Dispatch<React.SetStateAction<number>>;
 }
 
+interface SearchingData {
+  userLatitude: number;
+  userLongitude: number;
+  n: number;
+  partOfStoreName: string;
+}
+
 export interface ReviewSummary {
   productTitle: string;
   avgReviewScore: number;
@@ -45,6 +52,7 @@ export default function MapDrawer({
   const [selectedProductOption, setSelectedProductOption] = useState<number>(1);
   // const [selectedDistance, setSelectedDistance] = useState<number>(5);
   const [selectedProductName, setSelectedProductName] = useState<string>(null);
+  const [searchingTerm, setSearchingTerm] = useState<string>("");
 
   const oneKmBtn = useRef(null);
   const twoKmBtn = useRef(null);
@@ -52,6 +60,20 @@ export default function MapDrawer({
   const kmBtnRefs = [oneKmBtn, twoKmBtn, threeKmBtn];
 
   const drawerRef = useRef(null);
+
+  const handleSearch = () => {
+    const searchingData: SearchingData = {
+      n: selectedDistance,
+      partOfStoreName: searchingTerm,
+      userLatitude: userLocation.latitude,
+      userLongitude: userLocation.latitude,
+    };
+
+    const url = `${import.meta.env.VITE_BACK_PORT}/store/get-storeList`;
+    axios.get(url, { params: searchingData }).then((res) => {
+      setStoreData(res?.data); // 수정 : 테스트 하기
+    });
+  };
 
   useEffect(() => {
     const url = `${
@@ -174,8 +196,12 @@ export default function MapDrawer({
               5km
             </button>
             <div className={styles.inputWraaper}>
-              <input className={styles.disInput} type="text" />
-              <button className={styles.searchBtn}>
+              <input
+                onChange={(e) => setSearchingTerm(e.target.value)}
+                className={styles.disInput}
+                type="text"
+              />
+              <button className={styles.searchBtn} onClick={handleSearch}>
                 <TravelExploreIcon />
               </button>
             </div>

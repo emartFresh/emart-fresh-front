@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { GetUserAllInfo } from "../../utils/LoginUtils";
 import styles from "../page_css/ApplyManager.module.css";
 import axios from "axios";
+import { convertDateToShortForm } from "../../utils/dateUtils";
 
 interface ApplyData {
   applied: boolean;
@@ -11,7 +12,7 @@ interface ApplyData {
   memberId: string;
 }
 
-export default function ApplyForm() {
+export default function ApplyForm({ showModal }: { showModal: boolean }) {
   const userInfo = GetUserAllInfo();
   const [applyData, setApplyData] = useState<ApplyData>();
 
@@ -32,7 +33,7 @@ export default function ApplyForm() {
         console.log("데이터ㅓ", res.data);
         setApplyData(res.data);
       });
-  }, []);
+  }, [showModal]);
 
   return (
     <div className={styles.applyManagerWrapper}>
@@ -50,7 +51,7 @@ export default function ApplyForm() {
           </tr>
           <tr>
             <th>신청일</th>
-            <td>{applyData?.applyDate}</td>
+            <td>{convertDateToShortForm(applyData?.applyDate)}</td>
           </tr>
           <tr>
             <th>사업자 등록증</th>

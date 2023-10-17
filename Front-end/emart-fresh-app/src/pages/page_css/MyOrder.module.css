@@ -37,7 +37,10 @@
   color: black;
   font-size: 16px;
 }
-
+.orderBtn {
+  display: flex;
+  justify-content: center;
+}
 .orderDetailBtn {
   /* margin: 2em 0 4.5em 0; */
   width: 8em;
@@ -63,9 +66,9 @@
 }
 
 .detailWrapper {
+  width: 100%;
   margin: 0.5rem;
   padding: 0.5rem;
-
   border-bottom: 1.5px solid #e1e1e1;
 }
 
@@ -115,4 +118,13 @@
   .orderMain {
     margin-left: 250px;
   }
+}
+
+.reviewWrapper {
+  background-color: #e1e1e1;
+  width: 100%;
+  text-align: left;
+  padding: 1em;
+  border-radius: 0.5em;
+  color: gray;
 }
