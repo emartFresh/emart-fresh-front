@@ -14,7 +14,7 @@ import cartCalcNull from "../../assets/images/cartCalcNull.png";
 import Payment from "../paymentPage/Payment";
 
 // 이벤트 없을때 없는표시
-// grid -> flex : wrap 
+// grid -> flex : wrap
 // 네이버 / 카카오 버튼 사이즈
 // toast alert 모두 적용
 
@@ -30,7 +30,9 @@ const Cart = () => {
   const [paymentItems, setPaymentItems] = useState<CartData[]>([]);
   const [openPayment, setOpenPayment] = useState<boolean>(false);
   const [initCartItemList, setInitCartItemList] = useState<CartData[]>([]);
-  const [updateCartItemList, setUpdateCartItemList] = useState<Array<object>>([]);
+  const [updateCartItemList, setUpdateCartItemList] = useState<Array<object>>(
+    []
+  );
   // const [dialogOpen, setDialogOpen] = useState<boolean>(false);
   const [agreements, setAgreements] = useState<object>({});
 
@@ -49,9 +51,14 @@ const Cart = () => {
     ).then((response) => {
       console.log("response > ", response);
       const res: CartData[] = JSON.parse(JSON.stringify(response));
-      setCartItemList(res.map(item => {
-        return {...item, cartProductQuantityOfString: item.cartProductQuantity+""}
-      }));
+      setCartItemList(
+        res.map((item) => {
+          return {
+            ...item,
+            cartProductQuantityOfString: item.cartProductQuantity + "",
+          };
+        })
+      );
       setInitCartItemList(res);
       setCartCount(res.length);
     });
@@ -104,14 +111,21 @@ const Cart = () => {
           const initItem = initCartItemList.find(
             (item) => item.cartProductId === cart.cartProductId
           );
-        // cartProductQuantityOfString이 null 또는 빈 문자열("")이면 1로 설정
-        // const quantity = cart.cartProductQuantityOfString === null || cart.cartProductQuantityOfString === "" ? 1 : parseInt(cart.cartProductQuantityOfString);
-          return initItem.cartProductQuantity !== parseInt(cart.cartProductQuantityOfString);
+          // cartProductQuantityOfString이 null 또는 빈 문자열("")이면 1로 설정
+          // const quantity = cart.cartProductQuantityOfString === null || cart.cartProductQuantityOfString === "" ? 1 : parseInt(cart.cartProductQuantityOfString);
+          return (
+            initItem.cartProductQuantity !==
+            parseInt(cart.cartProductQuantityOfString)
+          );
         })
         ?.map((updateItem) => {
           return {
             cartProductId: updateItem.cartProductId,
-            cartProductQuantity: updateItem.cartProductQuantityOfString === "" || updateItem.cartProductQuantityOfString === null ? 1 : parseInt(updateItem.cartProductQuantityOfString),
+            cartProductQuantity:
+              updateItem.cartProductQuantityOfString === "" ||
+              updateItem.cartProductQuantityOfString === null
+                ? 1
+                : parseInt(updateItem.cartProductQuantityOfString),
           };
         });
   };
@@ -130,15 +144,13 @@ const Cart = () => {
         if (item.cartProductId === cartProductId) {
           return {
             ...item,
-            cartProductQuantityOfString: 
-              isMinusBtn
+            cartProductQuantityOfString: isMinusBtn
               ? parseInt(item.cartProductQuantityOfString) - 1 + ""
               : parseInt(item.cartProductQuantityOfString) + 1 + "",
 
-            cartProductQuantity: 
-            isMinusBtn 
-            ? parseInt(item.cartProductQuantityOfString) - 1
-            : parseInt(item.cartProductQuantityOfString) + 1,
+            cartProductQuantity: isMinusBtn
+              ? parseInt(item.cartProductQuantityOfString) - 1
+              : parseInt(item.cartProductQuantityOfString) + 1,
           };
         } else {
           return item;
@@ -155,13 +167,17 @@ const Cart = () => {
         if (item.cartProductId === cartProductId) {
           const newValue = value;
           const isValidInput = /^[1-9]\d*$/.test(newValue);
-  
+
           if (newValue.length === 0) {
-            return { ...item, cartProductQuantityOfString: "",};
+            return { ...item, cartProductQuantityOfString: "" };
           }
-  
+
           if (isValidInput) {
-            return { ...item, cartProductQuantityOfString: value, cartProductQuantity: parseInt(value)};
+            return {
+              ...item,
+              cartProductQuantityOfString: value,
+              cartProductQuantity: parseInt(value),
+            };
           }
         }
         return item;
@@ -174,7 +190,11 @@ const Cart = () => {
       setCartItemList((prevCartItemList) => {
         return prevCartItemList.map((item) => {
           if (item.cartProductId === cartProductId) {
-            return { ...item, cartProductQuantityOfString: "1", cartProductQuantity: 1 };
+            return {
+              ...item,
+              cartProductQuantityOfString: "1",
+              cartProductQuantity: 1,
+            };
           }
           return item;
         });
@@ -237,7 +257,7 @@ const Cart = () => {
         setCartItemList((prevList) =>
           prevList.filter((item) => item.cartProductId !== cartProductId)
         );
-        setCartCount(cartCount - 1);  
+        setCartCount(cartCount - 1);
       })
       .catch(console.error);
   };
@@ -315,8 +335,8 @@ const Cart = () => {
                       onChange={(e) =>
                         handleInputQuantity(e.target.value, item.cartProductId)
                       }
-                      onBlur={
-                        (e) => handleEmptyInput(e.target.value, item.cartProductId)
+                      onBlur={(e) =>
+                        handleEmptyInput(e.target.value, item.cartProductId)
                       }
                       minLength={1}
                       maxLength={2}
@@ -359,11 +379,12 @@ const Cart = () => {
                 const selectedItem = cartItemList.find(
                   (item) => item.cartProductId === selectedItemId
                 );
-                if(selectedItem.cartProductQuantityOfString === ''){
+                if (selectedItem.cartProductQuantityOfString === "") {
                   totalPrice === 0;
-                }else{
+                } else {
                   totalPrice +=
-                    selectedItem.priceNumber * parseInt(selectedItem.cartProductQuantityOfString);
+                    selectedItem.priceNumber *
+                    parseInt(selectedItem.cartProductQuantityOfString);
                 }
                 return (
                   <li key={selectedItemId} className={styles.payItemList}>
@@ -378,7 +399,6 @@ const Cart = () => {
                       }
                     />
                   </li>
-
                 );
               })}
             </ul>

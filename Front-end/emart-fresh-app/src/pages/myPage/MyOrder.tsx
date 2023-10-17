@@ -34,6 +34,7 @@ interface OrderedProductData {
 
 //진성
 interface DetailData {
+  isPickedUp: boolean;
   productId: number;
   productImgUrl: string;
   orderedQuantity: number;
@@ -110,12 +111,17 @@ export default function MyOrder() {
   }
 
   //진성
-  const handleDetail = (orderedProductId: number) => {
+  const handleDetail = (orderedProductId: number, isPickedUp: boolean) => {
     const url = `${
       import.meta.env.VITE_BACK_PORT
     }/orderedproduct/getProductDetails?orderedProductId=${orderedProductId}`;
     axios.get(url).then((res) => {
-      setDetailData(res.data);
+      const dataList: DetailData[] = res.data;
+      for (const data of dataList) {
+        data.isPickedUp = isPickedUp;
+      }
+
+      setDetailData(dataList);
       setShowModal(true);
     });
   };
@@ -169,11 +175,17 @@ export default function MyOrder() {
                   </span>
                   <span className={styles.detailName}>{item.productName}</span>
                   <span className={styles.detailPrice}>{item.price}원</span>
-                  <OrderReview
-                    setShowModal={setShowModal}
-                    orderedPpId={item.productId}
-                    review={item.review}
-                  ></OrderReview>
+                  {item.isPickedUp ? (
+                    <OrderReview
+                      setShowModal={setShowModal}
+                      orderedPpId={item.productId}
+                      review={item.review}
+                    />
+                  ) : (
+                    <div className={styles.reviewWrapper}>
+                      픽업 완료 후 리뷰를 작성할 수 있습니다.
+                    </div>
+                  )}
                 </div>
               );
             })}
@@ -238,10 +250,13 @@ export default function MyOrder() {
                     <button
                       className={styles.orderDetailBtn}
                       onClick={() =>
-                        handleDetail(orderedProduct?.orderedProductId)
+                        handleDetail(
+                          orderedProduct?.orderedProductId,
+                          orderedProduct?.pickup
+                        )
                       }
                     >
-                      리뷰쓰기
+                      확인
                     </button>
                   </div>
                 </div>

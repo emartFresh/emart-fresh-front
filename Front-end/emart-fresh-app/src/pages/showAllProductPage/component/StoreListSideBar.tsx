@@ -98,7 +98,7 @@ export default function StoreListSideBar({
       )}
 
       {isVisible && (
-        <div>
+        <div className={styles.itemSectionContainer}>
           <div className={styles.itemSectionWrapper}>
             <section className={styles.itemNamesSection}>
               {selectedItem.map((item) => {

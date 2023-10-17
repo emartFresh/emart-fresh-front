@@ -31,6 +31,11 @@
   border: 1px solid gray;
   border-radius: 0.3em;
   padding: 1em;
+  text-align: center;
+}
+
+.title {
+  font-weight: 800;
 }
 .innerCheckBox {
   width: 1.7em;

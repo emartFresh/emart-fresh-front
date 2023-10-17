@@ -1,13 +1,12 @@
 import { useState } from "react";
 import { loginState } from "../../atoms";
 import { useRecoilState } from "recoil";
-
 import { Modal, Box } from "@mui/material";
-
 import styles from "../page_css/ApplyManager.module.css";
 import ApplyForm from "./ApplyForm";
 import { GetUserAllInfo } from "../../utils/LoginUtils";
 import { sendAxiosPostRequest } from "../../utils/userUtils";
+import { toast } from "react-toastify";
 
 export default function ApplyManager() {
   const [loginToken, setLoginToken] = useRecoilState<JwtToken>(loginState);
@@ -16,6 +15,15 @@ export default function ApplyManager() {
   const userInfo = GetUserAllInfo();
 
   const handleApplyBtn = () => {
+    if (certifFile === undefined) {
+      toast.error("사진을 선택해 주세요.", {
+        position: "top-center",
+        autoClose: 1000,
+      });
+      return;
+    }
+    setShowModal(!showModal);
+
     const formData = new FormData();
     formData.append("file", certifFile);
 
@@ -23,16 +31,36 @@ export default function ApplyManager() {
       import.meta.env.VITE_BACK_PORT
     }/applymanager/apply-requestapplymanager`;
 
-    sendAxiosPostRequest(url, loginToken, setLoginToken, formData).then(
-      (res) => {
+    sendAxiosPostRequest(url, loginToken, setLoginToken, formData)
+      .then((res) => {
         console.log("응답", res);
-      }
-    );
+      })
+      .catch((e) => {
+        const res = e.response;
+        const exsitCondition =
+          res.status === 400 && res.data === "신청내역이 존재합니다.";
+        const invalidPicCondition =
+          res.status === 400 && res.data === "사진 삽입 실패";
+        if (exsitCondition) {
+          toast.error("신청내역이 존재합니다.", {
+            position: "top-center",
+            autoClose: 1000,
+          });
+        } else if (invalidPicCondition) {
+          toast.error("유효하지 않은 사진입니다.", {
+            position: "top-center",
+            autoClose: 1000,
+          });
+        }
+
+        console.log("에러", e);
+      });
   };
+
   return (
     <>
       <div className={styles.applyManagerContainer}>
-        <ApplyForm></ApplyForm>
+        <ApplyForm showModal={showModal}></ApplyForm>
         <Modal
           open={showModal}
           onClose={() => {
@@ -88,7 +116,6 @@ export default function ApplyManager() {
                 <button
                   className={styles.cofirmBtn}
                   onClick={() => {
-                    setShowModal(!showModal);
                     handleApplyBtn();
                   }}
                 >
@@ -98,6 +125,7 @@ export default function ApplyManager() {
             </div>
           </Box>
         </Modal>
+
         <button
           onClick={() => {
             setShowModal(true);

@@ -36,6 +36,7 @@ import CouponUpdate from "./pages/couponUpdate/CouponUpdate";
 
 import ManagerOrderStatus from "./pages/managerOrderStatus/ManagerOrderStatus";
 import SearchStore from "./pages/searchStorePage/SearchStorePage";
+
 import Chart from "./pages/salesChart/Chart";
 
 const queryClient = new QueryClient();
