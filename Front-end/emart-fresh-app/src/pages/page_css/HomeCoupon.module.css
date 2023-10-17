@@ -1,6 +1,7 @@
 .couponContainer{
     margin: 10rem auto;
     width: 80%;
+    max-width: 80rem;
     height: 28rem;
     display: flex;
     text-align: center;

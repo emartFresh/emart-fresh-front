@@ -227,11 +227,9 @@ export const sendAxiosRequest = async (
   if (callStack >= 10) {
     return { isError: true };
   }
-  console.log("sendAxios!!!!!!!!!!!!!!!!!!!!!!!");
-
   const result = await axios({
     method: httpMethod,
-    url: "http://localhost:8080" + url,
+    url: `${import.meta.env.VITE_BACK_PORT}${url}`,
     headers: {
       Authorization: `Bearer ${loginToken.accessToken}`,
       refreshToken: loginToken.refreshToken,
@@ -246,7 +244,7 @@ export const sendAxiosRequest = async (
       if (error.response?.status === 401) { 
         console.log("401error, refreshToken >>> " + loginToken.refreshToken);
         return await axios
-        .post("http://localhost:8080/refreshToken/newAccessToken", {
+        .post(`${import.meta.env.VITE_BACK_PORT}/refreshToken/newAccessToken`, {
           refreshToken: loginToken.refreshToken,
         })
         .then((response) => {
@@ -274,7 +272,6 @@ export const sendAxiosRequest = async (
             });
             setCartCount(0);
             toast.error("로그인 유효시간이 만료되었습니다. 다시 로그인해주세요.");
-            return;
           }
         });
       }else{

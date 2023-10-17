@@ -14,6 +14,7 @@
 
 .homeSwiper {
     width: 80%;
+    max-width: 80rem;
     border-bottom-left-radius: 5em;
     border-bottom-right-radius: 5em;
     z-index: 1; 
@@ -61,3 +62,15 @@
 .eventProductSwiper .swiper-button-next{
   color: rgba(0, 0, 0, 0.8);
 } */
+
+.productWrapper{
+  width: 100px;
+}
+
+.swiper-slide{
+  width: 100px;
+}
+
+._productWrapper_r2rcv_52{
+  width: 100px;
+}
