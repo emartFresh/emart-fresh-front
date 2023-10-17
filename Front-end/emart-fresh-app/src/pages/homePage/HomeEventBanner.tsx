@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 
 import { Swiper, SwiperSlide, SwiperProps } from 'swiper/react';
 
@@ -12,20 +13,20 @@ import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 
 const HomeEventBanner = () => {
-  const [eventList, setEventList] = useState<string[]>([]);
+  const [eventList, setEventList] = useState<Array<{ eventId: number, eventBannerImage: string }>>([]);
   const navigate = useNavigate();
 
   useEffect(() => {
     axios.get(`${import.meta.env.VITE_BACK_PORT}/event/now-event-list`)
     .then((res) => {
+      console.log(res.data);
       setEventList(res.data);
     })
     .catch(console.error)
   }, [])  
 
-  const showEventDetail = () => {
-    navigate('/eventlistdetail/10');
-    // 수정 : navigate('/eventlistdetail/' + eventId);
+  const showEventDetail = (eventId: number) => {
+    navigate('/eventlistdetail/' + eventId);
   }
 
   return (
@@ -36,19 +37,19 @@ const HomeEventBanner = () => {
       loop: true,
       autoplay: {
         delay: 2500,
-        disableOnInteraction: true,
+        disableOnInteraction: false,
       },
       pagination: {
         clickable: true,
       },
       navigation: true,
-      modules: [Autoplay, Pagination, Navigation],
+      modules: [Pagination, Navigation, Autoplay],
       className: "homeSwiper",
     } as SwiperProps}
     >
       {
-        eventList.map((eventImage) => {
-          return <SwiperSlide key={eventImage}><img src={eventImage} alt="" onClick={() => showEventDetail()}/></SwiperSlide> 
+        eventList.map((event) => {         
+          return <SwiperSlide key={event.eventId}><img src={event.eventBannerImage} alt="" onClick={() => showEventDetail(event.eventId)}/></SwiperSlide> 
         })
       }
     </Swiper>

@@ -6,7 +6,6 @@ import Nav from "./components/Nav";
 import Footer from "./components/Footer";
 
 import Home from "./pages/homePage/Home";
-import Show from "./pages/showPage/Show";
 
 import MyPageMain from "./pages/myPage/MyPageMain";
 import MyReview from "./pages/myPage/MyReview";
@@ -32,12 +31,13 @@ import MakeStore from "./pages/makeStore/MakeStore";
 import HandleApplyManager from "./pages/handleApplyManager/HandleApplyManager";
 import StoreOrderList from "./pages/storeOrderList/StoreOrderList";
 import NaverCallBack from "./pages/callBackPage/NaverCallBack";
-import SalesChart from "./pages/salesChart/SalesChart";
 
 import CouponUpdate from "./pages/couponUpdate/CouponUpdate";
 
 import ManagerOrderStatus from "./pages/managerOrderStatus/ManagerOrderStatus";
 import SearchStore from "./pages/searchStorePage/SearchStorePage";
+
+import Chart from "./pages/salesChart/Chart";
 
 const queryClient = new QueryClient();
 
@@ -51,9 +51,8 @@ function App() {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/:coupon" element={<Home />} />
-              {/* 쿠폰받으러가기 추가사항 */}
-              <Route path="/show" element={<Show />} />
               <Route path="/search-store" element={<SearchStore />} />
+
               <Route path="/mypageMain" element={<MyPageMain />}>
                 <Route index element={<MyPage />} />
                 <Route path="/mypageMain/myorder" element={<MyOrder />} />
@@ -100,7 +99,7 @@ function App() {
               <Route path="/login" element={<Login />} />
               <Route path="/naverCallBack" element={<NaverCallBack />} />
               <Route path="/signup" element={<Signup />} />
-              <Route path="/chart" element={<SalesChart />} />
+              <Route path="/chart" element={<Chart />} />
               <Route path="/order-request" element={<OrderRequest />} />
               <Route path="/request-order-list" element={<OrderHandle />} />
               <Route path="/show-all-product" element={<ShowAllProduct />} />

@@ -1,33 +1,31 @@
 .reviewMain {
-  width: 65vw;
+  width: 85vw;
   display: flex;
   flex-direction: column;
   align-items: center;
-  max-width: 900px;
-  min-width: 450px;
-  margin: auto;
+  min-width: 900px;
   margin-top: 40px;
   margin-bottom: 30px;
+  margin-left: 100px;
+  /* background-color: blue; */
 }
 
 .reviewWrapper {
+  width: 70%;
   display: flex;
   flex-direction: row;
-  width: 65vw;
   align-items: center;
   margin-bottom: 1rem;
-
+  /* min-width: 400px; */
   padding: 8px;
-  border: 1px solid grey;
-
   border-radius: 1rem;
-
-  box-shadow: 2px 2px 5px 2px rgba(0, 0, 0, 0.5);
+  box-shadow: 2px 2px 5px 2px rgba(0, 0, 0, 0.2);
+  /* background-color: red; */
 }
-
-.imageContainer {
+.dateAndImg {
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  /* background-color: aquamarine; */
 }
 
 .image {
@@ -35,20 +33,28 @@
 }
 
 .reviewContainer {
-  width: 100%;
-  margin-left: 8px;
-  display: grid;
-  grid-template-columns: 0.5fr 1fr 1.5fr 1fr 0.4fr;
-  align-items: center;
+  /* background-color: gray; */
+  width: 44vw;
+  min-width: 350px;
+  margin-left: 10px;
 }
+
+/* .reviewContent {
+  font-size: 16px;
+  padding-top: 10px;
+} */
 
 .reviewnameText {
   font-size: 16px;
+  padding-bottom: 10px;
 }
-
-.reviewText {
-  color: black;
+.reviewDate {
   font-size: 16px;
+  margin-left: 10px;
+}
+.reviewText {
+  font-size: 16px;
+  font-weight: 600;
 }
 
 .reviewDetailBtn {
@@ -64,15 +70,11 @@
 }
 .reviewRating {
   display: flex;
+  justify-content: space-between;
 }
 .paginationList {
   display: flex;
   justify-content: center;
   margin-top: 1.25rem;
   margin-bottom: 1.25rem;
-}
-@media screen and (max-width: 1600px) {
-  .reviewMain {
-    margin-left: 250px;
-  }
 }

@@ -9,13 +9,14 @@ import { formatFullDate } from '../../utils/dateUtils';
 import { IsLogin, SendLoginPageIfNotLogin } from '../../utils/LoginUtils';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
-import { loginState } from '../../atoms';
+import { cartItemCount, loginState } from '../../atoms';
 import { sendAxiosRequest } from '../../utils/userUtils';
 import { toast } from 'react-toastify';
 
 const HomeCoupon = () => {
   const [couponData, setCoupondata] = useState<ExtendedCoupon[]>([]);  
   const [loginToken, setLoginToken] = useRecoilState<JwtToken>(loginState);
+  const [cartCount, setCartCount] = useRecoilState<number>(cartItemCount);
   const [totalPages, setTotalPages] = useState<number>(0);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [initialSetter, setInitialSetter] = useState<number>(0);
@@ -25,7 +26,7 @@ const HomeCoupon = () => {
 
   useEffect(() => {
     if(isLogined){
-      sendAxiosRequest('/coupon/coupon-all', 'get', loginToken, setLoginToken, {page: currentPage, size: numberPerPage})
+      sendAxiosRequest('/coupon/coupon-all', 'get', loginToken, setLoginToken, setCartCount, {page: currentPage, size: numberPerPage})
       .then((res) => {
         // responseData 타입에 ExtendedCoupon[] 만 넣어준경우 
         // const content:ExtendedCoupon[] = res.contnet;
@@ -57,7 +58,7 @@ const HomeCoupon = () => {
       })
       .catch(console.error)
     }
-  }, [initialSetter,currentPage])
+  }, [isLogined, initialSetter,currentPage])
 
   const handlePage = (page: number) => {
     setCurrentPage(page);
@@ -78,6 +79,7 @@ const HomeCoupon = () => {
         "post",
         loginToken,
         setLoginToken,
+        setCartCount,
         {
           couponId: coupon.couponId,
           couponExpirationDate: coupon.couponExpirationDate,
@@ -94,7 +96,7 @@ const HomeCoupon = () => {
       )
       .catch(() => {
         console.error()
-        alert('쿠폰받기에 실패했습니다.');      
+        toast.error('쿠폰받기에 실패했습니다.');
       })
     }
   }

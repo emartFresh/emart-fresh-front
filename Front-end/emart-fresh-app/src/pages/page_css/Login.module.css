@@ -51,11 +51,25 @@ input:focus{
     font-size: 0.9em;
 }
 
+.inquiryOpen:hover{
+    color: #f9bb00;
+    cursor: pointer;
+}
+
+.signupLink:hover{
+    text-decoration: none;
+}
+
 .loginBtn{
-    width: 20em;
+    width: 22em;
     padding: 0.7em 0;
     display: block;
     margin: 2em auto;
+    background-color: #ffd045;
+}
+
+.loginBtn:hover{
+    background-color: #f9bb00;
 }
 
 .snsLoginTitle{

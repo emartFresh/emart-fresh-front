@@ -90,6 +90,7 @@ export default function Payment({ setOpenPayment, cartInfo }: PaymentProps) {
         itemData={itemData}
         totalPriceAf={totalPriceAf}
         appliedCoupon={appliedCoupon}
+        setOpenPayment={setOpenPayment}
       />
     </div>
   );

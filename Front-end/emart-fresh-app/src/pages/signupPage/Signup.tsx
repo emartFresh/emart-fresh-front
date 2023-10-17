@@ -10,6 +10,7 @@ import TextField from '@mui/material/TextField';
 // import InputAdornment from '@mui/material/InputAdornment';
 // import AccountCircle from '@mui/icons-material/AccountCircle';
 import { useEffect } from 'react';
+import { toast } from 'react-toastify';
 
 interface FormState {
     signupId: string;
@@ -134,7 +135,7 @@ const Signup = () => {
             .then((response) => {
                 console.log(response.data);
                 console.log(response.status);  
-                alert('회원가입 완료 (임시 알림)')
+                toast.success('회원가입이 완료되었습니다.');
                 navigate('/login')
             })
             .catch(() => console.error()
@@ -298,7 +299,7 @@ const Signup = () => {
             console.log(response.data);
         }).catch(() => {
             console.log("이메일 인증 실패");
-            alert('이메일 인증 실패 > 관리자 문의 (임시 알림)');
+            toast.error('이메일 인증에 실패했습니다. 관리자에게 문의해주세요.');
         })
     };
 

@@ -51,6 +51,7 @@ export default function CopuonApply({
         <div key={item.couponId} className={styles.couponItemContainer}>
           <div>{item.couponTitle}</div>
           <button
+            className={styles.couponSelectBtn}
             onClick={() => {
               setAppliedCoupon(item);
               handleClose();

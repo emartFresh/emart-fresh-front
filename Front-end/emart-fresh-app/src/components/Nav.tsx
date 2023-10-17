@@ -42,7 +42,7 @@ export default function Nav() {
 
     const checkLogout = confirm("로그아웃하시겠습니까?");
     if (checkLogout) {
-      sendAxiosRequest("/member/logout", "post", loginToken, setLoginToken, {
+      sendAxiosRequest("/member/logout", "post", loginToken, setLoginToken, setCartCount, {
         loginType: loginType,
         kakaoAccessToken: kakaoToken,
         naverAccessToken: naverToken,
@@ -83,9 +83,6 @@ export default function Nav() {
             ) : (
               <Link to="/login">Login</Link>
             )}
-          </span>
-          <span>
-            <Link to="/show">show</Link>
           </span>
           <span>
             <Link to="/chart">chart</Link>

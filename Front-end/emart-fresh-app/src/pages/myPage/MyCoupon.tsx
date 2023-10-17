@@ -12,6 +12,7 @@ import { useRecoilState } from "recoil";
 import { loginState } from "../../atoms";
 import { sendAxiosGetRequest } from "../../utils/userUtils";
 import { GetUserAllInfo } from "../../utils/LoginUtils";
+import { toast } from "react-toastify";
 
 //쿠폰 정보
 interface CouponData {
@@ -64,7 +65,7 @@ export default function MyCoupon() {
         }
       } catch (error) {
         console.error("Error fetching coupons:", error);
-        alert("쿠폰 조회 중 오류가 발생했습니다.");
+        toast.error("쿠폰 조회 중 오류가 발생했습니다.");
       }
     }
 
@@ -84,8 +85,8 @@ export default function MyCoupon() {
     <div>
       <div className={styles.couponMain}>
         <h4>
-          <span className={styles.tossface}>😀</span>
-          {allMember.memberId}님 반갑습니다.
+          <span className={styles.tossface}>😀</span>&nbsp;&nbsp;
+          {allMember.memberId}님 반갑습니다.&nbsp;&nbsp;
           <span className={styles.tossface}>😀</span>
         </h4>
         <div>
@@ -101,7 +102,8 @@ export default function MyCoupon() {
               <span style={{ fontSize: "1.2rem" }}>
                 고객님이 보유하신 쿠폰이 없습니다
               </span>
-              <div>다양한 쿠폰과 혜택을 받아보세요.</div>
+              <br />
+              {/* <div>다양한 쿠폰과 혜택을 받아보세요.</div> */}
               <div>
                 <Link to="/mycoupon" className={styles.couponBtn}>
                   쿠폰받으러가기
@@ -122,13 +124,14 @@ export default function MyCoupon() {
               </div>
             ))
           )}
-
           <div className={styles.paginationList}>
-            <Pagination
-              count={totalPages}
-              page={currentPage}
-              onChange={(event, value) => handlePageChange(value)}
-            />
+            {coupons && coupons.length > 0 && (
+              <Pagination
+                count={totalPages}
+                page={currentPage}
+                onChange={(_event, value) => handlePageChange(value)}
+              />
+            )}
           </div>
         </div>
       </div>
