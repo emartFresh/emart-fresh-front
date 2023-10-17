@@ -1,12 +1,13 @@
 .modal {
+  align-items: center;
   background-color: #ffffff;
-  padding: 20px;
+  padding-left: 45px;
   padding-top: 40px;
+
   border-radius: 20px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  width: 31.25rem;
-  height: 28rem;
-  margin: 0 auto;
+  width: 30rem;
+  height: 24rem;
   z-index: 1000; /* 레이어 순서 조정 */
 }
 
@@ -23,17 +24,17 @@
   z-index: 999; /* 다른 요소 위에 나타나도록 설정 */
 }
 
-.modifyPwForm {
+/* .modifyPwForm {
   margin: 0 auto;
   width: 28em;
-}
+} */
 
-.inputWrap {
+/* .inputWrap {
   margin: 0 auto;
   position: relative;
-}
+} */
 
-.modifyPw,
+/* .modifyPw,
 .modifyNewPw,
 .modifyNewPwCheck,
 .modifyEmail {
@@ -44,7 +45,7 @@
   border: 0.1em solid rgba(0, 0, 0, 0.8);
   border: #ccc;
   outline: 0;
-}
+} */
 .message {
   display: flex;
   color: red;
@@ -81,8 +82,8 @@
 
 .inputEmail,
 .inputPw {
-  flex: 1;
   padding: 10px;
+  flex: 0.8;
   border: 1px solid #ccc;
   border-radius: 5px;
 }
@@ -90,17 +91,16 @@
 .modifyBtn {
   border: 1px solid transparent;
   margin: 2em 0 4.5em 0;
-  width: 26em;
+  width: 12.3rem;
   padding: 0.8em 0;
   background-color: #f9bb00;
 }
 .modifyBackBtn {
   margin: 2em 0 4.5em 0;
-  width: 26em;
+  width: 12rem;
   padding: 0.8em 0;
   background-color: #d3d1d1;
 }
 .passwordVisibility {
-  /* background-color: white; */
   background-color: #f9bb00;
 }

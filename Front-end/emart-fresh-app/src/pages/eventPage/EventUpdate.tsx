@@ -112,7 +112,7 @@ export default function EventUpdate() {
       .then((response) => {
         console.log("파일전송" + response);
 
-        if (response.data === "이벤트생성 완료") {
+        if (response === "이벤트생성 완료") {
           toast.success("이벤트가 등록되었습니다!");
           setFormData({
             eventTitle: "",
