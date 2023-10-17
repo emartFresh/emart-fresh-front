@@ -119,7 +119,6 @@ const Login = () => {
     });
   };
 
-<<<<<<< HEAD
   if (!IsLogin())
     return (
       <div className={styles.container}>
@@ -172,55 +171,6 @@ const Login = () => {
             </a>
             <NaverLogin />
           </div>
-=======
-  if(!IsLogin())
-  return (
-    <div className={styles.container}>
-      <h2 className={styles.title}>로그인</h2>
-      <div className={styles.loginForm}>
-        <input
-          type="text"
-          name="memberId"
-          placeholder="아이디를 입력해주세요"
-          className={styles.loginId}
-          onChange={(e) => setMemberId(e.target.value)}
-        />
-        <input
-          type="password"
-          name="memberPw"
-          placeholder="비밀번호를 입력해주세요"
-          className={styles.loginPw}
-          onChange={(e) => setMemberPw(e.target.value)}
-          onKeyUp={(e) => {
-            if (e.key === "Enter") handleLogin();
-          }}
-        />
-        <div className={styles.links}>
-          <p onClick={openModal} className={styles.inquiryOpen}>아이디 / 비밀번호 찾기</p>
-          <Link to="/signup" className={styles.signupLink}>아직 회원이 아니신가요?</Link>
-        </div>
-        {isModalOpen && (
-          <Modal closeModal={closeModal}>
-            <Inquiry closeModal={closeModal} />
-          </Modal>
-        )}
-        <button className={styles.loginBtn} onClick={handleLogin}>
-          로그인
-        </button>
-        <hr />
-        <h6 className={styles.snsLoginTitle}>SNS 로그인</h6>
-        <div className={styles.snsBtnWrap}>
-          <a id="kakao-login-btn" >
-            <img
-              onClick={loginWithKakao}
-              src={kakaoLogin}
-              width="220"
-              alt="카카오 로그인 버튼"
-              className={styles.kakaoLoginBtn}
-            />
-          </a>
-          <NaverLogin />
->>>>>>> 6e73e1e4e009149d11e7b539df26904be692db3d
         </div>
       </div>
     );
