@@ -14,6 +14,7 @@ import cartCalcNull from "../../assets/images/cartCalcNull.png";
 import Payment from "../paymentPage/Payment";
 import { useNavigate } from "react-router-dom";
 import { useIsLogin } from "../../utils/LoginUtils";
+import { getTruncateString } from "../../utils/formatUtils";
 
 // 이벤트 없을때 없는표시
 // grid -> flex : wrap 
@@ -39,8 +40,10 @@ const Cart = () => {
   const isLogined = useIsLogin();
 
   const updateListRef = useRef(updateCartItemList);
+  const loginTokenRef = useRef(loginToken);
   let totalPrice = 0;
   let payItemsInfo: CartData[] = [];
+
 
   //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   useEffect(() => {
@@ -85,10 +88,11 @@ const Cart = () => {
       }
     });
     return () => {
-      sendAxiosRequest(
+      console.log("cart unmount ac >>> ",loginTokenRef.current);
+        sendAxiosRequest(
         "/cart/updateCartProductQuantity",
         "post",
-        loginToken,
+        loginTokenRef.current,
         setLoginToken,
         setCartCount,
         updateListRef.current
@@ -103,6 +107,10 @@ const Cart = () => {
   useEffect(() => {
     updateListRef.current = handleUpdateItemList();
   }, [cartItemList]);
+
+  useEffect(() => {
+    loginTokenRef.current = loginToken;
+  }, [loginToken.refreshToken])
 
   //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -253,6 +261,10 @@ const Cart = () => {
 
   //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+  console.log(cartItemList[0]?.storeName);
+
+
+
   return (
     <div>
       <h3
@@ -263,6 +275,7 @@ const Cart = () => {
       >
         장바구니
       </h3>
+      <button  onClick={()=>{console.log('fuxking token', loginToken)}}> test</button>
       <div
         className={
           cartItemList.length === 0 ? styles.hiddenWrap : styles.allCheckWrap
@@ -357,7 +370,7 @@ const Cart = () => {
 
         {selectedItems.length > 0 && (
           <div className={styles.cartCalculate}>
-            <h4 className={styles.storeName}>센텀시티점</h4>
+            <h4 className={styles.storeName}>{cartItemList[0]?.storeName}</h4>
             <div className={styles.payItemListInfo}>
               <p>제품명</p>
               <p>가격</p>
@@ -376,7 +389,7 @@ const Cart = () => {
                 }
                 return (
                   <li key={selectedItemId} className={styles.payItemList}>
-                    <p>{selectedItem.productTitle}</p>
+                    <p>{getTruncateString(selectedItem.productTitle, 12)}</p>
                     <p>{selectedItem.priceNumber}원</p>
                     <p>{selectedItem.cartProductQuantityOfString}개</p>
                     <FontAwesomeIcon
