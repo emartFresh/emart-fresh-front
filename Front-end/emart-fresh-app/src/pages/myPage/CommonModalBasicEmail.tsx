@@ -35,11 +35,6 @@ export default function CommonModalBasicEmail({
           setIsChange={setIsChange}
           onClose={closeModal}
         />
-        {/* <ChangeEmail */}
-        {/* // ischange={ischange}
-        // setIsChange={setIsChange}
-        // onClose={closeModal}
-        /> */}
       </CommonModal>
     </div>
   );

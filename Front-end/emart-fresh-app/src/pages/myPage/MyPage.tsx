@@ -15,8 +15,6 @@ import { loginState } from "../../atoms";
 import { sendAxiosGetRequest } from "../../utils/userUtils";
 
 export default function MyPage() {
-  console.log("마이페이지 컴포넌트");
-
   const [memberData, setMemberData] = useState<MemberData[]>([]);
   const [memberEmail, setMemberEmail] = useState<string>("");
   const [ischange, setIsChange] = useState<boolean>(false);
@@ -33,8 +31,10 @@ export default function MyPage() {
     );
 
     response
-      .then((res) => {
-        setMemberData(res.data);
+      .then((response) => {
+        setMemberData(response);
+        // setMemberEmail(res.data.memberEmail);
+        console.log("멤버데이터 어떻게 나와?", response);
       })
       .catch((error) => {
         console.log("Error", error);
