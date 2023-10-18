@@ -42,8 +42,6 @@ export default function SearchingSection({
 
     const searchingData = { params: filterData };
 
-    console.log("서치", searchingData);
-
     axios
       .get(
         `${import.meta.env.VITE_BACK_PORT}/product/all-product-list/filter`, //수정 : 페이징 처리
@@ -58,6 +56,12 @@ export default function SearchingSection({
           ...res.data,
         ]);
       });
+  };
+
+  const handleEnter = (evt) => {
+    if (evt.key === "Enter") {
+      resetData();
+    }
   };
 
   const handleSearchInputChange = (e) => {
@@ -75,6 +79,9 @@ export default function SearchingSection({
         name="searchingTerm"
         className={styles.searchingInput}
         type="text"
+        onKeyUp={(evt) => {
+          handleEnter(evt);
+        }}
         placeholder="상품명을 검색해주세요."
       />
       <button className={styles.searchBtn} onClick={resetData}>

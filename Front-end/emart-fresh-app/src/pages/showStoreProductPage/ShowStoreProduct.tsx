@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { useState, useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useQuery } from "react-query";
 import ShowProduct from "./component/ShowProduct";
 import SearchingSection from "./component/SearchingSectionStore";
@@ -28,8 +29,12 @@ export default function ShowStoreProduct() {
     limit: 0,
   });
 
+  const navigate = useNavigate();
   const searchParams = new URLSearchParams(location.search);
   const storeId: string | null = searchParams.get("storeid");
+  if (storeId === null || storeId === undefined) {
+    navigate("/search-store");
+  }
 
   const fetchStoreData = async () => {
     const url = `${
@@ -91,9 +96,12 @@ export default function ShowStoreProduct() {
         filterData={filteredData}
         productDatas={productDatas}
       />
-      <div className={styles.showWrapper}>
-        <ShowProduct productDatas={productDatas} />
+      <div className={styles.showAllCenterDiv}>
+        <div className={styles.showWrapper}>
+          <ShowProduct productDatas={productDatas} />
+        </div>
       </div>
+
       <div className={styles.infTrigger} ref={triggerRef}></div>
     </div>
   );

@@ -95,3 +95,10 @@ td {
 .applyManagerTable td {
   color: #505050;
 }
+
+.applyBtn {
+  background-color: white;
+  border-color: #f7c83d;
+  border-width: 0.2rem;
+  margin: 2em;
+}

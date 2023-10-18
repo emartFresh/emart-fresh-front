@@ -5,13 +5,34 @@
   align-items: center;
 }
 
+.btnContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
 .orderListWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   display: block;
   height: 50em;
   margin: 2em;
-  width: 80%;
-  max-width: 700px;
-  min-width: 320px;
+  height: 100vh;
+  overflow-y: scroll;
+  border-top: 2px solid #e1e1e1;
+  border-bottom: 2px solid #e1e1e1;
+}
+
+.orderListWrapper::-webkit-scrollbar {
+  width: 10px;
+  display: flex;
+}
+
+.orderListWrapper::-webkit-scrollbar-thumb {
+  background: #f9bb00;
+  border-radius: 0.4rem;
 }
 
 .orderListSection {
@@ -21,7 +42,7 @@
   border: 1px solid #e1e1e1;
   border-radius: 0.3em;
   padding: 1em;
-  width: 100%;
+  width: 95%;
 }
 
 .innerListSection {
@@ -32,6 +53,18 @@
   border-radius: 0.3em;
   padding: 1em;
   text-align: center;
+}
+
+.innerListSection > span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.innerListSection > div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .title {

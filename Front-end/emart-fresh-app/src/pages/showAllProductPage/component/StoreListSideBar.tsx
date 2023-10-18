@@ -8,6 +8,7 @@ import styles from "../../page_css/StoreListSideBar.module.css";
 import { userLocation, setUserLoaction } from "../../../../modules/location";
 import { getUserLocation } from "../../../utils/userUtils";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 
 interface StoreListSideBarProps {
   setSelectedItem: React.Dispatch<React.SetStateAction<string[]>>;
@@ -33,6 +34,13 @@ export default function StoreListSideBar({
   const [searchedStoreList, setSearchedStoreList] = useState<
     SearchedStoreData[]
   >([]);
+
+  useEffect(() => {
+    if (selectedItem.length > 0) {
+      setIsXClied(true);
+      setIsVisible(true);
+    }
+  }, [selectedItem]);
 
   const handleItemDelete = (e) => {
     if (selectedItem.includes(e.target.name)) {
@@ -72,12 +80,17 @@ export default function StoreListSideBar({
         )
         .then((res) => {
           console.log("넘겨받은 데이터", res);
+          if (res.data?.length === 0) {
+            toast.error("해당하는 가게가 없습니다.", {
+              position: "top-center",
+              autoClose: 1000,
+            });
+          }
           setSearchedStoreList(res.data);
         });
     });
   };
 
-  console.log("afdsfs", choosedDis);
   return isXClicked ? (
     <div className={styles.sidebarContainer}>
       <div style={{ width: "100%", textAlign: "right" }}>

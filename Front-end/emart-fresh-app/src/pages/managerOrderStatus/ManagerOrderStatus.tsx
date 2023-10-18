@@ -36,5 +36,10 @@ export default function ManagerOrderStatus() {
       </div>
     );
   });
-  return <div className={styles.statusContainer}>{orderList}</div>;
+  return (
+    <div className={styles.statusContainer}>
+      <h2 className={styles.title}>발주 내역</h2>
+      {orderList}
+    </div>
+  );
 }

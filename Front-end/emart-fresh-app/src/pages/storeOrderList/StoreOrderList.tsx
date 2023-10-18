@@ -129,14 +129,18 @@ export default function StoreOrderList() {
             {detailData.map((item, inx) => {
               return (
                 <div className={styles.detailWrapper} key={inx}>
-                  <span>
-                    <img
-                      className={styles.detailImg}
-                      src={item.productImgUrl}
-                      alt=""
-                    />
-                  </span>
-                  <span className={styles.detailName}>{item.productName}</span>
+                  <div>
+                    <span>
+                      <img
+                        className={styles.detailImg}
+                        src={item.productImgUrl}
+                        alt=""
+                      />
+                    </span>
+                    <span className={styles.detailName}>
+                      {item.productName}
+                    </span>
+                  </div>
                   <span className={styles.detailPrice}>{item.price}원</span>
                 </div>
               );
@@ -155,8 +159,7 @@ export default function StoreOrderList() {
         </Box>
       </Modal>
       {/* <button onClick={connectToEventSource}>Connect to Server</button> */}
-
-      {orders.map((order, index) => (
+      {orders?.map((order, index) => (
         <div className={styles.orderListWrapper} key={index}>
           <div className={styles.badge_detail_Wrapper}>
             <span className={styles.badge}>{order.orderedProductId}</span>

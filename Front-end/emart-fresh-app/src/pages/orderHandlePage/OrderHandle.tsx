@@ -10,7 +10,8 @@ interface ManagerOrderObjData extends ManagerOrderData {
   product: ProductData;
 }
 export default function OrderHandle() {
-  const [dateValue, setDateVale] = useState<string>();
+  const today = new Date().toISOString().slice(0, 10);
+  const [dateValue, setDateVale] = useState<string>(today);
   const [orderDatas, setOrderDatas] = useState<ManagerOrderObjData[]>();
   const [groupedOrderDatas, setGroupedOrderDatas] = useState([]);
   const [applyOrderNumbers, setApprayOrderNumbers] = useState<number[]>([]);
@@ -23,6 +24,7 @@ export default function OrderHandle() {
       navigate("/home");
     }
   }, [isValidUserAuth]);
+
   const handleCheckClick = (e) => {
     const clickedOrderNum = Number(e.target.name);
     const hasOrderId = applyOrderNumbers.includes(clickedOrderNum);
@@ -38,9 +40,6 @@ export default function OrderHandle() {
   };
 
   const isChecked = (orderNum: number): boolean => {
-    console.log("이거ㅓ", orderNum);
-    console.log("이거222", applyOrderNumbers.includes(orderNum));
-
     return applyOrderNumbers.includes(orderNum);
   };
 
@@ -61,8 +60,6 @@ export default function OrderHandle() {
       setApprayOrderNumbers([]);
     }
   }, [applyBtnCliked]);
-
-  console.log("ㅇ", applyOrderNumbers);
 
   useEffect(() => {
     const datas: any = orderDatas;
@@ -113,7 +110,7 @@ export default function OrderHandle() {
           <div style={{ textAlign: "center" }}>
             <img
               className={styles.orderImg}
-              src="{oneData.product.productImgUrl}"
+              src={oneData.product.productImgUrl}
             />
           </div>
           <span>{oneData.product.productTitle}</span>
@@ -155,17 +152,21 @@ export default function OrderHandle() {
 
   return (
     <div className={styles.orderHandleContainer}>
-      <div>
-        <input type="date" onChange={(e) => setDateVale(e.target.value)} />
+      <div className={styles.btnContainer}>
+        <input
+          type="date"
+          value={dateValue}
+          onChange={(e) => setDateVale(e.target.value)}
+        />
         <button className={styles.veriBtn} onClick={handleSubmitDate}>
           발주 확인
         </button>
-      </div>
-      <div>
-        <span>{applyOrderNumbers.length}개 선택</span>
-        <button className={styles.confirmBtn} onClick={handleDoOrder}>
-          발주 승인
-        </button>
+        <div>
+          <span>{applyOrderNumbers.length}개 선택</span>
+          <button className={styles.confirmBtn} onClick={handleDoOrder}>
+            발주 승인
+          </button>
+        </div>
       </div>
       <div className={styles.orderListWrapper}>{orderListEle}</div>
     </div>

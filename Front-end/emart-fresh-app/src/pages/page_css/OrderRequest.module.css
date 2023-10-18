@@ -2,12 +2,22 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-direction: column;
+  flex-direction: row;
   padding: 1rem;
+  min-height: 100vh;
+  flex-wrap: wrap;
+}
+
+.orderRequestWrapper {
+  min-width: 45rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
 .title {
-  color: gray;
+  color: rgb(60, 60, 60);
   font-size: 1.5rem;
   font-weight: bold;
   margin-top: 2rem;
@@ -21,6 +31,16 @@
   width: 80%;
   overflow: auto;
 }
+.productListWrapper::-webkit-scrollbar {
+  width: 10px;
+  display: flex;
+}
+
+.productListWrapper::-webkit-scrollbar-thumb {
+  background: #f9bb00;
+  border-radius: 0.4rem;
+}
+
 .productListSection {
   display: grid;
   grid-template-columns: 3fr 1fr;
@@ -29,6 +49,32 @@
   border-radius: 0.3em;
   padding: 0.5rem;
   padding-left: 1rem;
+  height: 3.7rem;
+}
+
+.gridFirstItem {
+  align-self: center;
+}
+
+.gridSecondItem {
+  display: flex;
+  justify-content: right;
+  align-items: center;
+}
+
+.itemTitle {
+  color: rgb(60, 60, 60);
+  font-weight: 800;
+}
+
+.qqtTitle {
+  color: #585858;
+  margin: 0.5rem;
+}
+.checkBox {
+  align-self: center;
+  width: 1.8em;
+  height: 1.8rem;
 }
 
 .addBtn {
@@ -36,6 +82,7 @@
   background-color: #e1e1e1;
   min-width: 320px;
   max-width: 500px;
+  margin: 1rem;
 }
 
 .confirmBtn {

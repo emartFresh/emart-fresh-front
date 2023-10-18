@@ -18,6 +18,11 @@ interface OrderProduct {
   productId: number;
 }
 
+interface OrderProductNameQqt {
+  productQuantity: number;
+  productTitle: string;
+}
+
 interface DopayProp {
   itemData: ItemData[];
   totalPriceAf: number;
@@ -36,6 +41,7 @@ export default function Dopay({
 
   const memberInfo: MemberInfo = GetUserAllInfo();
 
+  console.log("내가 넣을 데이터", itemData);
   useEffect(() => {
     const storeUrl = `${import.meta.env.VITE_BACK_PORT}/cart/myCartStoreId`;
 
@@ -55,30 +61,52 @@ export default function Dopay({
 
   console.log("가게 아이디22222", myCartStoreId);
   //수정 : 로직 고민...
+
   const preProcesse = async () => {
-    const orderedProductProducts: OrderProduct[] = itemData?.map((item) => {
-      return {
-        orderedQuantity: item.qty,
-        productId: Number(item.id),
-      };
-    });
-
-    const orderInfos = {
-      storeId: myCartStoreId,
-      couponId: appliedCoupon.couponId,
-      totalAmount: totalPriceAf,
-      orderedDate: new Date(),
-      orderedProductProduct: orderedProductProducts,
-    };
-
-    const url = `${import.meta.env.VITE_BACK_PORT}/cart/decreaseCartProduct`;
-    sendAxiosPostRequest(url, loginToken, setLoginToken, orderInfos).then(
-      (res) => {
-        alert("ㅇㅇㅇ");
-        console.log("응답", res);
-        requestPayment();
+    const orderedProductProducts: OrderProductNameQqt[] = itemData?.map(
+      (item) => {
+        return {
+          productQuantity: item.qty,
+          productTitle: item.name,
+        };
       }
     );
+
+    //가게 재고 깎기
+    const url = `${import.meta.env.VITE_BACK_PORT}/cart/decreaseStoreProduct`;
+    sendAxiosPostRequest(
+      url,
+      loginToken,
+      setLoginToken,
+      orderedProductProducts
+    ).then((res) => {
+      alert("ㅇㅇㅇ");
+      console.log("응답", res);
+      requestPayment();
+    });
+  };
+
+  // 내 장바구니 수량 깎기
+  const decreaseMyCart = async () => {
+    const orderedProductProducts: OrderProductNameQqt[] = itemData?.map(
+      (item) => {
+        return {
+          productQuantity: item.qty,
+          productTitle: item.name,
+        };
+      }
+    );
+
+    const url = `${import.meta.env.VITE_BACK_PORT}/cart/decreaseCartProduct1`;
+    sendAxiosPostRequest(
+      url,
+      loginToken,
+      setLoginToken,
+      orderedProductProducts
+    ).then((res) => {
+      alert("장바구니 깎기!!");
+      //수정 setter
+    });
   };
 
   const saveToOrderList = async () => {
@@ -102,13 +130,16 @@ export default function Dopay({
     }/orderedproduct/saveOrderedProductInfo`;
 
     console.log("스토어", orderInfos);
-    sendAxiosPostRequest(orderUrl, loginToken, setLoginToken, orderInfos).then(
-      (res) => {
-        alert("결제완료");
-      }
-    );
+    sendAxiosPostRequest(orderUrl, loginToken, setLoginToken, orderInfos)
+      .then((res) => {
+        console.log("saveToOrderList---", res);
+      })
+      .catch((e) => {
+        console.log("saveToOrderList error ---", e);
+      });
   };
 
+  //실결제
   const requestPayment = async () => {
     console.log("총액", totalPriceAf);
     const nameCnt = itemData.length;
@@ -137,11 +168,12 @@ export default function Dopay({
       },
     }).then((res) => {
       saveToOrderList();
+      decreaseMyCart();
       if (appliedCoupon !== null && appliedCoupon !== undefined) {
         deleteMyCoupon();
-        setOpenPayment(false);
-        toast.success("결제되었습니다 👏🏻");
       }
+      setOpenPayment(false);
+      toast.success("결제되었습니다 👏🏻");
       console.log("부트 페이 응답 ", res);
     });
   };
@@ -153,6 +185,7 @@ export default function Dopay({
       </button>
       <button onClick={saveToOrderList}>결제하기2</button>
       <button onClick={deleteMyCoupon}>쿠폰 깎기</button>
+      <button onClick={decreaseMyCart}>장바구니 깎기</button>
     </div>
   );
 }

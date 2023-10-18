@@ -1,5 +1,6 @@
 import { getUserLocation } from "../../utils/userUtils";
 import { useState, useRef, useEffect } from "react";
+import { toast } from "react-toastify";
 import styles from "../page_css/SearchStore.module.css";
 import MapDrawer from "./MapDrawer";
 
@@ -20,8 +21,8 @@ export interface StoreDataMap extends Location {
 
 export default function SearchStore() {
   const [userLocation, setUserLocation] = useState<Location>({
-    latitude: 35.165823,
-    longitude: 129.132308,
+    latitude: 37.57986,
+    longitude: 126.97711,
   });
   const [storeData, setStoreData] = useState<StoreData[]>();
   const [selectedDistance, setSelectedDistance] = useState<number>(5);
@@ -32,7 +33,10 @@ export default function SearchStore() {
         setUserLocation(res);
       })
       .catch((err) => {
-        console.log("유저 위치 정보 획득 X", err);
+        toast.error("위치 정보를 허용해주세요.", {
+          position: "top-center",
+          autoClose: 1000,
+        });
       });
   }, []);
 

@@ -63,10 +63,26 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  min-width: 330px;
+}
+
+.detailScrollWrapper {
+  width: 100%;
+  max-height: 500px;
+  overflow-y: scroll;
+}
+
+.detailScrollWrapper::-webkit-scrollbar {
+  width: 10px;
+  display: flex;
+}
+
+.detailScrollWrapper::-webkit-scrollbar-thumb {
+  background: #f9bb00;
+  border-radius: 0.4rem;
 }
 
 .detailWrapper {
-  width: 100%;
   margin: 0.5rem;
   padding: 0.5rem;
   border-bottom: 1.5px solid #e1e1e1;
