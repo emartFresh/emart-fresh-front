@@ -8,10 +8,10 @@ import './chart.css';
 export default function SalesChart() {
   const [salesData, setSalseData] = useState({});
 
-  fetch('/data.json')
-  .then((response) => {
-    console.log(response);  
-  })
+  // fetch('/data.json')
+  // .then((response) => {
+  //   console.log(response);  
+  // })
 
   const options = {
     colors: ['#f9bb00', '#333333'],
@@ -40,7 +40,7 @@ export default function SalesChart() {
     series: [
       {
         name: '매출액1',
-        data: [100, 200, 150, 300, 250, 400], // 첫 번째 선 그래프
+        data: [0, 200, 150, 300, 250, 800], // 첫 번째 선 그래프
       },
       {
         name: '매출액2',

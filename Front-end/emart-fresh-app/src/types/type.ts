@@ -67,11 +67,10 @@ declare global {
     priceNumber: number;
     productTitle: string;
     cartProductId: number; // 제품 아이디 (외래 키)
-    storeId: number; // 가게 아이디 (외래 키)
+    storeId?: number; // 가게 아이디 (외래 키)
+    storeName?: string;
     productTimeSale: number;
     productImgUrl: string;
-    // cartProductId: number | ProductData; // 제품 아이디 (외래 키)
-    // storeId: number | StoreData; // 가게 아이디 (외래 키)
   }
 
   // 발주 정보
@@ -115,6 +114,7 @@ declare global {
 
   interface ExtendedCoupon extends CouponData {
     existing: boolean;
+    admin: boolean;
   }
 
   // 가게 정보
