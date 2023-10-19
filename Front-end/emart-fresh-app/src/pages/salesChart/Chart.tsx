@@ -7,23 +7,18 @@ import ProductChart from './ProductChart';
 import { PickerCalendar } from './PickerCalendar';
 import { useState } from 'react';
 import { useEffect } from 'react';
-import { useRecoilState } from 'recoil';
-import { cartItemCount, loginState } from '../../atoms';
-import { IsLogin } from '../../utils/LoginUtils';
-import { sendAxiosRequest } from '../../utils/userUtils';
-import dayjs from 'dayjs';
+import { useIsLogin } from '../../utils/LoginUtils';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
+import dayjs from 'dayjs';
 
 const Chart = () => {
-  const [loginToken, setLoginToken] = useRecoilState<JwtToken>(loginState);
-  const [cartCount, setCartCount] = useRecoilState<number>(cartItemCount);
   const [selectOption, setSelectOption] = useState('weekly');
   const nowYear = dayjs().year();
   const nowMonth = dayjs().month()+1;
   const nowDate = dayjs().date();
   const [date, setDate] = useState<string>(nowYear + "-" + nowMonth + "-" + nowDate);
-  const isLogined = IsLogin();
+  const isLogined = useIsLogin();
   const navigate = useNavigate();
 
 
@@ -32,15 +27,6 @@ const Chart = () => {
       toast.error('로그인이 필요한 서비스입니다');
       navigate('/login');
       return;
-    }
-
-    if(isLogined){
-    sendAxiosRequest('/mypage/saleschart', 'get', loginToken, setLoginToken, setCartCount, {searchDate:date, period:selectOption})
-    .then((response) => {
-      console.log("chartData >>> " + response);
-    })
-    .catch(console.error);
-    console.log(date);
     }
   }, [date])
 
@@ -71,10 +57,10 @@ const Chart = () => {
         
         <div className={styles.chartContainer}>
             <div className={styles.lineChart}>
-              <SalesChart/>
+              <SalesChart date={date} period={selectOption}/>
             </div>
             <div className={styles.pieCharts}>
-              <ProductTypeChart/>
+              <ProductTypeChart date={date} period={selectOption}/>
               <ProductChart/>
             </div>
         </div>

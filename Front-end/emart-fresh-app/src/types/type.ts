@@ -21,7 +21,18 @@ declare global {
   // 수정
   interface responseData {
     // [key: string]: string | number | boolean | undefined| ExtendedCoupon[];
-    [key: string]: string | number | boolean | undefined;
+    [key: string]: string | number | boolean | undefined | SalesChartData[];
+  }
+
+  interface SalesChartData{
+    quarter: number;
+    orderedDate: string;
+    totalAmount: number;
+  }
+
+  interface TypeChartData{
+    name: string;
+    y: number;
   }
 
   // 제품 정보

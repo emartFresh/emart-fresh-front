@@ -1,20 +1,60 @@
+/* eslint-disable prefer-const */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState } from 'react';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import styles from './Chart.module.css';
 import './chart.css';
+import { useIsLogin } from '../../utils/LoginUtils';
+import { sendAxiosRequest } from '../../utils/userUtils';
+import { useRecoilState } from 'recoil';
+import { cartItemCount, loginState } from '../../atoms';
+import { useEffect } from 'react';
 
-export default function SalesChart() {
-  const [salesData, setSalseData] = useState({});
+interface SalesChartProps{
+  date: string;
+  period: string;
+}
 
-  // fetch('/data.json')
-  // .then((response) => {
-  //   console.log(response);  
-  // })
+export default function SalesChart({date, period}: SalesChartProps) {
+  const [loginToken, setLoginToken] = useRecoilState<JwtToken>(loginState);
+  const [cartCount, setCartCount] = useRecoilState<number>(cartItemCount);
+  const [salesData, setSalseData] = useState<SalesChartData[]>([]);
+  const isLogined = useIsLogin();
+  const [xAxisData, setXAxisData] = useState<string[]>([]);
+  const [seriesData, setSeriesData] = useState<number[]>([]);
+
+  useEffect(() => {
+  if(isLogined){
+    sendAxiosRequest('/mypage/saleschart', 'get', loginToken, setLoginToken, setCartCount, {searchDate:date, period:period})
+    .then((response) => {
+      const res: SalesChartData[] = JSON.parse(JSON.stringify(response));
+      setSalseData(res);
+
+      // if(typeof response === typeof SalesChartData){
+      //   const res:SalesChartData[] = response as SalesChartData[];
+      // }
+
+      setXAxisData(
+        response.map((data: SalesChartData) => {
+        return data.orderedDate;        
+      }))
+
+      setSeriesData(
+        response.map((data: SalesChartData) => {
+        return data.totalAmount;        
+      }))
+  
+
+    })
+    .catch(console.error);
+  }
+  }, []);
+  
+
 
   const options = {
-    colors: ['#f9bb00', '#333333'],
+    colors: ['#333333'],
     chart: {
       type: 'line',
     },
@@ -23,11 +63,11 @@ export default function SalesChart() {
       text: '매출액',
     },
     xAxis: {
-      categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+      categories: xAxisData,
     },
     yAxis: {
       title: {
-        text: '매출액',
+        text: '매출액(만원)',
       },
     },
     plotOptions: {
@@ -39,12 +79,9 @@ export default function SalesChart() {
     },
     series: [
       {
-        name: '매출액1',
-        data: [0, 200, 150, 300, 250, 800], // 첫 번째 선 그래프
-      },
-      {
-        name: '매출액2',
-        data: [50, 150, 80, 200, 180, 300], // 두 번째 선 그래프
+        name: '매출액',
+        // data: [242153, 123489, 243215, 854321, 641234, 123479, 548767],
+        data: seriesData,
       },
     ],
   };
