@@ -92,7 +92,7 @@ export default function ProductDetail() {
         .then((res) => {
           console.log("응답 완료", res);
           if (res === "error:out of stock") {
-            toast.error("물품의 재고가 모자랍니다.", {
+            toast.error("물품의 재고가 부족합니다.", {
               position: "top-center",
               autoClose: 1500,
             });
