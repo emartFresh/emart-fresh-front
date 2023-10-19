@@ -1,12 +1,62 @@
-import React from 'react';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import React, { useEffect, useState } from 'react';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import styles from "./Chart.module.css";
 import "./chart.css";
+import { useRecoilState } from 'recoil';
+import { cartItemCount, loginState } from '../../atoms';
+import { useIsLogin } from '../../utils/LoginUtils';
+import { sendAxiosRequest } from '../../utils/userUtils';
 
-const ProductTypeChart = () => {
+interface SalesChartProps{
+  date: string;
+  period: string;
+}
+
+const getProductNameByType = (type:number)=>{
+  return type === 1 ? "도시락"
+  : type === 2 ? "김밥"
+  : type === 3 ? "햄버거"
+  : type === 4 ? "주먹밥"
+  : type === 5 ? "샌드위치"
+  : type === 6 ? "즉석식"
+  : type === 7 ? "조리면"
+  : "분류없음"
+
+}
+const ProductTypeChart = ({date, period}: SalesChartProps) => {
+  const [loginToken, setLoginToken] = useRecoilState<JwtToken>(loginState);
+  const [cartCount, setCartCount] = useRecoilState<number>(cartItemCount);
+  const [typeData, setTypeData] = useState<TypeChartData[]>([]);
+  const isLogined = useIsLogin();
+
+  useEffect(() => {
+    if(isLogined){
+      sendAxiosRequest('/mypage/typechart', 'get', loginToken, setLoginToken, setCartCount, {searchDate:date, period:period})
+      .then((response) => {
+        console.log(response);
+        //const res: TypeChartData[] = JSON.parse(JSON.stringify(response));
+        //setTypeData(res);
+
+        const processedData = response?.map((ele)=>{
+          return {
+            name:getProductNameByType(Number(ele.productType)),
+            y:ele.orderedQuantity,
+          }
+        }) 
+
+        setTypeData(processedData);
+        
+        })
+
+      .catch(console.error);
+    }
+    }, []);
+
+
   const options = {
-    colors: ['#f95a00', '#333333', '#666666', '#999999', '#bbbbbb', '#dddddd'],
+    colors: ['#f9bb00', '#333333', '#666666', '#999999', '#bbbbbb', '#dddddd'],
     chart: {
       plotBackgroundColor: null,
       plotBorderWidth: null,
@@ -33,27 +83,13 @@ const ProductTypeChart = () => {
     series: [{
       name: 'Brands',
       colorByPoint: true,
-      data: [{
-        name: 'Microsoft Internet Explorer',
-        y: 54.33
-      }, {
-        name: 'Chrome',
-        y: 23.03,
-        sliced: true,
-        selected: true
-      }, {
-        name: 'Firefox',
-        y: 10.38
-      }, {
-        name: 'Safari',
-        y: 4.77
-      }, {
-        name: 'Opera',
-        y: 2.41
-      }, {
-        name: 'Proprietary or Undetectable',
-        y: 1.7
-      }]
+      data: typeData,
+      // {
+      //   name: 'Chrome',
+      //   y: 23.03,
+      //   sliced: true,
+      //   selected: true
+      // },
     }]
   };
 

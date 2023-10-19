@@ -224,7 +224,8 @@ export const sendAxiosRequest = async (
   setCartCount:SetterOrUpdater<number>,
   params?: Params | Array<object>,
   callStack: number = 0
-): Promise<responseData> => {
+  ): Promise<any> => {
+  // ): Promise<responseData> => {
   if (callStack >= 10) {
     return { isError: true };
   }

@@ -16,11 +16,6 @@ import { useNavigate } from "react-router-dom";
 import { useIsLogin } from "../../utils/LoginUtils";
 import { getTruncateString } from "../../utils/formatUtils";
 
-// 이벤트 없을때 없는표시
-// grid -> flex : wrap 
-// 네이버 / 카카오 버튼 사이즈
-// toast alert 모두 적용
-
 interface responseData {
   data: CartData[];
 }
