@@ -26,12 +26,10 @@
 .modifyPwForm {
   margin: 0 auto;
   width: 28em;
-  /* background-color: antiquewhite; */
 }
 .inputWrap {
   margin: 0 auto;
   position: relative;
-  /* border: 1px solid #ccc; */
 }
 
 .modifyPw,
@@ -51,7 +49,6 @@
   color: red;
   font-size: 0.8em;
   width: 35em;
-  /* margin: 0 auto; */
   margin-left: 46px;
   margin-top: 0.2em;
   margin-bottom: 1em;
@@ -71,7 +68,6 @@
   margin: 0 auto;
   margin-top: 0.2em;
   margin-bottom: 1em;
-  /* background-color: black; */
 }
 .modifyControlBtn {
   width: 100%;
@@ -79,9 +75,7 @@
   justify-content: center;
   margin-bottom: 7px;
   margin-top: 2px;
-  /* border: 1px solid #ccc; */
   border-radius: 5px;
-  /* background-color: red; */
 }
 .emailTitle {
   padding: 5px;
@@ -106,7 +100,7 @@
 .inputPw {
   padding: 10px;
   flex: 0.8;
-  /* border: 1px solid #ccc; */
+  border: 1px solid #ccc;
   border-radius: 5px;
 }
 
