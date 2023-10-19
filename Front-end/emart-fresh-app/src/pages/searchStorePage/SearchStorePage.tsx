@@ -90,6 +90,22 @@ export default function SearchStore() {
       });
 
       marker.setMap(map);
+
+      const iwContent = `<div style="padding: 1rem; min-height: 3rem; width:15rem;">
+                          <a href="/storeproduct?storeid=${storeData[i].storeId}">
+                            <div>${storeData[i].storeName}</div>
+                          </a>
+                          <div style="color: gray; font-size: 0.8rem; margin-bottom: 1rem;">${storeData[i].storeAddress}</div>
+                        </div>`;
+
+      const infowindow = new window.kakao.maps.InfoWindow({
+        content: iwContent,
+        removable: true,
+      });
+
+      window.kakao.maps.event.addListener(marker, "click", function () {
+        infowindow.open(map, marker);
+      });
     }
   };
 
@@ -103,9 +119,6 @@ export default function SearchStore() {
     };
 
     const map = new window.kakao.maps.Map(mapRef.current, mapOption);
-    //const places = new window.kakao.maps.services.Places();
-    //map.setLevel(13);
-    // places.setMap(map, selectedStore);
     setCircle(map, {
       latitude: userLocation.latitude,
       longitude: userLocation?.longitude,

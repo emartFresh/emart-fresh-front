@@ -14,8 +14,8 @@ export default function ShowProduct({ productDatas }: ShowProductProps) {
   const Datas = productDatas.map((product: ProductData, index: number) => {
     const idLink = `/product/detail?product-id=${product.productId}&store-id=${storeId}`;
     return (
-      <Link to={idLink} className={styles.linkTag}>
-        <section key={index} className={styles.productWrapper}>
+      <Link key={index} to={idLink} className={styles.linkTag}>
+        <section className={styles.productWrapper}>
           {product.productEvent === 1 ? (
             <span className={styles.badgeOnePlus}>1+1</span>
           ) : (

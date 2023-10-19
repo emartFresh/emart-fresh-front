@@ -62,6 +62,8 @@ export default function MapDrawer({
   const drawerRef = useRef(null);
 
   const handleSearch = () => {
+    console.log("핸들 서치");
+
     const searchingData: SearchingData = {
       n: selectedDistance,
       partOfStoreName: searchingTerm,
@@ -86,11 +88,10 @@ export default function MapDrawer({
       userLatitude: userLocation.latitude,
       userLongitude: userLocation.longitude,
     };
-
     axios.get(url, { params: param }).then((res) => {
       setStoreData(res?.data);
     });
-  }, [selectedDistance, selectedProductName]);
+  }, [selectedDistance, selectedProductName, userLocation]);
 
   const fetchTopReviewedProducts = () => {
     const url = `${
@@ -119,7 +120,6 @@ export default function MapDrawer({
         return response.data;
       })
       .catch((error) => {
-        console.error("에러 발생:", error);
         throw error;
       });
   };
@@ -189,12 +189,13 @@ export default function MapDrawer({
             </button>
             <button
               ref={threeKmBtn}
-              name="5"
+              name="20"
               className={styles.disBtnThree}
               onClick={(e) => handleDisBtn(e)}
             >
               5km
             </button>
+
             <div className={styles.inputWraaper}>
               <input
                 onChange={(e) => setSearchingTerm(e.target.value)}
