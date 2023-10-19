@@ -34,15 +34,12 @@ export default function Nav() {
 
   // useEffect(() => {
   // }, []);
+  
 
   const logout = () => {
     // aws 클라이언트 - 서버 에서 로그아웃 안되는 오류 있음
-    setLoginToken({
-      accessToken: "",
-      refreshToken: "",
-    });
-
     const checkLogout = confirm("로그아웃하시겠습니까?");
+
     if (checkLogout) {
       sendAxiosRequest("/member/logout", "post", loginToken, setLoginToken, setCartCount, {
         loginType: loginType,
@@ -52,6 +49,10 @@ export default function Nav() {
         .then(() => {
           setLoginType("");
           setKakaoToken("");
+          setLoginToken({
+            accessToken: "",
+            refreshToken: "",
+          });
           // setNaverToken("");
           setCartCount(0);
           toast.success("로그아웃되었습니다.");
@@ -75,11 +76,11 @@ export default function Nav() {
         <div className={styles.subContentDiv}>
           <span>
             {loginToken.refreshToken !== "" ? (
-              <Link to="/" onClick={logout}>
+              <Link to="/" onClick={logout} className={styles.loginLink}>
                 Logout
+                <p className={styles.arrowBox}>말풍선 등장!</p>
               </Link>
             ) : (
-              // <i class="fa-solid fa-right-to-bracket"></i>
               <Link to="/login">
                 {/* <FontAwesomeIcon icon={faRightToBracket}/> */}
                  Login</Link>
@@ -94,7 +95,6 @@ export default function Nav() {
                 <ShoppingCartIcon />
               </StyledBadge>
             </IconButton>
-            cart
           </span>
           <span>
             <Link to="/mypageMain">MyPage</Link>

@@ -8,7 +8,7 @@ import { cartItemCount, loginState } from "../../atoms";
 import { Checkbox } from "@mui/material";
 import { sendAxiosRequest } from "../../utils/userUtils";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faXmark } from "@fortawesome/free-solid-svg-icons";
+import { faCircleMinus, faMinus, faMinusCircle, faPlus, faXmark } from "@fortawesome/free-solid-svg-icons";
 import cartNull from "../../assets/images/cartNull.png";
 import cartCalcNull from "../../assets/images/cartCalcNull.png";
 import Payment from "../paymentPage/Payment";
@@ -29,8 +29,6 @@ const Cart = () => {
   const [openPayment, setOpenPayment] = useState<boolean>(false);
   const [initCartItemList, setInitCartItemList] = useState<CartData[]>([]);
   const [updateCartItemList, setUpdateCartItemList] = useState<Array<object>>([]);
-  // const [dialogOpen, setDialogOpen] = useState<boolean>(false);
-  // const [agreements, setAgreements] = useState<object>({});
   const navigate = useNavigate();
   const isLogined = useIsLogin();
 
@@ -270,7 +268,6 @@ const Cart = () => {
       >
         장바구니
       </h3>
-      <button  onClick={()=>{console.log('fuxking token', loginToken)}}> test</button>
       <div
         className={
           cartItemList.length === 0 ? styles.hiddenWrap : styles.allCheckWrap
@@ -314,17 +311,15 @@ const Cart = () => {
                     }}
                   />
                   <img src={item.productImgUrl} alt="product Image" className={styles.productImage} />
-                  <p className={styles.productTitle}>{item.productTitle}</p>
-                  <p className={styles.productPrice}>{item.priceNumber}</p>
+                  <p className={styles.productTitle}>{getTruncateString(item.productTitle, 35)}</p>
+                  <p className={styles.productPrice}>{item.priceNumber}원</p>
                   <p className={styles.quantityControl}>
-                    <input
-                      type="button"
-                      value="-"
+                    <FontAwesomeIcon 
+                      icon={faMinus}
                       id="minusQuantity"
                       className={styles.quantityBtn}
                       onClick={(e) => handleQuantity(e, item.cartProductId)}
                     />
-                    {/* <RemoveIcon/> */}
                     <input
                       type="text"
                       value={item.cartProductQuantityOfString}
@@ -340,9 +335,8 @@ const Cart = () => {
                       step="1"
                       pattern="[1-9]\d*"
                     />
-                    <input
-                      type="button"
-                      value="+"
+                    <FontAwesomeIcon 
+                      icon={faPlus}
                       id="plusQuantity"
                       className={styles.quantityBtn}
                       onClick={(e) => handleQuantity(e, item.cartProductId)}
