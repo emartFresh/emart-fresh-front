@@ -20,6 +20,7 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { toast } from "react-toastify";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRightToBracket } from "@fortawesome/free-solid-svg-icons";
+import logo from '../assets/images/pick-fresh logo.png';
 
 export default function Nav() {
   const navigate = useNavigate();
@@ -49,10 +50,6 @@ export default function Nav() {
         naverAccessToken: naverToken,
       })
         .then(() => {
-          // setLoginToken({
-          //   accessToken: "",
-          //   refreshToken: "",
-          // });
           setLoginType("");
           setKakaoToken("");
           // setNaverToken("");
@@ -106,8 +103,7 @@ export default function Nav() {
       </nav>
       <nav className={`${styles.nav} ${isHomePage ? styles.home : ""}`}>
         <div>
-          {/* <img src={logo} alt="" /> */}
-          로고
+          <img src={logo} alt="" className={styles.logoImage}/>
         </div>
         <div className={styles.contentDiv}>
           <span>
