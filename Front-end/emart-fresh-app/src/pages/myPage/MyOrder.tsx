@@ -221,44 +221,45 @@ export default function MyOrder() {
         </div>
       ) : (
         orderedProducts.map((orderedProduct, index) => (
-          <div key={index}>
-            <h6 style={{ textAlign: "left", marginLeft: "310px" }}>
-              {orderedProduct.productId}
-            </h6>
-            <div className={styles.orderWrapper}>
-              <div className={styles.orderContainer}>
-                <div className={styles.orderText}>
+          <div key={index} className={styles.orderWrapper}>
+            <div className={styles.orderContainer}>
+              <div className={styles.orderText}>
+                <div className={styles.ordernameText}>
+                  주문번호:&nbsp;{orderedProduct.productId}&nbsp;&nbsp;&nbsp;
                   {new Date(orderedProduct.orderedDate).toLocaleDateString()}
                 </div>
-                <div className={styles.ordernameText}>
+                <div className={styles.orderProductName}>
                   {orderedProduct.productTitle}
                   {orderedProduct.myOrderedCount > 1 &&
-                    ` 외 ${orderedProduct.myOrderedCount - 1}종`}{" "}
-                  {/* 퀀티티가 -> 마이오더 카운티로 바뀌었다.*/}
-                  <div>{orderedProduct.totalAmount}원</div>
+                    ` 외 ${orderedProduct.myOrderedCount - 1}종`}
                 </div>
                 <div>{orderedProduct.storeName}</div>
-                <div className={styles.orderText}>
-                  <div>
-                    {orderedProduct.pickup ? (
-                      <div style={{ color: "gray" }}>픽업완료</div>
-                    ) : (
-                      <div style={{ color: "blue" }}>픽업대기중</div>
-                    )}
-                  </div>
-                  <div>
-                    <button
-                      className={styles.orderDetailBtn}
-                      onClick={() =>
-                        handleDetail(
-                          orderedProduct?.orderedProductId,
-                          orderedProduct?.pickup
-                        )
-                      }
-                    >
-                      확인
-                    </button>
-                  </div>
+
+                <div className={styles.orderTotalAmount}>
+                  총액 {orderedProduct.totalAmount}원
+                </div>
+              </div>
+
+              <div className={styles.orderTextPickup}>
+                <div>
+                  {orderedProduct.pickup ? (
+                    <div style={{ color: "#4e5059" }}>픽업완료</div>
+                  ) : (
+                    <div style={{ color: "blue" }}>픽업대기중</div>
+                  )}
+                </div>
+                <div>
+                  <button
+                    className={styles.orderDetailBtn}
+                    onClick={() =>
+                      handleDetail(
+                        orderedProduct?.orderedProductId,
+                        orderedProduct?.pickup
+                      )
+                    }
+                  >
+                    상세보기
+                  </button>
                 </div>
               </div>
             </div>
