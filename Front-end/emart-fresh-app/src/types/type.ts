@@ -30,7 +30,7 @@ declare global {
     totalAmount: number;
   }
 
-  interface TypeChartData{
+  interface PieChartData{
     name: string;
     y: number;
   }

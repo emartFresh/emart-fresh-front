@@ -9,9 +9,14 @@ import { cartItemCount, loginState } from '../../atoms';
 import { useIsLogin } from '../../utils/LoginUtils';
 import { sendAxiosRequest } from '../../utils/userUtils';
 
-interface SalesChartProps{
+interface TypeChartProps{
   date: string;
   period: string;
+}
+
+interface TypeData{
+  productType: number;
+  orderedQuantity: number;
 }
 
 const getProductNameByType = (type:number)=>{
@@ -25,34 +30,31 @@ const getProductNameByType = (type:number)=>{
   : "분류없음"
 
 }
-const ProductTypeChart = ({date, period}: SalesChartProps) => {
+const ProductTypeChart = ({date, period}: TypeChartProps) => {
   const [loginToken, setLoginToken] = useRecoilState<JwtToken>(loginState);
   const [cartCount, setCartCount] = useRecoilState<number>(cartItemCount);
-  const [typeData, setTypeData] = useState<TypeChartData[]>([]);
+  const [typeData, setTypeData] = useState<PieChartData[]>([]);
   const isLogined = useIsLogin();
 
   useEffect(() => {
     if(isLogined){
       sendAxiosRequest('/mypage/typechart', 'get', loginToken, setLoginToken, setCartCount, {searchDate:date, period:period})
       .then((response) => {
-        console.log(response);
         //const res: TypeChartData[] = JSON.parse(JSON.stringify(response));
         //setTypeData(res);
 
-        const processedData = response?.map((ele)=>{
+        const processedData = response?.map((res: TypeData)=>{
           return {
-            name:getProductNameByType(Number(ele.productType)),
-            y:ele.orderedQuantity,
+            name:getProductNameByType(Number(res.productType)),
+            y:res.orderedQuantity,
           }
         }) 
-
         setTypeData(processedData);
-        
         })
 
       .catch(console.error);
     }
-    }, []);
+    }, [period]);
 
 
   const options = {
