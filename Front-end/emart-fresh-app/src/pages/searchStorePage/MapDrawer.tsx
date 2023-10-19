@@ -189,7 +189,7 @@ export default function MapDrawer({
             </button>
             <button
               ref={threeKmBtn}
-              name="20"
+              name="5"
               className={styles.disBtnThree}
               onClick={(e) => handleDisBtn(e)}
             >

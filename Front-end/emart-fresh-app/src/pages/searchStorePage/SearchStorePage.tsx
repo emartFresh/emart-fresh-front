@@ -1,5 +1,6 @@
 import { getUserLocation } from "../../utils/userUtils";
 import { useState, useRef, useEffect } from "react";
+import markerImg from "../../assets/images/marker.png";
 import { toast } from "react-toastify";
 import styles from "../page_css/SearchStore.module.css";
 import MapDrawer from "./MapDrawer";
@@ -71,8 +72,7 @@ export default function SearchStore() {
         ),
       };
     });
-    const imageSrc =
-      "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
+    const imageSrc = markerImg;
 
     console.log("포지션", positions);
 
