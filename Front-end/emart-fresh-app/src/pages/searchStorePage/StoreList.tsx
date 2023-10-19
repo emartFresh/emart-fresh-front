@@ -2,8 +2,6 @@ import styles from "../page_css/SearchStore.module.css";
 import { Link } from "react-router-dom";
 
 export default function StoreList({ storeData }: { storeData: StoreData[] }) {
-  console.log("유효", storeData);
-
   const storeList = storeData?.map((item, inx) => {
     const url = `/storeproduct?storeid=${item.storeId}`;
     return (

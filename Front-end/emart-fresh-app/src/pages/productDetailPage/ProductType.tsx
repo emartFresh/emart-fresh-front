@@ -37,7 +37,7 @@ export default function ProductType({ productType }: { productType: number }) {
       ? "즉석식"
       : productType === 7
       ? "조리면"
-      : "black";
+      : "분류없음";
   return (
     <div style={borderColor} className={styles.badge}>
       {bageName}
