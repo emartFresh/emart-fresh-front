@@ -74,17 +74,17 @@ export default function Nav() {
     <>
       <nav className={styles.subNav}>
         <div className={styles.subContentDiv}>
-          <span>
+          <span className={styles.loginLinkWrap}>
             {loginToken.refreshToken !== "" ? (
-              <Link to="/" onClick={logout} className={styles.loginLink}>
+              <Link to="/" onClick={logout} className={styles.logoutLink}>
                 Logout
-                <p className={styles.arrowBox}>말풍선 등장!</p>
               </Link>
             ) : (
               <Link to="/login">
-                {/* <FontAwesomeIcon icon={faRightToBracket}/> */}
-                 Login</Link>
+                <FontAwesomeIcon icon={faRightToBracket} className={styles.loginLink}/>
+              </Link>
             )}
+            <p className={styles.arrowBox}>로그인</p>
           </span>
           <span>
             <Link to="/chart">chart</Link>
