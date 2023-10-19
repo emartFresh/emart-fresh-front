@@ -39,6 +39,7 @@ export default function Nav() {
   const logout = () => {
     // aws 클라이언트 - 서버 에서 로그아웃 안되는 오류 있음
     const checkLogout = confirm("로그아웃하시겠습니까?");
+    console.log('checkLogout >', checkLogout)
 
     if (checkLogout) {
       sendAxiosRequest("/member/logout", "post", loginToken, setLoginToken, setCartCount, {

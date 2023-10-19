@@ -129,7 +129,7 @@ const Cart = () => {
   //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
   const handleQuantity = (
-    e: React.MouseEvent<HTMLInputElement, MouseEvent>,
+    e: React.MouseEvent<SVGSVGElement, MouseEvent>,
     cartProductId: number
   ) => {
     const btn = e.target as HTMLButtonElement;
