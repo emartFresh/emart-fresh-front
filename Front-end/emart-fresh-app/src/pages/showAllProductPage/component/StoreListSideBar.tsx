@@ -114,9 +114,9 @@ export default function StoreListSideBar({
         <div className={styles.itemSectionContainer}>
           <div className={styles.itemSectionWrapper}>
             <section className={styles.itemNamesSection}>
-              {selectedItem.map((item) => {
+              {selectedItem.map((item, inx) => {
                 return (
-                  <span className={styles.itemNameSection}>
+                  <span key={inx} className={styles.itemNameSection}>
                     {item}
                     <button
                       className={styles.itemDeleteBtn}

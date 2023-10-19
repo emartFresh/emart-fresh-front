@@ -97,7 +97,7 @@ export default function Dopay({
       }
     );
 
-    const url = `${import.meta.env.VITE_BACK_PORT}/cart/decreaseCartProduct1`;
+    const url = `${import.meta.env.VITE_BACK_PORT}/cart/decreaseCartProduct`;
     sendAxiosPostRequest(
       url,
       loginToken,

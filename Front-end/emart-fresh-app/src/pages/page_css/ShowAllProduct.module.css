@@ -1,4 +1,5 @@
 .showAllSection {
+  width: 100%;
   background-color: #ededed;
   padding: 2em;
   display: flex;

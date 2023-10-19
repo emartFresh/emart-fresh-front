@@ -19,7 +19,6 @@ export default function ProductReview({ productTitle }: ProductReviewProps) {
         }/review/product-review?productTitle=${productTitle}&select=${select}`
       )
       .then((res) => {
-        console.log("잉", res.data);
         if (res.data) {
           setReviewData(res.data);
         }
@@ -44,6 +43,12 @@ export default function ProductReview({ productTitle }: ProductReviewProps) {
     );
   });
 
+  const tempReview = (
+    <div className={styles.reviewContainer}>
+      <div className={styles.contentWrapper}>작성된 리뷰가 없습니다.</div>
+    </div>
+  );
+
   const handleSelect = (e) => {
     setSelect(e.target.value);
   };
@@ -63,8 +68,7 @@ export default function ProductReview({ productTitle }: ProductReviewProps) {
           <option value="2">평점 낮은순</option>
         </select>
       </div>
-
-      {Reviews}
+      {Reviews?.length >= 1 ? Reviews : tempReview}
     </div>
   );
 }

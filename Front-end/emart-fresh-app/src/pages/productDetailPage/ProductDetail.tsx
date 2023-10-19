@@ -14,6 +14,8 @@ import { Modal, Box } from "@mui/material";
 import styles from "../page_css/ProductDetail.module.css";
 import ProductReview from "./ProductReview";
 import { formatCurrency } from "../../utils/formatUtils";
+import StockCnt from "./StockCnt";
+import ProductType from "./ProductType";
 /*
 public class AddToCartDto {
 	int storeId;
@@ -36,7 +38,6 @@ export default function ProductDetail() {
   const [showModal, setShowModal] = useState<boolean>(false);
   const [cartCount, setCartCount] = useRecoilState<number>(cartItemCount);
 
-  console.log("로그인 토큰", loginToken);
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const productId = queryParams.get("product-id");
@@ -90,6 +91,13 @@ export default function ProductDetail() {
       sendAxiosPostRequest(url, loginToken, setLoginToken, data)
         .then((res) => {
           console.log("응답 완료", res);
+          if (res === "error:out of stock") {
+            toast.error("물품의 재고가 부족합니다.", {
+              position: "top-center",
+              autoClose: 1500,
+            });
+            return;
+          }
           toast.success("물건을 장바구니에 담았습니다.", {
             position: "top-center",
             autoClose: 1500,
@@ -98,6 +106,8 @@ export default function ProductDetail() {
           updateMyCart();
         })
         .catch((e) => {
+          console.log("응답 실패", e);
+
           if (e.response.status === 400) {
             setShowModal(true);
           }
@@ -213,7 +223,6 @@ export default function ProductDetail() {
           </div>
         </Box>
       </Modal>
-
       <div className={styles.itemContainer}>
         <img
           className={styles.itemImage}
@@ -221,10 +230,18 @@ export default function ProductDetail() {
           alt="no image"
         />
         <div className={styles.contentSection}>
+          <ProductType productType={productData?.productType} />
+
           <div className={styles.productTitle}>{productData?.productTitle}</div>
           <div className={styles.itemLine}></div>
           {Price()}
           <div className={styles.itemLine}></div>
+          {storeId && (
+            <StockCnt
+              storeId={storeId}
+              productTitle={productData?.productTitle}
+            />
+          )}
         </div>
       </div>
       {storeId && (
@@ -233,7 +250,14 @@ export default function ProductDetail() {
             <button className={styles.downBtn} onClick={handleQuantityDown}>
               -
             </button>
-            <input className={styles.qttInput} type="text" value={quantity} />
+            <input
+              onChange={(e) => {
+                setQuantity(Number(e.target.value));
+              }}
+              className={styles.qttInput}
+              type="text"
+              value={quantity}
+            />
             <button className={styles.upBtn} onClick={handleQuantityUp}>
               +
             </button>
