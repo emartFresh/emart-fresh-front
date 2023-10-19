@@ -11,6 +11,7 @@ import { toast } from "react-toastify";
 export default function ApplyManager() {
   const [loginToken, setLoginToken] = useRecoilState<JwtToken>(loginState);
   const [showModal, setShowModal] = useState<boolean>(false);
+  const [initialComp, setInitialComp] = useState<number>(0);
   const [certifFile, setCertifFile] = useState<File>();
   const userInfo = GetUserAllInfo();
 
@@ -33,7 +34,12 @@ export default function ApplyManager() {
 
     sendAxiosPostRequest(url, loginToken, setLoginToken, formData)
       .then((res) => {
-        console.log("응답", res);
+        toast.success("신청에 성공하였습니다.", {
+          position: "top-center",
+          autoClose: 1000,
+        });
+        setInitialComp((prev) => prev + 1);
+        setShowModal(false);
       })
       .catch((e) => {
         const res = e.response;
@@ -60,7 +66,7 @@ export default function ApplyManager() {
   return (
     <>
       <div className={styles.applyManagerContainer}>
-        <ApplyForm showModal={showModal}></ApplyForm>
+        <ApplyForm showModal={showModal} initialComp={initialComp}></ApplyForm>
         <Modal
           open={showModal}
           onClose={() => {
@@ -127,6 +133,7 @@ export default function ApplyManager() {
         </Modal>
 
         <button
+          className={styles.applyBtn}
           onClick={() => {
             setShowModal(true);
           }}

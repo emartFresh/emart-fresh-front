@@ -79,7 +79,20 @@ function App() {
                   path="/mypageMain/request-order-list"
                   element={<OrderHandle />}
                 ></Route>
+                <Route
+                  path="mypageMain/manager-order-status"
+                  element={<ManagerOrderStatus />}
+                />
+                <Route
+                  path="mypageMain/order-request"
+                  element={<OrderRequest />}
+                />
+                <Route
+                  path="mypageMain/storeOrderList"
+                  element={<StoreOrderList />}
+                />
               </Route>
+
               <Route path="/eventlist" element={<EventList />}></Route>
               <Route
                 path="/eventlistdetail/:eventId"
@@ -100,18 +113,13 @@ function App() {
               <Route path="/naverCallBack" element={<NaverCallBack />} />
               <Route path="/signup" element={<Signup />} />
               <Route path="/chart" element={<Chart />} />
-              <Route path="/order-request" element={<OrderRequest />} />
               <Route path="/request-order-list" element={<OrderHandle />} />
               <Route path="/show-all-product" element={<ShowAllProduct />} />
               <Route path="/storeproduct" element={<ShowStoreProduct />} />
               <Route path="/cart" element={<Cart />} />
               <Route path="/product/detail" element={<ProductDetail />} />
               <Route path="/makeStore" element={<MakeStore />} />
-              <Route path="/storeOrderList" element={<StoreOrderList />} />
-              <Route
-                path="/manager-order-status"
-                element={<ManagerOrderStatus />}
-              />
+
               {/* <Route path="/payment" element={<Payment />} /> */}
             </Routes>
           </div>

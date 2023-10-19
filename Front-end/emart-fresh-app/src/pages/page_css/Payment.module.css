@@ -7,8 +7,9 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-
-  width: 500px;
+  width: 90vw;
+  max-width: 500px;
+  min-width: 330px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -24,6 +25,21 @@
   justify-content: space-between;
   align-items: center;
   padding: 0.5rem 1rem 0.5rem 1rem;
+}
+
+.couponScrollWrapper {
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.couponScrollWrapper::-webkit-scrollbar {
+  width: 8px;
+  display: flex;
+}
+
+.couponScrollWrapper::-webkit-scrollbar-thumb {
+  background: skyblue;
+  border-radius: 0.4rem;
 }
 
 .couponItemContainer:hover {
@@ -48,12 +64,25 @@
   border: 1px solid #dadada;
 }
 
+.couponinputWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .couponInput {
   width: 100%;
-  margin-top: 1rem;
-  padding: 0.3rem;
+  height: 3rem;
   border: 1px solid #e1e1e1;
   border-radius: 0.3rem;
+}
+
+.couponDelBtn {
+  background-color: gray;
+  color: white;
+  height: 3rem;
+  padding: 0.3rem 1rem 0.3rem 1rem;
+  white-space: nowrap;
 }
 
 .allPayWrapper {
@@ -70,6 +99,8 @@
 }
 
 .applyCouponWrapper {
+  display: flex;
+  justify-content: space-between;
   margin-bottom: 1rem;
 }
 
@@ -86,6 +117,7 @@
 
 .applyCouponDis {
   font-weight: bold;
+  margin-right: 1rem;
 }
 
 .oneLine {
@@ -94,6 +126,8 @@
 }
 
 .totalPriceWrapper {
+  display: flex;
+  justify-content: space-between;
   margin-top: 1rem;
 }
 

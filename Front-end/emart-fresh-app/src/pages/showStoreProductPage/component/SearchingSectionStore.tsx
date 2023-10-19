@@ -29,6 +29,7 @@ export default function SearchingSection({
   useEffect(() => {
     submitSearch(page);
   }, [page]);
+
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const paramValue: string | null = searchParams.get("storeid");
@@ -70,6 +71,12 @@ export default function SearchingSection({
     setFilteredData(searchigData);
   };
 
+  const handleEnter = (evt) => {
+    if (evt.key === "Enter") {
+      resetData();
+    }
+  };
+
   return (
     <section className={styles.inputSection}>
       <input
@@ -77,6 +84,9 @@ export default function SearchingSection({
         name="searchingTerm"
         className={styles.searchingInput}
         type="text"
+        onKeyUp={(evt) => {
+          handleEnter(evt);
+        }}
         placeholder="상품명을 검색해주세요."
       />
       <button className={styles.searchBtn} onClick={resetData}>

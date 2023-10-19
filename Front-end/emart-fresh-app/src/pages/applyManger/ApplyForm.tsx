@@ -12,7 +12,13 @@ interface ApplyData {
   memberId: string;
 }
 
-export default function ApplyForm({ showModal }: { showModal: boolean }) {
+export default function ApplyForm({
+  showModal,
+  initialComp,
+}: {
+  showModal: boolean;
+  initialComp: number;
+}) {
   const userInfo = GetUserAllInfo();
   const [applyData, setApplyData] = useState<ApplyData>();
 
@@ -33,7 +39,7 @@ export default function ApplyForm({ showModal }: { showModal: boolean }) {
         console.log("데이터ㅓ", res.data);
         setApplyData(res.data);
       });
-  }, [showModal]);
+  }, [initialComp]);
 
   return (
     <div className={styles.applyManagerWrapper}>
@@ -51,7 +57,7 @@ export default function ApplyForm({ showModal }: { showModal: boolean }) {
           </tr>
           <tr>
             <th>신청일</th>
-            <td>{convertDateToShortForm(applyData?.applyDate)}</td>
+            <td>{applyData && convertDateToShortForm(applyData?.applyDate)}</td>
           </tr>
           <tr>
             <th>사업자 등록증</th>

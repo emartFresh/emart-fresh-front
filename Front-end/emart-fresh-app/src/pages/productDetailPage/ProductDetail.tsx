@@ -1,11 +1,13 @@
 import axios from "axios";
-
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { useRecoilState } from "recoil";
-import { loginState } from "../../atoms";
+import { cartItemCount, loginState } from "../../atoms";
 import { GetUserAllInfo, IsLogin } from "../../utils/LoginUtils";
-import { sendAxiosPostRequest } from "../../utils/userUtils";
+import {
+  sendAxiosGetRequest,
+  sendAxiosPostRequest,
+} from "../../utils/userUtils";
 import { toast } from "react-toastify";
 import { Modal, Box } from "@mui/material";
 
@@ -32,6 +34,7 @@ export default function ProductDetail() {
   const [quantity, setQuantity] = useState<number>(1);
   const [loginToken, setLoginToken] = useRecoilState<JwtToken>(loginState);
   const [showModal, setShowModal] = useState<boolean>(false);
+  const [cartCount, setCartCount] = useRecoilState<number>(cartItemCount);
 
   console.log("로그인 토큰", loginToken);
   const location = useLocation();
@@ -68,6 +71,13 @@ export default function ProductDetail() {
     }
   };
 
+  const updateMyCart = () => {
+    const url = `${import.meta.env.VITE_BACK_PORT}/cart/myCartInfoCount`;
+    sendAxiosGetRequest(url, loginToken, setLoginToken).then((res) => {
+      setCartCount(res);
+    });
+  };
+
   const handleCartInsert = () => {
     const data: AddToCartDto = {
       storeId: Number(storeId),
@@ -85,6 +95,7 @@ export default function ProductDetail() {
             autoClose: 1500,
             icon: "✅",
           });
+          updateMyCart();
         })
         .catch((e) => {
           if (e.response.status === 400) {

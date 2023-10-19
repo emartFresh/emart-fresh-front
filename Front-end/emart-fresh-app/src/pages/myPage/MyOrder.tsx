@@ -162,33 +162,37 @@ export default function MyOrder() {
             </button>
           </div>
           <div className={styles.detailContainer}>
-            {detailData.map((item, inx) => {
-              console.log("하나 데이터", item);
-              return (
-                <div className={styles.detailWrapper} key={inx}>
-                  <span>
-                    <img
-                      className={styles.detailImg}
-                      src={item.productImgUrl}
-                      alt=""
-                    />
-                  </span>
-                  <span className={styles.detailName}>{item.productName}</span>
-                  <span className={styles.detailPrice}>{item.price}원</span>
-                  {item.isPickedUp ? (
-                    <OrderReview
-                      setShowModal={setShowModal}
-                      orderedPpId={item.productId}
-                      review={item.review}
-                    />
-                  ) : (
-                    <div className={styles.reviewWrapper}>
-                      픽업 완료 후 리뷰를 작성할 수 있습니다.
-                    </div>
-                  )}
-                </div>
-              );
-            })}
+            <div className={styles.detailScrollWrapper}>
+              {detailData.map((item, inx) => {
+                console.log("하나 데이터", item);
+                return (
+                  <div className={styles.detailWrapper} key={inx}>
+                    <span>
+                      <img
+                        className={styles.detailImg}
+                        src={item.productImgUrl}
+                        alt=""
+                      />
+                    </span>
+                    <span className={styles.detailName}>
+                      {item.productName}
+                    </span>
+                    <span className={styles.detailPrice}>{item.price}원</span>
+                    {item.isPickedUp ? (
+                      <OrderReview
+                        setShowModal={setShowModal}
+                        orderedPpId={item.productId}
+                        review={item.review}
+                      />
+                    ) : (
+                      <div className={styles.reviewWrapper}>
+                        픽업 완료 후 리뷰를 작성할 수 있습니다.
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
           </div>
         </Box>
       </Modal>

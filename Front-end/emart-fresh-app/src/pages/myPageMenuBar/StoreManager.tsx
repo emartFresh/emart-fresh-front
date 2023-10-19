@@ -19,19 +19,16 @@ export default function StoreManager() {
       </div>
       <hr />
       <div className={styles.mypagemenubar}>
-        <Link to="/">상품등록</Link>
+        <Link to="mypageMain/manager-order-status">발주현황</Link>
       </div>
       <div className={styles.mypagemenubar}>
-        <Link to="/manager-order-status">발주현황확인</Link>
-      </div>
-      <div className={styles.mypagemenubar}>
-        <Link to="/order-request">발주</Link>
+        <Link to="mypageMain/order-request">발주</Link>
       </div>
       {/* <div className={styles.mypagemenubar}>
         <Link to="/">매출현황</Link>
       </div> */}
       <div className={styles.mypagemenubar}>
-        <Link to="/StoreOrderList">주문현황</Link>
+        <Link to="mypageMain/StoreOrderList">주문현황</Link>
       </div>
     </div>
   );

@@ -24,16 +24,13 @@ export default function SearchingSelection({
   const btnFour = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
-    console.log("값바뀜");
     if (filterData.eventNumber != undefined)
       setSelectionColor(filterData.eventNumber);
   }, [productDatas]);
 
   const setSelectionColor = (selectedCase: number) => {
-    console.log("선택 케이스", selectedCase);
     switch (selectedCase) {
       case 0:
-        console.log("적용");
         btnOne.current?.classList.add(styles.selectedColor);
         btnTwo.current?.classList.remove(styles.selectedColor);
         btnThree.current?.classList.remove(styles.selectedColor);

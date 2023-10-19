@@ -9,6 +9,20 @@
   border-radius: 1em;
   margin: 0.7em;
   max-height: 300px;
+  transition: 0.2s;
+}
+
+.linkTag {
+  text-decoration-line: none;
+}
+
+.linkTag:hover {
+  text-decoration-line: none;
+  color: black;
+}
+
+.productWrapper:hover {
+  box-shadow: 0 0 0 3px #f7c83d inset;
 }
 
 .productImg {
@@ -18,6 +32,7 @@
   object-fit: cover;
   background-color: white;
 }
+
 .productImgWrapper {
   width: 10em;
   height: 10em;
@@ -45,7 +60,7 @@
   width: 100%;
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: start;
   align-items: center;
   row-gap: 60px;
 }
@@ -65,6 +80,7 @@
 }
 
 .badgeOnePlus {
+  font-weight: 650;
   position: absolute;
   top: 0.8rem;
   left: 0.8rem;
@@ -74,6 +90,7 @@
 }
 
 .badgeTwoPlus {
+  font-weight: 650;
   position: absolute;
   top: 0.8rem;
   left: 0.8rem;
@@ -84,6 +101,7 @@
 }
 
 .badgeThreePlus {
+  font-weight: 650;
   position: absolute;
   top: 0.8rem;
   left: 0.8rem;
