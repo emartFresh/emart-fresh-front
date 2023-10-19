@@ -58,7 +58,7 @@ const ProductTypeChart = () => {
   };
 
   return (
-    <div style={{maxWidth:'600px'}} className={styles.productTypeChart}>
+    <div style={{maxWidth:'500px'}} className={styles.productTypeChart}>
       <HighchartsReact highcharts={Highcharts} options={options} />
     </div>
   );

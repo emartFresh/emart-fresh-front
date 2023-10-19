@@ -31,7 +31,8 @@ const HomeCoupon = () => {
         // responseData 타입에 ExtendedCoupon[] 만 넣어준경우 
         // const content:ExtendedCoupon[] = res.contnet;
         // setCoupondata(content);
-
+        console.log("couponres >>> " + res.content);
+        
         const response: ExtendedCoupon[] = JSON.parse(JSON.stringify(res.content));
         setCoupondata(response);
 
@@ -41,7 +42,6 @@ const HomeCoupon = () => {
         //   setCoupondata(content);
         // }
         setTotalPages(JSON.parse(JSON.stringify(res.totalPages)));
-        console.log(res);
       })
       .catch(console.error)
     }else{
@@ -54,7 +54,7 @@ const HomeCoupon = () => {
       .then((res) => {
         setCoupondata(res.data.content);
         setTotalPages(res.data.totalPages);
-        console.log(JSON.parse(JSON.stringify(res.data.content)));
+        // console.log(JSON.parse(JSON.stringify(res.data.content)));
       })
       .catch(console.error)
     }
@@ -118,12 +118,17 @@ const HomeCoupon = () => {
                       <div>{coupon.couponType}%</div>
                       <div>{formatFullDate(coupon.couponExpirationDate)}까지</div>
                     </div>
-                      <button 
-                      className={`${coupon.existing ? styles.unableDownBtn : styles.couponDownloadBtn }`}
-                      disabled={coupon.existing}
-                      onClick={() => {handleGetCoupon(coupon)}}
-                      >
-                      {coupon.existing ? '받기 완료' : '쿠폰 받기'}</button>
+                      {
+                        coupon.admin 
+                        ? <button className={styles.unableDownBtn}>관리자</button> 
+                        : <button 
+                            className={`${coupon.existing ? styles.unableDownBtn : styles.couponDownloadBtn }`}
+                            disabled={coupon.existing}
+                            onClick={() => {handleGetCoupon(coupon)}}
+                            >
+                            {coupon.existing ? '받기 완료' : '쿠폰 받기'}
+                          </button>
+                      }
                   </div>
                 )
               })

@@ -1,7 +1,7 @@
 .productEventContainer{
     display: flex;
     margin: 6em auto;
-    width: 80%;
+    width: 84%;
     height: 25em;
     text-align: center;
     max-width: 80rem;
@@ -62,8 +62,9 @@
 }
 
 .productWrapper:hover{
-    border: 3px solid #f9bb00;
-    transition: 0.1s;
+    /* border: 3px solid #f9bb00; */
+    box-shadow: 0 0 0 3px #f7c83d inset;
+    border: 0;
 }
 
 .productWrapper:hover .productImg{
@@ -74,16 +75,16 @@
 
 .productImg {
     transform: translate(50, 50);
-    width: 100%;
-    height: 100%;
+    width: 10rem;
+    height: 10rem;
     object-fit: cover;
     background-color: white;
 }
 
 .productImgWrapper {
-    width: 10em;
-    height: 10em;
-    padding: 1em;
+    width: 10rem;
+    height: 10rem;
+    padding: 1rem;
     overflow: hidden;
 }
 
@@ -94,6 +95,7 @@
     padding: 1rem 0;
     cursor: pointer;
 }
+
 .priceInfo {
     font-size: 1em;
     margin-top: 0.5em;

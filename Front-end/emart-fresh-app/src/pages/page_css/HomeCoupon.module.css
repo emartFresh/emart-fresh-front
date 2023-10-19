@@ -1,6 +1,6 @@
 .couponContainer{
     margin: 10rem auto;
-    width: 80%;
+    width: 100%;
     max-width: 80rem;
     height: 28rem;
     display: flex;
@@ -8,7 +8,7 @@
 }
 
 .couponHeader{
-    width: 15%;
+    width: 16%;
 }
 
 .barcodeIcon{
@@ -17,14 +17,15 @@
 }
 
 .contentContainer{
-    width: 85%;
-    margin-left: 2%;
+    width: 84%;
     display: flex;
+    justify-content: center;
     flex-direction: column;
     justify-content: space-between;
 }
 
 .couponWrap{
+    margin: 0 auto;
     width: 65rem;
     height: 85%;
     display: grid;
@@ -132,7 +133,14 @@
     font-weight: bold;
 }
 
+.paginationWrap{
+    width: 100%;
+    min-width: 1040px;
+    /* 임시 */
+}
+
 .paginationWrap ul{
+    width: 100%;
     display: flex;
     justify-content: center;
 }

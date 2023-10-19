@@ -2,6 +2,7 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
 import { toast } from "react-toastify";
 import { SetterOrUpdater } from "recoil";
+import { useIsLogin ,  IsLogin} from './LoginUtils';
 
 export function getUserLocation(): Promise<{
   latitude: number;
@@ -227,6 +228,12 @@ export const sendAxiosRequest = async (
   if (callStack >= 10) {
     return { isError: true };
   }
+
+  const isLogined = loginToken.refreshToken !== ""
+  if(!isLogined){
+    return;
+  }
+  
   const result = await axios({
     method: httpMethod,
     url: `${import.meta.env.VITE_BACK_PORT}${url}`,
