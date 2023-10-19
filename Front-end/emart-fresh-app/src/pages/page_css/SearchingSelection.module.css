@@ -1,5 +1,6 @@
 .selectionSection {
   width: 100%;
+  padding: 1rem 3rem;
   display: flex;
   flex-direction: row;
   justify-content: space-between;

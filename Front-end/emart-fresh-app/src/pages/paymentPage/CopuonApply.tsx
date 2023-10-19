@@ -68,14 +68,30 @@ export default function CopuonApply({
       {/* <button>적용</button> */}
       <div className={styles.inputWrapper}>
         <div>할인쿠폰</div>
-        <input
-          className={styles.couponInput}
-          type="text"
-          placeholder="쿠폰을 선택해주세요."
-          onClick={handleOpen}
-          readOnly
-          value={appliedCoupon && appliedCoupon.couponTitle}
-        />
+        <div className={styles.couponinputWrapper}>
+          <input
+            className={styles.couponInput}
+            type="text"
+            placeholder="쿠폰을 선택해주세요."
+            onClick={handleOpen}
+            readOnly
+            value={appliedCoupon && appliedCoupon.couponTitle}
+          />
+          <button
+            className={styles.couponDelBtn}
+            onClick={() =>
+              setAppliedCoupon({
+                couponExpirationDate: "",
+                couponId: null,
+                couponTitle: "",
+                couponType: 0,
+                memberId: "",
+              })
+            }
+          >
+            취소
+          </button>
+        </div>
       </div>
       <Modal
         open={open}
@@ -95,7 +111,7 @@ export default function CopuonApply({
             p: 4,
           }}
         >
-          {couponItems}
+          <div className={styles.couponScrollWrapper}>{couponItems}</div>
           <Button onClick={handleClose}>닫기</Button>
         </Box>
       </Modal>

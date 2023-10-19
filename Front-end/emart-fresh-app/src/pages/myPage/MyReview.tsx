@@ -143,6 +143,7 @@ export default function MyReview() {
               </div>
               <div className={styles.imageContainer}>
                 <img
+                  height="200px"
                   src={review.productImgUrl}
                   className={styles.image}
                   alt="상품"

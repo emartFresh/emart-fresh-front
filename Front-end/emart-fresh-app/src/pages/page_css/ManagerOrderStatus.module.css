@@ -1,10 +1,15 @@
 .statusContainer {
   display: flex;
-  justify-content: center;
   align-items: center;
   flex-direction: column;
   background-color: #e1e1e1;
   padding: 1rem;
+  min-height: 80vh;
+}
+
+.title {
+  color: #454444;
+  font-weight: 600;
 }
 .statusWrapper {
   background-color: white;

@@ -57,37 +57,39 @@ export default function ShowAllProduct() {
   }, []);
 
   return (
-    <div className={styles.showAllSection}>
-      <h1 className={styles.aboveTitle}>전체 상품</h1>
-      <p className={styles.aboveP}>
-        fresh가 취급하는 물품들을 만나보세요. <br></br> 상품을 클릭하면 해당
-        상품이 있는 근처 가게를 볼 수 있습니다.
-      </p>
+    <div className={styles.showAllCenterDiv}>
+      <div className={styles.showAllSection}>
+        <h1 className={styles.aboveTitle}>전체 상품</h1>
+        <p className={styles.aboveP}>
+          fresh가 취급하는 물품들을 만나보세요. <br></br> 상품을 클릭하면 해당
+          상품이 있는 근처 가게를 볼 수 있습니다.
+        </p>
 
-      <StoreListSideBar
-        selectedItem={selectedItem}
-        setSelectedItem={setSelectedItem}
-      />
-      <SearchingSection
-        page={page}
-        setPage={setPage}
-        setFilteredData={setFilteredData}
-        filterData={filteredData}
-        setProductDatas={setProductDatas}
-      />
-      <SearchingSelection
-        setFilteredData={setFilteredData}
-        filterData={filteredData}
-        productDatas={productDatas}
-      />
-      <div className={styles.showWrapper}>
-        <ShowProduct
-          productDatas={productDatas}
+        <StoreListSideBar
           selectedItem={selectedItem}
           setSelectedItem={setSelectedItem}
         />
+        <SearchingSection
+          page={page}
+          setPage={setPage}
+          setFilteredData={setFilteredData}
+          filterData={filteredData}
+          setProductDatas={setProductDatas}
+        />
+        <SearchingSelection
+          setFilteredData={setFilteredData}
+          filterData={filteredData}
+          productDatas={productDatas}
+        />
+        <div className={styles.showWrapper}>
+          <ShowProduct
+            productDatas={productDatas}
+            selectedItem={selectedItem}
+            setSelectedItem={setSelectedItem}
+          />
+        </div>
+        <div className={styles.infTrigger} ref={triggerRef}></div>
       </div>
-      <div className={styles.infTrigger} ref={triggerRef}></div>
     </div>
   );
 }

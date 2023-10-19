@@ -1,9 +1,8 @@
 .modal {
   align-items: center;
   background-color: #ffffff;
-  padding-left: 45px;
+  /* padding-left: 45px; */
   padding-top: 40px;
-
   border-radius: 20px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   width: 30rem;
@@ -24,17 +23,18 @@
   z-index: 999; /* 다른 요소 위에 나타나도록 설정 */
 }
 
-/* .modifyPwForm {
+.modifyPwForm {
   margin: 0 auto;
   width: 28em;
-} */
-
-/* .inputWrap {
+  /* background-color: antiquewhite; */
+}
+.inputWrap {
   margin: 0 auto;
   position: relative;
-} */
+  /* border: 1px solid #ccc; */
+}
 
-/* .modifyPw,
+.modifyPw,
 .modifyNewPw,
 .modifyNewPwCheck,
 .modifyEmail {
@@ -45,13 +45,14 @@
   border: 0.1em solid rgba(0, 0, 0, 0.8);
   border: #ccc;
   outline: 0;
-} */
+}
 .message {
   display: flex;
   color: red;
   font-size: 0.8em;
   width: 35em;
-  margin: 0 auto;
+  /* margin: 0 auto; */
+  margin-left: 46px;
   margin-top: 0.2em;
   margin-bottom: 1em;
 }
@@ -66,25 +67,46 @@
 .messageEmailInvalid {
   color: red;
   font-size: 0.8em;
-  width: 35em;
+  width: 10em;
   margin: 0 auto;
   margin-top: 0.2em;
   margin-bottom: 1em;
+  /* background-color: black; */
 }
 .modifyControlBtn {
-  width: 29rem;
+  width: 100%;
   display: flex;
+  justify-content: center;
   margin-bottom: 7px;
   margin-top: 2px;
   /* border: 1px solid #ccc; */
   border-radius: 5px;
+  /* background-color: red; */
 }
-
-.inputEmail,
+.emailTitle {
+  padding: 5px;
+  margin-left: 45px;
+}
+.inputEmail {
+  padding: 10px;
+  flex: 0.73;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+.inputCertificationCode {
+  display: flex;
+  align-items: center;
+}
+.inputEmailCertificationCode {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-left: 43px;
+}
 .inputPw {
   padding: 10px;
   flex: 0.8;
-  border: 1px solid #ccc;
+  /* border: 1px solid #ccc; */
   border-radius: 5px;
 }
 

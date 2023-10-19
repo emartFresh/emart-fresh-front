@@ -3,6 +3,7 @@ import { Navigate, useLocation } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { loginState } from "../../atoms";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 import styles from "../page_css/MakeStore.module.css";
 import { Modal, Box } from "@mui/material";
@@ -153,8 +154,6 @@ export default function MakeStore() {
   };
 
   const handleRegibtn = () => {
-    console.log("멤버 아이디", memberId);
-
     sendAxiosPostRequest(
       //매니저 신청
       `${import.meta.env.VITE_BACK_PORT}/applymanager/apply-applymanager`,
@@ -163,7 +162,6 @@ export default function MakeStore() {
       { memberId: memberId }
     )
       .then((res) => {
-        alert("가게 생성합니다.");
         //가게 생성
         axios
           .post(`${import.meta.env.VITE_BACK_PORT}/store/add-store`, {
@@ -174,13 +172,13 @@ export default function MakeStore() {
             memberId: memberId,
           })
           .then((res) => {
-            alert("등록 성공!!");
+            toast.success("점주 신청을 승인하였습니다.");
             navigate("/mypageMain/HandleApplyManager");
           });
       })
       .catch((err) => {
         if (err.response && err.response.status === 400) {
-          alert("유효하지 않은 아이디");
+          toast.error("아이디가 유효하지 않습니다.");
         }
       });
   };

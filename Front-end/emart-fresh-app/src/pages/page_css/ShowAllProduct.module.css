@@ -15,9 +15,16 @@
   color: gray;
 }
 
+.showAllCenterDiv {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .showWrapper {
   min-height: 600px;
   font-weight: 800;
+  display: inline-block;
 }
 
 @media screen and (max-width: 740px) {

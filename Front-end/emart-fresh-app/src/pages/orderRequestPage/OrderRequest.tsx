@@ -139,20 +139,23 @@ export default function OrderRequest() {
     (product: ProductData, index: number) => {
       return (
         <div key={index} className={styles.productListSection}>
-          <div>
-            <span>{product.productTitle}</span>
+          <div className={styles.gridFirstItem}>
+            <span className={styles.itemTitle}>{product.productTitle}</span>
             <span style={{ marginLeft: "1em" }}>{product.priceString}</span>
             {/* <span style={{ marginLeft: "1em" }}>
               {formatHyphenSeparatedDate(String(product.productExpirationDate))}
             </span> */}
           </div>
-          <input
-            type="checkbox"
-            checked={selectedProducts.some(
-              (p) => p.productId === product.productId
-            )}
-            onChange={() => handleCheckboxChange(product)}
-          />
+          <div className={styles.gridSecondItem}>
+            <input
+              className={styles.checkBox}
+              type="checkbox"
+              checked={selectedProducts.some(
+                (p) => p.productId === product.productId
+              )}
+              onChange={() => handleCheckboxChange(product)}
+            />
+          </div>
         </div>
       );
     }
@@ -162,13 +165,13 @@ export default function OrderRequest() {
     (product: ProductData, index: number) => {
       return (
         <div key={index} className={styles.productListSection}>
-          <div>
-            <span>{product.productTitle}</span>
+          <div className={styles.gridFirstItem}>
+            <span className={styles.itemTitle}>{product.productTitle}</span>
             <span style={{ marginLeft: "1em" }}>{product.priceString}</span>
             <span style={{ marginLeft: "1em" }}></span>
           </div>
-          <div>
-            <span>수량 </span>
+          <div className={styles.gridSecondItem}>
+            <span className={styles.qqtTitle}>수량 </span>
             <input
               className={styles.input}
               type="text"
@@ -182,21 +185,23 @@ export default function OrderRequest() {
     }
   );
 
-  console.log("수량", quantityMap);
-  console.log("수량2", quantityData);
   return (
     <>
       <div className={styles.orderRequestContainer}>
-        <div className={styles.title}>발주 가능 물품 목록</div>
-        <div className={styles.productListWrapper}>{productListEle}</div>
-        <button className={styles.addBtn} onClick={insertToBelow}>
-          발주 목록에 추가
-        </button>
-        <div className={styles.title}>발주 신청 목록</div>
-        <div className={styles.productListWrapper}>{belowProducts}</div>
-        <button className={styles.confirmBtn} onClick={handleOrderBtn}>
-          발주 신청
-        </button>
+        <div className={styles.orderRequestWrapper}>
+          <div className={styles.title}>발주 가능 물품 목록</div>
+          <div className={styles.productListWrapper}>{productListEle}</div>
+          <button className={styles.addBtn} onClick={insertToBelow}>
+            발주 목록에 추가
+          </button>
+        </div>
+        <div className={styles.orderRequestWrapper}>
+          <div className={styles.title}>발주 신청 목록</div>
+          <div className={styles.productListWrapper}>{belowProducts}</div>
+          <button className={styles.confirmBtn} onClick={handleOrderBtn}>
+            발주 신청
+          </button>
+        </div>
       </div>
     </>
   );

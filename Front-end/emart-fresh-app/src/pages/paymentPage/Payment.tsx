@@ -77,8 +77,10 @@ export default function Payment({ setOpenPayment, cartInfo }: PaymentProps) {
           <span className={styles.applyCoupon}>적용 쿠폰 </span>
           <span>{appliedCoupon.couponTitle}</span>
           <br />
-          <span className={styles.applyCouponDis}>쿠폰 할인률</span>
-          <span> {appliedCoupon.couponType}%</span>
+          <div>
+            <span className={styles.applyCouponDis}>쿠폰 할인률</span>
+            <span> {appliedCoupon.couponType}%</span>
+          </div>
         </div>
         <div className={styles.oneLine}></div>
         <div className={styles.totalPriceWrapper}>
