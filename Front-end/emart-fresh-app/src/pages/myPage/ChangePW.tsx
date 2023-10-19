@@ -63,6 +63,7 @@ const ChangePw = ({ onClose }: ModalProps) => {
       memberPw: memberPw,
       newPw: newPw,
     };
+
     const url = `${
       import.meta.env.VITE_BACK_PORT
     }/mypage/mypage-changepassword`;
@@ -72,17 +73,13 @@ const ChangePw = ({ onClose }: ModalProps) => {
         console.log("현재비밀번호 memberPW", memberPw);
         console.log("새비밀번호 newPW", newPw);
 
-        if (res === "비밀번호변경 성공") {
-          toast.success("비밀번호가 성공적으로 변경되었습니다.");
-        } else {
-          toast.error("현재 비밀번호가 잘못되었습니다. 다시 시도해주세요.");
-        }
-
+        toast.success("비밀번호가 성공적으로 변경되었습니다.");
         onClose();
       })
       .catch((error) => {
         console.error("Error:", error);
-        toast.error("비밀번호 변경 중에 문제가 발생했습니다.");
+        console.error("에러데이터:", error.response.data);
+        toast.error("현재비밀번호를 확인해주세요.");
       });
   }
 
@@ -106,10 +103,11 @@ const ChangePw = ({ onClose }: ModalProps) => {
       [fieldName]: value,
     });
   };
-
+  const isButtonDisabled =
+    newPw.length < 8 ||
+    newPw.length >= 17 ||
+    !/^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[~!@#$%^&*])/.test(newPw);
   const validatePassword = (value: string) => {
-    // 비밀번호 유효성 검사 로직 / 결과에 따라 메시지 및 유효성 상태 업데이트
-    // const password = value; // 비밀번호 값 별도 변수에 저장
     if (value.trim() === "") {
       handleMessageChange("password", "비밀번호를 입력해주세요.");
       setMemberPwVisible(false);
@@ -121,15 +119,9 @@ const ChangePw = ({ onClose }: ModalProps) => {
         "영문/숫자/특수문자를 포함하고, 최소8자 최대16자로 입력해주세요."
       );
       setMemberPwVisible(false);
-    } else if (value === formData.memberId) {
-      handleMessageChange(
-        "password",
-        "비밀번호는 아이디와 동일할 수 없습니다."
-      );
-      setMemberPwVisible(false);
     } else {
       handleMessageChange("password", "");
-      // setMemberPwVisible(true);
+      setMemberPwVisible(true);
     }
   };
 
@@ -162,6 +154,7 @@ const ChangePw = ({ onClose }: ModalProps) => {
   const toggleNewPwVisibility = () => {
     setNewPwVisible(!newPwVisible);
   };
+
   return (
     <div className={styles.container}>
       <div className={styles.modifyPwForm}>
@@ -238,7 +231,11 @@ const ChangePw = ({ onClose }: ModalProps) => {
           <button className={styles.modifyBackBtn} onClick={handleCancelClick}>
             취소
           </button>
-          <button className={styles.modifyBtn} onClick={changepassword}>
+          <button
+            className={styles.modifyBtn}
+            onClick={changepassword}
+            disabled={isButtonDisabled}
+          >
             비밀번호수정완료
           </button>
         </span>
