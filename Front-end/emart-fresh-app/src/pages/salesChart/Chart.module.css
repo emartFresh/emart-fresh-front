@@ -14,12 +14,16 @@
     grid-template-rows: 400px 400px; */
 }
 
+
+
 .selectDateContainer{
     text-align: center;
     margin: 0 auto;
 }
 
 .selectBtnWrap{
+    position: relative;
+    width: 100%;
     margin: 3rem 0 5rem 0;
 }
 
@@ -65,17 +69,34 @@
     justify-content: center;
 }
 
-  /* .salesChart{
-grid-column: 1 / 3;
-grid-row: 1 / 3;
+.weeklyExplanation, .monthlyExplanation, .yearlyExplanation{
+    display: none;
+    position: absolute;
+    /* right: 28rem; */
+    /* top: -2rem; */
+    right: 20%;
+    top: -5%;
+    z-index: 3;
+    width: 16rem;
+    background-color: rgba(170, 170, 170, 0.4);
+    border-radius: 0.8rem;
+    padding: 1rem;
 }
 
-.productTypeChart{
-grid-column: 3 / 4;
-grid-row: 1 / 2;
+.monthlyExplanation{
+    width: 20rem;
+    right: 28rem;
+    top: -2rem;
 }
 
-.productChart{
-grid-column: 3 / 4;
-grid-row: 2 / 3;
-} */
+.weeklyOptionBtn:hover + .weeklyExplanation {
+    display: block;
+}
+
+.monthlyOptionBtn:hover + .monthlyExplanation {
+    display: block;
+}
+
+.yearlyOptionBtn:hover + .yearlyExplanation {
+    display: block;
+}

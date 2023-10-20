@@ -93,7 +93,6 @@ const PwInquiry = ({ setPwResetting, pwInquiryId, setPwInquiryId }: PwInquiryPro
     const [showTimer, setShowTimer] = useState<boolean>(false);
     const [completeCert, setCompleteCert] = useState<boolean>(false);
 
-
     const handleInputChange = (fieldName: keyof FormState, value: string) => {
         setFormData({
             ...formData,
@@ -102,7 +101,12 @@ const PwInquiry = ({ setPwResetting, pwInquiryId, setPwInquiryId }: PwInquiryPro
     };
 
     const findUserInfo = async() => { 
-        // 수정 : 입력 없을때 toast.error('아이디/이름/이메일을 모두 입력해주세요.');
+        // 수정 : 입력 없을때 toast.error('아이디/이름/이메일을 모두 입력해주세요.');        
+        const emailCertLoading = toast.loading('회원정보를 확인중입니다.')
+    
+        setTimeout(() => {
+            toast.dismiss(emailCertLoading); 
+        }, 1000);
         
         await axios.post(`${import.meta.env.VITE_BACK_PORT}/member/findPw`,
         {
@@ -111,9 +115,9 @@ const PwInquiry = ({ setPwResetting, pwInquiryId, setPwInquiryId }: PwInquiryPro
             memberName: formData.inquiryName,
         })
         .then((response) => {
-            console.log("일치하는 회원정보가 있음! >>> " + response.data);
+            toast.success('이메일을 전송했습니다.');
             handleStartTimer();
-            // 수정 : 이메일 전송까지 걸리는 시간 로딩 필요 
+            // 수정 : 타이머 재시작 안됨. 로딩 처리 문제. -> 로직을 나눠야 할듯?
         }).catch(() => {
             toast.error('일치하는 회원 정보가 없습니다.');
         })
@@ -126,7 +130,6 @@ const PwInquiry = ({ setPwResetting, pwInquiryId, setPwInquiryId }: PwInquiryPro
             verificationCode: formData.inquiryCertCode,
         })
         .then((response) => {
-            console.log("인증코드 일치 >>> " + response.data);
             setEnableCodeSendBtn(false);
             setEnableCodeInput(false);
             setEnableCodeSendBtn(false);

@@ -28,7 +28,6 @@ const getProductNameByType = (type:number)=>{
   : type === 6 ? "즉석식"
   : type === 7 ? "조리면"
   : "분류없음"
-
 }
 const ProductTypeChart = ({date, period}: TypeChartProps) => {
   const [loginToken, setLoginToken] = useRecoilState<JwtToken>(loginState);
@@ -58,7 +57,7 @@ const ProductTypeChart = ({date, period}: TypeChartProps) => {
 
 
   const options = {
-    colors: ['#f9bb00', '#333333', '#666666', '#999999', '#bbbbbb', '#dddddd'],
+    colors: ['#7483d8', '#5C6BC0', '#7986CB', '#9FA8DA', '#C5CAE9', '#dfd9ff'],
     chart: {
       plotBackgroundColor: null,
       plotBorderWidth: null,
@@ -85,13 +84,37 @@ const ProductTypeChart = ({date, period}: TypeChartProps) => {
     series: [{
       name: 'Brands',
       colorByPoint: true,
-      data: typeData,
-      // {
-      //   name: 'Chrome',
-      //   y: 23.03,
+      // data: typeData,
+      
       //   sliced: true,
       //   selected: true
       // },
+      data: [
+        {
+        y: 1,
+        name: "11",
+      },
+      {
+        y: 1,
+        name: "11",
+      },
+      {
+        y: 1,
+        name: "11",
+      },
+      {
+        y: 1,
+        name: "11",
+      },
+      {
+        y: 1,
+        name: "11",
+      },
+      {
+        y: 1,
+        name: "11",
+      },
+    ]
     }]
   };
 
