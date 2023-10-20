@@ -31,17 +31,18 @@ export default function SalesChart({date, period}: SalesChartProps) {
       const res: SalesChartData[] = JSON.parse(JSON.stringify(response));
       setSalseData(res);
 
+      // 수정
       // if(typeof response === typeof SalesChartData){
       //   const res:SalesChartData[] = response as SalesChartData[];
       // }
 
       setXAxisData(
-        response.map((data: SalesChartData) => {
-        return data.orderedDate;        
+        response?.map((data: SalesChartData) => {
+        return data.quarter;        
       }))
 
       setSeriesData(
-        response.map((data: SalesChartData) => {
+        response?.map((data: SalesChartData) => {
         return data.totalAmount;        
       }))
   
@@ -49,7 +50,7 @@ export default function SalesChart({date, period}: SalesChartProps) {
     })
     .catch(console.error);
   }
-  }, []);
+  }, [period]);
   
 
 

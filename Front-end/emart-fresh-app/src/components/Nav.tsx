@@ -34,15 +34,13 @@ export default function Nav() {
 
   // useEffect(() => {
   // }, []);
+  
 
   const logout = () => {
     // aws 클라이언트 - 서버 에서 로그아웃 안되는 오류 있음
-    setLoginToken({
-      accessToken: "",
-      refreshToken: "",
-    });
-
     const checkLogout = confirm("로그아웃하시겠습니까?");
+    console.log('checkLogout >', checkLogout)
+
     if (checkLogout) {
       sendAxiosRequest(
         "/member/logout",
@@ -59,6 +57,10 @@ export default function Nav() {
         .then(() => {
           setLoginType("");
           setKakaoToken("");
+          setLoginToken({
+            accessToken: "",
+            refreshToken: "",
+          });
           // setNaverToken("");
           setCartCount(0);
           toast.success("로그아웃되었습니다.");
@@ -80,18 +82,18 @@ export default function Nav() {
     <>
       <nav className={styles.subNav}>
         <div className={styles.subContentDiv}>
-          <span>
+          <span className={styles.loginLinkWrap}>
             {loginToken.refreshToken !== "" ? (
               <Link className={styles.logoutLink} to="/" onClick={logout}>
                 Logout
               </Link>
             ) : (
-              // <i class="fa-solid fa-right-to-bracket"></i>
               <Link to="/login">
-                {/* <FontAwesomeIcon icon={faRightToBracket}/> */}
                 Login
+                <FontAwesomeIcon icon={faRightToBracket} className={styles.loginLink}/>
               </Link>
             )}
+            <p className={styles.arrowBox}>로그인</p>
           </span>
           <span onClick={() => navigate("/cart")}>
             <IconButton aria-label="cart" onClick={() => navigate("/cart")}>
@@ -99,7 +101,6 @@ export default function Nav() {
                 <ShoppingCartIcon />
               </StyledBadge>
             </IconButton>
-            cart
           </span>
           <span>
             <Link className={styles.pypageLink} to="/mypageMain">

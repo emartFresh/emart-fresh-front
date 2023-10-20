@@ -28,7 +28,7 @@ const Chart = () => {
       navigate('/login');
       return;
     }
-  }, [date])
+  }, [date, selectOption])
 
   const clickButton = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     const btn = e.target as HTMLButtonElement;
@@ -61,7 +61,7 @@ const Chart = () => {
             </div>
             <div className={styles.pieCharts}>
               <ProductTypeChart date={date} period={selectOption}/>
-              <ProductChart/>
+              <ProductChart date={date} period={selectOption}/>
             </div>
         </div>
     </div>

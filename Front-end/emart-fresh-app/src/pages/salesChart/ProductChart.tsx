@@ -1,10 +1,53 @@
-import React from 'react';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import React, { useEffect, useState } from 'react';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import styles from "./Chart.module.css";
 import "./chart.css";
+import { useRecoilState } from 'recoil';
+import { cartItemCount, loginState } from '../../atoms';
+import { useIsLogin } from '../../utils/LoginUtils';
+import { sendAxiosRequest } from '../../utils/userUtils';
 
-const ProductChart = () => {
+interface ProductChartProps{
+  date: string;
+  period: string;
+}
+
+interface ProductData{
+  productTitle: string;
+  orderedQuantity: number;
+}
+
+const ProductChart = ({date, period}: ProductChartProps) => {
+  const [loginToken, setLoginToken] = useRecoilState<JwtToken>(loginState);
+  const [cartCount, setCartCount] = useRecoilState<number>(cartItemCount);
+  const [ProductChartData, setProductChartData] = useState<PieChartData[]>([]);
+  const isLogined = useIsLogin();
+
+  useEffect(() => {
+    if(isLogined){
+      sendAxiosRequest('/mypage/titlechart', 'get', loginToken, setLoginToken, setCartCount, {searchDate:date, period:period})
+      .then((response) => {
+        console.log(response);
+
+        const processedData = response?.map((res: ProductData)=>{
+          return {
+            name:res.productTitle,
+            y:res.orderedQuantity,
+          }
+        }) 
+
+        setProductChartData(processedData);
+        })
+
+      .catch(console.error);
+    }
+    }, [period]);
+
+    console.log(ProductChartData);
+    
+
   const options = {
     colors: ['#000000', '#333333', '#666666', '#999999', '#bbbbbb', '#dddddd'],
     chart: {
@@ -33,27 +76,7 @@ const ProductChart = () => {
     series: [{
       name: 'Brands',
       colorByPoint: true,
-      data: [{
-        name: 'Microsoft Internet Explorer',
-        y: 54.33
-      }, {
-        name: 'Chrome',
-        y: 23.03,
-        sliced: true,
-        selected: true
-      }, {
-        name: 'Firefox',
-        y: 10.38
-      }, {
-        name: 'Safari',
-        y: 4.77
-      }, {
-        name: 'Opera',
-        y: 2.41
-      }, {
-        name: 'Proprietary or Undetectable',
-        y: 1.7
-      }]
+      data: ProductChartData,
     }]
   };
 
