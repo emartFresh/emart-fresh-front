@@ -2,14 +2,15 @@
 // import { QueryClient, QueryClientProvider, useQuery } from "react-query";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import './styles.css';
+import "./styles.css";
 import HomeProductEvent from "./HomeProductEvent";
-import HomeEventBanner from './HomeEventBanner';
+import HomeEventBanner from "./HomeEventBanner";
 import HomeCoupon from "./HomeCoupon";
 import { IsLogin } from "../../utils/LoginUtils";
 import { sendAxiosRequest } from "../../utils/userUtils";
 import { useRecoilState } from "recoil";
 import { cartItemCount, loginState } from "../../atoms";
+import styles from "../page_css/HomePage.module.css";
 
 export default function Home() {
   const [loginToken, setLoginToken] = useRecoilState<JwtToken>(loginState);
@@ -17,20 +18,28 @@ export default function Home() {
   const isLogined = IsLogin();
 
   useEffect(() => {
-    if(isLogined){
-      sendAxiosRequest('/cart/myCartInfoCount', 'get', loginToken, setLoginToken, setCartCount)
-      .then((res) => {
-        setCartCount(JSON.parse(JSON.stringify(res)));
-      })
-      .catch(console.error)
+    if (isLogined) {
+      sendAxiosRequest(
+        "/cart/myCartInfoCount",
+        "get",
+        loginToken,
+        setLoginToken,
+        setCartCount
+      )
+        .then((res) => {
+          setCartCount(JSON.parse(JSON.stringify(res)));
+        })
+        .catch(console.error);
     }
-  })
+  });
 
   return (
     <>
-      <HomeEventBanner/>
-      <HomeProductEvent/>
-      <HomeCoupon/>
+      <div className={styles.homeContainer}>
+        <HomeEventBanner />
+        <HomeProductEvent />
+        <HomeCoupon />
+      </div>
     </>
   );
 }

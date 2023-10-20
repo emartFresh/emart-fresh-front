@@ -62,6 +62,7 @@
   width: 40%;
   font-size: 1.2em;
   align-items: center;
+  margin-right: 2rem;
 }
 
 .subContentDiv {
@@ -74,6 +75,7 @@
   min-width: 330px;
   padding-left: 1rem;
   padding-right: 1rem;
+  margin-right: 2rem;
 }
 
 .nav a:hover {
@@ -90,7 +92,7 @@
   }
   .burger {
     position: absolute;
-    right: 1rem;
+    right: 35px;
     display: inline-block;
   }
   .contentDiv {
@@ -115,13 +117,11 @@
   }
 }
 
-
-
-.loginLinkWrap{
+.loginLinkWrap {
   position: relative;
 }
 
-.loginLink{
+.loginLink {
   font-size: 18px;
   color: rgb(95, 95, 95);
 }
@@ -155,7 +155,7 @@
   border-bottom-color: #333;
   border-width: 8px;
   pointer-events: none;
-  content: ' ';
+  content: " ";
 }
 
 .loginLinkWrap:hover .arrowBox {
