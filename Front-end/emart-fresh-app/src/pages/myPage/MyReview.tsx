@@ -157,14 +157,14 @@ export default function MyReview() {
                   value={review.reviewScore}
                   readOnly
                 />
-                <div>
+                {/* <div>
                   <button
                     className={styles.reviewDetailBtn}
                     onClick={(e) => deleteReview(review.reviewId)}
                   >
                     삭제
                   </button>
-                </div>
+                </div> */}
               </div>
               <div className={styles.reviewText}>{review.productTitle}</div>
               <div className={styles.reviewContent}>{review.reviewContent}</div>
