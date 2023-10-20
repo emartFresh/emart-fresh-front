@@ -63,8 +63,9 @@
   width: 24%;
   font-size: 1.2em;
   align-items: center;
-  margin-left: 18rem;
-  margin-right: 20rem;
+/*   margin-left: 18rem;
+  margin-right: 20rem; */
+  margin-right: 2rem;
 }
 
 .subContentDiv {
@@ -74,8 +75,13 @@
   width: 250px;
   font-size: 1.7em;
   /* min-width: 300px; */
-  padding: 0 1rem;
-  margin-right: 18%;
+/*   padding: 0 1rem;
+  margin-right: 18%; */
+  max-width: 1000px;
+  min-width: 330px;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  margin-right: 2rem;
 }
 
 .nav a:hover {
@@ -166,7 +172,7 @@
   }
   .burger {
     position: absolute;
-    right: 1rem;
+    right: 35px;
     display: inline-block;
     font-size: 1.5rem;
     color: #f9bb00;
@@ -191,11 +197,9 @@
   .subContentDiv {
     display: none;
   }
-  
+
   .menuBar {
     right: 0;
   }
-
 }
-
 

@@ -111,11 +111,11 @@ export default function MyReview() {
 
   return (
     <div className={styles.reviewMain}>
-      <h3>
+      <h4>
         <span className={styles.tossface}>😀</span>&nbsp;&nbsp;
         {allMember.memberId}님 반갑습니다.&nbsp;&nbsp;
         <span className={styles.tossface}>😀</span>
-      </h3>
+      </h4>
 
       {reviews === undefined || (reviews && reviews.length === 0) ? (
         <div style={{ alignItems: "center" }}>
@@ -138,9 +138,6 @@ export default function MyReview() {
         reviews.map((review) => (
           <div key={review.reviewId} className={styles.reviewWrapper}>
             <div className={styles.dateAndImg}>
-              <div className={styles.reviewDate}>
-                {new Date(review.reviewDate).toLocaleDateString()}
-              </div>
               <div className={styles.imageContainer}>
                 <img
                   height="200px"
@@ -157,6 +154,9 @@ export default function MyReview() {
                   value={review.reviewScore}
                   readOnly
                 />
+                <div className={styles.reviewDate}>
+                  {new Date(review.reviewDate).toLocaleDateString()}
+                </div>
                 {/* <div>
                   <button
                     className={styles.reviewDetailBtn}
