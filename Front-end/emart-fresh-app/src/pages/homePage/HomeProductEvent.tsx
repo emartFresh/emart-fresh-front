@@ -171,10 +171,10 @@ const HomeProductEvent = () => {
           {...({
             centeredSlides: true,
             slidesPerView: 1,
-            // autoplay: {
-            //   delay: 3500,
-            //   disableOnInteraction: false,
-            // },
+            autoplay: {
+              delay: 3500,
+              disableOnInteraction: false,
+            },
             pagination: {
               clickable: true,
             },
