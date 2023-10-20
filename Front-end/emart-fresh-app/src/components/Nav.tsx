@@ -2,7 +2,7 @@
 import styles from "./comp_css/Nav.module.css";
 
 import { Link, useLocation, useNavigate } from "react-router-dom";
-
+import MenuIcon from "@mui/icons-material/Menu";
 import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import {
@@ -20,7 +20,7 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { toast } from "react-toastify";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRightToBracket } from "@fortawesome/free-solid-svg-icons";
-import logo from '../assets/images/pick-fresh logo.png';
+import logo from "../assets/images/pick-fresh logo.png";
 
 export default function Nav() {
   const navigate = useNavigate();
@@ -44,11 +44,18 @@ export default function Nav() {
 
     const checkLogout = confirm("로그아웃하시겠습니까?");
     if (checkLogout) {
-      sendAxiosRequest("/member/logout", "post", loginToken, setLoginToken, setCartCount, {
-        loginType: loginType,
-        kakaoAccessToken: kakaoToken,
-        naverAccessToken: naverToken,
-      })
+      sendAxiosRequest(
+        "/member/logout",
+        "post",
+        loginToken,
+        setLoginToken,
+        setCartCount,
+        {
+          loginType: loginType,
+          kakaoAccessToken: kakaoToken,
+          naverAccessToken: naverToken,
+        }
+      )
         .then(() => {
           setLoginType("");
           setKakaoToken("");
@@ -75,18 +82,16 @@ export default function Nav() {
         <div className={styles.subContentDiv}>
           <span>
             {loginToken.refreshToken !== "" ? (
-              <Link to="/" onClick={logout}>
+              <Link className={styles.logoutLink} to="/" onClick={logout}>
                 Logout
               </Link>
             ) : (
               // <i class="fa-solid fa-right-to-bracket"></i>
               <Link to="/login">
                 {/* <FontAwesomeIcon icon={faRightToBracket}/> */}
-                 Login</Link>
+                Login
+              </Link>
             )}
-          </span>
-          <span>
-            <Link to="/chart">chart</Link>
           </span>
           <span onClick={() => navigate("/cart")}>
             <IconButton aria-label="cart" onClick={() => navigate("/cart")}>
@@ -97,32 +102,33 @@ export default function Nav() {
             cart
           </span>
           <span>
-            <Link to="/mypageMain">MyPage</Link>
+            <Link className={styles.pypageLink} to="/mypageMain">
+              MyPage
+            </Link>
           </span>
         </div>
       </nav>
       <nav className={`${styles.nav} ${isHomePage ? styles.home : ""}`}>
-        <div>
-          <img src={logo} alt="" className={styles.logoImage}/>
+        <div className={styles.logoWrapper}>
+          <img src={logo} alt="" className={styles.logoImage} />
         </div>
         <div className={styles.contentDiv}>
-          <span>
+          <span className={styles.homeLink}>
             <Link to="/">Home</Link>
           </span>
           <span>
-            <Link to="/show-all-product">전체</Link>
+            <Link to="/show-all-product">상품</Link>
           </span>
           <span>
-            <Link to="/storeproduct">가게</Link>
-          </span>
-          <span>
-            <Link to="/search-store">지도</Link>
+            <Link to="/search-store">매장찾기</Link>
           </span>
           <span>
             <Link to="/eventlist">이벤트</Link>
           </span>
         </div>
-        <div></div>
+        <span className={styles.burger}>
+          <MenuIcon />
+        </span>
       </nav>
       <hr />
     </>

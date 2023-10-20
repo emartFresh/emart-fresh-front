@@ -1,3 +1,7 @@
+.myPageContainer {
+  display: flex;
+}
+
 .mypageMain {
   width: 65vw;
   display: flex;
@@ -7,31 +11,25 @@
   text-align: center;
   max-width: 900px;
   min-width: 450px;
-  margin: auto;
-  margin-top: 40px;
-  margin-bottom: 30px;
   padding: 20px;
   border: 1px solid #ccc;
   border-radius: 15px;
   /* background-color: whitesmoke; */
   /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); */
   box-shadow: 0px 0px 10px 0.5px #f9bb00;
+  margin: 1rem;
 }
 
 /* 메뉴바 */
 .sideMenuBar {
-  margin-left: 8px;
-  /* margin-top: 10px; */
   padding-top: 10px;
   padding-left: 20px;
   border-radius: 10px;
   border: 1px solid #ccc;
-  /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); */
-  position: absolute;
-  left: 10;
   height: 250px;
   min-width: 200px;
   font-size: 0.8em;
+  margin: 1rem;
 }
 .mypagecontent {
   border: 1px solid balck;
@@ -150,20 +148,12 @@
   /* background-color: rgb(204, 204, 204); */
   background-color: #f9bb00;
 }
-@media screen and (max-width: 1600px) {
-  .mypageMain {
-    margin-left: 250px;
-  }
-}
-@media screen and (max-width: 415px) {
+
+@media screen and (max-width: 740px) {
   .sideMenuBarWrapper {
     display: none;
   }
   .sideMenuBar {
     display: none;
-  }
-  .mypageMain {
-    margin-left: 0px;
-    width: 2vw;
   }
 }
