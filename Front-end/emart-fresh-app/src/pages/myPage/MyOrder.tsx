@@ -196,11 +196,11 @@ export default function MyOrder() {
           </div>
         </Box>
       </Modal>
-      <h3>
+      <h4>
         <span className={styles.tossface}>😀</span>&nbsp;&nbsp;
         {allMember.memberId}님 반갑습니다.&nbsp;&nbsp;
         <span className={styles.tossface}>😀</span>
-      </h3>
+      </h4>
       {orderedProducts === undefined ||
       (orderedProducts && orderedProducts.length === 0) ? (
         <div style={{ alignItems: "center" }}>

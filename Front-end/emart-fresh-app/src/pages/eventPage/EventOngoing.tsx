@@ -43,6 +43,7 @@ export default function EventOngoing() {
         );
         setOnGoingEventList(filteredEventList);
         setEventId(response.data);
+        console.log("날짜ㅏ아앙아아아아아아아아", response.data);
       } catch (error) {
         console.error("Error fetching eventlist:", error);
         alert(error);
@@ -50,7 +51,6 @@ export default function EventOngoing() {
     }
     EventListup();
   }, []);
-  // console.log(onGoingEventList);
   return (
     <div className={styles.eventContainer}>
       {onGoingEventList.map((eventlist) => (
@@ -64,8 +64,11 @@ export default function EventOngoing() {
               />
             </div>
             <div className={styles.eventText}>
-              {new Date(eventlist.eventStartDate).toLocaleDateString()} ~&nbsp;
-              {new Date(eventlist.eventEndDate).toLocaleDateString()}
+              {/* {new Date(eventlist.eventStartDate).toLocaleDateString()} ~&nbsp;
+              {new Date(eventlist.eventEndDate).toLocaleDateString()} */}
+              {new Date(eventlist.eventStartDate).toISOString().split("T")[0]}{" "}
+              ~&nbsp;
+              {new Date(eventlist.eventEndDate).toISOString().split("T")[0]}
             </div>
             <div className={styles.eventText}>{eventlist.eventTitle}</div>
           </Link>
