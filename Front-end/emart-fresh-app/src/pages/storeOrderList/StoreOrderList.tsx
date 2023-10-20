@@ -24,6 +24,7 @@ export default function StoreOrderList() {
   const [showModal, setShowModal] = useState<boolean>(false);
   const [orders, setOrders] = useState<Order[]>([]);
   const [detailData, setDetailData] = useState<DetailData[]>([]);
+  const [evtSource, setEvtSource] = useState<EventSource>();
 
   const userInfo = GetUserAllInfo();
 
@@ -41,8 +42,17 @@ export default function StoreOrderList() {
   };
 
   useEffect(() => {
-    connectToEventSource();
-  }, []);
+    if (!evtSource) {
+      connectToEventSource();
+    }
+
+    return () => {
+      if (evtSource) {
+        evtSource.close();
+        setEvtSource(null);
+      }
+    };
+  }, [evtSource]);
 
   const handleDetail = (orderedProductId: number) => {
     const url = `${
@@ -56,11 +66,14 @@ export default function StoreOrderList() {
     //axios요청
   };
   const connectToEventSource = () => {
+    console.log("연결");
+
     const url = `${
       import.meta.env.VITE_BACK_PORT
     }/orderedproduct/storeordered-list?memberId=${userInfo.memberId}`;
 
     const eventSource = new EventSource(url);
+    setEvtSource(eventSource);
 
     eventSource.onmessage = (event) => {
       const order = JSON.parse(event.data);
@@ -85,10 +98,6 @@ export default function StoreOrderList() {
           return prevOrders; // 이미 존재하는 주문이면 상태를 그대로 반환합니다.
         });
       }
-    };
-
-    return () => {
-      eventSource.close();
     };
   };
 

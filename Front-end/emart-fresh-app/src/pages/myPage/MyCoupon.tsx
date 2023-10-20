@@ -92,47 +92,47 @@ export default function MyCoupon() {
         <div>
           <CouponCard totalElements={totalElements} />
         </div>
-        <div>
-          {coupons === undefined || (coupons && coupons.length === 0) ? (
-            <div className={styles.couponNoItem}>
-              <img
-                src={icon_warning}
-                style={{ width: "1.2rem", marginBottom: "0.6rem" }}
-              />
-              <span style={{ fontSize: "1.2rem" }}>
-                고객님이 보유하신 쿠폰이 없습니다
-              </span>
 
-              {/* <div>다양한 쿠폰과 혜택을 받아보세요.</div> */}
-              <div>
-                <Link to="/mycoupon" className={styles.couponBtn}>
-                  쿠폰받으러가기
-                </Link>
-              </div>
+        {coupons === undefined || (coupons && coupons.length === 0) ? (
+          <div className={styles.couponNoItem}>
+            <img
+              src={icon_warning}
+              style={{ width: "1.2rem", marginBottom: "0.6rem" }}
+            />
+            <span style={{ fontSize: "1.2rem" }}>
+              고객님이 보유하신 쿠폰이 없습니다
+            </span>
+
+            {/* <div>다양한 쿠폰과 혜택을 받아보세요.</div> */}
+            <div>
+              <Link to="/mycoupon" className={styles.couponBtn}>
+                쿠폰받으러가기
+              </Link>
             </div>
-          ) : (
-            coupons.map((coupon) => (
-              <div key={coupon.couponId} className={styles.couponWrapper}>
-                <div className={styles.couponContainer}>
-                  <div className={styles.couponText}>{coupon.couponTitle}</div>
-                  <div className={styles.couponText}>{coupon.couponType}%</div>
-                  <div className={styles.couponText}>
-                    ~
-                    {new Date(coupon.couponExpirationDate).toLocaleDateString()}
-                  </div>
-                </div>
-              </div>
-            ))
-          )}
-          <div className={styles.paginationList}>
-            {coupons && coupons.length > 0 && (
-              <Pagination
-                count={totalPages}
-                page={currentPage}
-                onChange={(_event, value) => handlePageChange(value)}
-              />
-            )}
           </div>
+        ) : (
+          coupons.map((coupon) => (
+            <div key={coupon.couponId} className={styles.couponContainer}>
+              {/* <div className={styles.couponContainer}> */}
+              <div className={styles.couponText}>{coupon.couponTitle}</div>
+              <div className={styles.couponText}>
+                할인율&nbsp;{coupon.couponType}%
+              </div>
+              <div className={styles.couponText}>
+                ~{new Date(coupon.couponExpirationDate).toLocaleDateString()}
+              </div>
+              {/* </div> */}
+            </div>
+          ))
+        )}
+        <div className={styles.paginationList}>
+          {coupons && coupons.length > 0 && (
+            <Pagination
+              count={totalPages}
+              page={currentPage}
+              onChange={(_event, value) => handlePageChange(value)}
+            />
+          )}
         </div>
       </div>
     </div>

@@ -1,4 +1,5 @@
 .showAllSection {
+  width: 100%;
   background-color: #ededed;
   padding: 2em;
   display: flex;
@@ -16,6 +17,7 @@
 }
 
 .showAllCenterDiv {
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
