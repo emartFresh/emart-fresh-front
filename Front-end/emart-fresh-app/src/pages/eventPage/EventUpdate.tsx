@@ -29,6 +29,8 @@ export default function EventUpdate() {
   );
   const eventBannerImageInputRef = useRef<HTMLInputElement>(null);
   const eventDetailImageInputRef = useRef<HTMLInputElement>(null);
+  //
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleBannerImageFileClick = () => {
     if (eventBannerImageInputRef.current) {
@@ -99,6 +101,11 @@ export default function EventUpdate() {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
+    if (isSubmitting) {
+      return;
+    }
+    setIsSubmitting(true);
+
     const formDataToSend = new FormData();
     formDataToSend.append("eventTitle", formData.eventTitle);
     formDataToSend.append("eventBannerImage", formData.eventBannerImage || "");
@@ -110,25 +117,25 @@ export default function EventUpdate() {
 
     sendAxiosMediaPostRequest(url, loginToken, setLoginToken, formDataToSend)
       .then((response) => {
-        console.log("파일전송" + response);
+        console.log("파일전송 : " + response);
 
-        if (response === "이벤트생성 완료") {
-          toast.success("이벤트가 등록되었습니다!");
-          setFormData({
-            eventTitle: "",
-            eventBannerImage: null,
-            eventDetailImage: null,
-            eventStartDate: null,
-            eventEndDate: null,
-          });
-          setBannerImagePreview(BannerImageIcon);
-          setDetailImagePreview(DetailImageIcon);
-        } else {
-          toast.error("이벤트 생성에 실패하였습니다.");
-        }
+        toast.success("이벤트가 등록되었습니다!");
+        setFormData({
+          eventTitle: "",
+          eventBannerImage: null,
+          eventDetailImage: null,
+          eventStartDate: null,
+          eventEndDate: null,
+        });
+        setBannerImagePreview(BannerImageIcon);
+        setDetailImagePreview(DetailImageIcon);
       })
       .catch((error) => {
-        toast.error("이벤트 등록에 오류가 발생하였습니다", error);
+        toast.error("이벤트 생성에 실패하였습니다.", error);
+      })
+      .finally(() => {
+        // 이벤트 등록 완료 후 상태 재설정
+        setIsSubmitting(false);
       });
   };
 
@@ -146,12 +153,9 @@ export default function EventUpdate() {
             placeholder="이벤트이름을 등록하세요"
           />
           &nbsp;&nbsp;
-          {/* 유의사항 수정 중 */}
           <div className={styles.iconContainer}>
-            <img src={icon} style={{ width: "30px" }} />
+            <img src={icon} style={{ width: "20px" }} />
             <div className={styles.hoverText}>
-              이벤트 이름과 날짜를 등록하면 <br />
-              이벤트 등록 버튼이 활성화됩니다. <br />
               시작날짜는 종료날짜보다 빨라야합니다.
               <br />
             </div>
@@ -226,11 +230,11 @@ export default function EventUpdate() {
       <button
         onClick={handleSubmit}
         className={`${styles.eventSubmitBtn} ${
-          isButtonDisabled && styles.disabledButton
+          isButtonDisabled || (isSubmitting && styles.disabledButton)
         }`}
-        disabled={isButtonDisabled}
+        disabled={isButtonDisabled || isSubmitting}
       >
-        이벤트 등록
+        {isSubmitting ? "이벤트 등록 중..." : "이벤트 등록"}
       </button>
     </div>
   );
