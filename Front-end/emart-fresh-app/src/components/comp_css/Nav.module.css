@@ -22,7 +22,7 @@
 .subNav {
   display: flex;
   justify-content: right;
-  padding: 0.8em 0;
+  padding: 1em 0;
   width: 85vw;
 }
 
@@ -55,6 +55,7 @@
 
 .subContentDiv {
   display: flex;
+  align-items: center;
   justify-content: space-between;
   width: 16%;
   font-size: 1.7em;
@@ -74,6 +75,7 @@
 
 .loginLink{
   font-size: 18px;
+  color: rgb(95, 95, 95);
 }
 
 /* 말풍선 적절한 top 과 margin-left 로 위치조정 */
@@ -81,9 +83,9 @@
   display: none;
   position: absolute;
   width: 80px;
-  padding: 4px 8px;
-  top: 30px;
-  left: -15px;
+  padding: 3px 6px;
+  top: 24px;
+  left: -20px;
   -webkit-border-radius: 8px;
   -moz-border-radius: 8px;
   border-radius: 8px;
@@ -103,7 +105,7 @@
   border: solid transparent;
   border-color: rgba(51, 51, 51, 0);
   border-bottom-color: #333;
-  border-width: 10px;
+  border-width: 8px;
   pointer-events: none;
   content: ' ';
 }

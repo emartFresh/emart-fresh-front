@@ -19,7 +19,7 @@ import IconButton from "@mui/material/IconButton";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { toast } from "react-toastify";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faRightToBracket } from "@fortawesome/free-solid-svg-icons";
+import { faRightFromBracket, faRightToBracket } from "@fortawesome/free-solid-svg-icons";
 import logo from '../assets/images/pick-fresh logo.png';
 
 export default function Nav() {
@@ -75,20 +75,27 @@ export default function Nav() {
     <>
       <nav className={styles.subNav}>
         <div className={styles.subContentDiv}>
-          <span className={styles.loginLinkWrap}>
-            {loginToken.refreshToken !== "" ? (
-              <Link to="/" onClick={logout} className={styles.logoutLink}>
-                Logout
-              </Link>
-            ) : (
-              <Link to="/login">
-                <FontAwesomeIcon icon={faRightToBracket} className={styles.loginLink}/>
-              </Link>
+          
+            {loginToken.refreshToken !== "" 
+            ? (
+            <span className={styles.loginLinkWrap}>    
+                <Link to="/" onClick={logout} className={styles.logoutLink}>
+                  <FontAwesomeIcon icon={faRightFromBracket} className={styles.loginLink}/>
+                </Link>
+                <p className={styles.arrowBox}>로그아웃</p>
+              </span>
+            ) 
+            : 
+            (
+              <span className={styles.loginLinkWrap}>
+                <Link to="/login">
+                  <FontAwesomeIcon icon={faRightToBracket} className={styles.loginLink}/>
+                </Link>
+                <p className={styles.arrowBox}>로그인</p>
+              </span>
             )}
-            <p className={styles.arrowBox}>로그인</p>
-          </span>
           <span>
-            <Link to="/chart">chart</Link>
+            <Link to="/mypageMain">MyPage</Link>
           </span>
           <span onClick={() => navigate("/cart")}>
             <IconButton aria-label="cart" onClick={() => navigate("/cart")}>
@@ -98,7 +105,7 @@ export default function Nav() {
             </IconButton>
           </span>
           <span>
-            <Link to="/mypageMain">MyPage</Link>
+            <Link to="/chart">chart</Link>
           </span>
         </div>
       </nav>
