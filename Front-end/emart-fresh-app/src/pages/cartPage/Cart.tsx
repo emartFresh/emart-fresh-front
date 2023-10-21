@@ -15,6 +15,7 @@ import Payment from "../paymentPage/Payment";
 import { useNavigate } from "react-router-dom";
 import { useIsLogin } from "../../utils/LoginUtils";
 import { getTruncateString } from "../../utils/formatUtils";
+import { toast } from "react-toastify";
 
 interface responseData {
   data: CartData[];
@@ -249,7 +250,7 @@ const Cart = () => {
         );
         setCartCount(cartCount - 1);  
       })
-      .catch(console.error);
+      .catch(() => toast.error('장바구니 상품 삭제를 실패했습니다.'));
   };
 
   //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

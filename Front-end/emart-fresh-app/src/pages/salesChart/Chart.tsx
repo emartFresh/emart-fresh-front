@@ -38,21 +38,42 @@ const Chart = () => {
   return (
     <div>
         <div className={styles.selectDateContainer}>
-            <PickerCalendar setDate={setDate}/>
-            <div className={styles.selectBtnWrap}>
-              <button 
-                id='weekly' 
-                className={`${styles.weeklyOptionBtn} ${selectOption === 'weekly' ? styles.selectedOptionBtn : ''}`}
-                onClick={(e) => clickButton(e)}>주간 조회하기</button>
-              <button 
-                id='monthly' 
-                className={`${styles.monthlyOptionBtn} ${selectOption === 'monthly' ? styles.selectedOptionBtn : ''}`}
-                onClick={(e) => clickButton(e)}>월간 조회하기</button>
-              <button 
-                id='yearly' 
-                className={`${styles.yearlyOptionBtn} ${selectOption === 'yearly' ? styles.selectedOptionBtn : ''}`}
-                onClick={(e) => clickButton(e)}>연간 조회하기</button>
+          <PickerCalendar setDate={setDate}/>
+          <div className={styles.selectBtnWrap}>
+            <button 
+              id='weekly' 
+              className={`${styles.weeklyOptionBtn} ${selectOption === 'weekly' ? styles.selectedOptionBtn : ''}`}
+              onClick={(e) => clickButton(e)}>주간 조회하기
+            </button>
+            <div className={styles.weeklyExplanation}>
+              <h5>주간 조회하기</h5>
+              선택 날짜를 기준으로 <br/>
+              이전 7일의 기록을 보여줍니다.
+            </div>  
+            <button 
+              id='monthly' 
+              className={`${styles.monthlyOptionBtn} ${selectOption === 'monthly' ? styles.selectedOptionBtn : ''}`}
+              onClick={(e) => clickButton(e)}>월간 조회하기
+            </button>  
+            <div className={styles.monthlyExplanation}>
+              <h5>월간 조회하기</h5>
+              선택 날짜의 해당 월을 기준으로 <br/>
+              1️⃣ (01일 ~ 07일) 2️⃣ (08일 ~ 15일) <br/>
+              3️⃣ (16일 ~ 21일) 4️⃣ (22일 ~ 28일) <br/>
+              5️⃣ (29일 ~ 말일) 을 나타냅니다.
             </div>
+            <button 
+              id='yearly' 
+              className={`${styles.yearlyOptionBtn} ${selectOption === 'yearly' ? styles.selectedOptionBtn : ''}`}
+              onClick={(e) => clickButton(e)}>연간 조회하기
+            </button>
+              <div className={styles.yearlyExplanation}>
+                <h5>연간 조회하기</h5>
+                선택 날짜의 해당 연도를 기준으로 <br/>
+                분기별 기록을 나타냅니다.
+              </div>
+          </div>
+          
         </div>
         
         <div className={styles.chartContainer}>
