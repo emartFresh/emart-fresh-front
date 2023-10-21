@@ -66,13 +66,6 @@ const CouponUpdate = () => {
     const url = `${import.meta.env.VITE_BACK_PORT}/coupon/coupon-create`;
     sendAxiosPostRequest(url, loginToken, setLoginToken, data)
       .then((res) => {
-        console.log("쿠폰생성: " + res);
-
-        console.log("쿠폰 생성에 성공했엉");
-        console.log("쿠폰 이름", formData.couponTitle);
-        console.log("쿠폰 타입", formData.couponType);
-        console.log(res);
-
         if (res === "쿠폰생성 완료") {
           toast.success("쿠폰 등록이 완료 되었습니다!");
         } else {
@@ -124,7 +117,9 @@ const CouponUpdate = () => {
           onChange={handleInputChange}
         />
       </div>
-      <button onClick={handleCouponUpdate}>쿠폰 생성</button>
+      <button style={{ color: "#fff" }} onClick={handleCouponUpdate}>
+        쿠폰 생성
+      </button>
     </div>
   );
 };

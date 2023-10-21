@@ -1,5 +1,5 @@
 .couponUpdateMain {
-  width: 65vw;
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -10,12 +10,11 @@
   margin: 1rem;
 }
 .couponUpdateContainer {
-  width: 450px;
+  width: 100%;
   border: 1px solid #ccc;
   padding: 40px;
   border-radius: 16px;
   margin-bottom: 10px;
-  min-width: 400;
 }
 .couponUpdateTitle {
   font-weight: bold;

@@ -1,9 +1,10 @@
 .myPageContainer {
+  width: 100%;
   display: flex;
 }
 
 .mypageMain {
-  width: 65vw;
+  width: 70vw;
   display: flex;
   flex-direction: column;
   justify-content: center;
