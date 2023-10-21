@@ -1,7 +1,6 @@
 .productEventContainer {
   display: flex;
-  margin-top: 6em;
-  margin-bottom: 6em;
+  margin: 6em auto;
   width: 100%;
   height: 25em;
   text-align: center;
@@ -14,33 +13,12 @@
 .eventType {
   display: flex;
   flex-direction: column;
-  width: 120px;
-  margin-right: 1.3rem;
+  width: 11rem;
+  margin-right: 5rem;
 }
-
-/*
-.eventTypeBtn {
-  display: block;
-  background-color: white;
-  color: rgb(30, 30, 30);
-  width: 120px;
-  border-radius: 0.7em;
-  border-bottom-right-radius: 0;
-  margin-top: 1.5em;
-  padding: 0.7em 1.6em 0.7em 0;
-}
-
-.eventTypeBtn:hover {
-  width: 120%;
-  background-color: #f9bb00;
-  color: white;
-  transition: 0.4s;
-}
-
-*/
 
 .eventProducts {
-  width: 65%;
+  width: 70%;
   min-width: 400px;
 }
 
@@ -53,11 +31,12 @@
   display: block;
   background-color: white;
   color: rgb(30, 30, 30);
-  width: 120px;
+  width: 10rem;
   border-radius: 0.7em;
   border-bottom-right-radius: 0;
   margin-top: 1.5em;
   padding: 0.7em 1.6em 0.7em 0;
+  text-align: center;
 }
 
 .eventTypeBtn:hover {
@@ -82,7 +61,7 @@
   align-items: center;
   justify-content: start;
   flex-direction: column;
-  width: 100%;
+  width: 25%;
   height: 18rem;
   background-color: white;
   border-radius: 1em;
@@ -92,7 +71,6 @@
 }
 
 .productWrapper:hover {
-  /* border: 3px solid #f9bb00; */
   box-shadow: 0 0 0 3px #f7c83d inset;
   border: 0;
 }
@@ -104,16 +82,9 @@
 }
 
 .productImg {
-  /* transform: translate(50, 50); */
   width: 100%;
   object-fit: cover;
   background-color: white;
-  /* position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  border-radius: 0.5rem; */
 }
 
 .productImgWrapper {
@@ -124,10 +95,6 @@
   height: 100%;
   padding: 1rem;
   overflow: hidden;
-  /* position: relative;
-  width: 100%;
-  height: 0;
-  padding-bottom: 100%; */
 }
 
 .titleWrapper {
@@ -172,13 +139,32 @@
   display: none;
 }
 
-@media screen and (max-width: 750px) {
+@media screen and (max-width: 1200px) {
+  .productWrapper{
+    width: 33%;
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  .productEventContainer{
+    justify-content: center;
+  }
+  .eventTitle{
+    align-items: center;
+  }
+  .eventTitle svg{
+    font-size: 28px !important;
+  }
+  .eventTitle h3{
+    font-size: 24px !important;
+    margin: 0;
+  }
   .eventType {
     flex-direction: column;
     justify-content: center;
     align-items: center;
     width: 100%;
-    margin: none;
+    margin: 0;
   }
   .eventTypeBtn {
     display: none;
@@ -191,6 +177,10 @@
   }
   .selectedTypeBtnRes {
     display: inline-block;
+  }
+  .productWrapper{
+    width: 50%;
+    max-width: 200px;
   }
   .eventTitle {
     display: flex;
