@@ -49,7 +49,8 @@ const ProductChart = ({date, period}: ProductChartProps) => {
     
 
   const options = {
-    colors: ['#000000', '#333333', '#666666', '#999999', '#bbbbbb', '#dddddd'],
+    colors: ['#424242', '#616161', '#757575', '#9E9E9E', '#BDBDBD', '#E0E0E0'],
+    // colors: ['#5566c6', '#5C6BC0', '#7986CB', '#9FA8DA', '#C5CAE9', '#E8EAF6'],
     chart: {
       plotBackgroundColor: null,
       plotBorderWidth: null,
@@ -76,7 +77,33 @@ const ProductChart = ({date, period}: ProductChartProps) => {
     series: [{
       name: 'Brands',
       colorByPoint: true,
-      data: ProductChartData,
+      // data: ProductChartData,
+      data: [
+        {
+        y: 1,
+        name: "11",
+      },
+      {
+        y: 1,
+        name: "11",
+      },
+      {
+        y: 1,
+        name: "11",
+      },
+      {
+        y: 1,
+        name: "11",
+      },
+      {
+        y: 1,
+        name: "11",
+      },
+      {
+        y: 1,
+        name: "11",
+      },
+    ]
     }]
   };
 

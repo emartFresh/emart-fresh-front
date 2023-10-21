@@ -54,8 +54,7 @@ const IdInquiry = () => {
                     console.log(response.data);
                     setResultId(response.data);
                 })
-                .catch(() => console.error()
-                );
+                .catch(() => toast.error('아이디 찾기에 실패했습니다.'));
             }
         }
 

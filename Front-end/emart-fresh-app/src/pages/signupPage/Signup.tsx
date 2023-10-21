@@ -138,8 +138,7 @@ const Signup = () => {
                 toast.success('회원가입이 완료되었습니다.');
                 navigate('/login')
             })
-            .catch(() => console.error()
-            )
+            .catch(() => toast.error('회원가입에 실패했습니다.'));
         }
     }
 
@@ -295,11 +294,9 @@ const Signup = () => {
         setShowCertCodeInput(true);
         await axios.post(`${import.meta.env.VITE_BACK_PORT}/member/checkVerifyEmail`,{memberEmail: signupEmail})
         .then((response) => {
-            // setEmailCertCode(response.data.verificationCode.toString());
-            console.log(response.data);
+            toast.success('인증번호를 전송했습니다.');
         }).catch(() => {
-            console.log("이메일 인증 실패");
-            toast.error('이메일 인증에 실패했습니다. 관리자에게 문의해주세요.');
+            toast.error('인증번호 전송에 실패했습니다. 관리자에게 문의해주세요.');
         })
     };
 
@@ -319,19 +316,16 @@ const Signup = () => {
             verificationCode: trimValue
         })
         .then((response) => {
-            console.log(response.data);
             handleMessageChange('certificationCode', '인증이 완료되었습니다.');
             handleValidityChange('isCertificationCode', true);
             setShowExpiryTime(false);
             setEnableCodeCertBtn(false);
             setEnableCodeSendBtn(false);
             setIsComplete(true);
-            console.log("인증 코드 일치");
         })
         .catch(() => {
             handleMessageChange('certificationCode','인증번호가 일치하지않습니다.')
             handleValidityChange('isCertificationCode', false);
-            console.log("인증 코드 불일치");
         })
     };
         

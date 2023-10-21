@@ -2,7 +2,6 @@
 import styles from "./comp_css/Nav.module.css";
 
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import MenuIcon from "@mui/icons-material/Menu";
 import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import {
@@ -19,8 +18,11 @@ import IconButton from "@mui/material/IconButton";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { toast } from "react-toastify";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faRightToBracket } from "@fortawesome/free-solid-svg-icons";
-import logo from "../assets/images/pick-fresh logo.png";
+import { faBars, faRightFromBracket, faRightToBracket } from "@fortawesome/free-solid-svg-icons";
+import logo from '../assets/images/pick-fresh logo.png';
+import { faXmark } from '@fortawesome/free-solid-svg-icons';
+// import { faUser } from "@fortawesome/free-regular-svg-icons";
+import { faUser } from '@fortawesome/free-solid-svg-icons';
 
 export default function Nav() {
   const navigate = useNavigate();
@@ -31,13 +33,20 @@ export default function Nav() {
   const [naverToken, setNaverToken] = useRecoilState<string>(naverAccessToken);
   const [loginType, setLoginType] = useRecoilState<string>(loginTypeState);
   const [cartCount, setCartCount] = useRecoilState<number>(cartItemCount);
-
-  // useEffect(() => {
-  // }, []);
   
+  const [menuBarRight, setMenuBarRight] = useState(-100);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (isOpen) {
+      setMenuBarRight(0);
+    } else {
+      setMenuBarRight(-100);
+    }
+  }, [isOpen]);
+
 
   const logout = () => {
-    // aws 클라이언트 - 서버 에서 로그아웃 안되는 오류 있음
     const checkLogout = confirm("로그아웃하시겠습니까?");
     console.log('checkLogout >', checkLogout)
 
@@ -65,7 +74,7 @@ export default function Nav() {
           setCartCount(0);
           toast.success("로그아웃되었습니다.");
         })
-        .catch(console.error);
+        .catch(() => toast.error('로그아웃에 실패했습니다.'));
     }
   };
 
@@ -75,6 +84,9 @@ export default function Nav() {
       top: 13,
       border: `2px solid ${theme.palette.background.paper}`,
       padding: "0 4px",
+      fontSize: "8px",
+      backgroundColor: "#f9bb00",
+      color: "#000000",
     },
   }));
 
@@ -82,56 +94,71 @@ export default function Nav() {
     <>
       <nav className={styles.subNav}>
         <div className={styles.subContentDiv}>
-          <span className={styles.loginLinkWrap}>
-            {loginToken.refreshToken !== "" ? (
-              <Link className={styles.logoutLink} to="/" onClick={logout}>
-                Logout
-              </Link>
-            ) : (
-              <Link to="/login">
-                Login
-                <FontAwesomeIcon icon={faRightToBracket} className={styles.loginLink}/>
-              </Link>
+          
+            {loginToken.refreshToken !== "" 
+            ? (
+            <span className={styles.subMenuItem}>
+                <Link to="/" onClick={logout} className={styles.logoutLink}>
+                  <FontAwesomeIcon icon={faRightFromBracket} className={styles.loginLink}/>
+                </Link>
+                <p className={styles.arrowBox}>로그아웃</p>
+              </span>
+            ) 
+            : 
+            (
+              <span className={styles.subMenuItem}>
+                <Link to="/login">
+                  <FontAwesomeIcon icon={faRightToBracket} className={styles.loginLink}/>
+                </Link>
+                <p className={styles.arrowBox}>로그인</p>
+              </span>
             )}
-            <p className={styles.arrowBox}>로그인</p>
+          <span className={styles.subMenuItem}>
+            <Link to="/mypageMain">
+              <FontAwesomeIcon icon={faUser} className={styles.mypageIcon}/>
+            </Link>
+            <p className={styles.arrowBox}>마이페이지</p>
           </span>
-          <span onClick={() => navigate("/cart")}>
-            <IconButton aria-label="cart" onClick={() => navigate("/cart")}>
+          <span onClick={() => navigate("/cart")} className={styles.subMenuItem}>
+            <IconButton aria-label="cart" onClick={() => navigate("/cart")} className={styles.cartIcon}>
               <StyledBadge badgeContent={cartCount} color="secondary">
                 <ShoppingCartIcon />
               </StyledBadge>
-            </IconButton>
+            </IconButton>                                                             
+            <p className={styles.cartArrowBox}>장바구니</p>
           </span>
-          <span>
-            <Link className={styles.pypageLink} to="/mypageMain">
-              MyPage
-            </Link>
-          </span>
+          {/* <span>
+            <Link to="/chart">chart</Link>
+          </span> */}
         </div>
       </nav>
       <nav className={`${styles.nav} ${isHomePage ? styles.home : ""}`}>
         <div className={styles.logoWrapper}>
-          <img src={logo} alt="" className={styles.logoImage} />
+          <img src={logo} alt="" className={styles.logoImage} onClick={() => navigate("/")} />
         </div>
         <div className={styles.contentDiv}>
-          <span className={styles.homeLink}>
-            <Link to="/">Home</Link>
+          <span>
+            <Link to="/show-all-product">전체 상품</Link>
           </span>
           <span>
-            <Link to="/show-all-product">상품</Link>
-          </span>
-          <span>
-            <Link to="/search-store">매장찾기</Link>
+            <Link to="/search-store">근처 매장찾기</Link>
           </span>
           <span>
             <Link to="/eventlist">이벤트</Link>
           </span>
         </div>
         <span className={styles.burger}>
-          <MenuIcon />
+          <FontAwesomeIcon icon={faBars} onClick={() => {setIsOpen(true)}} />
         </span>
       </nav>
       <hr />
+       <div className={styles.menuBar} style={{ right: `${menuBarRight}%` }}>
+        <div>
+          <img src={logo} alt="" className={styles.logoImage}/>
+          <FontAwesomeIcon icon={faXmark} onClick={() => {setIsOpen(false)}}/>
+        </div>
+        <div>메뉴1</div>
+      </div>
     </>
   );
 }

@@ -22,6 +22,7 @@ export default function SalesChart({date, period}: SalesChartProps) {
   const [salesData, setSalseData] = useState<SalesChartData[]>([]);
   const isLogined = useIsLogin();
   const [xAxisData, setXAxisData] = useState<string[]>([]);
+  const [xText, setXText] = useState<string>('');
   const [seriesData, setSeriesData] = useState<number[]>([]);
 
   useEffect(() => {
@@ -36,22 +37,33 @@ export default function SalesChart({date, period}: SalesChartProps) {
       //   const res:SalesChartData[] = response as SalesChartData[];
       // }
 
-      setXAxisData(
-        response?.map((data: SalesChartData) => {
-        return data.quarter;        
-      }))
+      setXText(
+        period === 'weekly' ? '일'
+        : period === 'monthly' ?  '주'
+        : period === 'yearly' ?  '분기'
+        : '분류 없음'
+      )
+
+      if(period === 'weekly'){
+        setXAxisData(
+          response?.map((data: SalesChartData) => {
+          return data.orderedDate;        
+        }))
+      }else{
+        setXAxisData(
+          response?.map((data: SalesChartData) => {
+          return data.quarter;        
+        }))
+      }
 
       setSeriesData(
         response?.map((data: SalesChartData) => {
         return data.totalAmount;        
       }))
-  
-
     })
     .catch(console.error);
   }
   }, [period]);
-  
 
 
   const options = {
@@ -65,6 +77,9 @@ export default function SalesChart({date, period}: SalesChartProps) {
     },
     xAxis: {
       categories: xAxisData,
+      title:{
+        text: xText,
+      }
     },
     yAxis: {
       title: {
@@ -81,7 +96,6 @@ export default function SalesChart({date, period}: SalesChartProps) {
     series: [
       {
         name: '매출액',
-        // data: [242153, 123489, 243215, 854321, 641234, 123479, 548767],
         data: seriesData,
       },
     ],
