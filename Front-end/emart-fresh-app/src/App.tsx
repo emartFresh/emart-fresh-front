@@ -80,17 +80,18 @@ function App() {
                   element={<OrderHandle />}
                 ></Route>
                 <Route
-                  path="mypageMain/manager-order-status"
+                  path="/mypageMain/manager-order-status"
                   element={<ManagerOrderStatus />}
                 />
                 <Route
-                  path="mypageMain/order-request"
+                  path="/mypageMain/order-request"
                   element={<OrderRequest />}
                 />
                 <Route
-                  path="mypageMain/storeOrderList"
+                  path="/mypageMain/storeOrderList"
                   element={<StoreOrderList />}
                 />
+                <Route path="/mypageMain/chart" element={<Chart />} />
               </Route>
 
               <Route path="/eventlist" element={<EventList />}></Route>
