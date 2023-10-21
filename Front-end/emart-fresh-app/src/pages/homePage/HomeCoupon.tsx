@@ -5,7 +5,7 @@ import { faBarcode } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styles from "../page_css/HomeCoupon.module.css";
 import Pagination from "@mui/material/Pagination";
-import { formatSlashSeparatedDateNotTime } from "../../utils/dateUtils";
+import { formatDateNotTime, formatSlashSeparatedDateNotTime } from "../../utils/dateUtils";
 import { IsLogin, SendLoginPageIfNotLogin } from "../../utils/LoginUtils";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
@@ -130,8 +130,8 @@ const HomeCoupon = () => {
                   <div className={styles.couponTitle}>{coupon.couponTitle}</div>
                   <div>{coupon.couponType}%</div>
                   <div>
-                    ~
-                    {formatSlashSeparatedDateNotTime(
+                    ~ 
+                    {formatDateNotTime(
                       coupon.couponExpirationDate
                     )}
                   </div>
