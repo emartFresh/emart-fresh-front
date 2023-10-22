@@ -36,13 +36,10 @@ const HomeProductEvent = () => {
     setWidth(window.innerWidth);
   };
 
-  console.log("width", width);
-
   useEffect(() => {
     window.addEventListener("resize", handleResize);
 
     return () => {
-      // cleanup
       window.removeEventListener("resize", handleResize);
     };
   }, []);

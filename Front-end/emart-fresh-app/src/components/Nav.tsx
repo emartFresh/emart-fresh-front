@@ -20,9 +20,8 @@ import { toast } from "react-toastify";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faRightFromBracket, faRightToBracket } from "@fortawesome/free-solid-svg-icons";
 import logo from '../assets/images/pick-fresh logo.png';
-import { faXmark } from '@fortawesome/free-solid-svg-icons';
-// import { faUser } from "@fortawesome/free-regular-svg-icons";
 import { faUser } from '@fortawesome/free-solid-svg-icons';
+import { Menu } from "./Menu";
 
 export default function Nav() {
   const navigate = useNavigate();
@@ -93,8 +92,7 @@ export default function Nav() {
   return (
     <>
       <nav className={styles.subNav}>
-        <div className={styles.subContentDiv}>
-          
+        <div className={styles.subContentDiv}>          
             {loginToken.refreshToken !== "" 
             ? (
             <span className={styles.subMenuItem}>
@@ -104,8 +102,7 @@ export default function Nav() {
                 <p className={styles.arrowBox}>로그아웃</p>
               </span>
             ) 
-            : 
-            (
+            : (
               <span className={styles.subMenuItem}>
                 <Link to="/login">
                   <FontAwesomeIcon icon={faRightToBracket} className={styles.loginLink}/>
@@ -127,9 +124,6 @@ export default function Nav() {
             </IconButton>                                                             
             <p className={styles.cartArrowBox}>장바구니</p>
           </span>
-          {/* <span>
-            <Link to="/chart">chart</Link>
-          </span> */}
         </div>
       </nav>
       <nav className={`${styles.nav} ${isHomePage ? styles.home : ""}`}>
@@ -153,11 +147,7 @@ export default function Nav() {
       </nav>
       <hr />
        <div className={styles.menuBar} style={{ right: `${menuBarRight}%` }}>
-        <div>
-          <img src={logo} alt="" className={styles.logoImage}/>
-          <FontAwesomeIcon icon={faXmark} onClick={() => {setIsOpen(false)}}/>
-        </div>
-        <div>메뉴1</div>
+          <Menu isOpen={isOpen} setIsOpen={setIsOpen}/>
       </div>
     </>
   );
