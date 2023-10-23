@@ -78,8 +78,6 @@
 }
 
 .emailCertificationBtn {
-    /* position: absolute; */
-    /* right: 0; */
     z-index: 1;
     margin-left: 1em;
     width: 9em;
@@ -98,7 +96,71 @@
 
 .signupBtn{
     margin: 2em auto 4.5em auto;
-    /* width: 50%; */
     width: 30em;
     padding: 0.8em 0;
+}
+
+@media screen and (max-width: 740px) {
+    .container{
+        width: 355px;
+        margin: 0 auto;
+    }
+    .signupForm{
+        width: 26rem;
+        justify-content: center;
+    }
+    .emailCenteredContent{
+        margin: 0;
+        flex-direction: column;
+        align-items: flex-end;
+    }
+    .emailValueCheckIcon{
+        right: 0.4em;
+        top: 15px;
+    }
+    .emailCertificationBtn{
+        margin-top: 1rem;
+        
+    }
+    .emailInputWrap{
+        position: relative;
+    }
+    .emailMessage{
+        position: absolute;
+        top: 50px;
+    }
+    .loginLink{
+        justify-content: left;
+        /* margin-top: 0; */
+    }
+    .signupBtn{
+        width: 26rem;
+    }
+
+    .timer{
+        position: absolute;
+        left: 0;
+        top: 88px;
+    }
+}
+
+@media screen and (max-width: 555px) {
+    .signupForm{
+        width: 20rem;
+    }
+    .signupId, .signupPw, .signupPwCheck, .signupName, .signupEmail, .emailCertCode{
+        width: 20em;
+    }
+    .message{
+        width: 25em;
+    }
+    .emailCenteredContent{
+        margin: 0;
+        flex-direction: column;
+        align-items: flex-end;
+    }    
+    .signupBtn{
+        width: 20rem;
+    }
+
 }

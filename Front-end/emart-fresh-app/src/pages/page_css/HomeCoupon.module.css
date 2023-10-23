@@ -37,6 +37,7 @@
 .coupon {
   width: 20rem;
   height: 10rem;
+  background-color: white;
   border: 1.5px solid #ebebeb;
   border-radius: 1rem;
   display: flex;
@@ -53,6 +54,7 @@
 .unableCoupon {
   width: 20rem;
   height: 10rem;
+  background-color: white;
   border: 1.5px solid #ebebeb;
   border-radius: 1rem;
   display: flex;
@@ -119,6 +121,7 @@ div {
 
 .paginationWrap {
   max-width: 980px;
+  margin-top: 1rem;
 }
 
 .paginationWrap ul {
@@ -153,6 +156,12 @@ div {
 }
 
 @media screen and (max-width: 750px) {
+  .couponHeader > svg{
+    width: 40px;
+  }
+  .couponHeader > h3{
+    font-size: 24px;
+  }
   .coupon, .unableCoupon{
     width: 200px;
     height: 130px;
@@ -169,6 +178,23 @@ div {
 }
 
 @media screen and (max-width: 582px) {
+  .couponContainer{
+    align-content: center;
+  }
+  .couponHeader{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+  }
+  .couponHeader > svg{
+    width: 36px;
+    margin: 0 1rem 0 0;
+  }
+  .couponHeader > h3{
+    font-size: 20px;
+    margin: 0;
+  }
   .couponContainer{
     display: flex;
     flex-direction: row;
@@ -193,6 +219,9 @@ div {
       height: 300px;
       overflow: scroll;
       justify-content: center;
+      border: 0.8px solid #eeeeee;
+      border-radius: 0.5rem;
+      background-color: #fcfcfc;
     }
     .couponWrap::-webkit-scrollbar {
       width: 8px;

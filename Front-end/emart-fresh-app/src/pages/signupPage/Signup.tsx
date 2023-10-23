@@ -418,7 +418,7 @@ const Signup = () => {
                 </div>
                 <p className={styles.message}>{messages.name}</p>
             </div>
-            <div className={styles.inputWrap}>
+            <div className={`${styles.inputWrap} ${styles.emailInputWrap}`}>
                 <div className={styles.emailCenteredContent}>
                     <TextField
                         label="Email"
@@ -452,11 +452,11 @@ const Signup = () => {
                         }}
                     >인증번호받기</button>
                 </div>
-                <p className={styles.message}>{messages.email}</p>
+                <p className={`${styles.message} ${styles.emailMessage}`}>{messages.email}</p>
             </div>
 
             {showCertCodeInput && (
-                <div className={styles.inputWrap}>
+                <div className={`${styles.inputWrap} ${styles.emailInputWrap}`}>
                     <div className={styles.emailCenteredContent}>
                         <TextField
                             label="Certification Code"
@@ -477,14 +477,16 @@ const Signup = () => {
                             disabled={!enableCodeCertBtn}
                         >인증하기</button>
                     </div>
-                    <p className={styles.message}>{messages.certificationCode}</p>
+                    <p className={`${styles.message} ${styles.emailMessage}`}>{messages.certificationCode}</p>
 
-                    {showExpiryTime && (
-                        <ExpiryTime 
-                            callCount={codeSendCount}
-                            onClose={handleCloseExpiryTime}
-                            enableSendBtn={() => setEnableCodeSendBtn(true)} />
-                    )}
+                    <p className={styles.timer}>
+                        {showExpiryTime && (
+                            <ExpiryTime 
+                                callCount={codeSendCount}
+                                onClose={handleCloseExpiryTime}
+                                enableSendBtn={() => setEnableCodeSendBtn(true)} />
+                        )}
+                    </p>
                 </div>
             )}
             <div className={styles.loginLinkWrap}>
