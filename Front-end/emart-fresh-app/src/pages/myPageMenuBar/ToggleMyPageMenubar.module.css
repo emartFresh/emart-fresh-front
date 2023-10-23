@@ -1,0 +1,46 @@
+.mypagemenubar {
+  font-size: 0.8em;
+}
+
+.myPageDrawerContainer {
+  display: flex;
+  justify-content: center;
+  width: 200px;
+  position: relative;
+  z-index: 2;
+  left: 0;
+  transition: 0.3s;
+  background-color: white;
+}
+
+.drawerBtn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+  position: relative;
+  left: -3px;
+  width: 30px;
+  background-color: white;
+  height: 10px;
+  color: #f9bb00;
+}
+
+.myPageDrawerWrapper {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  background-color: white;
+  /* height: 100%; */
+  width: 350px;
+  padding: 1rem;
+}
+
+@media screen and (min-width: 740px) {
+  .drawerBtn {
+    display: none;
+  }
+  .myPageDrawerContainer {
+    display: none;
+  }
+}
