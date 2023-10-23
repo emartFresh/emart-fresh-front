@@ -66,7 +66,6 @@ function App() {
                   path="/mypageMain/HandleApplyManager"
                   element={<HandleApplyManager />}
                 />
-
                 <Route
                   path="/mypageMain/eventupdate"
                   element={<EventUpdate />}

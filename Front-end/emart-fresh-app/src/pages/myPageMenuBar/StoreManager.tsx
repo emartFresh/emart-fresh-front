@@ -28,7 +28,7 @@ export default function StoreManager() {
         <Link to="/mypageMain/StoreOrderList">주문현황</Link>
       </div>
       <div className={styles.mypagemenubar}>
-        <Link to="/mypageMain/chart">매출현황</Link>
+        <Link to="/mypageMain/chart">매출 차트</Link>
       </div>
     </div>
   );
