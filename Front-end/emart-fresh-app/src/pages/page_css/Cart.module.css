@@ -83,6 +83,7 @@
 
 .cartCalculate{
     width: 30%;
+    min-width: 400px;
     height: 34rem;
     border: 0.05rem solid rgba(0, 0, 0, 0.6);
     border-radius: 0.5rem;

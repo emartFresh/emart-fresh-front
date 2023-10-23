@@ -1,0 +1,115 @@
+
+
+.menuHeader{
+    /* position: relative; */
+    padding: 0.2rem 0;
+    background-color: #f9bb00;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    height: 76px;
+    position: absolute;
+    right: 0;
+    z-index: 2;
+}
+
+.secondBack{
+    background-color: #ffda6a;
+    padding: 0.1rem 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    height: 76px;
+    position: absolute;
+    right: 0;
+    z-index: 1;
+}
+
+.firstBack{
+    background-color: #ffe79e;
+    padding: 0.1rem 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    height: 76px;
+    position: absolute;
+    right: 0;
+    z-index: 0;
+}
+
+@keyframes run {
+    from {
+      width: 120px;
+    }
+    to {
+      width: 100%;
+    }
+  }
+
+
+.headerAnimaition {
+    animation-name: run;
+    animation-duration: 0.8s;
+    animation-fill-mode: forwards;
+}
+
+.secondAnimation{
+    animation-name: run;
+    animation-duration: 0.6s;
+    animation-fill-mode: forwards;
+}
+
+.firstAnimation{
+    animation-name: run;
+    animation-duration: 0.4s;
+    animation-fill-mode: forwards;
+}
+
+.logoImage {
+    width: 100px;
+    height: 70px;
+}
+
+
+.xMark{
+    position: fixed;
+    right: 20px;
+    color: white;
+    font-size: 24px;
+    float: right;
+}
+
+.mainMenu, .subMenu{
+    position: absolute;
+    width: 100%;
+    top: 65px;
+    display: flex;    
+    flex-direction: column;
+    padding: 1rem 0;
+    border-bottom: 0.5px solid rgba(0, 0, 0, 0.2)
+}
+
+.subMenu{
+    top: 295px;
+}
+
+.menuList, .subList{
+    padding: 1.3rem;
+    color: #4e5059;
+    font-weight: 700;
+    text-align: left;
+    cursor: pointer;
+}
+
+.menuList:hover, .subList:hover{
+    background-color: #fff1c9;
+}
+
+.menuIcon{
+    font-size: 1.2rem;
+    color: #f9bb00;
+    margin-right: 1rem;
+}

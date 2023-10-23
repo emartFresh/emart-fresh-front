@@ -29,9 +29,14 @@ export const formatSlashSeparatedDate = (stringDate: string): string => {
 
 export const formatSlashSeparatedDateNotTime = (stringDate: string): string => {
   const date = new Date(stringDate);
-  const formattedDate = `${date.getFullYear()}/${
-    date.getMonth() + 1
-  }/${date.getDate()} ${date.getHours()}`;
+  const formattedDate = `${date.getFullYear()} / ${date.getMonth() + 1} / ${date.getDate()}`;
+
+  return formattedDate;
+};
+
+export const formatDateNotTime = (stringDate: string): string => {
+  const date = new Date(stringDate);
+  const formattedDate = ` ${date.getFullYear()}년 ${date.getMonth() + 1}월 ${date.getDate()}일`;
 
   return formattedDate;
 };

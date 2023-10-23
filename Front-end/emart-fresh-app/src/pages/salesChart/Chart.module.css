@@ -72,10 +72,10 @@
 .weeklyExplanation, .monthlyExplanation, .yearlyExplanation{
     display: none;
     position: absolute;
-    /* right: 28rem; */
-    /* top: -2rem; */
-    right: 20%;
-    top: -5%;
+    right: 200px;
+    top: -2rem;
+    /* right: 20%;
+    top: -5%; */
     z-index: 3;
     width: 16rem;
     background-color: rgba(170, 170, 170, 0.4);
@@ -85,7 +85,7 @@
 
 .monthlyExplanation{
     width: 20rem;
-    right: 28rem;
+    right: 200px;
     top: -2rem;
 }
 
