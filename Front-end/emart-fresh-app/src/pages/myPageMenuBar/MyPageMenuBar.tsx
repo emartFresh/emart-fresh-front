@@ -18,9 +18,9 @@ import { toast } from "react-toastify";
 const MyPageMenuBar = () => {
   const [memberData, setMemberData] = useState<MemberData[]>([]);
   const [loginToken, setLoginToken] = useRecoilState<JwtToken>(loginState);
+  const [openDrawer, setOpenDrawer] = useState<boolean>(false);
 
   SendLoginPageIfNotLogin();
-  console.log("확인", GetUserAllInfo());
 
   const getUserAuth = GetUserAuth();
   useEffect(() => {
@@ -46,17 +46,17 @@ const MyPageMenuBar = () => {
         <div>
           {getUserAuth === 0 && (
             <div className={styles.mypagemenubar}>
-              <OrdinaryUser />
+              <OrdinaryUser setOpenDrawer={setOpenDrawer} />
             </div>
           )}
           {getUserAuth === 1 && (
             <div className={styles.mypagemenubar}>
-              <StoreManager />
+              <StoreManager setOpenDrawer={setOpenDrawer} />
             </div>
           )}
           {getUserAuth === 2 && (
             <div className={styles.mypagemenubar}>
-              <Administrator />
+              <Administrator setOpenDrawer={setOpenDrawer} />
             </div>
           )}
         </div>
