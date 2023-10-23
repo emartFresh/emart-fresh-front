@@ -1,13 +1,15 @@
 .logoImage {
   width: 140px;
   height: 100px;
+  margin-left: 2rem;
+  margin-right: 2rem;
   cursor: pointer;
 }
 
 .nav {
   margin: 0 auto;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   position: sticky;
   width: 100%;
@@ -27,7 +29,13 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 33%;
 }
+
+.rightDiv {
+  width: 33%;
+}
+
 .home {
   border-bottom: none; /* 홈 페이지에서 border-bottom 제거 */
 }
@@ -60,25 +68,17 @@
 .contentDiv {
   display: flex;
   justify-content: space-between;
-  width: 24%;
+  width: 20rem;
   font-size: 1.2em;
   align-items: center;
-/*   margin-left: 18rem;
-  margin-right: 20rem; */
-  margin-right: 2rem;
 }
 
 .subContentDiv {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 250px;
+  width: 15rem;
   font-size: 1.7em;
-  /* min-width: 300px; */
-/*   padding: 0 1rem;
-  margin-right: 18%; */
-  max-width: 1000px;
-  min-width: 330px;
   padding-left: 1rem;
   padding-right: 1rem;
   margin-right: 2rem;
@@ -88,27 +88,30 @@
   color: #f9bb00; /* 마우스 호버 시 색상 변경 */
 }
 
-.subMenuItem{
+.subMenuItem {
   position: relative;
   width: 40px;
   text-align: center;
 }
 
-.loginLink, .mypageIcon{
+.loginLink,
+.mypageIcon {
   font-size: 1.2rem;
   color: rgb(111, 111, 111);
 }
 
-.loginLink:hover, .mypageIcon:hover{
+.loginLink:hover,
+.mypageIcon:hover {
   color: #f9bb00;
 }
 
-.cartIcon:hover{
+.cartIcon:hover {
   color: #f9bb00;
 }
 
 /* 말풍선 적절한 top 과 margin-left 로 위치조정 */
-.arrowBox, .cartArrowBox {
+.arrowBox,
+.cartArrowBox {
   display: none;
   position: absolute;
   width: 80px;
@@ -124,11 +127,12 @@
   text-align: center;
 }
 
-.cartArrowBox{
+.cartArrowBox {
   top: 38px;
 }
 
-.arrowBox:after, .cartArrowBox:after {
+.arrowBox:after,
+.cartArrowBox:after {
   position: absolute;
   bottom: 100%;
   left: 50%;
@@ -140,7 +144,7 @@
   border-bottom-color: #333;
   border-width: 8px;
   pointer-events: none;
-  content: '';
+  content: "";
 }
 
 .subMenuItem:hover .arrowBox {
@@ -151,7 +155,7 @@
   display: block;
 }
 
-.menuBar{
+.menuBar {
   position: fixed;
   top: 0;
   background-color: white;
@@ -162,6 +166,12 @@
 }
 
 @media screen and (max-width: 740px) {
+  .rightDiv {
+    display: none;
+  }
+  .nav {
+    justify-content: center;
+  }
   .logoImage {
     width: 100px;
     height: 70px;
@@ -202,4 +212,3 @@
     right: 0;
   }
 }
-
