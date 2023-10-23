@@ -16,7 +16,7 @@
 }
 
 .loginId, .loginPw{
-    width: 22em;
+    width: 22rem;
     display: block;
     padding: 0.8em 1.8em;
     font-size: 1em;
@@ -91,4 +91,30 @@ input:focus{
 
 .naverLoginBtn a img{
     display: block;
+}
+
+@media screen and (max-width: 740px) {
+    .container{
+        width: 355px;
+        margin: 0 auto;
+    }
+    .loginForm{
+        width: 22rem;
+    }
+    .snsLoginTitle{
+        margin: 2rem auto 1rem auto;
+    }
+    .snsBtnWrap{
+        flex-direction: column;
+        height: 10rem;
+        margin: 0.4rem auto;
+    }
+    .kakaoLoginBtn{
+        margin: 0 auto;
+    }
+    
+    .naverLoginBtn a img{
+        margin: 0 auto;
+    }
+    
 }

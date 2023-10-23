@@ -24,8 +24,6 @@ function ExpiryTime({ onClose, enableSendBtn, callCount }: ExpiryTimeProps) {
   }, [callCount]);
 
   useEffect(() => {
-    console.log("timer useffect!!");
-
     const timer = setInterval(() => {
       elapsedTimeRef.current += 1; // useRef로 변수 값을 갱신
 
