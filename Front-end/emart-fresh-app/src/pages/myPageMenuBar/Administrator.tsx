@@ -6,7 +6,7 @@ export default function Administrator() {
   return (
     <div>
       <div className={styles.mypagemenubar}>
-        <Link to="/">점주 주문관리</Link>
+        <Link to="/mypageMain">개인정보관리</Link>
       </div>
       <div className={styles.mypagemenubar}>
         <Link to="/mypageMain/HandleApplyManager">점주 신청 승인</Link>
