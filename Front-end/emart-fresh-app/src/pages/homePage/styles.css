@@ -139,6 +139,9 @@
   .homeSwiper {
     height: 200;
   }
+  .eventProductSwiper{
+    height: 350px !important;
+  }
 }
 
 @media screen and (max-width: 720px) {
@@ -157,6 +160,10 @@
     object-fit: cover;
   }
 
+  .swiper-wrapper{
+    height: 320px !important;
+  }
+
   .swiper-pagination-bullet {
     width: var(--swiper-pagination-bullet-width, var(--swiper-pagination-bullet-size, 5px)) !important;
     height: var(--swiper-pagination-bullet-height, var(--swiper-pagination-bullet-size, 5px)) !important;
@@ -168,6 +175,7 @@
     height: 200px;
   }
   .homeSwiper .swiper-slide img {
+    width: 626px;
     height: 200px;
   }
   .swiper-button-prev:after{

@@ -160,7 +160,7 @@ export default function Nav() {
             <Link to="/eventlist">이벤트</Link>
           </span>
         </div>
-        <div className={styles.rightDiv}></div>
+        <div className={styles.rightDiv}></div>  
         <span className={styles.burger}>
           <FontAwesomeIcon
             icon={faBars}
@@ -172,7 +172,7 @@ export default function Nav() {
       </nav>
       <hr />
       <div className={styles.menuBar} style={{ right: `${menuBarRight}%` }}>
-        <Menu isOpen={isOpen} setIsOpen={setIsOpen} />
+        <Menu isOpen={isOpen} setIsOpen={setIsOpen} logout={logout}/>
       </div>
     </>
   );
