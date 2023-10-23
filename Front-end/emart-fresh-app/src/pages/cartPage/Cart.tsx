@@ -40,8 +40,8 @@ const Cart = () => {
 
 
   //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-  useEffect(() => {
 
+  useEffect(() => {
     if(isLogined){
       sendAxiosRequest(
         "/cart/getCartInfo",
@@ -54,7 +54,7 @@ const Cart = () => {
         console.log("response > ", response);
         const res: CartData[] = JSON.parse(JSON.stringify(response));
         setCartItemList(res?.map(item => {
-          return {...item, cartProductQuantityOfString: item.cartProductQuantity+""}
+          return {...item, cartProductQuantityOfString: item.cartProductQuantity.toString()}
         }));
         setInitCartItemList(res);
         setCartCount(res.length);
@@ -115,8 +115,6 @@ const Cart = () => {
           const initItem = initCartItemList.find(
             (item) => item.cartProductId === cart.cartProductId
           );
-        // cartProductQuantityOfString이 null 또는 빈 문자열("")이면 1로 설정
-        // const quantity = cart.cartProductQuantityOfString === null || cart.cartProductQuantityOfString === "" ? 1 : parseInt(cart.cartProductQuantityOfString);
           return initItem.cartProductQuantity !== parseInt(cart.cartProductQuantityOfString);
         })
         ?.map((updateItem) => {
@@ -128,28 +126,19 @@ const Cart = () => {
   };
 
   //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-  const handleQuantity = (
+  const handleMinusQuantity = (
     e: React.MouseEvent<SVGSVGElement, MouseEvent>,
     cartProductId: number
   ) => {
-    const btn = e.target as HTMLButtonElement;
-    const isMinusBtn = btn.id === "minusQuantity";
-
     setCartItemList(
       cartItemList.map((item) => {
         if (item.cartProductId === cartProductId) {
+          const minusQuantity = item.cartProductQuantity <= 1 ? 1 : item.cartProductQuantity - 1;
+
           return {
             ...item,
-            cartProductQuantityOfString: 
-              isMinusBtn
-              ? parseInt(item.cartProductQuantityOfString) - 1 + ""
-              : parseInt(item.cartProductQuantityOfString) + 1 + "",
-
-            cartProductQuantity: 
-            isMinusBtn 
-            ? parseInt(item.cartProductQuantityOfString) - 1
-            : parseInt(item.cartProductQuantityOfString) + 1,
+            cartProductQuantityOfString: minusQuantity.toString(),
+            cartProductQuantity: minusQuantity
           };
         } else {
           return item;
@@ -157,6 +146,27 @@ const Cart = () => {
       })
     );
   };
+
+  const handlePlusQuantity = (
+    e: React.MouseEvent<SVGSVGElement, MouseEvent>,
+    cartProductId: number
+  ) => {
+    setCartItemList(
+      cartItemList.map((item) => {
+        if (item.cartProductId === cartProductId) {
+          const plusQuantity = item.cartProductQuantity < 99 ? item.cartProductQuantity + 1 : 99;
+
+          return {
+            ...item,
+            cartProductQuantityOfString: plusQuantity.toString(),
+            cartProductQuantity: plusQuantity
+          };
+        } else {
+          return item;
+        }
+      })
+    );
+  }
 
   //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -315,12 +325,12 @@ const Cart = () => {
                   <p className={styles.productTitle}>{getTruncateString(item.productTitle, 35)}</p>
                   <p className={styles.productPrice}>{item.priceNumber}원</p>
                   <p className={styles.quantityControl}>
-                    <FontAwesomeIcon 
-                      icon={faMinus}
-                      id="minusQuantity"
-                      className={styles.quantityBtn}
-                      onClick={(e) => handleQuantity(e, item.cartProductId)}
-                    />
+                      <FontAwesomeIcon 
+                        icon={faMinus}
+                        id="minusQuantity" 
+                        onClick={(e) => handleMinusQuantity(e, item.cartProductId)}
+                        className={styles.quantityBtn}
+                      />
                     <input
                       type="text"
                       value={item.cartProductQuantityOfString}
@@ -340,7 +350,7 @@ const Cart = () => {
                       icon={faPlus}
                       id="plusQuantity"
                       className={styles.quantityBtn}
-                      onClick={(e) => handleQuantity(e, item.cartProductId)}
+                      onClick={(e) => handlePlusQuantity(e, item.cartProductId)}
                     />
                     {/* <AddIcon/> */}
                   </p>
