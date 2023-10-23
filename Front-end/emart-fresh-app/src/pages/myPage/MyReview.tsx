@@ -155,14 +155,14 @@ export default function MyReview() {
                 <div className={styles.reviewDate}>
                   {new Date(review.reviewDate).toLocaleDateString()}
                 </div>
-                {/* <div>
+                <div>
                   <button
                     className={styles.reviewDetailBtn}
                     onClick={(e) => deleteReview(review.reviewId)}
                   >
                     삭제
                   </button>
-                </div> */}
+                </div>
               </div>
               <div className={styles.reviewText}>{review.productTitle}</div>
               <div className={styles.reviewContent}>{review.reviewContent}</div>

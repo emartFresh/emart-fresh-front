@@ -37,7 +37,6 @@ const ToggleMyPageMenubar = () => {
         );
         setMemberData(response.data);
       } catch (error) {
-        console.error("Error fetching mypageMenuBar:", error);
         toast.error("오류가 발생했습니다.");
       }
     };
@@ -68,7 +67,7 @@ const ToggleMyPageMenubar = () => {
         className={styles.drawerBtn}
         onClick={() => setOpenDrawer(!openDrawer)}
       >
-        {openDrawer ? <ArrowForwardIosIcon /> : <ArrowBackIosIcon />}
+        {openDrawer ? <ArrowBackIosIcon /> : <ArrowForwardIosIcon />}
       </button>
     </div>
   );
