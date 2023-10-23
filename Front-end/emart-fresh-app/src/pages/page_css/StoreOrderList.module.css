@@ -1,4 +1,5 @@
 .orderListContainer {
+  width: 100%;
   background-color: #f9fafb;
   display: flex;
   justify-content: center;

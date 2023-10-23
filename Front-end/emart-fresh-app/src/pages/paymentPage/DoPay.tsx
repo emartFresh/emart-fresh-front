@@ -80,7 +80,6 @@ export default function Dopay({
       setLoginToken,
       orderedProductProducts
     ).then((res) => {
-      alert("ㅇㅇㅇ");
       console.log("응답", res);
       requestPayment();
     });
