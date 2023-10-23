@@ -24,9 +24,8 @@ import {
   faRightToBracket,
 } from "@fortawesome/free-solid-svg-icons";
 import logo from "../assets/images/pick-fresh logo.png";
-import { faXmark } from "@fortawesome/free-solid-svg-icons";
-// import { faUser } from "@fortawesome/free-regular-svg-icons";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
+import { Menu } from "./Menu";
 
 export default function Nav() {
   const navigate = useNavigate();
@@ -139,9 +138,6 @@ export default function Nav() {
             </IconButton>
             <p className={styles.cartArrowBox}>장바구니</p>
           </span>
-          {/* <span>
-            <Link to="/chart">chart</Link>
-          </span> */}
         </div>
       </nav>
       <nav className={`${styles.nav} ${isHomePage ? styles.home : ""}`}>
@@ -176,16 +172,7 @@ export default function Nav() {
       </nav>
       <hr />
       <div className={styles.menuBar} style={{ right: `${menuBarRight}%` }}>
-        <div>
-          <img src={logo} alt="" className={styles.logoImage} />
-          <FontAwesomeIcon
-            icon={faXmark}
-            onClick={() => {
-              setIsOpen(false);
-            }}
-          />
-        </div>
-        <div>메뉴1</div>
+        <Menu isOpen={isOpen} setIsOpen={setIsOpen} />
       </div>
     </>
   );

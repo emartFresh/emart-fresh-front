@@ -137,15 +137,13 @@ export default function MyReview() {
       ) : (
         reviews.map((review) => (
           <div key={review.reviewId} className={styles.reviewWrapper}>
-            <div className={styles.dateAndImg}>
-              <div className={styles.imageContainer}>
-                <img
-                  height="200px"
-                  src={review.productImgUrl}
-                  className={styles.image}
-                  alt="상품"
-                />
-              </div>
+            <div className={styles.imageContainer}>
+              <img
+                height="200px"
+                src={review.productImgUrl}
+                className={styles.image}
+                alt="상품"
+              />
             </div>
             <div className={styles.reviewContainer}>
               <div className={styles.reviewRating}>
