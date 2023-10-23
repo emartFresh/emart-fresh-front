@@ -1,9 +1,10 @@
 import { Outlet, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import MyPageMenuBar from "../myPageMenuBar/MyPageMenuBar";
 import { useIsLogin } from "../../utils/LoginUtils";
-import styles from "../page_css/MyPage.module.css";
 import { toast } from "react-toastify";
+import styles from "../page_css/MyPage.module.css";
+import MyPageMenuBar from "../myPageMenuBar/MyPageMenuBar";
+import ToggleMyPageMenubar from "../myPageMenuBar/ToggleMyPageMenubar";
 
 export default function MyPageMain() {
   const isValidUserAuth = useIsLogin();
@@ -18,6 +19,7 @@ export default function MyPageMain() {
   return (
     <div className={styles.myPageContainer}>
       {isValidUserAuth && <MyPageMenuBar />}
+      {isValidUserAuth && <ToggleMyPageMenubar />}
       {isValidUserAuth && <Outlet />}
     </div>
   );
