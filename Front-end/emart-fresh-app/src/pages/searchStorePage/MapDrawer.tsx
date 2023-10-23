@@ -138,7 +138,7 @@ export default function MapDrawer({
   );
 
   useEffect(() => {
-    if (openDrawer) drawerRef.current.style.left = "-350px";
+    if (openDrawer) drawerRef.current.style.left = "-300px";
     else drawerRef.current.style.left = "0";
   }, [openDrawer]);
 
@@ -216,8 +216,8 @@ export default function MapDrawer({
               id=""
               onChange={(e) => setSelectedProductOption(Number(e.target.value))}
             >
-              <option value={1}>구매 횟수</option>
-              <option value={2}>평점</option>
+              <option value={1}>평점</option>
+              <option value={2}>구매 횟수</option>
             </select>
           </div>
           <div className={styles.productListWrapper}>
