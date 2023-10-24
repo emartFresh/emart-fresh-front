@@ -88,8 +88,11 @@ export default function MapDrawer({
       userLatitude: userLocation.latitude,
       userLongitude: userLocation.longitude,
     };
+    console.log("지도 파람", param);
+
     axios.get(url, { params: param }).then((res) => {
       setStoreData(res?.data);
+      console.log("지도 get data", res?.data);
     });
   }, [selectedDistance, selectedProductName, userLocation]);
 
