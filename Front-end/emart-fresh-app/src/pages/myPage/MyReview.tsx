@@ -111,23 +111,20 @@ export default function MyReview() {
 
   return (
     <div className={styles.reviewMain}>
-      <h4>
+      <p className={styles.reviewUserName}>
         <span className={styles.tossface}>😀</span>&nbsp;&nbsp;
         {allMember.memberId}님 반갑습니다.&nbsp;&nbsp;
         <span className={styles.tossface}>😀</span>
-      </h4>
+      </p>
 
       {reviews === undefined || (reviews && reviews.length === 0) ? (
         <div style={{ alignItems: "center" }}>
-          <img
-            src={review}
-            style={{ width: "200px", marginBottom: "0.6rem" }}
-          />
+          <img src={review} className={styles.reviewNoItemImage} />
           <img
             src={icon_warning}
             style={{ width: "1.2rem", marginBottom: "1vw" }}
           />
-          <span style={{ fontSize: "1.2rem" }}>작성한 리뷰가 없습니다</span>
+          <span className={styles.reviewTitleName}>작성한 리뷰가 없습니다</span>
           <div>
             <Link to="/" className={styles.reviewBtn}>
               상품보러가기

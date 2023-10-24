@@ -82,22 +82,19 @@ export default function MyCoupon() {
 
   return (
     <div className={styles.couponMain}>
-      <h4>
+      <p className={styles.couponUserName}>
         <span className={styles.tossface}>😀</span>&nbsp;&nbsp;
         {allMember.memberId}님 반갑습니다.&nbsp;&nbsp;
         <span className={styles.tossface}>😀</span>
-      </h4>
+      </p>
       <div>
         <CouponCard totalElements={totalElements} />
       </div>
 
       {coupons === undefined || (coupons && coupons.length === 0) ? (
         <div className={styles.couponNoItem}>
-          <img
-            src={icon_warning}
-            style={{ width: "1.2rem", marginBottom: "0.6rem" }}
-          />
-          <span style={{ fontSize: "1.2rem" }}>
+          <img src={icon_warning} className={styles.couponNoItemImage} />
+          <span className={styles.couponTitleName}>
             고객님이 보유하신 쿠폰이 없습니다
           </span>
 
