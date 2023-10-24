@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState, useEffect } from "react";
 
 import styles from "../page_css/Payment.module.css";
@@ -7,6 +8,7 @@ import CopuonApply from "./CopuonApply";
 interface PaymentProps {
   setOpenPayment: React.Dispatch<React.SetStateAction<boolean>>;
   cartInfo: CartData[];
+  setReRender: React.Dispatch<React.SetStateAction<number>>;
 }
 
 export interface ItemData {
@@ -24,7 +26,7 @@ export interface Coupon {
   memberId: string;
 }
 
-export default function Payment({ setOpenPayment, cartInfo }: PaymentProps) {
+export default function Payment({ setOpenPayment, cartInfo, setReRender }: PaymentProps) {
   const [itemData, setItemData] = useState<ItemData[]>();
   const [totalPriceAf, setTotalPriceAf] = useState<number>();
   const [appliedCoupon, setAppliedCoupon] = useState<Coupon>({

@@ -41,7 +41,6 @@ button {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-  color: #333333; /* font-color 수정 */
   background-color: #ffffff;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -93,6 +92,7 @@ button {
   font-family: inherit;
   background-color: #f9bb00;
   cursor: pointer;
+  color: #333333;
 }
 
 /* 수정 color: #333333;

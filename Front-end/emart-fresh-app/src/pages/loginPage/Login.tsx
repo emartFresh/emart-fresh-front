@@ -22,18 +22,7 @@ const Login = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const isLogin = IsLogin();
 
-  // 성공 알람 ( 초록색 창 )
-  const success = () => toast.success("Success!");
-  // 실패 알람 ( 빨간색 창 )
-  const error = () => toast.error("Error!");
-  // 경고 알람 ( 노란색 창 )
-  const warning = () => toast.warning("Warnning!");
-  // 정보 알람
-  const info = () => toast.info("Info...");
-
   const navigate = useNavigate();
-  // const REDIRECT_URL = "http://localhost:5173/login";
-  const REDIRECT_URL = "https://pick-fresh24.com/login";
   const { Kakao } = window;
 
   useEffect(() => {
@@ -53,8 +42,8 @@ const Login = () => {
           {
             grant_type: "authorization_code",
             client_id: "d19f32cfc8b52ff1cea52dd94e860f6b",
-            redirect_uri: REDIRECT_URL,
-            code: code,
+            redirect_uri: `${import.meta.env.VITE_KAKAOLOGIN_REDIRECTURL}`,
+            code: code, 
           },
           {
             headers: {
@@ -114,7 +103,7 @@ const Login = () => {
     /* 수정 : 이미 가입한 유저는 가입절차가 다름 -> 이메일/닉네임 허용할건지 안물어봐도됨 */
 
     Kakao.Auth.authorize({
-      redirectUri: REDIRECT_URL,
+      redirectUri: `${import.meta.env.VITE_KAKAOLOGIN_REDIRECTURL}`,
       scope: "account_email,profile_nickname",
     });
   };
