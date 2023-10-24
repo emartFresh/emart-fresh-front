@@ -57,10 +57,10 @@ export default function EventUpdate() {
 
       if (name === "eventBannerImage") {
         setBannerImagePreview(webpfile + "");
-        console.log("첫번째 배너", webpfile);
+        // console.log("첫번째 배너", webpfile);
       } else if (name === "eventDetailImage") {
         setDetailImagePreview(webpfile + "");
-        console.log("두번째 디테일", webpfile);
+        // console.log("두번째 디테일", webpfile);
       }
     } else {
       setFormData((formData) => ({

@@ -27,7 +27,7 @@ export default function CommonModalBasicEmail({
   return (
     <div>
       <button className={styles.emailChangeBtn} onClick={openModal}>
-        수정
+        변경
       </button>
       <CommonModal isOpen={isModalOpen} onClose={closeModal}>
         <ModifyEmail
