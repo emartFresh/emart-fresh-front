@@ -83,10 +83,10 @@
   padding: 1rem;
 }
 
-.couponContent > .couponTitle,
+/* .couponContent > .couponTitle,
 div {
   text-align: center;
-}
+} */
 
 .couponDownloadBtn {
   width: 100%;
@@ -131,7 +131,8 @@ div {
 }
 
 @media screen and (max-width: 1400px) {
-  .coupon, .unableCoupon{
+  .coupon,
+  .unableCoupon {
     width: 280px;
   }
   .paginationWrap {
@@ -140,13 +141,14 @@ div {
 }
 
 @media screen and (max-width: 1206px) {
-  .paginationWrap{
+  .paginationWrap {
     width: 580px;
   }
 }
 
 @media screen and (max-width: 805px) {
-  .coupon, .unableCoupon{
+  .coupon,
+  .unableCoupon {
     width: 250px;
     height: 150px;
   }
@@ -156,20 +158,22 @@ div {
 }
 
 @media screen and (max-width: 750px) {
-  .couponHeader > svg{
+  .couponHeader > svg {
     width: 40px;
   }
-  .couponHeader > h3{
+  .couponHeader > h3 {
     font-size: 24px;
   }
-  .coupon, .unableCoupon{
+  .coupon,
+  .unableCoupon {
     width: 200px;
     height: 130px;
   }
   .couponContent {
     font-size: 0.8rem;
   }
-  .couponDownloadBtn, .unableDownBtn{
+  .couponDownloadBtn,
+  .unableDownBtn {
     font-size: 0.8rem;
   }
   .paginationWrap {
@@ -178,35 +182,36 @@ div {
 }
 
 @media screen and (max-width: 582px) {
-  .couponContainer{
+  .couponContainer {
     align-content: center;
   }
-  .couponHeader{
+  .couponHeader {
     display: flex;
     align-items: center;
     justify-content: center;
     margin-bottom: 1rem;
   }
-  .couponHeader > svg{
+  .couponHeader > svg {
     width: 36px;
     margin: 0 1rem 0 0;
   }
-  .couponHeader > h3{
+  .couponHeader > h3 {
     font-size: 20px;
     margin: 0;
   }
-  .couponContainer{
+  .couponContainer {
     display: flex;
     flex-direction: row;
     align-items: center;
-    margin: 5rem 0; 
+    margin: 5rem 0;
   }
-  .coupon, .unableCoupon{
+  .coupon,
+  .unableCoupon {
     width: 190px;
     height: 120px;
     margin: 0;
   }
-  .couponHeader{
+  .couponHeader {
     width: 100%;
   }
   .paginationWrap {
@@ -214,29 +219,30 @@ div {
   }
 }
 
-  @media screen and (max-width: 528px) {
-    .couponWrap{
-      height: 300px;
-      overflow: scroll;
-      justify-content: center;
-      border: 0.8px solid #eeeeee;
-      border-radius: 0.5rem;
-      background-color: #fcfcfc;
-    }
-    .couponWrap::-webkit-scrollbar {
-      width: 8px;
-      display: flex;
-    }
-    
-    .couponWrap::-webkit-scrollbar-thumb {
-      background: #f9bb00;
-      border-radius: 0.4rem;
-    }
-    .coupon, .unableCoupon{
-      width: 230px;
-      margin: 0 0 0.3rem 0 ;
-    }
-    .paginationWrap {
-      width: 100%;
-    }
+@media screen and (max-width: 528px) {
+  .couponWrap {
+    height: 300px;
+    overflow: scroll;
+    justify-content: center;
+    border: 0.8px solid #eeeeee;
+    border-radius: 0.5rem;
+    background-color: #fcfcfc;
+  }
+  .couponWrap::-webkit-scrollbar {
+    width: 8px;
+    display: flex;
+  }
+
+  .couponWrap::-webkit-scrollbar-thumb {
+    background: #f9bb00;
+    border-radius: 0.4rem;
+  }
+  .coupon,
+  .unableCoupon {
+    width: 230px;
+    margin: 0 0 0.3rem 0;
+  }
+  .paginationWrap {
+    width: 100%;
+  }
 }
