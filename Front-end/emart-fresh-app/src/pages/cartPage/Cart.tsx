@@ -26,6 +26,7 @@ const Cart = () => {
   const [cartCount, setCartCount] = useRecoilState<number>(cartItemCount);
   const [cartItemList, setCartItemList] = useState<CartData[]>([]);
   const [selectedItems, setSelectedItems] = useState([]);
+  const [reRender, setReRender] = useState<number>(0);
   const [paymentItems, setPaymentItems] = useState<CartData[]>([]);
   const [openPayment, setOpenPayment] = useState<boolean>(false);
   const [initCartItemList, setInitCartItemList] = useState<CartData[]>([]);
@@ -96,7 +97,7 @@ const Cart = () => {
 
       window.removeEventListener("scroll", () => {});
     };
-  }, []);
+  }, [reRender]);
 
   useEffect(() => {
     updateListRef.current = handleUpdateItemList();
@@ -421,6 +422,7 @@ const Cart = () => {
         {openPayment && (
           <Payment
             setOpenPayment={setOpenPayment}
+            setReRender={setReRender}
             cartInfo={
               (payItemsInfo = selectedItems.map((selectedItemId) => {
                 const payItemInfo = cartItemList.find(
