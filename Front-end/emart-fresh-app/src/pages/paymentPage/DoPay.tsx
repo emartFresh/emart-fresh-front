@@ -101,8 +101,7 @@ export default function Dopay({
       setLoginToken,
       orderedProductProducts
     ).then((res) => {
-      alert("장바구니 깎기!!");
-      //수정 setter
+      setReRender((pre) => pre + 1);
     });
   };
 
@@ -171,7 +170,6 @@ export default function Dopay({
       }
       setOpenPayment(false);
       toast.success("결제되었습니다 👏🏻");
-      setReRender((pre) => pre + 1);
       // console.log("부트 페이 응답 ", res);
     });
   };

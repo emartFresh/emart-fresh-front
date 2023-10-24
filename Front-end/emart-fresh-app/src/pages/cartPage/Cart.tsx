@@ -8,7 +8,13 @@ import { cartItemCount, loginState } from "../../atoms";
 import { Checkbox } from "@mui/material";
 import { sendAxiosRequest } from "../../utils/userUtils";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleMinus, faMinus, faMinusCircle, faPlus, faXmark } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCircleMinus,
+  faMinus,
+  faMinusCircle,
+  faPlus,
+  faXmark,
+} from "@fortawesome/free-solid-svg-icons";
 import cartNull from "../../assets/images/cartNull.png";
 import cartCalcNull from "../../assets/images/cartCalcNull.png";
 import Payment from "../paymentPage/Payment";
@@ -30,7 +36,9 @@ const Cart = () => {
   const [paymentItems, setPaymentItems] = useState<CartData[]>([]);
   const [openPayment, setOpenPayment] = useState<boolean>(false);
   const [initCartItemList, setInitCartItemList] = useState<CartData[]>([]);
-  const [updateCartItemList, setUpdateCartItemList] = useState<Array<object>>([]);
+  const [updateCartItemList, setUpdateCartItemList] = useState<Array<object>>(
+    []
+  );
   const navigate = useNavigate();
   const isLogined = useIsLogin();
 
@@ -39,11 +47,10 @@ const Cart = () => {
   let totalPrice = 0;
   let payItemsInfo: CartData[] = [];
 
-
   //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
   useEffect(() => {
-    if(isLogined){
+    if (isLogined) {
       sendAxiosRequest(
         "/cart/getCartInfo",
         "get",
@@ -51,18 +58,26 @@ const Cart = () => {
         setLoginToken,
         setCartCount
       )
-      .then((response) => {
-        console.log("response > ", response);
-        const res: CartData[] = JSON.parse(JSON.stringify(response));
-        setCartItemList(res?.map(item => {
-          return {...item, cartProductQuantityOfString: item.cartProductQuantity.toString()}
-        }));
-        setInitCartItemList(res);
-        setCartCount(res.length);
-      })
-      .catch(console.error);
+        .then((response) => {
+          console.log("response > ", response);
+          const res: CartData[] = JSON.parse(JSON.stringify(response));
+          setCartItemList(
+            res?.map((item) => {
+              return {
+                ...item,
+                cartProductQuantityOfString:
+                  item.cartProductQuantity.toString(),
+              };
+            })
+          );
+          setInitCartItemList(res);
+          setCartCount(res.length);
+        })
+        .catch(console.error);
     }
 
+    //수정
+    setSelectedItems([]);
     window.addEventListener("scroll", () => {
       const cartCalculate = document.querySelector(
         ".cartCalculate"
@@ -83,8 +98,8 @@ const Cart = () => {
       }
     });
     return () => {
-      console.log("cart unmount ac >>> ",loginTokenRef.current);
-        sendAxiosRequest(
+      console.log("cart unmount ac >>> ", loginTokenRef.current);
+      sendAxiosRequest(
         "/cart/updateCartProductQuantity",
         "post",
         loginTokenRef.current,
@@ -105,7 +120,7 @@ const Cart = () => {
 
   useEffect(() => {
     loginTokenRef.current = loginToken;
-  }, [loginToken.refreshToken])
+  }, [loginToken.refreshToken]);
 
   //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -116,12 +131,19 @@ const Cart = () => {
           const initItem = initCartItemList.find(
             (item) => item.cartProductId === cart.cartProductId
           );
-          return initItem.cartProductQuantity !== parseInt(cart.cartProductQuantityOfString);
+          return (
+            initItem.cartProductQuantity !==
+            parseInt(cart.cartProductQuantityOfString)
+          );
         })
         ?.map((updateItem) => {
           return {
             cartProductId: updateItem.cartProductId,
-            cartProductQuantity: updateItem.cartProductQuantityOfString === "" || updateItem.cartProductQuantityOfString === null ? 1 : parseInt(updateItem.cartProductQuantityOfString),
+            cartProductQuantity:
+              updateItem.cartProductQuantityOfString === "" ||
+              updateItem.cartProductQuantityOfString === null
+                ? 1
+                : parseInt(updateItem.cartProductQuantityOfString),
           };
         });
   };
@@ -134,12 +156,13 @@ const Cart = () => {
     setCartItemList(
       cartItemList.map((item) => {
         if (item.cartProductId === cartProductId) {
-          const minusQuantity = item.cartProductQuantity <= 1 ? 1 : item.cartProductQuantity - 1;
+          const minusQuantity =
+            item.cartProductQuantity <= 1 ? 1 : item.cartProductQuantity - 1;
 
           return {
             ...item,
             cartProductQuantityOfString: minusQuantity.toString(),
-            cartProductQuantity: minusQuantity
+            cartProductQuantity: minusQuantity,
           };
         } else {
           return item;
@@ -155,19 +178,20 @@ const Cart = () => {
     setCartItemList(
       cartItemList.map((item) => {
         if (item.cartProductId === cartProductId) {
-          const plusQuantity = item.cartProductQuantity < 99 ? item.cartProductQuantity + 1 : 99;
+          const plusQuantity =
+            item.cartProductQuantity < 99 ? item.cartProductQuantity + 1 : 99;
 
           return {
             ...item,
             cartProductQuantityOfString: plusQuantity.toString(),
-            cartProductQuantity: plusQuantity
+            cartProductQuantity: plusQuantity,
           };
         } else {
           return item;
         }
       })
     );
-  }
+  };
 
   //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -177,13 +201,17 @@ const Cart = () => {
         if (item.cartProductId === cartProductId) {
           const newValue = value;
           const isValidInput = /^[1-9]\d*$/.test(newValue);
-  
+
           if (newValue.length === 0) {
-            return { ...item, cartProductQuantityOfString: "",};
+            return { ...item, cartProductQuantityOfString: "" };
           }
-  
+
           if (isValidInput) {
-            return { ...item, cartProductQuantityOfString: value, cartProductQuantity: parseInt(value)};
+            return {
+              ...item,
+              cartProductQuantityOfString: value,
+              cartProductQuantity: parseInt(value),
+            };
           }
         }
         return item;
@@ -196,7 +224,11 @@ const Cart = () => {
       setCartItemList((prevCartItemList) => {
         return prevCartItemList.map((item) => {
           if (item.cartProductId === cartProductId) {
-            return { ...item, cartProductQuantityOfString: "1", cartProductQuantity: 1 };
+            return {
+              ...item,
+              cartProductQuantityOfString: "1",
+              cartProductQuantity: 1,
+            };
           }
           return item;
         });
@@ -260,16 +292,14 @@ const Cart = () => {
         setCartItemList((prevList) =>
           prevList.filter((item) => item.cartProductId !== cartProductId)
         );
-        setCartCount(cartCount - 1);  
+        setCartCount(cartCount - 1);
       })
-      .catch(() => toast.error('장바구니 상품 삭제를 실패했습니다.'));
+      .catch(() => toast.error("장바구니 상품 삭제를 실패했습니다."));
   };
 
   //%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
   console.log(cartItemList[0]?.storeName);
-
-
 
   return (
     <div>
@@ -323,16 +353,24 @@ const Cart = () => {
                       handleDeleteItem(item.cartProductId);
                     }}
                   />
-                  <img src={item.productImgUrl} alt="product Image" className={styles.productImage} />
-                  <p className={styles.productTitle}>{getTruncateString(item.productTitle, 35)}</p>
+                  <img
+                    src={item.productImgUrl}
+                    alt="product Image"
+                    className={styles.productImage}
+                  />
+                  <p className={styles.productTitle}>
+                    {getTruncateString(item.productTitle, 35)}
+                  </p>
                   <p className={styles.productPrice}>{item.priceNumber}원</p>
                   <p className={styles.quantityControl}>
-                      <FontAwesomeIcon 
-                        icon={faMinus}
-                        id="minusQuantity" 
-                        onClick={(e) => handleMinusQuantity(e, item.cartProductId)}
-                        className={styles.quantityBtn}
-                      />
+                    <FontAwesomeIcon
+                      icon={faMinus}
+                      id="minusQuantity"
+                      onClick={(e) =>
+                        handleMinusQuantity(e, item.cartProductId)
+                      }
+                      className={styles.quantityBtn}
+                    />
                     <input
                       type="text"
                       value={item.cartProductQuantityOfString}
@@ -340,15 +378,15 @@ const Cart = () => {
                       onChange={(e) =>
                         handleInputQuantity(e.target.value, item.cartProductId)
                       }
-                      onBlur={
-                        (e) => handleEmptyInput(e.target.value, item.cartProductId)
+                      onBlur={(e) =>
+                        handleEmptyInput(e.target.value, item.cartProductId)
                       }
                       minLength={1}
                       maxLength={2}
                       step="1"
                       pattern="[1-9]\d*"
                     />
-                    <FontAwesomeIcon 
+                    <FontAwesomeIcon
                       icon={faPlus}
                       id="plusQuantity"
                       className={styles.quantityBtn}
@@ -383,11 +421,12 @@ const Cart = () => {
                 const selectedItem = cartItemList.find(
                   (item) => item.cartProductId === selectedItemId
                 );
-                if(selectedItem.cartProductQuantityOfString === ''){
+                if (selectedItem.cartProductQuantityOfString === "") {
                   totalPrice === 0;
-                }else{
+                } else {
                   totalPrice +=
-                    selectedItem.priceNumber * parseInt(selectedItem.cartProductQuantityOfString);
+                    selectedItem.priceNumber *
+                    parseInt(selectedItem.cartProductQuantityOfString);
                 }
                 return (
                   <li key={selectedItemId} className={styles.payItemList}>
@@ -402,7 +441,6 @@ const Cart = () => {
                       }
                     />
                   </li>
-
                 );
               })}
             </ul>
