@@ -70,8 +70,9 @@ export default function EventEnded() {
               />
             </div>
             <div className={styles.eventText}>
-              {new Date(eventlist.eventStartDate).toLocaleDateString()} ~&nbsp;
-              {new Date(eventlist.eventEndDate).toLocaleDateString()}
+              {new Date(eventlist.eventStartDate).toISOString().split("T")[0]}{" "}
+              ~&nbsp;
+              {new Date(eventlist.eventEndDate).toISOString().split("T")[0]}
             </div>
             <div className={styles.eventText}>{eventlist.eventTitle}</div>
           </Link>
