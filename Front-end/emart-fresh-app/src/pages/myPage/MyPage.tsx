@@ -40,25 +40,23 @@ export default function MyPage() {
 
   return (
     <div className={styles.mypageMain}>
-      <div className={styles.container}>
-        <div className={styles.myinfo}>
-          <div className={styles.myTitleId}>아이디</div>
-          <div className={styles.myTitleIdValue}>{allMember.memberId}</div>
-          <div className={styles.myTitleName}>이름</div>
-          <div className={styles.myTitleNameValue}>{allMember.memberName}</div>
-          <div className={styles.myTitleEmail}>이메일</div>
-          <div className={styles.myTitleEmailValue}>
-            {allMember.memberEmail}&nbsp;&nbsp;&nbsp;
-            <div>
-              <CommonModalBasicEmail
-                ischange={ischange}
-                setIsChange={setIsChange}
-              />
-            </div>
+      <div className={styles.myinfo}>
+        <div className={styles.myTitleId}>아이디</div>
+        <div className={styles.myTitleIdValue}>{allMember.memberId}</div>
+        <div className={styles.myTitleName}>이름</div>
+        <div className={styles.myTitleNameValue}>{allMember.memberName}</div>
+        <div className={styles.myTitleEmail}>이메일</div>
+        <div className={styles.myTitleEmailValue}>
+          {allMember.memberEmail}&nbsp;&nbsp;&nbsp;
+          <div>
+            <CommonModalBasicEmail
+              ischange={ischange}
+              setIsChange={setIsChange}
+            />
           </div>
-          <div className={styles.editPassword}>
-            <CommonModalBasic />
-          </div>
+        </div>
+        <div className={styles.editPassword}>
+          <CommonModalBasic />
         </div>
       </div>
     </div>

@@ -166,3 +166,33 @@
   border-radius: 0.5em;
   color: gray;
 }
+@media screen and (max-width: 740px) {
+  .orderMain {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    margin-bottom: 30px;
+    min-width: 530px;
+    margin: 1rem;
+  }
+  .orderContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    margin: 1rem;
+    padding: 8px;
+    border-radius: 1rem;
+    border: 3px solid transparent;
+    box-shadow: 2px 2px 5px 2px rgba(0, 0, 0, 0.2);
+  }
+  .reviewTitleName {
+    font-size: 15px;
+  }
+  .reviewContainer {
+    min-width: 390px;
+  }
+}

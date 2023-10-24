@@ -5,11 +5,7 @@ import styles from "../page_css/MyPage.module.css";
 import Administrator from "./Administrator";
 import StoreManager from "./StoreManager";
 import OrdinaryUser from "./OrdinaryUser";
-import {
-  GetUserAllInfo,
-  GetUserAuth,
-  SendLoginPageIfNotLogin,
-} from "../../utils/LoginUtils";
+import { GetUserAuth, SendLoginPageIfNotLogin } from "../../utils/LoginUtils";
 import { loginState } from "../../atoms";
 import { useRecoilState } from "recoil";
 import { sendAxiosGetRequest } from "../../utils/userUtils";
@@ -33,7 +29,6 @@ const MyPageMenuBar = () => {
         );
         setMemberData(response.data);
       } catch (error) {
-        console.error("Error fetching mypageMenuBar:", error);
         toast.error("오류가 발생했습니다.");
       }
     };
