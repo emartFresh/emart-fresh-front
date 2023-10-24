@@ -127,7 +127,6 @@ export default function ProductDetail() {
       requestQuantity: quantity,
     };
 
-    console.log("데이터22", data);
     const url = `${import.meta.env.VITE_BACK_PORT}/cart/changeCart/yes`;
 
     sendAxiosPostRequest(url, loginToken, setLoginToken, data).then((res) => {
