@@ -66,7 +66,11 @@ export default function ApplyForm({
                 className={styles.certifImg}
                 src={applyData?.certifImgUrl}
                 alt=""
-                onClick={() => window.open(applyData?.certifImgUrl)}
+                onClick={() => {
+                  if (applyData?.certifImgUrl) {
+                    window.open(applyData?.certifImgUrl);
+                  }
+                }}
               />
             </td>
           </tr>

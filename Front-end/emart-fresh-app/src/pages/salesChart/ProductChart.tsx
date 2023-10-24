@@ -49,7 +49,9 @@ const ProductChart = ({date, period}: ProductChartProps) => {
     
 
   const options = {
-    colors: ['#424242', '#616161', '#757575', '#9E9E9E', '#BDBDBD', '#E0E0E0'],
+    colors: ['#b2d3e1','#f7c7b9','#e64242d2','#e7cebf','#f7c45f','#475b77','#cfd4d5'],
+    // colors: ['#','#','#','#','#','#','#']
+    // colors: ['rgb()','rgb()','rgb()','rgb()','rgb()','rgb()','rgb()',],
     // colors: ['#5566c6', '#5C6BC0', '#7986CB', '#9FA8DA', '#C5CAE9', '#E8EAF6'],
     chart: {
       plotBackgroundColor: null,
@@ -80,23 +82,27 @@ const ProductChart = ({date, period}: ProductChartProps) => {
       // data: ProductChartData,
       data: [
         {
-        y: 1,
+        y: 7,
         name: "11",
       },
       {
-        y: 1,
+        y: 6,
         name: "11",
       },
       {
-        y: 1,
+        y: 5,
         name: "11",
       },
       {
-        y: 1,
+        y: 4,
         name: "11",
       },
       {
-        y: 1,
+        y: 3,
+        name: "11",
+      },
+      {
+        y: 2,
         name: "11",
       },
       {

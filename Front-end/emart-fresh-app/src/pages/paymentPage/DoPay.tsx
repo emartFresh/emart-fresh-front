@@ -28,6 +28,7 @@ interface DopayProp {
   totalPriceAf: number;
   appliedCoupon: Coupon;
   setOpenPayment: React.Dispatch<React.SetStateAction<boolean>>;
+  setReRender: React.Dispatch<React.SetStateAction<number>>;
 }
 
 export default function Dopay({
@@ -35,13 +36,13 @@ export default function Dopay({
   totalPriceAf,
   appliedCoupon,
   setOpenPayment,
+  setReRender,
 }: DopayProp) {
   const [loginToken, setLoginToken] = useRecoilState<JwtToken>(loginState);
   const [myCartStoreId, setMyCartStoreId] = useState<number>();
 
   const memberInfo: MemberInfo = GetUserAllInfo();
 
-  console.log("내가 넣을 데이터", itemData);
   useEffect(() => {
     const storeUrl = `${import.meta.env.VITE_BACK_PORT}/cart/myCartStoreId`;
 
@@ -55,12 +56,9 @@ export default function Dopay({
     sendAxiosPostRequest(url, loginToken, setLoginToken, {
       couponId: appliedCoupon.couponId,
     }).then((res) => {
-      console.log("쿠폰 사용하였슴", res);
+      // console.log("쿠폰 사용하였슴", res);
     });
   };
-
-  console.log("가게 아이디22222", myCartStoreId);
-  //수정 : 로직 고민...
 
   const preProcesse = async () => {
     const orderedProductProducts: OrderProductNameQqt[] = itemData?.map(
@@ -72,7 +70,7 @@ export default function Dopay({
       }
     );
 
-    //가게 재고 깎기
+    //매장 재고 깎기
     const url = `${import.meta.env.VITE_BACK_PORT}/cart/decreaseStoreProduct`;
     sendAxiosPostRequest(
       url,
@@ -173,7 +171,8 @@ export default function Dopay({
       }
       setOpenPayment(false);
       toast.success("결제되었습니다 👏🏻");
-      console.log("부트 페이 응답 ", res);
+      setReRender((pre) => pre + 1);
+      // console.log("부트 페이 응답 ", res);
     });
   };
 
@@ -182,9 +181,9 @@ export default function Dopay({
       <button className={styles.doPayBtn} onClick={preProcesse}>
         결제하기
       </button>
-      <button onClick={saveToOrderList}>결제하기2</button>
-      <button onClick={deleteMyCoupon}>쿠폰 깎기</button>
-      <button onClick={decreaseMyCart}>장바구니 깎기</button>
+      {/* <button onClick={saveToOrderList}>결제처리(시험)</button>
+      <button onClick={deleteMyCoupon}>쿠폰 깎기(시험)</button>
+      <button onClick={decreaseMyCart}>장바구니 깎기(시험)</button> */}
     </div>
   );
 }

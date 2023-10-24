@@ -4,6 +4,7 @@ import SearchingSection from "./component/SearchingSection";
 import SearchingSelection from "./component/SearchingSelection";
 import StoreListSideBar from "./component/StoreListSideBar";
 import styles from "../page_css/ShowAllProduct.module.css";
+import ToTopBtn from "../../components/ToTopBtn";
 
 //수정 : 무한 스크롤 적용(오프셋 리미트 0 30이 디폴트)
 interface ProductFilterData {
@@ -62,7 +63,7 @@ export default function ShowAllProduct() {
         <h1 className={styles.aboveTitle}>전체 상품</h1>
         <p className={styles.aboveP}>
           fresh가 취급하는 물품들을 만나보세요. <br></br> 상품을 클릭하면 해당
-          상품이 있는 근처 가게를 볼 수 있습니다.
+          상품이 있는 근처 매장를 볼 수 있습니다.
         </p>
 
         <StoreListSideBar
@@ -90,6 +91,7 @@ export default function ShowAllProduct() {
         </div>
         <div className={styles.infTrigger} ref={triggerRef}></div>
       </div>
+      <ToTopBtn />
     </div>
   );
 }

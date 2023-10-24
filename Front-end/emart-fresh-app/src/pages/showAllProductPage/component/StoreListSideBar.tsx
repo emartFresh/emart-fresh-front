@@ -81,7 +81,7 @@ export default function StoreListSideBar({
         .then((res) => {
           console.log("넘겨받은 데이터", res);
           if (res.data?.length === 0) {
-            toast.error("해당하는 가게가 없습니다.", {
+            toast.error("해당하는 매장가 없습니다.", {
               position: "top-center",
               autoClose: 1000,
             });
@@ -125,7 +125,12 @@ export default function StoreListSideBar({
                         handleItemDelete(e);
                       }}
                     >
-                      <FontAwesomeIcon icon={faXmark} />
+                      <FontAwesomeIcon
+                        icon={faXmark}
+                        onClick={(e) => {
+                          handleItemDelete(e);
+                        }}
+                      />
                     </button>
                   </span>
                 );
@@ -158,7 +163,7 @@ export default function StoreListSideBar({
     </div>
   ) : (
     <div className={styles.sidebarContainerClosed}>
-      <Tooltip title="선택한 상품이 있는 가게를 보여줍니다." arrow>
+      <Tooltip title="선택한 상품이 있는 매장를 보여줍니다." arrow>
         <button className={styles.defaultBtn} onClick={handleXClick}>
           매장찾기
         </button>
