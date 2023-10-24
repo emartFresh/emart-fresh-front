@@ -34,7 +34,11 @@ export default function PopularItem({
   } else if (selectedProductOption === 2) {
     showingData = topOrderedProducts?.data?.map((ele: OrderedCount, inx) => {
       return (
-        <div key={inx} className={styles.productItemWrapper}>
+        <div
+          key={inx}
+          className={styles.productItemWrapper}
+          onClick={() => handleSelectProduct(ele.productTitle)}
+        >
           <div className={styles.productTitle}>{ele.productTitle}</div>
           {/* <div className={styles.productOrderCount}>
             총 주문 횟수 {ele.orderedCount}

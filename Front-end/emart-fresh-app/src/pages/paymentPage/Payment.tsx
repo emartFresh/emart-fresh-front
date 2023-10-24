@@ -26,7 +26,11 @@ export interface Coupon {
   memberId: string;
 }
 
-export default function Payment({ setOpenPayment, cartInfo, setReRender }: PaymentProps) {
+export default function Payment({
+  setOpenPayment,
+  cartInfo,
+  setReRender,
+}: PaymentProps) {
   const [itemData, setItemData] = useState<ItemData[]>();
   const [totalPriceAf, setTotalPriceAf] = useState<number>();
   const [appliedCoupon, setAppliedCoupon] = useState<Coupon>({
@@ -38,7 +42,6 @@ export default function Payment({ setOpenPayment, cartInfo, setReRender }: Payme
   });
 
   useEffect(() => {
-    console.log("인포", cartInfo);
     let totalPrice = 0;
     const items =
       cartInfo &&
@@ -54,7 +57,6 @@ export default function Payment({ setOpenPayment, cartInfo, setReRender }: Payme
           price: item.priceNumber * (1 - appliedCoupon.couponType / 100),
         };
       });
-    console.log("최종값", totalPrice);
 
     setItemData(items);
     setTotalPriceAf(totalPrice);
@@ -95,6 +97,7 @@ export default function Payment({ setOpenPayment, cartInfo, setReRender }: Payme
         totalPriceAf={totalPriceAf}
         appliedCoupon={appliedCoupon}
         setOpenPayment={setOpenPayment}
+        setReRender={setReRender}
       />
     </div>
   );

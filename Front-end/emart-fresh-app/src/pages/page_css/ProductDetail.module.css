@@ -14,6 +14,7 @@
 }
 
 .contentSection {
+  text-align: left;
   width: 30em;
   padding: 1em;
 }
@@ -36,11 +37,13 @@
 }
 
 .productTitle {
+  text-align: left;
   color: #4b4b4b;
   font-size: 1.5rem;
 }
 
 .productPrice {
+  text-align: left;
   color: #cb1400;
   font-weight: 500;
   font-size: 1.5rem;
