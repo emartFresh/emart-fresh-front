@@ -70,7 +70,7 @@ export default function Dopay({
       }
     );
 
-    //가게 재고 깎기
+    //매장 재고 깎기
     const url = `${import.meta.env.VITE_BACK_PORT}/cart/decreaseStoreProduct`;
     sendAxiosPostRequest(
       url,

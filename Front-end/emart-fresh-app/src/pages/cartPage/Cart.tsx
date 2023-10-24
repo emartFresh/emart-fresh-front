@@ -256,6 +256,7 @@ const Cart = () => {
       setCartCount
     )
       .then((res) => {
+        toast.success('상품을 장바구니에서 삭제했습니다.');
         setCartItemList((prevList) =>
           prevList.filter((item) => item.cartProductId !== cartProductId)
         );

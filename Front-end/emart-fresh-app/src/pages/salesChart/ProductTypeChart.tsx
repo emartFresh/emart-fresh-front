@@ -57,7 +57,8 @@ const ProductTypeChart = ({date, period}: TypeChartProps) => {
 
 
   const options = {
-    colors: ['#7483d8', '#5C6BC0', '#7986CB', '#9FA8DA', '#C5CAE9', '#dfd9ff'],
+    colors: ['#ffd25f', '#f7d9b8', '#f3c5bc','#fee3c9', '#edbbc6', '#ffdbd1', '#fff0cf'],
+    // colors: ['#ffae00', '#ffbb27', '#ffc64c', '#ffd16e', '#ffdf99', '#ffe7b3', '#fff0cf'],
     chart: {
       plotBackgroundColor: null,
       plotBorderWidth: null,
@@ -91,23 +92,27 @@ const ProductTypeChart = ({date, period}: TypeChartProps) => {
       // },
       data: [
         {
-        y: 1,
+        y: 5,
         name: "11",
       },
       {
-        y: 1,
+        y: 5,
         name: "11",
       },
       {
-        y: 1,
+        y: 4,
         name: "11",
       },
       {
-        y: 1,
+        y: 4,
         name: "11",
       },
       {
-        y: 1,
+        y: 3,
+        name: "11",
+      },
+      {
+        y: 2,
         name: "11",
       },
       {

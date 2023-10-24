@@ -53,7 +53,7 @@ declare global {
   interface OrderedProductData {
     memberId: string | MemberData; // 멤버 아이디 (외래 키)
     productId: number | ProductData; // 제품 아이디 (외래 키)
-    storeId: number | StoreData; // 가게 아이디 (외래 키)
+    storeId: number | StoreData; // 매장 아이디 (외래 키)
     orderedNumber: number; // 주문 번호
     orderedQuantity: number; // 수량
     isPickup: boolean; // 픽업 여부
@@ -78,7 +78,7 @@ declare global {
     priceNumber: number;
     productTitle: string;
     cartProductId: number; // 제품 아이디 (외래 키)
-    storeId?: number; // 가게 아이디 (외래 키)
+    storeId?: number; // 매장 아이디 (외래 키)
     storeName?: string;
     productTimeSale: number;
     productImgUrl: string;
@@ -87,7 +87,7 @@ declare global {
   // 발주 정보
   interface ManagerOrderData {
     productId: number | ProductData; // 제품 아이디 (외래 키)
-    storeId?: number | StoreData; // 가게 아이디 (외래 키)
+    storeId?: number | StoreData; // 매장 아이디 (외래 키)
     managerOrderNum?: number; // 발주 번호
     managerOrderStatus: boolean; // 상태 (false: 대기, true: 처리 완료)
     managerOrderQuantity: number; // 수량
@@ -96,7 +96,7 @@ declare global {
 
   interface ManagerOrderDataWithObj {
     product: ProductData; // 제품 아이디 (외래 키)
-    storeId?: StoreData; // 가게 아이디 (외래 키)
+    storeId?: StoreData; // 매장 아이디 (외래 키)
     managerOrderNum?: number; // 발주 번호
     managerOrderStatus: boolean; // 상태 (false: 대기, true: 처리 완료)
     managerOrderQuantity: number; // 수량
@@ -128,9 +128,9 @@ declare global {
     admin: boolean;
   }
 
-  // 가게 정보
+  // 매장 정보
   interface StoreData {
-    storeId?: number; // 가게 아이디
+    storeId?: number; // 매장 아이디
     memberId: number | MemberData; // 멤버 아이디
     address: string; // 주소
     storeAddress?: string;
@@ -139,12 +139,12 @@ declare global {
     storeLatitude?: number;
   }
 
-  // 가게 상품 정보
+  // 매장 상품 정보
   interface StoreProductData {
     productId: number | ProductData; // 제품 아이디 (외래 키)
-    storeId: number | StoreData; // 가게 아이디 (외래 키)
-    storeProductStock: number; // 가게 상품 재고
-    storeProductStatus: boolean; // 가게 상품 취급 분류 (true: 취급)
+    storeId: number | StoreData; // 매장 아이디 (외래 키)
+    storeProductStock: number; // 매장 상품 재고
+    storeProductStatus: boolean; // 매장 상품 취급 분류 (true: 취급)
   }
 
   // 검색 정보

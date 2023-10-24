@@ -194,7 +194,7 @@ export default function ProductDetail() {
         >
           <div className={styles.detailModalContainer}>
             <div className={styles.detailModalTitle}>
-              장바구니에는 같은 가게의 메뉴만 담을 수 있습니다.
+              장바구니에는 같은 매장의 메뉴만 담을 수 있습니다.
             </div>
             <div className={styles.oneLine}></div>
             <div className={styles.detailModalInfo}>
