@@ -125,7 +125,12 @@ export default function StoreListSideBar({
                         handleItemDelete(e);
                       }}
                     >
-                      <FontAwesomeIcon icon={faXmark} />
+                      <FontAwesomeIcon
+                        icon={faXmark}
+                        onClick={(e) => {
+                          handleItemDelete(e);
+                        }}
+                      />
                     </button>
                   </span>
                 );
