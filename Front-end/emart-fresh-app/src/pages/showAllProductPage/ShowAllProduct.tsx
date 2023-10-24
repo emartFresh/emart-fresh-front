@@ -4,6 +4,7 @@ import SearchingSection from "./component/SearchingSection";
 import SearchingSelection from "./component/SearchingSelection";
 import StoreListSideBar from "./component/StoreListSideBar";
 import styles from "../page_css/ShowAllProduct.module.css";
+import ToTopBtn from "../../components/ToTopBtn";
 
 //수정 : 무한 스크롤 적용(오프셋 리미트 0 30이 디폴트)
 interface ProductFilterData {
@@ -90,6 +91,7 @@ export default function ShowAllProduct() {
         </div>
         <div className={styles.infTrigger} ref={triggerRef}></div>
       </div>
+      <ToTopBtn />
     </div>
   );
 }
