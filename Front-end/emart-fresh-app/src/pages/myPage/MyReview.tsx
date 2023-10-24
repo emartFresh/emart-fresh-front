@@ -60,11 +60,11 @@ export default function MyReview() {
           console.log("Review Data:", ReviewData);
           setReviews(ReviewData);
         } else {
-          // alert("리뷰내역이 없습니다.");
+          // toast.success("리뷰내역이 없습니다.");
         }
       } catch (error) {
         console.error("Error fetching reviews:", error);
-        alert("리뷰 조회 중 오류가 발생했습니다.");
+        // toast.error("리뷰 조회 중 오류가 발생했습니다.");
       }
     }
 
@@ -97,7 +97,7 @@ export default function MyReview() {
       }
     } catch (error) {
       console.error("Error fetching reviews:", error);
-      toast.error("삭제 중 오류가 발생했습니다.");
+      // toast.error("삭제 중 오류가 발생했습니다.");
     }
   }
 

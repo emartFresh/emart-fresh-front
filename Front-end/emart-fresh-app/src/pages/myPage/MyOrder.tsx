@@ -90,11 +90,11 @@ export default function MyOrder() {
           console.log("Ordered Data:", OrderedData);
           setOrderedProducts(OrderedData);
         } else {
-          // alert("주문내역이 없습니다.");
+          // toast.success("주문내역이 없습니다.");
         }
       } catch (error) {
         console.error("Error fetching orders:", error);
-        toast.error("주문내역 조회 중 오류가 발생했습니다.");
+        // toast.error("주문내역 조회 중 오류가 발생했습니다.");
       }
     }
 

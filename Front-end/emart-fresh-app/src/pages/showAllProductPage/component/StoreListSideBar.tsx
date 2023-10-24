@@ -160,7 +160,7 @@ export default function StoreListSideBar({
     <div className={styles.sidebarContainerClosed}>
       <Tooltip title="선택한 상품이 있는 가게를 보여줍니다." arrow>
         <button className={styles.defaultBtn} onClick={handleXClick}>
-          가게찾기
+          매장찾기
         </button>
       </Tooltip>
 
