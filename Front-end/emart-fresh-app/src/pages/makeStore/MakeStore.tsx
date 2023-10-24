@@ -162,7 +162,7 @@ export default function MakeStore() {
       { memberId: memberId }
     )
       .then((res) => {
-        //가게 생성
+        //매장 생성
         axios
           .post(`${import.meta.env.VITE_BACK_PORT}/store/add-store`, {
             storeName: confirmedStore.place_name,
