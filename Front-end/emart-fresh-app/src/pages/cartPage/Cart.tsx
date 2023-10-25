@@ -20,7 +20,10 @@ import cartCalcNull from "../../assets/images/cartCalcNull.png";
 import Payment from "../paymentPage/Payment";
 import { useNavigate } from "react-router-dom";
 import { useIsLogin } from "../../utils/LoginUtils";
-import { getTruncateString } from "../../utils/formatUtils";
+import {
+  formatKoreanCurrency,
+  getTruncateString,
+} from "../../utils/formatUtils";
 import { toast } from "react-toastify";
 
 interface responseData {
@@ -288,7 +291,7 @@ const Cart = () => {
       setCartCount
     )
       .then((res) => {
-        toast.success('상품을 장바구니에서 삭제했습니다.');
+        toast.success("상품을 장바구니에서 삭제했습니다.");
         setCartItemList((prevList) =>
           prevList.filter((item) => item.cartProductId !== cartProductId)
         );
@@ -361,7 +364,10 @@ const Cart = () => {
                   <p className={styles.productTitle}>
                     {getTruncateString(item.productTitle, 35)}
                   </p>
-                  <p className={styles.productPrice}>{item.priceNumber}원</p>
+                  <p className={styles.productPrice}>
+                    {item.priceNumber && formatKoreanCurrency(item.priceNumber)}
+                    원
+                  </p>
                   <p className={styles.quantityControl}>
                     <FontAwesomeIcon
                       icon={faMinus}
@@ -431,7 +437,11 @@ const Cart = () => {
                 return (
                   <li key={selectedItemId} className={styles.payItemList}>
                     <p>{getTruncateString(selectedItem.productTitle, 12)}</p>
-                    <p>{selectedItem.priceNumber}원</p>
+                    <p>
+                      {selectedItem.priceNumber &&
+                        formatKoreanCurrency(selectedItem.priceNumber)}
+                      원
+                    </p>
                     <p>{selectedItem.cartProductQuantityOfString}개</p>
                     <FontAwesomeIcon
                       icon={faXmark}
@@ -446,7 +456,7 @@ const Cart = () => {
             </ul>
             <div className={styles.payInfoWrap}>
               <p className={styles.extendedPrice}>
-                결제 금액 : {totalPrice} 원
+                결제 금액 : {totalPrice && formatKoreanCurrency(totalPrice)} 원
               </p>
               <button
                 className={styles.payBtn}

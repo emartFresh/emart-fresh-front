@@ -16,3 +16,9 @@ export function getTruncateString(
   const truncatedString = inputString.slice(0, maxLength - 3); // 원하는 길이보다 3 작게 자름
   return truncatedString + "...";
 }
+
+export function formatKoreanCurrency(amount: number): string {
+  const formattedAmount = amount.toLocaleString("ko-KR");
+
+  return formattedAmount;
+}
