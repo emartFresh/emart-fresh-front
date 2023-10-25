@@ -168,7 +168,6 @@ export default function OrderRequest() {
           <div className={styles.gridFirstItem}>
             <span className={styles.itemTitle}>{product.productTitle}</span>
             <span style={{ marginLeft: "1em" }}>{product.priceString}</span>
-            <span style={{ marginLeft: "1em" }}></span>
           </div>
           <div className={styles.gridSecondItem}>
             <span className={styles.qqtTitle}>수량 </span>
