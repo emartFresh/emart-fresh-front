@@ -97,6 +97,7 @@ export default function SalesChart({date, period}: SalesChartProps) {
       {
         name: '매출액',
         data: seriesData,
+        //data: [331300, 82300, 481300,  97300, 64300, 44300, 741300]
       },
     ],
   };

@@ -49,10 +49,7 @@ const ProductChart = ({date, period}: ProductChartProps) => {
     
 
   const options = {
-    colors: ['#b2d3e1','#f7c7b9','#e64242d2','#e7cebf','#f7c45f','#475b77','#cfd4d5'],
-    // colors: ['#','#','#','#','#','#','#']
-    // colors: ['rgb()','rgb()','rgb()','rgb()','rgb()','rgb()','rgb()',],
-    // colors: ['#5566c6', '#5C6BC0', '#7986CB', '#9FA8DA', '#C5CAE9', '#E8EAF6'],
+    colors: ['#ffe7d8', '#ffcdb2','#ffb4a2','#e5989b','#b5838d','#6d6875','#dce4f3','#fbfbec'],
     chart: {
       plotBackgroundColor: null,
       plotBorderWidth: null,
@@ -79,37 +76,7 @@ const ProductChart = ({date, period}: ProductChartProps) => {
     series: [{
       name: 'Brands',
       colorByPoint: true,
-      // data: ProductChartData,
-      data: [
-        {
-        y: 7,
-        name: "11",
-      },
-      {
-        y: 6,
-        name: "11",
-      },
-      {
-        y: 5,
-        name: "11",
-      },
-      {
-        y: 4,
-        name: "11",
-      },
-      {
-        y: 3,
-        name: "11",
-      },
-      {
-        y: 2,
-        name: "11",
-      },
-      {
-        y: 1,
-        name: "11",
-      },
-    ]
+      data: ProductChartData,
     }]
   };
 

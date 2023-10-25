@@ -14,10 +14,6 @@
     grid-template-rows: 400px 400px; */
 }
 
-.test{
-    color: #fee3c9;
-}
-
 .selectDateContainer{
     text-align: center;
     margin: 0 auto;
@@ -74,7 +70,7 @@
 .weeklyExplanation, .monthlyExplanation, .yearlyExplanation{
     display: none;
     position: absolute;
-    right: 200px;
+    right: 10px;
     top: -2rem;
     /* right: 20%;
     top: -5%; */
@@ -87,7 +83,7 @@
 
 .monthlyExplanation{
     width: 20rem;
-    right: 200px;
+    right: 10px;
     top: -2rem;
 }
 
