@@ -50,15 +50,18 @@ export default function CopuonApply({
       return (
         <div key={item.couponId} className={styles.couponItemContainer}>
           <div>{item.couponTitle}</div>
-          <button
-            className={styles.couponSelectBtn}
-            onClick={() => {
-              setAppliedCoupon(item);
-              handleClose();
-            }}
-          >
-            선택
-          </button>
+          <div>
+            <span className={styles.couponType}>{item.couponType}%</span>
+            <button
+              className={styles.couponSelectBtn}
+              onClick={() => {
+                setAppliedCoupon(item);
+                handleClose();
+              }}
+            >
+              선택
+            </button>
+          </div>
         </div>
       );
     });
