@@ -8,7 +8,7 @@ import {
   SendLoginPageIfNotLogin,
   GetUserAllInfo,
 } from "../../utils/LoginUtils";
-
+import { useRecoilValue } from "recoil";
 import { useRecoilState } from "recoil";
 import { loginState } from "../../atoms";
 import { sendAxiosGetRequest } from "../../utils/userUtils";
@@ -19,8 +19,9 @@ export default function MyPage() {
   const [ischange, setIsChange] = useState<boolean>(false);
   const [loginToken, setLoginToken] = useRecoilState<JwtToken>(loginState);
   const allMember = GetUserAllInfo();
+  const loginToken1 = useRecoilValue(loginState);
   SendLoginPageIfNotLogin();
-  console.log("확인", GetUserAllInfo());
+  // console.log("확인", GetUserAllInfo());
 
   useEffect(() => {
     const response = sendAxiosGetRequest(
@@ -36,7 +37,7 @@ export default function MyPage() {
       .catch((error) => {
         console.log("Error", error);
       });
-  }, [memberEmail, ischange]);
+  }, [memberEmail, ischange, loginToken, setLoginToken]);
 
   return (
     <div className={styles.mypageMain}>

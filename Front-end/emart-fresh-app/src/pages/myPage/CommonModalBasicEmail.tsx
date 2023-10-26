@@ -23,7 +23,9 @@ export default function CommonModalBasicEmail({
   const closeModal = () => {
     setIsModalOpen(false);
   };
-
+  // const handleEmailChangeComplete = () => {
+  //   setIsChange(true);
+  // };
   return (
     <div>
       <button className={styles.emailChangeBtn} onClick={openModal}>

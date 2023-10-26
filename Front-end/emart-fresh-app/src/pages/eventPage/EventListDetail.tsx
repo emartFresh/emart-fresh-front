@@ -80,8 +80,17 @@ export default function EventListDetail() {
             </p>
           </div>
           <p className={styles.eventDetailDate}>
-            {new Date(onGoingEventList.eventStartDate).toLocaleDateString()}~
-            {new Date(onGoingEventList.eventEndDate).toLocaleDateString()}
+            {
+              new Date(onGoingEventList.eventStartDate)
+                .toISOString()
+                .split("T")[0]
+            }
+            ~
+            {
+              new Date(onGoingEventList.eventEndDate)
+                .toISOString()
+                .split("T")[0]
+            }
           </p>
         </div>
         <div>
