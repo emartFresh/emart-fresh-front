@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import styles from "../page_css/CommonModal.module.css";
 import ExpiryTime from "../signupPage/ExpiryTime";
@@ -101,6 +101,11 @@ const ModifyEmail: React.FC<ModifyEmailProps> = ({
 
   // 이메일 중복 여부 검사 후 인증번호 발송
   const checkEmailDuplication = async () => {
+    const emailCertLoading = toast.loading("회원정보를 확인중입니다.");
+    setTimeout(() => {
+      toast.dismiss(emailCertLoading);
+    }, 3000);
+
     const data = {
       newEmail: newEmail,
     };
@@ -145,7 +150,9 @@ const ModifyEmail: React.FC<ModifyEmailProps> = ({
         toast.success("이메일 변경이 완료되었습니다");
         handleMessageChange("email", "이메일변경이 완료되었습니다.");
         handleValidityChange("isEmailDuplicated", true);
+
         setIsChange(!ischange);
+        // setIsChange(true);
         onClose();
       })
       .catch((error) => {
