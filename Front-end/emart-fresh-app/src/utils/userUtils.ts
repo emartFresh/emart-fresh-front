@@ -2,7 +2,7 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
 import { toast } from "react-toastify";
 import { SetterOrUpdater } from "recoil";
-import { useIsLogin ,  IsLogin} from './LoginUtils';
+import { useIsLogin, IsLogin } from "./LoginUtils";
 
 export function getUserLocation(): Promise<{
   latitude: number;
@@ -221,20 +221,20 @@ export const sendAxiosRequest = async (
   httpMethod: string,
   loginToken: JwtToken,
   setLoginToken: SetterOrUpdater<JwtToken>,
-  setCartCount:SetterOrUpdater<number>,
+  setCartCount: SetterOrUpdater<number>,
   params?: Params | Array<object>,
   callStack: number = 0
-  ): Promise<any> => {
+): Promise<any> => {
   // ): Promise<responseData> => {
   if (callStack >= 10) {
     return { isError: true };
   }
 
-  const isLogined = loginToken.refreshToken !== ""
-  if(!isLogined){
+  const isLogined = loginToken.refreshToken !== "";
+  if (!isLogined) {
     return;
   }
-  
+
   const result = await axios({
     method: httpMethod,
     url: `${import.meta.env.VITE_BACK_PORT}${url}`,
@@ -249,40 +249,46 @@ export const sendAxiosRequest = async (
     .then((response) => response.data)
     .catch(async (error) => {
       console.error("ecatch error status>>> ", error.response?.status);
-      if (error.response?.status === 401) { 
+      if (error.response?.status === 401) {
         console.log("401error, refreshToken >>> " + loginToken.refreshToken);
         return await axios
-        .post(`${import.meta.env.VITE_BACK_PORT}/refreshToken/newAccessToken`, {
-          refreshToken: loginToken.refreshToken,
-        })
-        .then((response) => {
-          const newAccessToken = response.data.newAccessToken;
-          setLoginToken({
-            ...loginToken,
-            accessToken: newAccessToken,
-          });
-          return sendAxiosRequest(
-            url,
-            httpMethod,
-            { ...loginToken, accessToken: newAccessToken },
-            setLoginToken,
-            setCartCount,
-            params,
-            ++callStack
-          );
-        })
-        .catch((error) => { // refresh token 만료 status
-          if(error.response.data === "Refresh Token이 유효하지 않습니다."){
-            console.log("refresh error >>> " + error.response.data);
+          .post(
+            `${import.meta.env.VITE_BACK_PORT}/refreshToken/newAccessToken`,
+            {
+              refreshToken: loginToken.refreshToken,
+            }
+          )
+          .then((response) => {
+            const newAccessToken = response.data.newAccessToken;
             setLoginToken({
-              accessToken: "",
-              refreshToken: "",
+              ...loginToken,
+              accessToken: newAccessToken,
             });
-            setCartCount(0);
-            toast.error("로그인 유효시간이 만료되었습니다. 다시 로그인해주세요.");
-          }
-        });
-      }else{
+            return sendAxiosRequest(
+              url,
+              httpMethod,
+              { ...loginToken, accessToken: newAccessToken },
+              setLoginToken,
+              setCartCount,
+              params,
+              ++callStack
+            );
+          })
+          .catch((error) => {
+            // refresh token 만료 status
+            if (error.response.data === "Refresh Token이 유효하지 않습니다.") {
+              console.log("refresh error >>> " + error.response.data);
+              setLoginToken({
+                accessToken: "",
+                refreshToken: "",
+              });
+              setCartCount(0);
+              toast.error(
+                "로그인 유효시간이 만료되었습니다. 다시 로그인해주세요."
+              );
+            }
+          });
+      } else {
         throw error;
       }
     });

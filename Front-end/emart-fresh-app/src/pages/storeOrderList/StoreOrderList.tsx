@@ -5,6 +5,7 @@ import { GetUserAllInfo } from "../../utils/LoginUtils";
 
 import styles from "../page_css/StoreOrderList.module.css";
 import axios from "axios";
+import { formatCurrency } from "../../utils/formatUtils";
 
 interface Order {
   orderedProductId: number;
@@ -150,7 +151,9 @@ export default function StoreOrderList() {
                       {item.productName}
                     </span>
                   </div>
-                  <span className={styles.detailPrice}>{item.price}원</span>
+                  <span className={styles.detailPrice}>
+                    {item.price && formatCurrency(item.price)}원
+                  </span>
                 </div>
               );
             })}
@@ -196,7 +199,7 @@ export default function StoreOrderList() {
           </div>
           <div className={styles.totalAmountWrapper}>
             <span className={styles.totalAmount}>총 결제액</span>
-            {order.totalAmount}원
+            {formatCurrency(order.totalAmount)}원
           </div>
           <div>
             <button
