@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import Rating from "@mui/material/Rating";
 
 import styles from "../page_css/ProductDetail.module.css";
+import { convertDateToShortForm } from "../../utils/dateUtils";
 
 interface ProductReviewProps {
   productTitle: string;
@@ -36,7 +37,7 @@ export default function ProductReview({ productTitle }: ProductReviewProps) {
             value={review.reviewScore}
             readOnly
           />
-          <span>{String(review.reviewDate)}</span>
+          <span>{convertDateToShortForm(String(review.reviewDate))}</span>
         </div>
         <div className={styles.contentWrapper}>{review.reviewContent}</div>
       </div>

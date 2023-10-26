@@ -60,7 +60,9 @@ export default function ApplyForm({
             <td>{applyData && convertDateToShortForm(applyData?.applyDate)}</td>
           </tr>
           <tr>
-            <th>사업자 등록증</th>
+            <th>
+              사업자<br></br>등록증
+            </th>
             <td>
               <img
                 className={styles.certifImg}

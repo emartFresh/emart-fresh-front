@@ -119,6 +119,7 @@ const Login = () => {
             placeholder="아이디를 입력해주세요"
             className={styles.loginId}
             onChange={(e) => setMemberId(e.target.value)}
+            autoComplete='off'
           />
           <input
             type="password"

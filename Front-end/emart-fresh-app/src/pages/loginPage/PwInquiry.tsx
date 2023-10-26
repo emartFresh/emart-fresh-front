@@ -163,6 +163,7 @@ const PwInquiry = ({ setPwResetting, pwInquiryId, setPwInquiryId }: PwInquiryPro
                 placeholder="아이디를 입력해주세요"
                 maxLength={12}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPwInquiryId(e.target.value)}
+                autoComplete="off"
             />
             <InquiryInput
                 type="text"
@@ -170,6 +171,7 @@ const PwInquiry = ({ setPwResetting, pwInquiryId, setPwInquiryId }: PwInquiryPro
                 placeholder="이름을 입력해주세요"
                 maxLength={5}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleInputChange('inquiryName', e.target.value)}
+                autoComplete="off"
             />
             <EmailInquiryInput
                 type="text"
@@ -177,6 +179,7 @@ const PwInquiry = ({ setPwResetting, pwInquiryId, setPwInquiryId }: PwInquiryPro
                 placeholder="이메일을 입력해주세요"
                 maxLength={30}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleInputChange('inquiryEmail', e.target.value)}
+                autoComplete="off"
             />
             <CertificationBtn disabled={enableCodeSendBtn} onClick={() => findUserInfo()}>인증번호 전송</CertificationBtn>
 
@@ -186,6 +189,7 @@ const PwInquiry = ({ setPwResetting, pwInquiryId, setPwInquiryId }: PwInquiryPro
                 maxLength={6}
                 disabled={!enableCodeInput}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleInputChange('inquiryCertCode', e.target.value)}
+                autoComplete="off"
             />
             <CertificationBtn onClick={checkCertCode} disabled={!enableCodeInput}>인증번호 확인</CertificationBtn>
 

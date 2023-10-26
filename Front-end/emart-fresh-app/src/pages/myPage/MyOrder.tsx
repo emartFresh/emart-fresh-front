@@ -13,6 +13,7 @@ import { Modal, Box } from "@mui/material";
 import axios from "axios";
 import OrderReview from "./OrderReview";
 import { toast } from "react-toastify";
+import { formatKoreanCurrency } from "../../utils/formatUtils";
 
 interface OrderedProductData {
   memberId: string | MemberData;
@@ -177,7 +178,9 @@ export default function MyOrder() {
                     <span className={styles.detailName}>
                       {item.productName}
                     </span>
-                    <span className={styles.detailPrice}>{item.price}원</span>
+                    <span className={styles.detailPrice}>
+                      {item.price && formatKoreanCurrency(item.price)}원
+                    </span>
                     {item.isPickedUp ? (
                       <OrderReview
                         setShowModal={setShowModal}
@@ -240,7 +243,10 @@ export default function MyOrder() {
                 <div>{orderedProduct.storeName}</div>
 
                 <div className={styles.orderTotalAmount}>
-                  총액 {orderedProduct.totalAmount}원
+                  총액{" "}
+                  {orderedProduct.totalAmount &&
+                    formatKoreanCurrency(orderedProduct.totalAmount)}
+                  원
                 </div>
               </div>
 

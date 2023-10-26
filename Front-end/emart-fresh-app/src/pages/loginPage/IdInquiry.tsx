@@ -62,13 +62,14 @@ const IdInquiry = () => {
     <InquiryFormWrap>
         {resultId === '' ?
         <>
-            <InquiryInput type="text" name='inquiryName' placeholder='이름을 입력해주세요' onChange={(e: React.ChangeEvent<HTMLInputElement>) => setInquiryName(e.target.value)}/>
-            <InquiryInput type="text" name='inquiryEmail' placeholder='이메일을 입력해주세요' onChange={(e: React.ChangeEvent<HTMLInputElement>) => setInquiryEmail(e.target.value)}/>
+            <InquiryInput type="text" name='inquiryName' placeholder='이름을 입력해주세요' onChange={(e: React.ChangeEvent<HTMLInputElement>) => setInquiryName(e.target.value)} autoComplete="off"/>
+            <InquiryInput type="text" name='inquiryEmail' placeholder='이메일을 입력해주세요' onChange={(e: React.ChangeEvent<HTMLInputElement>) => setInquiryEmail(e.target.value)} autoComplete="off"/>
             <InquiryButton onClick={findId}>아이디 찾기</InquiryButton>
         </>
         :
         <>
             <p>{`조회 요청하신 아이디는 ${resultId}입니다.`}</p>
+            {/* 수정 */}
             <Link to='/login'>로그인 페이지로 이동</Link>
         </>
         

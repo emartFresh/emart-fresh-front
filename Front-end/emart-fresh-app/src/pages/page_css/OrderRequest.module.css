@@ -11,7 +11,7 @@
 .orderRequestWrapper {
   min-width: 45rem;
   display: flex;
-  justify-content: center;
+  justify-content: start;
   align-items: center;
   flex-direction: column;
 }
@@ -25,7 +25,7 @@
 
 .productListWrapper {
   display: block;
-  height: 200px;
+  height: 500px;
   border: 1px solid #e1e1e1;
   border-radius: 0.5rem;
   width: 80%;
@@ -53,7 +53,11 @@
 }
 
 .gridFirstItem {
-  align-self: center;
+  width: 100%;
+  display: flex;
+  padding-right: 1rem;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .gridSecondItem {
@@ -70,6 +74,7 @@
 .qqtTitle {
   color: #585858;
   margin: 0.5rem;
+  white-space: none;
 }
 .checkBox {
   align-self: center;

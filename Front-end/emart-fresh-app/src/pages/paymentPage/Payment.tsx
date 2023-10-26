@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import styles from "../page_css/Payment.module.css";
 import Dopay from "./DoPay";
 import CopuonApply from "./CopuonApply";
+import { formatKoreanCurrency } from "../../utils/formatUtils";
 
 interface PaymentProps {
   setOpenPayment: React.Dispatch<React.SetStateAction<boolean>>;
@@ -89,7 +90,7 @@ export default function Payment({
         <div className={styles.oneLine}></div>
         <div className={styles.totalPriceWrapper}>
           <span className={styles.totalPriceTitle}>총 결제액 </span>
-          <span>{totalPriceAf}원</span>
+          <span>{totalPriceAf && formatKoreanCurrency(totalPriceAf)}원</span>
         </div>
       </div>
       <Dopay
