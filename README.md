@@ -79,7 +79,7 @@
 <hr/>
 <h2>Back-end</h2>
 <ol>
-	<li>아래 명령어를 순차적으로 실행</li>
+	<li>아래 명령어를 순차적으로 실행(localhost의 mysql id:root, pw:1234와 연동)</li>
 	<li>git clone https://github.com/emartFresh/emart-fresh-back</li>
 	<li>cd emart-fresh-spring/demo</li>
  	<li>mvn clean package</li>
