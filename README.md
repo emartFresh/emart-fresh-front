@@ -64,7 +64,8 @@
 	<li>자동 AWS Ec2로의 자동 배포를 위해 사용</li>
 </ul>
 <hr/>
-<h2>프로젝트 사용 방법</h2>
+<h2>Work flow</h2>
+![image](https://github.com/emartFresh/emart-fresh-front/assets/76651990/250e361d-0a0f-4b2c-95cd-bb30054c7382)
 
 <h2>프로젝트 설치 및 실행 방법</h2>
 <h2>Front-end</h2>
