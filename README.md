@@ -65,7 +65,8 @@
 </ul>
 <hr/>
 <h2>Work flow</h2>
-![image](https://github.com/emartFresh/emart-fresh-front/assets/76651990/250e361d-0a0f-4b2c-95cd-bb30054c7382)
+<img src="https://github.com/emartFresh/emart-fresh-front/assets/76651990/250e361d-0a0f-4b2c-95cd-bb30054c7382"></img>
+<hr/>
 
 <h2>프로젝트 설치 및 실행 방법</h2>
 <h2>Front-end</h2>
