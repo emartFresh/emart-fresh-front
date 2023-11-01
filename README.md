@@ -88,3 +88,12 @@
  	<li>mvn clean package</li>
   	<li>java -jar target/jpa-0.0.1-SNAPSHOT.jar</li>
 </ol>
+<hr/>
+<h2>팀원</h2>
+<ul>
+	<li>정진성 - 팀장/백엔드/프론트엔드(<a href="https://github.com/fkthfvk112/fkthfvk112">깃허브 프로필로 이동</a>)</li>
+	<li>김예원 - 프론트엔드</li>
+	<li>강창희 - 프론트엔드</li>
+	<li>김현민 - 백엔드</li>
+	<li>최무진 - 백엔드</li>
+</ul>
