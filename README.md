@@ -5,7 +5,7 @@
 </p>
 <hr/>
 <h2>사용한 기술</h2>
-<h3>Front-end</h3>
+<h2>Front-end</h2>
 <h4>개발언어</h4>
 <ul>
 	<li>TypeScript</li>
@@ -28,7 +28,7 @@
 </ul>
 <hr/>
 
-<h3>Back-end</h3>
+<h2>Back-end</h2>
 <h4>개발언어</h4>
 <ul>
 	<li>Java</li>
@@ -47,7 +47,7 @@
 </ul>
 <hr/>
 
-<h3>etc</h3>
+<h2>Etc</h2>
 <h4>Docker</h4>
 <ul>
 	<li>운영체제에 상관없이 일정한 프로젝트를 컨테이너화해 보여주기 위해 사용</li>
@@ -64,3 +64,23 @@
 	<li>자동 AWS Ec2로의 자동 배포를 위해 사용</li>
 </ul>
 <hr/>
+<h2>프로젝트 사용 방법</h2>
+
+<h2>프로젝트 설치 및 실행 방법</h2>
+<h2>Front-end</h2>
+<ol>
+	<li>아래 명령어를 순차적으로 실행</li>
+	<li>git clone https://github.com/emartFresh/emart-fresh-front.git</li>
+	<li>cd Front-end/emart-fresh-app</li>
+ 	<li>npm i</li>
+  	<li>npm run dev(디벨롭 모드, localhost:8080과 연동)</li>
+</ol>
+<hr/>
+<h2>Back-end</h2>
+<ol>
+	<li>아래 명령어를 순차적으로 실행</li>
+	<li>git clone https://github.com/emartFresh/emart-fresh-back</li>
+	<li>cd emart-fresh-spring/demo</li>
+ 	<li>mvn clean package</li>
+  	<li>java -jar target/jpa-0.0.1-SNAPSHOT.jar</li>
+</ol>
