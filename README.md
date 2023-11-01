@@ -65,7 +65,7 @@
 </ul>
 <hr/>
 <h2>Project architecture</h2>
-<img src="https://github.com/emartFresh/emart-fresh-back/assets/76651990/2f0c9857-d20d-4d42-9070-f00d7a2dde69"/>
+<img src="https://github.com/emartFresh/emart-fresh-back/assets/76651990/ca69d325-3d19-4670-8764-c97f200d7bdd"/>
 <hr/>
 <h2>Work flow</h2>
 <img src="https://github.com/emartFresh/emart-fresh-front/assets/76651990/250e361d-0a0f-4b2c-95cd-bb30054c7382"/>
