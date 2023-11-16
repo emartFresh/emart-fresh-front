@@ -97,3 +97,10 @@
 	<li>김현민 - 백엔드</li>
 	<li>최무진 - 백엔드</li>
 </ul>
+<hr/>
+<h2>요구사항 명세서</h2>
+<img width="50%" src="https://github.com/emartFresh/emart-fresh-front/assets/76651990/e31589ec-0860-4d03-bf5f-f6a5f5dbb956"/>
+<img width="50%" src="https://github.com/emartFresh/emart-fresh-front/assets/76651990/d3926b75-6db1-488c-b526-846bed082e81"/>
+<hr/>
+<h2>데이터베이스 모델링</h2>
+<img src="https://github.com/emartFresh/emart-fresh-front/assets/76651990/bbfc99b2-a01d-4683-8881-95825983134c"/>
