@@ -101,9 +101,14 @@
 <hr/>
 <h2>요구사항 명세서</h2>
 <div>
-	<img width="50%" src="https://github.com/emartFresh/emart-fresh-front/assets/76651990/e31589ec-0860-4d03-bf5f-f6a5f5dbb956"/>
-	<img width="50%" src="https://github.com/emartFresh/emart-fresh-front/assets/76651990/d3926b75-6db1-488c-b526-846bed082e81"/>
+	<img src="https://github.com/emartFresh/emart-fresh-front/assets/76651990/e31589ec-0860-4d03-bf5f-f6a5f5dbb956"/>
+	<img src="https://github.com/emartFresh/emart-fresh-front/assets/76651990/d3926b75-6db1-488c-b526-846bed082e81"/>
 </div>
 <hr/>
 <h2>데이터베이스 모델링</h2>
 <img src="https://github.com/emartFresh/emart-fresh-front/assets/76651990/bbfc99b2-a01d-4683-8881-95825983134c"/>
+<hr/>
+<h2>기술 스택</h2>
+<img src="https://github.com/emartFresh/emart-fresh-front/assets/76651990/071d92ca-76df-4e6f-af9b-5f8b5ba24c6a"/>
+<img src="https://github.com/emartFresh/emart-fresh-front/assets/76651990/e52264d7-a950-4a74-85a1-8658e336df35"/>
+
