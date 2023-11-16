@@ -107,3 +107,18 @@
 <hr/>
 <h2>데이터베이스 모델링</h2>
 <img src="https://github.com/emartFresh/emart-fresh-front/assets/76651990/bbfc99b2-a01d-4683-8881-95825983134c"/>
+<hr/>
+<h2>기술스택</h2>
+<img src="https://github.com/emartFresh/emart-fresh-front/assets/76651990/071d92ca-76df-4e6f-af9b-5f8b5ba24c6a"/>
+<h2>💻 Front-end</h2> 
+<h3>Vite</h3> 
+React 프로젝트 빌드 툴로 사용하였습니다. 빠른 서버 구동 및 각종 빌드 옵션을 사용하기 위하여 도입하였습니다.
+<h3>Recoil</h3> 
+전역 상태 관리를 위해 사용. 팀원 대다수가 프로그래밍 초심자였기에 보일러 플레이트가 적은 리코일을 채택하였습니다.
+<h3>TypeScript</h3> 
+타입 지정을 통해 백엔드와 협업을 용이하게 하고 에러 방지를 위해 도입하였습니다.
+<h2>💻 Back-end</h2>
+<h3>Spring security</h3> 
+인증, 인가 관리 및 JWT 관리를 위해 도입하였습니다.
+<h3>Spring Data JPA</h3> 
+객체 지향의 관점에서 DB를 사용하고, 런타임 환경에서 에러를 핸들링 하기 위해 도입하였습니다.
