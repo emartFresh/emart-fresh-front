@@ -114,55 +114,55 @@
 <hr/>
 <h2>핵심 기능</h2>
 <h3>로그인 페이지</h3>
-<img src="https://github.com/emartFresh/emart-fresh-front/assets/76651990/9a72805f-3ef9-4f06-bf3e-ad9fffaab035"/>
-<li>
-	<ul>JWT 기반 로그인 지원</ul>
-	<ul>OAuth 2.0 기반 카카오, 네이버 로그인</ul>
-</li>
+<img src="https://github.com/emartFresh/emart-fresh-front/assets/76651990/f80d852a-0eac-431d-b740-cab21b43ba32"/>
+<ul>
+	<li>JWT 기반 로그인 지원</li>
+	<li>OAuth 2.0 기반 카카오, 네이버 로그인</li>
+</ul>
 <h3>회원가입 페이지</h3>
-<img src="https://github.com/emartFresh/emart-fresh-front/assets/76651990/e9a56b14-67e8-4758-9276-706fc807db15"/>
-<li>
-	<ul>SMTP 기반 이메일 인증</ul>
-</li>
+<img src="https://github.com/emartFresh/emart-fresh-front/assets/76651990/6d5862f9-d22c-4656-98ca-478b7296de55"/>
+<ul>
+	<li>SMTP 기반 이메일 인증</li>
+</ul>
 <h3>전체 상품보기 페이지</h3>
-<img src="https://github.com/emartFresh/emart-fresh-front/assets/76651990/b2ce3c3c-fe0c-4547-a53a-c6f2b391840e"/>
-<li>
-	<ul>필터링으로 상품 검색</ul>
-	<ul>거리 기반 가게 검색</ul>
+<img src="https://github.com/emartFresh/emart-fresh-front/assets/76651990/45eab708-5bdf-47c0-bda7-10998bc33771"/>
+<ul>
+	<li>필터링으로 상품 검색</li>
+	<li>거리 기반 가게 검색</li>
 
-</li>
+</ul>
 <h3>근처 매장 찾기</h3>
-<img src="https://github.com/emartFresh/emart-fresh-front/assets/76651990/7c55d516-d70d-4f5f-848b-6d575d857c11"/>
-<li>
-	<ul>카카오맵 기반 거리 별 가게 검색</ul>
-	<ul>민감 정보(유저의 위치) 획득을 위해 HTTPS 적용</ul>
+<img src="https://github.com/emartFresh/emart-fresh-front/assets/76651990/ba608f66-5b57-47eb-9e25-1b3d836534d0"/>
+<ul>
+	<li>카카오맵 기반 거리 별 가게 검색</li>
+	<li>민감 정보(유저의 위치) 획득을 위해 HTTPS 적용</li>
 
-</li>
+</ul>
 <h3>결제</h3>
-<img src="https://github.com/emartFresh/emart-fresh-front/assets/76651990/e8bdd011-95b6-46f4-ba94-c6f1aa011701"/>
-<li>
-	<ul>부트페이 API연동 실결제 지원</ul>
-	<ul>픽업 주문한 물품 확인 및 리뷰, 별점 작성 가능</ul>
-</li>
+<img src="https://github.com/emartFresh/emart-fresh-front/assets/76651990/b0a2dbe2-6a72-43ec-87ee-1c2d1105cdc6"/>
+<ul>
+	<li>부트페이 API연동 실결제 지원</li>
+	<li>픽업 주문한 물품 확인 및 리뷰, 별점 작성 가능</li>
+</ul>
 <h3>상품 상세보기</h3>
-<img src="https://github.com/emartFresh/emart-fresh-front/assets/76651990/de179e04-41fa-401f-a628-7343f43a9eda"/>
-<li>
-	<ul>픽업 주문한 물품 확인 및 리뷰, 별점 작성 가능</ul>
-</li>
+<img src="https://github.com/emartFresh/emart-fresh-front/assets/76651990/a9e059b1-83b2-4118-92a4-e1f479dca8a5"/>
+<ul>
+	<li>픽업 주문한 물품 확인 및 리뷰, 별점 작성 가능</li>
+</ul>
 <h3>점주 신청</h3>
-<img src="https://github.com/emartFresh/emart-fresh-front/assets/76651990/5707e1eb-ca99-4142-aa2b-a2016e660a68"/>
-<li>
-	<ul>네이버 클라우드 플랫폼 연동 OCR 광학 인증</ul>
-	<ul>승인 받은 후 점주 권한 획득</ul>
-</li>
+<img src="https://github.com/emartFresh/emart-fresh-front/assets/76651990/56440c21-5cfb-4952-8f3e-3e1c29fd654c"/>
+<ul>
+	<li>네이버 클라우드 플랫폼 연동 OCR 광학 인증</li>
+	<li>승인 받은 후 점주 권한 획득</li>
+</ul>
 <h3>점주 승인</h3>
-<img src="https://github.com/emartFresh/emart-fresh-front/assets/76651990/96bbd867-1367-4243-a88d-ae3dcbb16a09"/>
-<li>
-	<ul>실제 가게의 기반 위, 경도, 주소 데이터를 백엔드로 전송</ul>
-	<ul>일반 유저에게 점주 권한 부여</ul>
-</li>
+<img src="https://github.com/emartFresh/emart-fresh-front/assets/76651990/89945bd5-3b1f-4aa5-94ad-79bc5a4a188b"/>
+<ul>
+	<li>실제 가게의 기반 위, 경도, 주소 데이터를 백엔드로 전송</li>
+	<li>일반 유저에게 점주 권한 부여</li>
+</ul>
 <h3>주문 현황 확인</h3>
-<img src="https://github.com/emartFresh/emart-fresh-front/assets/76651990/511aa442-b895-40df-99c0-288df26d92b1"/>
-<li>
-	<ul>SSE 적용으로 실시간 주문 팝업 및 TTS 생성</ul>
-</li>
+<img src="https://github.com/emartFresh/emart-fresh-front/assets/76651990/ab7c259f-1bf1-4f39-b6f7-929418d5af16"/>
+<ul>
+	<li>SSE 적용으로 실시간 주문 팝업 및 TTS 생성</li>
+</ul>
