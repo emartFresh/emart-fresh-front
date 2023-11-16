@@ -111,4 +111,58 @@
 <h2>기술 스택</h2>
 <img src="https://github.com/emartFresh/emart-fresh-front/assets/76651990/071d92ca-76df-4e6f-af9b-5f8b5ba24c6a"/>
 <img src="https://github.com/emartFresh/emart-fresh-front/assets/76651990/e52264d7-a950-4a74-85a1-8658e336df35"/>
+<hr/>
+<h2>핵심 기능</h2>
+<h3>로그인 페이지</h3>
+<img src="https://github.com/emartFresh/emart-fresh-front/assets/76651990/9a72805f-3ef9-4f06-bf3e-ad9fffaab035"/>
+<li>
+	<ul>JWT 기반 로그인 지원</ul>
+	<ul>OAuth 2.0 기반 카카오, 네이버 로그인</ul>
+</li>
+<h3>회원가입 페이지</h3>
+<img src="https://github.com/emartFresh/emart-fresh-front/assets/76651990/e9a56b14-67e8-4758-9276-706fc807db15"/>
+<li>
+	<ul>SMTP 기반 이메일 인증</ul>
+</li>
+<h3>전체 상품보기 페이지</h3>
+<img src="https://github.com/emartFresh/emart-fresh-front/assets/76651990/b2ce3c3c-fe0c-4547-a53a-c6f2b391840e"/>
+<li>
+	<ul>필터링으로 상품 검색</ul>
+	<ul>거리 기반 가게 검색</ul>
 
+</li>
+<h3>근처 매장 찾기</h3>
+<img src="https://github.com/emartFresh/emart-fresh-front/assets/76651990/7c55d516-d70d-4f5f-848b-6d575d857c11"/>
+<li>
+	<ul>카카오맵 기반 거리 별 가게 검색</ul>
+	<ul>민감 정보(유저의 위치) 획득을 위해 HTTPS 적용</ul>
+
+</li>
+<h3>결제</h3>
+<img src="https://github.com/emartFresh/emart-fresh-front/assets/76651990/e8bdd011-95b6-46f4-ba94-c6f1aa011701"/>
+<li>
+	<ul>부트페이 API연동 실결제 지원</ul>
+	<ul>픽업 주문한 물품 확인 및 리뷰, 별점 작성 가능</ul>
+</li>
+<h3>상품 상세보기</h3>
+<img src="https://github.com/emartFresh/emart-fresh-front/assets/76651990/de179e04-41fa-401f-a628-7343f43a9eda"/>
+<li>
+	<ul>픽업 주문한 물품 확인 및 리뷰, 별점 작성 가능</ul>
+</li>
+<h3>점주 신청</h3>
+<img src="https://github.com/emartFresh/emart-fresh-front/assets/76651990/5707e1eb-ca99-4142-aa2b-a2016e660a68"/>
+<li>
+	<ul>네이버 클라우드 플랫폼 연동 OCR 광학 인증</ul>
+	<ul>승인 받은 후 점주 권한 획득</ul>
+</li>
+<h3>점주 승인</h3>
+<img src="https://github.com/emartFresh/emart-fresh-front/assets/76651990/96bbd867-1367-4243-a88d-ae3dcbb16a09"/>
+<li>
+	<ul>실제 가게의 기반 위, 경도, 주소 데이터를 백엔드로 전송</ul>
+	<ul>일반 유저에게 점주 권한 부여</ul>
+</li>
+<h3>주문 현황 확인</h3>
+<img src="https://github.com/emartFresh/emart-fresh-front/assets/76651990/511aa442-b895-40df-99c0-288df26d92b1"/>
+<li>
+	<ul>SSE 적용으로 실시간 주문 팝업 및 TTS 생성</ul>
+</li>
